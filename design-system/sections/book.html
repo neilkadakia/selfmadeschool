@@ -1,0 +1,65 @@
+<!-- @dsCard group="Sections" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Instrument Sans", sans-serif; background: var(--coral); color: var(--ink); padding: 40px 32px; overflow-x: hidden; }
+  a { text-decoration: none; }
+  .grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 56px; align-items: center; }
+  .kicker { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; margin: 0 0 16px; }
+  .h2 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(32px, 4.5vw, 58px); line-height: 0.98; letter-spacing: -0.02em; margin: 0 0 22px; text-transform: uppercase; }
+  .blurb { max-width: 520px; font-size: 17px; line-height: 1.55; color: rgba(14,14,18,0.75); margin: 0 0 24px; }
+  .meta { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 30px; }
+  .pill { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; background: var(--ink); color: var(--coral); }
+  .ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 16px 32px; border-radius: 999px; font-weight: 700; font-size: 16px; transition: all 0.2s ease; }
+  .btn--ink { background: var(--ink); color: var(--acc); padding: 18px 38px; }
+  .btn--ink:hover { background: var(--vio); color: #fff; }
+  .btn--outline-ink { border: 1.5px solid rgba(14,14,18,0.35); color: var(--ink); }
+  .btn--outline-ink:hover { border-color: var(--ink); }
+  .stage { position: relative; display: flex; justify-content: center; }
+  .book { width: min(280px, 60vw); aspect-ratio: 5 / 7; background: var(--ink); color: var(--paper); border-radius: 8px 16px 16px 8px; padding: 30px 26px; display: flex; flex-direction: column; justify-content: space-between; position: relative; transform: rotate(-4deg); box-shadow: 0 30px 70px rgba(14,14,18,0.35); transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; }
+  .book:hover { transform: rotate(0deg) translateY(-8px); box-shadow: 0 40px 80px rgba(14,14,18,0.4); }
+  .book::before { content: ""; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: rgba(242,238,227,0.18); }
+  .book::after { content: ""; position: absolute; right: -8px; top: 10px; bottom: 6px; width: 8px; background: #fff; border-radius: 0 4px 4px 0; box-shadow: inset -2px 0 0 rgba(14,14,18,0.15); }
+  .imprint { font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.6; }
+  .num { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 84px; line-height: 1; color: var(--acc); }
+  .num .dot { color: var(--coral); }
+  .title { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 30px; line-height: 0.98; letter-spacing: -0.02em; text-transform: uppercase; margin: 10px 0 12px; }
+  .sub { font-size: 13px; line-height: 1.5; color: rgba(242,238,227,0.75); margin: 0; }
+  .foot { display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; }
+  .badge { width: 28px; height: 28px; border-radius: 50%; background: var(--acc); color: var(--ink); display: inline-flex; align-items: center; justify-content: center; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 11px; transform: rotate(-8deg); flex: none; }
+  .sticker { position: absolute; top: -14px; right: 2%; background: var(--vio); color: #fff; padding: 10px 20px; border-radius: 999px; font-weight: 700; font-size: 14px; transform: rotate(7deg); letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div>
+      <p class="kicker">Required Reading</p>
+      <h2 class="h2">The textbook adulthood never gave you.</h2>
+      <p class="blurb">Every unit of The 13th Grade — mindset, money, and the big calls — rewritten as a book you can dog-ear, gift, and re-read the night before a big decision. Plain English, cover to cover.</p>
+      <div class="meta"><span class="pill">312 pages</span><span class="pill">All six units</span><span class="pill">Zero pop quizzes</span></div>
+      <div class="ctas"><a href="#" class="btn btn--ink">Get the Book →</a><a href="#" class="btn btn--outline-ink">Read a Sample</a></div>
+    </div>
+    <div class="stage">
+      <div class="book">
+        <span class="imprint">Self Made School Press</span>
+        <div>
+          <span class="num">13<span class="dot">.</span></span>
+          <h3 class="title">The 13th Grade</h3>
+          <p class="sub">The missing textbook for your first decade of adulthood.</p>
+        </div>
+        <div class="foot"><span class="badge">SM</span><span>First Edition · Class of '26</span></div>
+      </div>
+      <div class="sticker">dog-ear approved ✓</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -363,6 +363,55 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="book" className="book-section">
+        <div className="book-grid">
+          <div>
+            <p data-reveal className="kicker">
+              Required Reading
+            </p>
+            <h2 data-reveal className="h2 h2--book">
+              The textbook adulthood never gave you.
+            </h2>
+            <p data-reveal className="book-blurb">
+              Every unit of The 13th Grade — mindset, money, and the big calls — rewritten as a book you can
+              dog-ear, gift, and re-read the night before a big decision. Plain English, cover to cover.
+            </p>
+            <div data-reveal className="book-meta">
+              <span className="pill pill--ink-coral">312 pages</span>
+              <span className="pill pill--ink-coral">All six units</span>
+              <span className="pill pill--ink-coral">Zero pop quizzes</span>
+            </div>
+            <div data-reveal className="book-ctas">
+              <a href="#enroll" className="btn btn--ink">
+                Get the Book →
+              </a>
+              <a href="#syllabus" className="btn btn--outline-ink">
+                Read a Sample
+              </a>
+            </div>
+          </div>
+          <div className="book-stage">
+            <div data-card className="book-cover">
+              <span className="book-imprint">Self Made School Press</span>
+              <div>
+                <span className="book-num">
+                  13<span className="dot">.</span>
+                </span>
+                <h3 className="book-title">The 13th Grade</h3>
+                <p className="book-sub">The missing textbook for your first decade of adulthood.</p>
+              </div>
+              <div className="book-foot">
+                <span className="book-badge">SM</span>
+                <span>First Edition · Class of &apos;26</span>
+              </div>
+            </div>
+            <div data-sticker className="sticker sticker--book">
+              dog-ear approved ✓
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="enroll" className="enroll">
         <p data-reveal className="kicker kicker--enroll">
           Enrollment is open
