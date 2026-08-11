@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  <style>
+    :root { --acc: #43DE7B; --ink: #0E0E12; --paper: #F2EEE3; --vio: #5B7CFA; --coral: #FFB43A; }
+    html { background: #0E0E12; }
+    body { margin: 0; font-family: "Instrument Sans", sans-serif; color: #F2EEE3; background: #0E0E12; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--acc); }
+    ::selection { background: var(--acc); color: #0E0E12; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<div style="position: fixed; z-index: 50; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 18px 32px; backdrop-filter: blur(12px); background: rgba(14,14,18,0.55); border-bottom: 1px solid rgba(242,238,227,0.08);">
+  <a href="Self Made School.dc.html" style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px;">
+    <span style="display: inline-flex; width: 34px; height: 34px; border-radius: 50%; background: var(--acc); color: #0E0E12; align-items: center; justify-content: center; font-size: 13px; transform: rotate(-8deg);">SM</span>
+    <span>SELF MADE SCHOOL</span>
+  </a>
+  <nav style="display: flex; gap: 28px; font-size: 14px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; align-items: center;">
+    <a href="Self Made School.dc.html#syllabus" style="opacity: 0.8;">Syllabus</a>
+    <a href="Self Made School.dc.html#grades" style="opacity: 0.8;">The Grades</a>
+    <a href="About.dc.html" style="color: var(--acc);">About</a>
+    <a href="Self Made School.dc.html#enroll" style="background: var(--acc); color: #0E0E12; padding: 10px 22px; border-radius: 999px; font-weight: 700;" style-hover="background: #ffffff; color: #0E0E12;">Enroll Free</a>
+  </nav>
+</div>
+
+<header data-screen-label="About Hero" style="min-height: 82vh; display: flex; flex-direction: column; justify-content: center; padding: 160px 32px 80px; position: relative; overflow: hidden;">
+  <div data-wm aria-hidden="true" style="position: absolute; right: -4%; top: 6%; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(260px, 38vw, 640px); line-height: 0.8; color: transparent; -webkit-text-stroke: 1.5px rgba(242,238,227,0.07); pointer-events: none; user-select: none; z-index: 0;">SM</div>
+  <p data-hero-kicker style="font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--acc); margin: 0 0 24px;">★ About Self Made School</p>
+  <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(48px, 9vw, 130px); line-height: 0.94; letter-spacing: -0.03em; margin: 0; text-transform: uppercase;">
+    <span style="display: block; overflow: hidden;"><span data-hline style="display: block;">Nobody is born</span></span>
+    <span style="display: block; overflow: hidden;"><span data-hline style="display: block;">knowing <span style="color: var(--acc);">this stuff.</span></span></span>
+  </h1>
+  <p data-hero-sub style="max-width: 560px; font-size: 18px; line-height: 1.55; color: rgba(242,238,227,0.75); margin: 36px 0 0;">School taught you trigonometry, then handed you a lease, a W-4, and a 401(k) form and wished you luck. Self Made School is the school for everything after the diploma — built for 18-to-30-year-olds who'd rather learn it now than regret it at 40.</p>
+</header>
+
+<section data-screen-label="Mission" style="background: var(--paper); color: #0E0E12; padding: 110px 32px;">
+  <div style="max-width: 1240px; margin: 0 auto;">
+    <p data-reveal style="font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--vio); margin: 0 0 16px;">Why we exist</p>
+    <h2 data-reveal style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(34px, 5vw, 68px); line-height: 1.02; letter-spacing: -0.02em; margin: 0; text-transform: uppercase; max-width: 20ch;">Adulthood is a curriculum. Someone should teach it.</h2>
+    <p data-reveal style="max-width: 620px; font-size: 17px; line-height: 1.6; margin: 32px 0 0; color: rgba(14,14,18,0.75);">Every year, millions of people graduate into the most consequential decade of their lives — first paychecks, first leases, first big calls — with zero formal preparation. We think that's absurd. So we built the missing grades: the 13th for foundations, the 14th for money, the 15th for the decisions that shape everything else.</p>
+  </div>
+</section>
+
+<section data-screen-label="Beliefs" style="background: #0E0E12; padding: 110px 32px;">
+  <div style="max-width: 1240px; margin: 0 auto;">
+    <p data-reveal style="font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--acc); margin: 0 0 16px;">What we believe</p>
+    <h2 data-reveal style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(34px, 5vw, 68px); line-height: 1.02; letter-spacing: -0.02em; margin: 0 0 56px; text-transform: uppercase;">Three house rules</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px;">
+      <div data-card style="transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; background: var(--acc); color: #0E0E12; border-radius: 24px; padding: 38px 32px; min-height: 260px; display: flex; flex-direction: column; justify-content: space-between;" style-hover="transform: translateY(-6px) rotate(0deg); box-shadow: 0 18px 44px rgba(0,0,0,0.28);">
+        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 56px; line-height: 1;">01</span>
+        <div><h3 style="font-family: 'Instrument Sans', sans-serif; font-weight: 700; font-size: 26px; margin: 0 0 10px; letter-spacing: -0.02em;">Plain English or nothing</h3><p style="margin: 0; font-size: 16px; line-height: 1.55; opacity: 0.75;">If a lesson needs a finance degree to follow, we rewrite the lesson. Jargon is a tax on people who weren't told the rules.</p></div>
+      </div>
+      <div data-card style="transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; background: var(--vio); color: #fff; border-radius: 24px; padding: 38px 32px; min-height: 260px; display: flex; flex-direction: column; justify-content: space-between;" style-hover="transform: translateY(-6px) rotate(0deg); box-shadow: 0 18px 44px rgba(0,0,0,0.28);">
+        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 56px; line-height: 1;">02</span>
+        <div><h3 style="font-family: 'Instrument Sans', sans-serif; font-weight: 700; font-size: 26px; margin: 0 0 10px; letter-spacing: -0.02em;">Doing beats knowing</h3><p style="margin: 0; font-size: 16px; line-height: 1.55; opacity: 0.85;">Every unit ends with a real action taken in your real life. A budget you built counts; a budget you watched doesn't.</p></div>
+      </div>
+      <div data-card style="transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; background: var(--coral); color: #0E0E12; border-radius: 24px; padding: 38px 32px; min-height: 260px; display: flex; flex-direction: column; justify-content: space-between;" style-hover="transform: translateY(-6px) rotate(0deg); box-shadow: 0 18px 44px rgba(0,0,0,0.28);">
+        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 56px; line-height: 1;">03</span>
+        <div><h3 style="font-family: 'Instrument Sans', sans-serif; font-weight: 700; font-size: 26px; margin: 0 0 10px; letter-spacing: -0.02em;">No shame in the syllabus</h3><p style="margin: 0; font-size: 16px; line-height: 1.55; opacity: 0.75;">Not knowing was never your fault — nobody taught you. Every question here is a fair one, asked by thousands before you.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Note" style="background: #0E0E12; padding: 20px 32px 120px; border-top: 1px solid rgba(242,238,227,0.1);">
+  <blockquote data-reveal style="margin: 80px auto 0; max-width: 920px; text-align: center;">
+    <p style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(26px, 3.6vw, 44px); line-height: 1.25; margin: 0 0 24px;">"We're not here to make you feel behind. We're here to make catching up feel easy."</p>
+    <cite style="font-style: normal; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--acc);">— The Self Made School Team</cite>
+  </blockquote>
+</section>
+
+<section data-screen-label="CTA" style="background: var(--acc); color: #0E0E12; padding: 100px 32px; text-align: center;">
+  <h2 data-reveal style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(40px, 6.5vw, 96px); line-height: 0.95; letter-spacing: -0.03em; margin: 0 0 32px; text-transform: uppercase;">Class starts whenever<br>you do.</h2>
+  <div data-reveal style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+    <a href="Self Made School.dc.html#enroll" style="background: #0E0E12; color: var(--acc); padding: 20px 44px; border-radius: 999px; font-weight: 700; font-size: 18px;" style-hover="background: var(--vio); color: #ffffff;">Start With the 13th Grade</a>
+  </div>
+</section>
+
+<footer style="background: #0E0E12; padding: 40px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 14px; color: rgba(242,238,227,0.55);">
+  <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 18px; color: #F2EEE3;">SELF MADE SCHOOL</span>
+  <div style="display: flex; gap: 24px;"><a href="Self Made School.dc.html#syllabus">Syllabus</a><a href="Self Made School.dc.html#how">How It Works</a><a href="About.dc.html">About</a><a href="Self Made School.dc.html#enroll">Enroll</a></div>
+  <span>© 2026 Self Made School. Not actual financial advice — actual life advice.</span>
+</footer>
+
+<div style="position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: 0.38; mix-blend-mode: overlay; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.28'/%3E%3C/svg%3E&quot;);"></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() { this.boot(); }
+  componentWillUnmount() { /* cleanup happens in the next init(); see main page */ }
+  loadEngine() {
+    if (!window.__smsEngine) {
+      window.__smsEngine = new Promise(resolve => {
+        if (window.gsap && window.ScrollTrigger) return resolve();
+        const add = src => {
+          const s = document.createElement('scr' + 'ipt');
+          s.src = src;
+          document.head.appendChild(s);
+        };
+        add('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js');
+        add('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js');
+        const poll = setInterval(() => {
+          if (window.gsap && window.ScrollTrigger) { clearInterval(poll); resolve(); }
+        }, 100);
+      });
+    }
+    return window.__smsEngine;
+  }
+  boot() {
+    this.loadEngine().then(() => {
+      const start = () => requestAnimationFrame(() => requestAnimationFrame(() => this.init()));
+      if (document.readyState === 'complete') start();
+      else window.addEventListener('load', start, { once: true });
+    });
+    if (window.__smsDog) clearInterval(window.__smsDog);
+    this._brokenTicks = 0;
+    window.__smsDog = setInterval(() => {
+      if (!window.gsap || !window.ScrollTrigger) return;
+      const broken = !window.__smsCtx || window.gsap !== window.__smsGsap;
+      if (!broken) { this._brokenTicks = 0; return; }
+      this._brokenTicks++;
+      if (this._brokenTicks >= 2) { this._brokenTicks = 0; this.init(); }
+    }, 1000);
+  }
+  init() {
+    gsap.registerPlugin(ScrollTrigger);
+    window.__smsGsap = window.gsap;
+    if (window.__smsCtx) { try { window.__smsCtx.revert(); } catch (e) {} window.__smsCtx = null; }
+    if (window.__smsIO) { window.__smsIO.disconnect(); window.__smsIO = null; }
+    gsap.set('[data-hero-kicker], [data-hline], [data-hero-sub], [data-wm], [data-card], [data-reveal]', { clearProps: 'opacity,transform' });
+
+    const io = window.__smsIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting && e.target._revealPlay) {
+          e.target._revealPlay();
+          e.target._revealPlay = null;
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    window.__smsCtx = gsap.context(() => {
+      gsap.from('[data-hero-kicker]', { y: 20, opacity: 0, duration: 0.7, ease: 'power3.out' });
+      gsap.from('[data-hline]', { yPercent: 115, duration: 1.05, stagger: 0.1, ease: 'power4.out', delay: 0.1 });
+      gsap.from('[data-hero-sub]', { y: 30, opacity: 0, duration: 0.8, delay: 0.5, ease: 'power3.out' });
+      gsap.from('[data-wm]', { opacity: 0, x: 80, duration: 1.4, ease: 'power2.out', delay: 0.3 });
+      gsap.to('[data-wm]', { y: 140, ease: 'none', scrollTrigger: { trigger: '[data-screen-label="About Hero"]', start: 'top top', end: 'bottom top', scrub: true } });
+
+      const reveal = (el, vars) => {
+        const tween = gsap.from(el, Object.assign({ paused: true }, vars));
+        el._revealPlay = () => { if (tween.parent) tween.play(); else window.gsap.set(el, { clearProps: 'opacity,transform' }); };
+        io.observe(el);
+      };
+      gsap.utils.toArray('[data-card]').forEach((el, i) => {
+        reveal(el, { y: 70, opacity: 0, rotation: i % 2 ? 2.5 : -2.5, duration: 0.9, ease: 'power3.out' });
+      });
+      gsap.utils.toArray('[data-reveal]').forEach(el => {
+        reveal(el, { y: 44, opacity: 0, duration: 0.9, ease: 'power3.out' });
+      });
+    });
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
