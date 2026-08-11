@@ -265,7 +265,7 @@ export default function Home() {
       <div className="marquee-band">
         <div data-mq className="marquee-track">
           <span>{MARQUEE}&nbsp;</span>
-          <span>{MARQUEE}&nbsp;</span>
+          <span aria-hidden="true">{MARQUEE}&nbsp;</span>
         </div>
       </div>
 

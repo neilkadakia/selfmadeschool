@@ -14,7 +14,9 @@
   .spec { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; margin: 24px 0 10px; }
   .spec:first-child { margin-top: 0; }
   a { text-decoration: none; color: inherit; display: inline-block; }
-  .btn { padding: 16px 32px; border-radius: 999px; font-weight: 700; font-size: 16px; transition: all 0.2s ease; }
+  .btn { padding: 16px 32px; border-radius: 999px; font-weight: 700; font-size: 16px; transition: transform 0.2s cubic-bezier(0.22,1,0.36,1), background 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0) scale(0.98); }
   .btn--solid { background: var(--acc); color: var(--ink); }
   .btn--solid:hover { background: #ffffff; }
   .btn--outline { border: 1.5px solid rgba(242,238,227,0.35); color: var(--paper); }

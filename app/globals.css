@@ -14,6 +14,13 @@
 
 html {
   background: var(--ink);
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -37,6 +44,50 @@ a:hover {
 ::selection {
   background: var(--acc);
   color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.enroll :focus-visible,
+.book-section :focus-visible,
+.about-cta :focus-visible {
+  outline-color: var(--ink);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 16px;
+  z-index: 100;
+  background: var(--acc);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus-visible {
+  top: 14px;
+  color: var(--ink);
+}
+
+#syllabus,
+#grades,
+#how,
+#receipts,
+#book,
+#enroll {
+  scroll-margin-top: 84px;
 }
 
 /* ---------- Nav ---------- */
@@ -91,6 +142,25 @@ a:hover {
 
 .nav-link {
   opacity: 0.8;
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: var(--acc);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-link:hover::after,
+.nav-link--active::after {
+  transform: scaleX(1);
 }
 
 .nav-link--active {
@@ -104,11 +174,123 @@ a:hover {
   padding: 10px 22px;
   border-radius: 999px;
   font-weight: 700;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease;
 }
 
 .nav-cta:hover {
   background: #ffffff;
   color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.nav-cta:active {
+  transform: scale(0.97);
+}
+
+.nav--scrolled {
+  background: rgba(14, 14, 18, 0.85);
+}
+
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 42px;
+  height: 42px;
+  padding: 0 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 60;
+}
+
+.nav-burger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--paper);
+  border-radius: 2px;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+}
+
+.nav-burger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.nav-burger[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-burger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 110px 32px 60px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s;
+}
+
+.nav-overlay--open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-overlay a {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(32px, 8.5vw, 54px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  transform: translateY(24px);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease, color 0.2s ease;
+}
+
+.nav-overlay--open a {
+  transform: none;
+  opacity: 1;
+}
+
+.nav-overlay a:nth-child(2) { transition-delay: 0.04s; }
+.nav-overlay a:nth-child(3) { transition-delay: 0.08s; }
+.nav-overlay a:nth-child(4) { transition-delay: 0.12s; }
+.nav-overlay a:nth-child(5) { transition-delay: 0.16s; }
+.nav-overlay a:nth-child(6) { transition-delay: 0.2s; }
+.nav-overlay a:nth-child(7) { transition-delay: 0.24s; }
+
+.nav-overlay .nav-overlay-cta {
+  margin-top: 22px;
+  align-self: flex-start;
+  background: var(--acc);
+  color: var(--ink);
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  padding: 16px 32px;
+  border-radius: 999px;
+  line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-overlay,
+  .nav-overlay a,
+  .nav-burger span {
+    transition: none;
+  }
 }
 
 @media (max-width: 880px) {
@@ -118,6 +300,98 @@ a:hover {
 
   .nav-link {
     display: none;
+  }
+
+  .nav-burger {
+    display: flex;
+  }
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 640px) {
+  .nav {
+    padding: 14px 18px;
+  }
+
+  .hero {
+    padding: 120px 20px 48px;
+  }
+
+  .sticker {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+
+  .sticker--quiz {
+    top: 13%;
+    right: 4%;
+  }
+
+  .sticker--free {
+    bottom: 26%;
+    right: 8%;
+  }
+
+  .marquee-track {
+    font-size: 18px;
+  }
+
+  .syllabus {
+    padding: 76px 20px 84px;
+  }
+
+  .grades {
+    padding: 0 20px 90px;
+  }
+
+  .h2 {
+    margin: 0 0 44px;
+  }
+
+  .card-grid,
+  .grade-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .how-head {
+    padding: 72px 20px 0;
+  }
+
+  .how-track {
+    padding: 44px 20px 72px;
+    gap: 18px;
+  }
+
+  .how-panel {
+    width: 84vw;
+    padding: 32px 28px;
+    min-height: 380px;
+  }
+
+  .how-num {
+    font-size: 84px;
+  }
+
+  .how-title {
+    font-size: 36px;
+  }
+
+  .receipts {
+    padding: 24px 20px 84px;
+  }
+
+  .book-section {
+    padding: 76px 20px 84px;
+  }
+
+  .enroll {
+    padding: 90px 20px;
+  }
+
+  .footer {
+    padding: 32px 20px;
+    justify-content: flex-start;
   }
 }
 
@@ -199,6 +473,7 @@ a:hover {
 
 .hero {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -301,6 +576,17 @@ a:hover {
   border-radius: 999px;
   font-weight: 700;
   font-size: 16px;
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .btn--solid {
@@ -668,7 +954,8 @@ a:hover {
 .stat-num {
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
-  font-size: 72px;
+  font-size: clamp(52px, 8vw, 72px);
+  font-variant-numeric: tabular-nums;
 }
 
 .stat--acc .stat-num {
@@ -945,6 +1232,7 @@ a:hover {
 
 .about-hero {
   min-height: 82vh;
+  min-height: 82dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1042,6 +1330,64 @@ a:hover {
   color: var(--ink);
   padding: 100px 32px;
   text-align: center;
+}
+
+/* ---------- Utility pages (404, legal) ---------- */
+
+.page-hero {
+  min-height: 82vh;
+  min-height: 82dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 160px 32px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero .hero-ctas {
+  margin-top: 40px;
+}
+
+.error-num {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(120px, 22vw, 280px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: var(--acc);
+  margin: 0;
+}
+
+.page-copy {
+  max-width: 560px;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--muted-on-ink);
+  margin: 24px 0 0;
+}
+
+.legal {
+  padding: 180px 32px 120px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.legal-h1 {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(38px, 6vw, 72px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin: 0 0 32px;
+}
+
+.legal p {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--muted-on-ink);
+  margin: 0 0 20px;
 }
 
 /* ---------- Grain overlay ---------- */
