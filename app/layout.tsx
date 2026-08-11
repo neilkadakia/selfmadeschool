@@ -31,7 +31,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${bricolage.variable} ${instrument.variable}`}>
-      <body>
+      {/* suppressHydrationWarning: browser extensions (e.g. Grammarly) inject
+          attributes into <body> before React hydrates; scope is this element's
+          attributes only, so real hydration issues elsewhere still surface. */}
+      <body suppressHydrationWarning>
         <Nav />
         {children}
         <Footer />
