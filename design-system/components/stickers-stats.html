@@ -1,0 +1,48 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 28px; font-family: "Instrument Sans", sans-serif; background: var(--ink); color: var(--paper); }
+  .spec { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; margin: 26px 0 14px; }
+  .spec:first-child { margin-top: 0; }
+  .sticker { display: inline-block; padding: 10px 20px; border-radius: 999px; font-weight: 700; font-size: 14px; }
+  .sticker--quiz { background: var(--vio); color: #fff; transform: rotate(7deg); letter-spacing: 0.04em; }
+  .sticker--free { background: var(--coral); color: var(--ink); transform: rotate(-6deg); }
+  .row { display: flex; gap: 26px; flex-wrap: wrap; align-items: center; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 22px; }
+  .stat { border-top: 2px solid var(--paper); padding-top: 22px; }
+  .stat-num { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 72px; }
+  .stat-label { margin: 8px 0 0; font-size: 15px; opacity: 0.7; letter-spacing: 0.06em; text-transform: uppercase; }
+  blockquote { margin: 0; max-width: 700px; text-align: center; }
+  blockquote p { font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 30px; line-height: 1.25; margin: 0 0 20px; }
+  cite { font-style: normal; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--acc); }
+</style>
+</head>
+<body>
+  <p class="spec">Sticker pills — rotated ±6–7°, absolute-positioned in hero (animate in with back.out(2.2))</p>
+  <div class="row">
+    <span class="sticker sticker--quiz">no pop quizzes ✓</span>
+    <span class="sticker sticker--free">actually free</span>
+  </div>
+  <p class="spec">Stat blocks — 2px colored top border · Bricolage 72px numeral · counters animate 0→target on reveal</p>
+  <div class="stats">
+    <div class="stat" style="border-top-color:var(--acc);"><span class="stat-num" style="color:var(--acc);">40+</span><p class="stat-label">Lessons live now</p></div>
+    <div class="stat" style="border-top-color:var(--vio);"><span class="stat-num" style="color:var(--vio);">10 min</span><p class="stat-label">Average lesson</p></div>
+    <div class="stat" style="border-top-color:var(--coral);"><span class="stat-num" style="color:var(--coral);">$0</span><p class="stat-label">Tuition, forever</p></div>
+    <div class="stat"><span class="stat-num">0</span><p class="stat-label">Pop quizzes</p></div>
+  </div>
+  <p class="spec">Blockquote — Bricolage 700 · clamp(26px, 3.6vw, 44px) · green cite</p>
+  <blockquote>
+    <p>"I came for the money stuff. The mindset unit is the one I keep re-watching."</p>
+    <cite>— Maya, 24 · The 13th Grade, Class of '26</cite>
+  </blockquote>
+</body>
+</html>

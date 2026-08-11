@@ -1,0 +1,41 @@
+<!-- @dsCard group="Motion" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 28px; font-family: "Instrument Sans", sans-serif; background: var(--ink); color: var(--paper); }
+  h1 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 22px; text-transform: uppercase; letter-spacing: -0.02em; margin: 0 0 16px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid rgba(242,238,227,0.12); vertical-align: top; }
+  th { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.55; }
+  td:first-child { font-weight: 700; white-space: nowrap; }
+  code { background: rgba(242,238,227,0.1); padding: 1px 6px; border-radius: 5px; font-size: 12px; }
+  .note { font-size: 12.5px; opacity: 0.65; margin-top: 14px; line-height: 1.5; }
+</style>
+</head>
+<body>
+  <h1>Motion — GSAP 3 + ScrollTrigger</h1>
+  <table>
+    <tr><th>Element</th><th>Animation</th></tr>
+    <tr><td>Hero kicker</td><td>from <code>y:20, opacity:0</code> · 0.7s · power3.out</td></tr>
+    <tr><td>Headline lines</td><td>from <code>yPercent:115</code> in overflow-hidden masks · 1.05s · stagger 0.1 · power4.out</td></tr>
+    <tr><td>Hero sub + CTAs</td><td>from <code>y:30, opacity:0</code> · 0.8s · stagger 0.12 · delay 0.55</td></tr>
+    <tr><td>Stickers</td><td>from <code>scale:0</code> · 0.7s · stagger 0.14 · delay 0.8 · back.out(2.2)</td></tr>
+    <tr><td>Watermark</td><td>intro from <code>opacity:0, x:80</code> 1.4s · parallax to <code>y:160</code> scrubbed over hero</td></tr>
+    <tr><td>Marquee</td><td>to <code>xPercent:-50</code> · 22s · linear · repeat −1 (duplicated track)</td></tr>
+    <tr><td>Cards</td><td>from <code>y:70, opacity:0, rotation:±2.5</code> · 0.9s · power3.out · ScrollTrigger top 88%, once</td></tr>
+    <tr><td>Reveal blocks</td><td>from <code>y:44, opacity:0</code> · 0.9s · power3.out · once</td></tr>
+    <tr><td>How It Works</td><td>section pinned · track x scrubbed 0 → −(scrollWidth − innerWidth + 64) · scrub 1</td></tr>
+    <tr><td>Counters</td><td>0 → target · 1.6s · power2.out · on first reveal</td></tr>
+    <tr><td>Card hover (CSS)</td><td><code>translateY(-6px)</code> + shadow · 0.35s cubic-bezier(0.22,1,0.36,1)</td></tr>
+  </table>
+  <p class="note">Respect prefers-reduced-motion: all intro/scrub animations are skipped via gsap.matchMedia; content is never left hidden if JS fails.</p>
+</body>
+</html>

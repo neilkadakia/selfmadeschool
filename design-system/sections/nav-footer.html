@@ -1,0 +1,50 @@
+<!-- @dsCard group="Sections" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Instrument Sans", sans-serif; background: #17171d; color: var(--paper); padding: 28px 0; }
+  .spec { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; margin: 26px 28px 10px; }
+  .spec:first-child { margin-top: 0; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: var(--acc); }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 18px 32px; backdrop-filter: blur(12px); background: rgba(14,14,18,0.55); border-bottom: 1px solid rgba(242,238,227,0.08); }
+  .nav-logo { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
+  .nav-badge { display: inline-flex; width: 34px; height: 34px; border-radius: 50%; background: var(--acc); color: var(--ink); align-items: center; justify-content: center; font-size: 13px; transform: rotate(-8deg); }
+  .nav-links { display: flex; gap: 28px; font-size: 14px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; align-items: center; }
+  .nav-link { opacity: 0.8; }
+  .nav-cta { background: var(--acc); color: var(--ink); padding: 10px 22px; border-radius: 999px; font-weight: 700; }
+  .nav-cta:hover { background: #fff; color: var(--ink); }
+  .footer { background: var(--ink); padding: 40px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 14px; color: rgba(242,238,227,0.55); }
+  .footer-logo { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 18px; color: var(--paper); }
+  .footer-links { display: flex; gap: 24px; }
+</style>
+</head>
+<body>
+  <p class="spec">Nav — fixed, rgba(14,14,18,0.55) + blur(12px), 1px bottom border</p>
+  <div class="nav">
+    <a href="#" class="nav-logo"><span class="nav-badge">SM</span><span>SELF MADE SCHOOL</span></a>
+    <nav class="nav-links">
+      <a href="#" class="nav-link">Syllabus</a>
+      <a href="#" class="nav-link">The Grades</a>
+      <a href="#" class="nav-link">How It Works</a>
+      <a href="#" class="nav-link">Receipts</a>
+      <a href="#" class="nav-link" style="color:var(--acc);opacity:1;">About</a>
+      <a href="#" class="nav-cta">Enroll Free</a>
+    </nav>
+  </div>
+  <p class="spec">Footer — space-between, muted 0.55 links (hover green)</p>
+  <footer class="footer">
+    <span class="footer-logo">SELF MADE SCHOOL</span>
+    <div class="footer-links"><a href="#">Syllabus</a><a href="#">How It Works</a><a href="#">About</a><a href="#">Enroll</a></div>
+    <span>© 2026 Self Made School. Not actual financial advice — actual life advice.</span>
+  </footer>
+</body>
+</html>

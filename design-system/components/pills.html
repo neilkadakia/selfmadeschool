@@ -1,0 +1,47 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 28px; font-family: "Instrument Sans", sans-serif; background: var(--paper); color: var(--ink); }
+  .spec { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.55; margin: 22px 0 10px; }
+  .spec:first-child { margin-top: 0; }
+  .pill { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; display: inline-block; }
+  .pill--acc { background: var(--acc); color: var(--ink); }
+  .pill--white-vio { background: #fff; color: var(--vio); }
+  .pill--ink-acc { background: var(--ink); color: var(--acc); }
+  .pill--ink-coral { background: var(--ink); color: var(--coral); }
+  .pill--vio { background: var(--vio); color: #fff; }
+  .pill--coral { background: var(--coral); color: var(--ink); }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .dark { background: var(--ink); border-radius: 16px; padding: 18px; }
+  .unit-label { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; opacity: 0.6; color: var(--paper); }
+</style>
+</head>
+<body>
+  <p class="spec">Lesson-count / status pills — 12px 700, radius 999px</p>
+  <div class="row">
+    <span class="pill pill--acc">6 lessons</span>
+    <span class="pill pill--white-vio">5 lessons</span>
+    <span class="pill pill--ink-acc">7 lessons</span>
+    <span class="pill pill--ink-coral">5 lessons</span>
+    <span class="pill pill--vio">6 lessons</span>
+    <span class="pill pill--coral">8 lessons</span>
+  </div>
+  <p class="spec">Grade status pills</p>
+  <div class="row">
+    <span class="pill pill--acc">Start Here</span>
+    <span class="pill pill--vio">Next Up</span>
+    <span class="pill pill--coral">Final Year</span>
+  </div>
+  <p class="spec">Unit label — 13px 700, ls 0.18em, opacity 0.6 (pairs with pill in card top row)</p>
+  <div class="dark row"><span class="unit-label">UNIT 03</span><span class="pill pill--acc">7 lessons</span></div>
+</body>
+</html>

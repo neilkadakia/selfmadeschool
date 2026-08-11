@@ -1,0 +1,37 @@
+<!-- @dsCard group="Colors" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 28px; font-family: "Instrument Sans", sans-serif; background: var(--paper); color: var(--ink); }
+  h1 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 22px; text-transform: uppercase; letter-spacing: -0.02em; margin: 0 0 18px; }
+  .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+  .swatch { border-radius: 16px; padding: 16px 14px; min-height: 110px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(14,14,18,0.12); }
+  .name { font-weight: 700; font-size: 14px; }
+  .hex { font-size: 12px; opacity: 0.75; letter-spacing: 0.06em; }
+  .muted-note { margin-top: 18px; font-size: 13px; line-height: 1.5; }
+  .muted-note code { background: rgba(14,14,18,0.08); padding: 2px 6px; border-radius: 6px; font-size: 12px; }
+</style>
+</head>
+<body>
+  <h1>Colors</h1>
+  <div class="row">
+    <div class="swatch" style="background:#0E0E12;color:#F2EEE3;"><span class="name">Ink — page ground</span><span class="hex">#0E0E12 · --ink</span></div>
+    <div class="swatch" style="background:#F2EEE3;"><span class="name">Paper — cream sections</span><span class="hex">#F2EEE3 · --paper</span></div>
+    <div class="swatch" style="background:#43DE7B;"><span class="name">Growth green — primary accent</span><span class="hex">#43DE7B · --acc</span></div>
+    <div class="swatch" style="background:#5B7CFA;color:#fff;"><span class="name">Cobalt — secondary</span><span class="hex">#5B7CFA · --vio</span></div>
+    <div class="swatch" style="background:#FFB43A;"><span class="name">Amber — tertiary</span><span class="hex">#FFB43A · --coral</span></div>
+  </div>
+  <p class="muted-note">
+    Muted text: <code>rgba(242,238,227,0.75)</code> on ink · <code>rgba(14,14,18,0.75)</code> on paper.
+    Selection: green bg, ink text. Green is used for CTAs, the marquee band, and the enroll section background.
+  </p>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 28px; font-family: "Instrument Sans", sans-serif; background: var(--paper); color: var(--ink); }
+  .spec { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.55; margin: 0 0 12px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+  .card { border-radius: 24px; padding: 34px 30px; min-height: 240px; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(0,0,0,0.28); }
+  .card--ink { background: var(--ink); color: var(--paper); }
+  .card--vio { background: var(--vio); color: #fff; }
+  .card--acc { background: var(--acc); color: var(--ink); }
+  .card--coral { background: var(--coral); color: var(--ink); }
+  .card--white { background: #fff; color: var(--ink); border: 2px solid var(--ink); }
+  .card-top { display: flex; justify-content: space-between; align-items: center; }
+  .unit-label { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; opacity: 0.6; }
+  .pill { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; }
+  .card-title { font-weight: 700; font-size: 27px; margin: 0 0 10px; letter-spacing: -0.02em; }
+  .card-body { margin: 0; font-size: 16px; line-height: 1.5; opacity: 0.7; }
+</style>
+</head>
+<body>
+  <p class="spec">Syllabus cards — radius 24px · padding 34×30 · min-height 240 · hover lift −6px + shadow · bg order: ink / cobalt / green / amber / white(2px ink border) / ink</p>
+  <div class="grid">
+    <div class="card card--ink">
+      <div class="card-top"><span class="unit-label">UNIT 01</span><span class="pill" style="background:var(--acc);color:var(--ink);">6 lessons</span></div>
+      <div><h3 class="card-title">Money 101</h3><p class="card-body">Budgeting that doesn't feel like punishment. Where your paycheck actually goes.</p></div>
+    </div>
+    <div class="card card--vio">
+      <div class="card-top"><span class="unit-label" style="opacity:0.7;">UNIT 02</span><span class="pill" style="background:#fff;color:var(--vio);">5 lessons</span></div>
+      <div><h3 class="card-title">Tax Season, Decoded</h3><p class="card-body" style="opacity:0.85;">W-2? 1099? Refund? Plain English, before April ruins your month.</p></div>
+    </div>
+    <div class="card card--acc">
+      <div class="card-top"><span class="unit-label">UNIT 03</span><span class="pill" style="background:var(--ink);color:var(--acc);">7 lessons</span></div>
+      <div><h3 class="card-title">Credit Glow-Up</h3><p class="card-body" style="opacity:0.75;">From "no score" to "approved" — without falling for a single trap.</p></div>
+    </div>
+    <div class="card card--coral">
+      <div class="card-top"><span class="unit-label">UNIT 04</span><span class="pill" style="background:var(--ink);color:var(--coral);">5 lessons</span></div>
+      <div><h3 class="card-title">Mindset Reps</h3><p class="card-body" style="opacity:0.75;">Habits, discipline, and talking to yourself like a coach instead of a critic.</p></div>
+    </div>
+    <div class="card card--white">
+      <div class="card-top"><span class="unit-label">UNIT 05</span><span class="pill" style="background:var(--vio);color:#fff;">6 lessons</span></div>
+      <div><h3 class="card-title">Invest, Eventually</h3><p class="card-body">401(k)s and index funds for people with fifty bucks and a dream.</p></div>
+    </div>
+  </div>
+</body>
+</html>

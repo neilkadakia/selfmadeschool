@@ -1,0 +1,45 @@
+<!-- @dsCard group="Sections" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Instrument Sans", sans-serif; background: var(--ink); color: var(--paper); padding: 28px 0 0; overflow-x: hidden; }
+  .spec { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; margin: 26px 28px 12px; }
+  .spec:first-child { margin-top: 0; }
+  a { text-decoration: none; }
+  .marquee-band { background: var(--acc); color: var(--ink); overflow: hidden; padding: 14px 0; transform: rotate(-1.5deg) scale(1.02); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+  .marquee-track { display: flex; white-space: nowrap; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 22px; text-transform: uppercase; letter-spacing: 0.02em; width: max-content; animation: mq 22s linear infinite; }
+  .marquee-track span { padding-right: 24px; }
+  @keyframes mq { to { transform: translateX(-50%); } }
+  .enroll { background: var(--acc); color: var(--ink); padding: 70px 32px; text-align: center; margin-top: 30px; }
+  .kicker { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; margin: 0 0 20px; }
+  .h2 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(34px, 6vw, 72px); line-height: 0.95; letter-spacing: -0.03em; margin: 0 0 36px; text-transform: uppercase; }
+  .btn--ink { display: inline-block; background: var(--ink); color: var(--acc); padding: 20px 44px; border-radius: 999px; font-weight: 700; font-size: 18px; transition: all 0.2s ease; }
+  .btn--ink:hover { background: var(--vio); color: #fff; }
+  .note { margin: 24px 0 0; font-size: 14px; opacity: 0.65; }
+</style>
+</head>
+<body>
+  <p class="spec">Marquee band — green, rotated −1.5° scale 1.02, 2px ink borders, 22s loop (GSAP xPercent −50 in production)</p>
+  <div class="marquee-band">
+    <div class="marquee-track">
+      <span>Mindset ★ Money ★ Habits ★ Big calls ★ Taxes ★ Credit ★ 401(k) ★ Negotiation ★&nbsp;</span>
+      <span>Mindset ★ Money ★ Habits ★ Big calls ★ Taxes ★ Credit ★ 401(k) ★ Negotiation ★&nbsp;</span>
+    </div>
+  </div>
+  <p class="spec">Enroll section — full green, centered, ink pill CTA</p>
+  <section class="enroll">
+    <p class="kicker">Enrollment is open</p>
+    <h2 class="h2">Your first adult<br>decision? This one.</h2>
+    <a href="#" class="btn--ink">Start the 13th Grade — Free</a>
+    <p class="note">No credit card. Ironically.</p>
+  </section>
+</body>
+</html>

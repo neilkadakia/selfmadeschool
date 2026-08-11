@@ -1,0 +1,40 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 28px; font-family: "Instrument Sans", sans-serif; background: var(--ink); color: var(--paper); }
+  .spec { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; margin: 24px 0 10px; }
+  .spec:first-child { margin-top: 0; }
+  a { text-decoration: none; color: inherit; display: inline-block; }
+  .btn { padding: 16px 32px; border-radius: 999px; font-weight: 700; font-size: 16px; transition: all 0.2s ease; }
+  .btn--solid { background: var(--acc); color: var(--ink); }
+  .btn--solid:hover { background: #ffffff; }
+  .btn--outline { border: 1.5px solid rgba(242,238,227,0.35); color: var(--paper); }
+  .btn--outline:hover { border-color: var(--acc); color: var(--acc); }
+  .btn--ink { background: var(--ink); color: var(--acc); padding: 20px 44px; font-size: 18px; }
+  .btn--ink:hover { background: var(--vio); color: #fff; }
+  .nav-cta { background: var(--acc); color: var(--ink); padding: 10px 22px; border-radius: 999px; font-weight: 700; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; transition: background 0.2s ease; }
+  .nav-cta:hover { background: #fff; }
+  .green-strip { background: var(--acc); border-radius: 16px; padding: 22px; display: inline-block; }
+  .row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+</style>
+</head>
+<body>
+  <p class="spec">Primary — green pill (hover: white bg)</p>
+  <div class="row"><a href="#" class="btn btn--solid">Enroll Free →</a></div>
+  <p class="spec">Secondary — outline pill (hover: green border + text)</p>
+  <div class="row"><a href="#" class="btn btn--outline">See the Syllabus</a></div>
+  <p class="spec">On green — ink pill, 20×44px (hover: cobalt bg, white text)</p>
+  <div class="green-strip"><a href="#" class="btn btn--ink">Start the 13th Grade — Free</a></div>
+  <p class="spec">Nav CTA — compact pill, 10×22px, uppercase</p>
+  <div class="row"><a href="#" class="nav-cta">Enroll Free</a></div>
+</body>
+</html>

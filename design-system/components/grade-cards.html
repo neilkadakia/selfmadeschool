@@ -1,0 +1,44 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 28px; font-family: "Instrument Sans", sans-serif; background: var(--paper); color: var(--ink); }
+  .spec { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.55; margin: 0 0 12px; }
+  a { text-decoration: none; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+  .card { background: var(--ink); color: var(--paper); border-radius: 24px; padding: 40px 34px; min-height: 380px; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(0,0,0,0.28); }
+  .top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .num { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 88px; line-height: 1; }
+  .pill { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; }
+  h3 { font-weight: 700; font-size: 26px; margin: 0 0 12px; letter-spacing: -0.02em; }
+  p { margin: 0 0 20px; font-size: 16px; line-height: 1.55; opacity: 0.7; }
+  .link { font-weight: 700; font-size: 15px; }
+</style>
+</head>
+<body>
+  <p class="spec">Grade cards — ink bg · giant Bricolage numeral 88px in course color · status pill · colored text link</p>
+  <div class="grid">
+    <div class="card">
+      <div class="top"><span class="num" style="color:var(--acc);">13</span><span class="pill" style="background:var(--acc);color:var(--ink);">Start Here</span></div>
+      <div><h3>The 13th Grade</h3><p>The intro course. Mindset, money, and the big calls — the foundations of running your own life, in six units.</p><a class="link" style="color:var(--acc);" href="#">Enroll Free →</a></div>
+    </div>
+    <div class="card">
+      <div class="top"><span class="num" style="color:var(--vio);">14</span><span class="pill" style="background:var(--vio);color:#fff;">Next Up</span></div>
+      <div><h3>The 14th Grade</h3><p>All money, all year. Personal finance, mastered.</p><a class="link" style="color:var(--vio);" href="#">Join the Waitlist →</a></div>
+    </div>
+    <div class="card">
+      <div class="top"><span class="num" style="color:var(--coral);">15</span><span class="pill" style="background:var(--coral);color:var(--ink);">Final Year</span></div>
+      <div><h3>The 15th Grade</h3><p>The big calls in life — career, place, people — and how to think them through.</p><a class="link" style="color:var(--coral);" href="#">Join the Waitlist →</a></div>
+    </div>
+  </div>
+</body>
+</html>
