@@ -10,13 +10,13 @@ const jsonLd = {
       name: "Self Made School",
       url: siteUrl,
       description:
-        "The school for everything after the diploma — adulting, money, and the big calls, taught in plain English.",
+        "The school for everything after the diploma — adulting, money, and life's big calls, taught in plain English.",
     },
     {
       "@type": "Course",
       name: "The 13th Grade",
       description:
-        "The intro course. Mindset, money, and the big calls — the foundations of running your own life, in six units.",
+        "The intro course. Mindset, understanding money, and life's big calls — the foundations of running your own life, in 24 units.",
       isAccessibleForFree: true,
       provider: { "@id": `${siteUrl}/#org` },
     },

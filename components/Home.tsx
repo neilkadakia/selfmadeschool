@@ -61,7 +61,7 @@ const GRADES = [
     pill: "pill--acc",
     status: "Start Here",
     title: "The 13th Grade",
-    body: "The intro course. Mindset, money, and the big calls — the foundations of running your own life, in 24 units.",
+    body: "The intro course. Mindset, understanding money, and life's big calls — the foundations of running your own life, in 24 units.",
     link: "Enroll Free →",
   },
   {
@@ -256,7 +256,7 @@ export default function Home() {
         </h1>
         <div data-hero-sub className="hero-sub">
           <p className="hero-copy">
-            Mindset, money, and the big calls — all the adult stuff you were supposed to just <em>know</em>. We teach
+            Mindset, understanding money, and life's big calls — all the adult stuff you were supposed to just <em>know</em>. We teach
             it in plain English. You crush it. Welcome to Self Made School.
           </p>
           <div className="hero-ctas">
@@ -384,7 +384,7 @@ export default function Home() {
               The textbook adulthood never gave you.
             </h2>
             <p data-reveal className="book-blurb">
-              Every unit of The 13th Grade — mindset, money, and the big calls — rewritten as a book you can
+              Every unit of The 13th Grade — mindset, understanding money, and life's big calls — rewritten as a book you can
               dog-ear, gift, and re-read the night before a big decision. Plain English, cover to cover.
             </p>
             <div data-reveal className="book-meta">

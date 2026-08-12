@@ -21,7 +21,7 @@ const instrument = Instrument_Sans({
 
 const title = "Self Made School — School Never Taught You This";
 const description =
-  "Mindset, money, and the big calls — all the adult stuff you were supposed to just know, taught in plain English. Enroll free in The 13th Grade.";
+  "Mindset, understanding money, and life's big calls — all the adult stuff you were supposed to just know, taught in plain English. Enroll free in The 13th Grade.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
