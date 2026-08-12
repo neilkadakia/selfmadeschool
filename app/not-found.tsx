@@ -4,7 +4,7 @@ export default function NotFound() {
   return (
     <section className="page-hero">
       <div aria-hidden="true" className="wm about-wm">
-        SM
+        S<span className="wm-dash">-</span>M
       </div>
       <p className="kicker kicker--acc kicker--hero">★ Attendance Report</p>
       <p className="error-num">

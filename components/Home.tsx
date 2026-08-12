@@ -31,7 +31,7 @@ const UNITS = [
   {
     unit: "UNIT 04",
     lessons: "5 lessons",
-    title: "Mindset Reps",
+    title: "Mindset Hacks",
     body: "Habits, discipline, and talking to yourself like a coach instead of a critic.",
     card: "card--coral",
     pill: "pill--ink-coral",
@@ -41,8 +41,8 @@ const UNITS = [
     lessons: "6 lessons",
     title: "Invest, Eventually",
     body: "401(k)s and index funds for people with fifty bucks and a dream.",
-    card: "card--white",
-    pill: "pill--vio",
+    card: "card--vio",
+    pill: "pill--white-vio",
   },
   {
     unit: "UNIT 06",
@@ -61,7 +61,7 @@ const GRADES = [
     pill: "pill--acc",
     status: "Start Here",
     title: "The 13th Grade",
-    body: "The intro course. Mindset, money, and the big calls — the foundations of running your own life, in six units.",
+    body: "The intro course. Mindset, money, and the big calls — the foundations of running your own life, in 24 units.",
     link: "Enroll Free →",
   },
   {
@@ -87,27 +87,33 @@ const GRADES = [
 const STEPS = [
   {
     num: "01",
-    title: "Watch",
-    body: '10-minute lessons that respect your attention span. No 40-slide decks, no "circle back."',
+    title: "Read",
+    body: "Start with the book. Every unit begins as a chapter — read it on your own time, at your own pace.",
     tone: "how-panel--acc",
   },
   {
     num: "02",
-    title: "Do",
-    body: "Real challenges with your real numbers: build the budget, file the thing, make the call.",
+    title: "Watch",
+    body: 'Each chapter pairs with a 10-minute companion module. No 40-slide decks, no "circle back."',
     tone: "how-panel--vio",
   },
   {
     num: "03",
-    title: "Flex",
-    body: 'Earn unit badges and a certificate that says "I have my life together (mostly)."',
+    title: "Do",
+    body: "Real challenges with your real numbers: build the budget, file the thing, make the call.",
     tone: "how-panel--coral",
   },
   {
     num: "04",
+    title: "Flex",
+    body: 'Earn unit badges and a certificate that says "I have my life together (mostly)."',
+    tone: "how-panel--paper",
+  },
+  {
+    num: "05",
     title: "Repeat",
     body: "New units drop every month. Adulting doesn't graduate, and neither do we.",
-    tone: "how-panel--paper",
+    tone: "how-panel--ink",
   },
 ];
 
@@ -118,7 +124,8 @@ const STATS = [
   { count: 0, display: "0", label: "Pop quizzes", tone: "" },
 ];
 
-const MARQUEE = "Mindset ★ Money ★ Habits ★ Big calls ★ Taxes ★ Credit ★ 401(k) ★ Negotiation ★";
+const MARQUEE =
+  "Mindset ★ Money ★ Habits ★ Big calls ★ Taxes ★ Credit ★ 401(k) ★ Negotiation ★ Relationships ★ Emotional intelligence ★ Purpose ★ Boundaries ★ Insurance ★ First apartments ★";
 
 export default function Home() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -145,8 +152,9 @@ export default function Home() {
           scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
         });
 
-        // Marquee
-        gsap.to("[data-mq]", { xPercent: -50, duration: 22, repeat: -1, ease: "none" });
+        // Marquee: shift exactly one of the three copies per cycle (seamless).
+        // Duration scaled with the longer topic list to keep the original speed.
+        gsap.to("[data-mq]", { xPercent: -100 / 3, duration: 40, repeat: -1, ease: "none" });
 
         // Scroll reveals
         gsap.utils.toArray<HTMLElement>("[data-card]").forEach((el, i) => {
@@ -218,7 +226,7 @@ export default function Home() {
     <div ref={rootRef}>
       <header id="top" ref={heroRef} className="hero">
         <div data-wm aria-hidden="true" className="wm">
-          SM
+          S<span className="wm-dash">-</span>M
         </div>
         <div data-sticker className="sticker sticker--quiz">
           no pop quizzes ✓
@@ -263,8 +271,11 @@ export default function Home() {
       </header>
 
       <div className="marquee-band">
+        {/* Three copies + one-copy shift: track stays covered up to ~2 copy-widths
+            of viewport, so the band never shows a gap mid-loop. */}
         <div data-mq className="marquee-track">
           <span>{MARQUEE}&nbsp;</span>
+          <span aria-hidden="true">{MARQUEE}&nbsp;</span>
           <span aria-hidden="true">{MARQUEE}&nbsp;</span>
         </div>
       </div>
@@ -328,7 +339,7 @@ export default function Home() {
             How it works
           </p>
           <h2 data-reveal className="h2 h2--how">
-            Four steps. Keep scrolling →
+            Five steps. Keep scrolling →
           </h2>
         </div>
         <div ref={trackRef} className="how-track">
@@ -401,12 +412,22 @@ export default function Home() {
                 <p className="book-sub">The missing textbook for your first decade of adulthood.</p>
               </div>
               <div className="book-foot">
-                <span className="book-badge">SM</span>
+                <svg className="book-mark" viewBox="0 0 300 20" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="dawn-book" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0" stopColor="#F5A83C" />
+                      <stop offset="0.55" stopColor="#B8C94F" />
+                      <stop offset="1" stopColor="#43DE7B" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M6,15.5 C90,12 190,8.5 268,4.5 L268,11.5 C190,14.5 90,17 6,19 Z" fill="url(#dawn-book)" />
+                  <path d="M264,0.5 L298,8 L265,15.5 Z" fill="#43DE7B" />
+                </svg>
                 <span>First Edition · Class of &apos;26</span>
               </div>
             </div>
             <div data-sticker className="sticker sticker--book">
-              dog-ear approved ✓
+              parent approved ✓
             </div>
           </div>
         </div>

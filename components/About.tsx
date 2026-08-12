@@ -77,7 +77,7 @@ export default function About() {
     <div ref={rootRef}>
       <header ref={heroRef} className="hero about-hero">
         <div data-wm aria-hidden="true" className="wm about-wm">
-          SM
+          S<span className="wm-dash">-</span>M
         </div>
         <p data-hero-kicker className="kicker kicker--acc kicker--hero">
           ★ About Self Made School

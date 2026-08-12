@@ -11,8 +11,8 @@ export default function Wordmark({ gid }: Props) {
       }}
     >
       SELF
-      <span style={{ color: "var(--acc)", fontSize: "0.68em", verticalAlign: "0.1em" }}>-</span>
-      MADE SCHOOL
+      <span style={{ color: "var(--acc)", fontSize: "0.62em", verticalAlign: "0.1em" }}>-</span>
+      MADE <span style={{ color: "var(--acc)" }}>SCHOOL</span>
       <svg
         width="100%"
         height="5"
@@ -29,10 +29,12 @@ export default function Wordmark({ gid }: Props) {
           </linearGradient>
         </defs>
         <path
-          d="M6,15.5 C90,12 190,8.5 268,4.5 L268,11.5 C190,14.5 90,17 6,19 Z"
-          fill={"url(#" + gid + ")"}
+          d="M6,15 C90,4 230,4 294,11"
+          stroke={"url(#" + gid + ")"}
+          strokeWidth="8"
+          fill="none"
+          strokeLinecap="round"
         />
-        <path d="M264,0.5 L298,8 L265,15.5 Z" fill="#43DE7B" />
       </svg>
     </span>
   );

@@ -19,7 +19,6 @@
   .card--vio { background: var(--vio); color: #fff; }
   .card--acc { background: var(--acc); color: var(--ink); }
   .card--coral { background: var(--coral); color: var(--ink); }
-  .card--white { background: #fff; color: var(--ink); border: 2px solid var(--ink); }
   .card-top { display: flex; justify-content: space-between; align-items: center; }
   .unit-label { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; opacity: 0.6; }
   .pill { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; }
@@ -28,7 +27,7 @@
 </style>
 </head>
 <body>
-  <p class="spec">Syllabus cards — radius 24px · padding 34×30 · min-height 240 · hover lift −6px + shadow · bg order: ink / cobalt / green / amber / white(2px ink border) / ink</p>
+  <p class="spec">Syllabus cards — radius 24px · padding 34×30 · min-height 240 · hover lift −6px + shadow · bg order: ink / cobalt / green / amber / cobalt / ink</p>
   <div class="grid">
     <div class="card card--ink">
       <div class="card-top"><span class="unit-label">UNIT 01</span><span class="pill" style="background:var(--acc);color:var(--ink);">6 lessons</span></div>
@@ -44,11 +43,11 @@
     </div>
     <div class="card card--coral">
       <div class="card-top"><span class="unit-label">UNIT 04</span><span class="pill" style="background:var(--ink);color:var(--coral);">5 lessons</span></div>
-      <div><h3 class="card-title">Mindset Reps</h3><p class="card-body" style="opacity:0.75;">Habits, discipline, and talking to yourself like a coach instead of a critic.</p></div>
+      <div><h3 class="card-title">Mindset Hacks</h3><p class="card-body" style="opacity:0.75;">Habits, discipline, and talking to yourself like a coach instead of a critic.</p></div>
     </div>
-    <div class="card card--white">
-      <div class="card-top"><span class="unit-label">UNIT 05</span><span class="pill" style="background:var(--vio);color:#fff;">6 lessons</span></div>
-      <div><h3 class="card-title">Invest, Eventually</h3><p class="card-body">401(k)s and index funds for people with fifty bucks and a dream.</p></div>
+    <div class="card card--vio">
+      <div class="card-top"><span class="unit-label" style="opacity:0.7;">UNIT 05</span><span class="pill" style="background:#fff;color:var(--vio);">6 lessons</span></div>
+      <div><h3 class="card-title">Invest, Eventually</h3><p class="card-body" style="opacity:0.85;">401(k)s and index funds for people with fifty bucks and a dream.</p></div>
     </div>
   </div>
 </body>

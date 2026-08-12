@@ -484,6 +484,13 @@ p {
   z-index: 0;
 }
 
+.wm-dash {
+  -webkit-text-stroke: 0;
+  color: rgba(67, 222, 123, 0.26);
+  font-size: 0.48em;
+  vertical-align: 0.14em;
+}
+
 .sticker {
   position: absolute;
   padding: 10px 20px;
@@ -692,12 +699,6 @@ p {
   color: var(--ink);
 }
 
-.card--white {
-  background: #ffffff;
-  color: var(--ink);
-  border: 2px solid var(--ink);
-}
-
 .card-top {
   display: flex;
   justify-content: space-between;
@@ -883,6 +884,12 @@ p {
 .how-panel--paper {
   background: var(--paper);
   color: var(--ink);
+}
+
+.how-panel--ink {
+  background: var(--ink);
+  color: var(--paper);
+  border: 2px solid rgba(242, 238, 227, 0.35);
 }
 
 .how-num {
@@ -1133,20 +1140,11 @@ p {
   opacity: 0.7;
 }
 
-.book-badge {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--acc);
-  color: var(--ink);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-bricolage), sans-serif;
-  font-weight: 800;
-  font-size: 12px;
-  transform: rotate(-8deg);
+.book-mark {
+  width: 64px;
+  height: 8px;
   flex: none;
+  overflow: visible;
 }
 
 .sticker--book {

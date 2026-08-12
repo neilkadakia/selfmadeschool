@@ -15,9 +15,9 @@
   .spec:first-child { margin-top: 0; }
   a { text-decoration: none; }
   .marquee-band { background: var(--acc); color: var(--ink); overflow: hidden; padding: 14px 0; transform: rotate(-1.5deg) scale(1.02); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
-  .marquee-track { display: flex; white-space: nowrap; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 22px; text-transform: uppercase; letter-spacing: 0.02em; width: max-content; animation: mq 22s linear infinite; }
+  .marquee-track { display: flex; white-space: nowrap; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 22px; text-transform: uppercase; letter-spacing: 0.02em; width: max-content; animation: mq 40s linear infinite; }
   .marquee-track span { padding-right: 24px; }
-  @keyframes mq { to { transform: translateX(-50%); } }
+  @keyframes mq { to { transform: translateX(-33.3333%); } }
   .enroll { background: var(--acc); color: var(--ink); padding: 70px 32px; text-align: center; margin-top: 30px; }
   .kicker { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; margin: 0 0 20px; }
   .h2 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(34px, 6vw, 72px); line-height: 0.95; letter-spacing: -0.03em; margin: 0 0 36px; text-transform: uppercase; }
@@ -27,11 +27,12 @@
 </style>
 </head>
 <body>
-  <p class="spec">Marquee band — green, rotated −1.5° scale 1.02, 2px ink borders, 22s loop (GSAP xPercent −50 in production)</p>
+  <p class="spec">Marquee band — green, rotated −1.5° scale 1.02, 2px ink borders, 40s loop, 3 copies shifting one copy-width per cycle so the band never shows a gap (GSAP xPercent −100/3 in production)</p>
   <div class="marquee-band">
     <div class="marquee-track">
-      <span>Mindset ★ Money ★ Habits ★ Big calls ★ Taxes ★ Credit ★ 401(k) ★ Negotiation ★&nbsp;</span>
-      <span>Mindset ★ Money ★ Habits ★ Big calls ★ Taxes ★ Credit ★ 401(k) ★ Negotiation ★&nbsp;</span>
+      <span>Mindset ★ Money ★ Habits ★ Big calls ★ Taxes ★ Credit ★ 401(k) ★ Negotiation ★ Relationships ★ Emotional intelligence ★ Purpose ★ Boundaries ★ Insurance ★ First apartments ★&nbsp;</span>
+      <span>Mindset ★ Money ★ Habits ★ Big calls ★ Taxes ★ Credit ★ 401(k) ★ Negotiation ★ Relationships ★ Emotional intelligence ★ Purpose ★ Boundaries ★ Insurance ★ First apartments ★&nbsp;</span>
+      <span>Mindset ★ Money ★ Habits ★ Big calls ★ Taxes ★ Credit ★ 401(k) ★ Negotiation ★ Relationships ★ Emotional intelligence ★ Purpose ★ Boundaries ★ Insurance ★ First apartments ★&nbsp;</span>
     </div>
   </div>
   <p class="spec">Enroll section — full green, centered, ink pill CTA</p>
