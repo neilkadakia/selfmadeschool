@@ -1,0 +1,75 @@
+<!-- @dsCard group="Sections" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; --muted: rgba(242,238,227,0.68); }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 40px 32px 56px; font-family: "Instrument Sans", sans-serif; background: var(--ink); color: var(--paper); }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  .kicker { font-size: 13px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--acc); margin: 0 0 14px; }
+  .h1 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(36px, 5vw, 60px); line-height: 0.95; letter-spacing: -0.03em; text-transform: uppercase; margin: 0 0 12px; }
+  .hook { font-size: 17px; line-height: 1.6; color: var(--muted); margin: 0 0 36px; max-width: 560px; }
+
+  /* Lesson blocks */
+  .p { font-size: 17px; line-height: 1.7; margin: 0 0 22px; max-width: 65ch; }
+  .callout { border-left: 4px solid var(--acc); background: rgba(67,222,123,0.07); border-radius: 0 16px 16px 0; padding: 18px 22px; margin: 0 0 22px; }
+  .example { border-left: 4px solid var(--vio); background: rgba(91,124,250,0.09); border-radius: 0 16px 16px 0; padding: 18px 22px; margin: 0 0 22px; }
+  .c-title { font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin: 0 0 6px; opacity: 0.8; }
+  .c-text { font-size: 16px; line-height: 1.65; margin: 0; }
+  .bigfact { display: flex; flex-direction: column; gap: 6px; padding: 26px 28px; border-radius: 20px; background: var(--paper); color: var(--ink); margin: 0 0 36px; }
+  .bf-stat { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 48px; line-height: 1; letter-spacing: -0.02em; }
+  .bf-caption { font-size: 15px; line-height: 1.5; opacity: 0.8; }
+
+  /* Quiz option states */
+  .q-label { font-size: 13px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin: 0 0 16px; }
+  .quiz { border: 1px solid rgba(242,238,227,0.14); border-radius: 24px; padding: 28px; }
+  .quiz-q { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 21px; letter-spacing: -0.01em; line-height: 1.2; margin: 0 0 18px; }
+  .opt { display: flex; align-items: center; gap: 14px; font-size: 15.5px; line-height: 1.45; background: rgba(242,238,227,0.04); border: 1px solid rgba(242,238,227,0.14); border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; }
+  .letter { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 9px; border: 1px solid rgba(242,238,227,0.25); font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 14px; }
+  .opt.right { background: rgba(67,222,123,0.14); border-color: var(--acc); }
+  .opt.right .letter { background: var(--acc); color: var(--ink); border-color: var(--acc); }
+  .opt.wrong { background: rgba(255,107,107,0.12); border-color: #ff6b6b; }
+  .opt.wrong .letter { background: #ff6b6b; color: var(--ink); border-color: #ff6b6b; }
+  .explain { margin-top: 16px; padding: 16px 18px; border-radius: 14px; background: rgba(67,222,123,0.08); border-left: 4px solid var(--acc); font-size: 15px; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">Earn More · Unit 01 of 12</p>
+  <h1 class="h1">Salary Negotiation</h1>
+  <p class="hook">The scariest 30 seconds of your career are worth more than most years of work.</p>
+
+  <p class="p">Here&rsquo;s the math nobody shows you: raises compound. A $10,000 higher starting salary, with normal percentage raises on top, is easily $100,000+ over a decade — from one conversation you were too polite to have.</p>
+
+  <div class="callout">
+    <p class="c-title">Real talk</p>
+    <p class="c-text">The company negotiated. Their first number was a negotiation move. You&rsquo;re not starting the game, you&rsquo;re just finally playing it.</p>
+  </div>
+
+  <div class="example">
+    <p class="c-title">Worked example</p>
+    <p class="c-text">Anika gets offered $85,000. She says the four sentences with $97,000 as her number, then stops talking. The recruiter comes back at $92,000 plus a signing bonus.</p>
+  </div>
+
+  <div class="bigfact">
+    <span class="bf-stat">10–15%</span>
+    <span class="bf-caption">a normal counter above the initial offer. High enough to matter, low enough that nobody blinks.</span>
+  </div>
+
+  <p class="q-label">Knowledge check — option states</p>
+  <div class="quiz">
+    <p class="quiz-q">You said your number. The recruiter goes quiet. You should…</p>
+    <div class="opt"><span class="letter">A</span>Immediately soften: &ldquo;but the current offer is fine too!&rdquo;</div>
+    <div class="opt wrong"><span class="letter">B</span>Fill the silence with more reasons</div>
+    <div class="opt right"><span class="letter">C</span>Let the silence sit — it&rsquo;s part of the negotiation</div>
+    <div class="explain"><strong>Right.</strong> Whoever fills the silence first gives ground. You made a reasonable ask; the discomfort is doing the work — let it.</div>
+  </div>
+</div>
+</body>
+</html>
