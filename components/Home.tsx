@@ -131,7 +131,7 @@ const STATS = [
 ];
 
 const MARQUEE =
-  "Mindset ★ Money ★ Habits ★ Big calls ★ Taxes ★ Credit ★ 401(k) ★ Negotiation ★ Relationships ★ Emotional intelligence ★ Purpose ★ Boundaries ★ Insurance ★ First apartments ★";
+  "Mindset ★ Money ★ Habits ★ Big calls ★ Taxes ★ Credit ★ 401(k) ★ Negotiation ★ Relationships ★ Emotional intelligence ★ Purpose ★ First principles thinking ★ Boundaries ★ Insurance ★ First apartments ★";
 
 export default function Home() {
   const rootRef = useRef<HTMLDivElement>(null);
