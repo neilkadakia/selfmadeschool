@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash",
+      "PowerShell",
+      "DesignSync",
+      "Monitor",
+      "TaskStop",
+      "WebFetch",
+      "Skill",
+      "SendUserFile"
+    ]
+  }
+}

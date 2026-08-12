@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRef } from "react";
 import Wordmark from "./Wordmark";
 import { FAQS } from "@/lib/faqs";
@@ -283,9 +284,9 @@ export default function Home() {
             it in plain English. You crush it. Welcome to Self Made School.
           </p>
           <div className="hero-ctas">
-            <a href="#enroll" className="btn btn--solid">
+            <Link href="/learn" className="btn btn--solid">
               Enroll Free →
-            </a>
+            </Link>
             <a href="#syllabus" className="btn btn--outline">
               See the Syllabus
             </a>
@@ -363,9 +364,12 @@ export default function Home() {
                 <div>
                   <h3 className="grade-title">{g.title}</h3>
                   <p className="grade-body">{g.body}</p>
-                  <a href="#enroll" className={`grade-link ${g.tone}`}>
+                  <Link
+                    href={g.link.startsWith("Enroll") ? "/learn" : "#enroll"}
+                    className={`grade-link ${g.tone}`}
+                  >
                     {g.link}
-                  </a>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -509,9 +513,9 @@ export default function Home() {
           decision? This one.
         </h2>
         <div data-reveal className="enroll-ctas">
-          <a href="#top" className="btn btn--ink">
+          <Link href="/learn" className="btn btn--ink">
             Start the 13th Grade — Free
-          </a>
+          </Link>
         </div>
         <p data-reveal className="enroll-note">
           No credit card. Ironically.

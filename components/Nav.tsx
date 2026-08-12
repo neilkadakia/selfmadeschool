@@ -51,7 +51,7 @@ export default function Nav() {
         <Link href="/about" onClick={close}>
           About
         </Link>
-        <Link href="/#enroll" className="nav-overlay-cta" onClick={close}>
+        <Link href="/learn" className="nav-overlay-cta" onClick={close}>
           Enroll Free
         </Link>
       </div>
@@ -71,7 +71,7 @@ export default function Nav() {
         >
           About
         </Link>
-        <Link href="/#enroll" className="nav-cta">
+        <Link href="/learn" className="nav-cta">
           Enroll Free
         </Link>
         <button
