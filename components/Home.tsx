@@ -286,7 +286,7 @@ export default function Home() {
             The 13th Grade — Intro Course Syllabus
           </p>
           <h2 data-reveal className="h2">
-            Six units. Zero lectures about the mitochondria.
+            Six units. Zero lectures about mitochondria.
           </h2>
           <div className="card-grid">
             {UNITS.map((u) => (
