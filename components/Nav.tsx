@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import Wordmark from "./Wordmark";
 
 const LINKS = [
   { href: "/#syllabus", label: "Syllabus" },
@@ -56,8 +57,7 @@ export default function Nav() {
       </div>
       <header className={scrolled ? "nav nav--scrolled" : "nav"}>
       <Link href="/" className="nav-logo" onClick={close}>
-        <span className="nav-badge">SM</span>
-        <span>SELF MADE SCHOOL</span>
+        <Wordmark gid="dawn-nav" />
       </Link>
       <nav className="nav-links" aria-label="Main">
         {LINKS.map((link) => (

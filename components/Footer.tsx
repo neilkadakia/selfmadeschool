@@ -1,9 +1,12 @@
 import Link from "next/link";
+import Wordmark from "./Wordmark";
 
 export default function Footer() {
   return (
     <footer className="footer">
-      <span className="footer-logo">SELF MADE SCHOOL</span>
+      <span className="footer-logo">
+        <Wordmark gid="dawn-footer" />
+      </span>
       <div className="footer-links">
         <Link href="/#syllabus">Syllabus</Link>
         <Link href="/#how">How It Works</Link>
