@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Wordmark from "./Wordmark";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 
 const UNITS = [
@@ -90,30 +91,35 @@ const STEPS = [
     title: "Read",
     body: "Start with the book. Every unit begins as a chapter — read it on your own time, at your own pace.",
     tone: "how-panel--acc",
+    icon: "M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z",
   },
   {
     num: "02",
     title: "Watch",
     body: 'Each chapter pairs with a 10-minute companion module. No 40-slide decks, no "circle back."',
     tone: "how-panel--vio",
+    icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z",
   },
   {
     num: "03",
     title: "Do",
     body: "Real challenges with your real numbers: build the budget, file the thing, make the call.",
     tone: "how-panel--coral",
+    icon: "M22 5.18L10.59 16.6l-4.24-4.24 1.41-1.41 2.83 2.83 10-10L22 5.18zm-2.21 5.04c.13.57.21 1.17.21 1.78 0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8c1.58 0 3.04.46 4.28 1.25l1.44-1.44C16.1 2.67 14.13 2 12 2 6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10c0-1.19-.22-2.33-.6-3.39l-1.61 1.61z",
   },
   {
     num: "04",
     title: "Flex",
     body: 'Earn unit badges and a certificate that says "I have my life together (mostly)."',
     tone: "how-panel--paper",
+    icon: "M9.68 13.69L12 11.93l2.31 1.76-.88-2.85L15.75 9h-2.84L12 6.19 11.09 9H8.25l2.31 1.84-.88 2.85zM20 10c0-4.42-3.58-8-8-8s-8 3.58-8 8c0 2.03.76 3.87 2 5.28V23l6-2 6 2v-7.72c1.24-1.41 2-3.25 2-5.28zm-8-6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6 2.69-6 6-6zm0 15l-4 1.02v-3.1c1.18.68 2.54 1.08 4 1.08s2.82-.4 4-1.08v3.1L12 19z",
   },
   {
     num: "05",
     title: "Repeat",
     body: "New units drop every month. Adulting doesn't graduate, and neither do we.",
     tone: "how-panel--ink",
+    icon: "M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z",
   },
 ];
 
@@ -345,7 +351,12 @@ export default function Home() {
         <div ref={trackRef} className="how-track">
           {STEPS.map((s) => (
             <div key={s.num} className={`how-panel ${s.tone}`}>
-              <span className="how-num">{s.num}</span>
+              <div className="how-top">
+                <span className="how-num">{s.num}</span>
+                <svg className="how-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d={s.icon} />
+                </svg>
+              </div>
               <div>
                 <h3 className="how-title">{s.title}</h3>
                 <p className="how-body">{s.body}</p>
@@ -389,7 +400,7 @@ export default function Home() {
             </p>
             <div data-reveal className="book-meta">
               <span className="pill pill--ink-coral">312 pages</span>
-              <span className="pill pill--ink-coral">All six units</span>
+              <span className="pill pill--ink-coral">All 24 units</span>
               <span className="pill pill--ink-coral">Zero pop quizzes</span>
             </div>
             <div data-reveal className="book-ctas">
@@ -403,7 +414,9 @@ export default function Home() {
           </div>
           <div className="book-stage">
             <div data-card className="book-cover">
-              <span className="book-imprint">Self Made School Press</span>
+              <span className="book-brand">
+                <Wordmark gid="dawn-bookcover" />
+              </span>
               <div>
                 <span className="book-num">
                   13<span className="dot">.</span>
