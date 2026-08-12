@@ -766,6 +766,20 @@ p {
   animation-delay: calc(var(--i) * 45ms);
 }
 
+/* The rail cards are links — keep each colorway's own text color on hover
+   instead of the global green link hover (unreadable on pink/lime/green). */
+.syl-card:hover {
+  color: var(--ink);
+}
+
+.syl-card.card--ink:hover {
+  color: var(--paper);
+}
+
+.syl-card.card--vio:hover {
+  color: #fff;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .syl-card {
     animation: none;
