@@ -112,15 +112,21 @@ const STEPS = [
     title: "Flex",
     body: 'Earn unit badges and a certificate that says "I have my life together (mostly)."',
     tone: "how-panel--paper",
-    icon: "M9.68 13.69L12 11.93l2.31 1.76-.88-2.85L15.75 9h-2.84L12 6.19 11.09 9H8.25l2.31 1.84-.88 2.85zM20 10c0-4.42-3.58-8-8-8s-8 3.58-8 8c0 2.03.76 3.87 2 5.28V23l6-2 6 2v-7.72c1.24-1.41 2-3.25 2-5.28zm-8-6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6 2.69-6 6-6zm0 15l-4 1.02v-3.1c1.18.68 2.54 1.08 4 1.08s2.82-.4 4-1.08v3.1L12 19z",
+    icon: "M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z",
   },
   {
     num: "05",
     title: "Repeat",
     body: "New units drop every month. Adulting doesn't graduate, and neither do we.",
     tone: "how-panel--ink",
-    icon: "M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z",
+    icon: "M18.6 6.62c-1.44 0-2.8.56-3.77 1.53L12 10.66 10.48 12h.01L7.8 14.39c-.64.64-1.49.99-2.4.99-1.87 0-3.39-1.51-3.39-3.38S3.53 8.62 5.4 8.62c.91 0 1.76.35 2.44 1.03l1.13 1 1.51-1.34L9.22 8.2C8.2 7.18 6.84 6.62 5.4 6.62 2.42 6.62 0 9.04 0 12s2.42 5.38 5.4 5.38c1.44 0 2.8-.56 3.77-1.53l2.83-2.5.01.01L13.52 12h-.01l2.69-2.39c.64-.64 1.49-.99 2.4-.99 1.87 0 3.39 1.51 3.39 3.38s-1.52 3.38-3.39 3.38c-.9 0-1.76-.35-2.44-1.03l-1.14-1.01-1.51 1.34 1.27 1.12c1.02 1.01 2.37 1.57 3.82 1.57 2.98 0 5.4-2.41 5.4-5.38s-2.42-5.37-5.4-5.37z",
   },
+];
+
+const PARTS = [
+  { name: "Growing Your Mindset", tone: "part--acc" },
+  { name: "Mastering Money", tone: "part--vio" },
+  { name: "Life's Big Calls", tone: "part--coral" },
 ];
 
 const STATS = [
@@ -183,6 +189,16 @@ export default function Home() {
             scrollTrigger: { trigger: el, start: "top 88%", once: true },
             onComplete: () => gsap.set(el, { clearProps: "transform,opacity" }),
           });
+        });
+
+        // Course-map bars sweep in when the parts row reveals
+        gsap.from("[data-part-fill]", {
+          scaleX: 0,
+          transformOrigin: "left center",
+          duration: 1.1,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: { trigger: "[data-parts]", start: "top 85%", once: true },
         });
 
         // Pinned horizontal scroll
@@ -292,8 +308,25 @@ export default function Home() {
             The 13th Grade — Intro Course Syllabus
           </p>
           <h2 data-reveal className="h2">
-            Six units. Zero lectures about mitochondria.
+            24 units. Zero lectures about mitochondria.
           </h2>
+          <div data-parts data-reveal className="parts">
+            {PARTS.map((p) => (
+              <div key={p.name} className={`part ${p.tone}`}>
+                <span data-count={8} className="part-num">
+                  8
+                </span>
+                <div className="part-bar">
+                  <span data-part-fill className="part-fill" />
+                </div>
+                <h3 className="part-name">{p.name}</h3>
+                <p className="part-label">8 units · 8 chapters in the book</p>
+              </div>
+            ))}
+          </div>
+          <p data-reveal className="sample-note">
+            A few units from the syllabus —
+          </p>
           <div className="card-grid">
             {UNITS.map((u) => (
               <div key={u.unit} data-card className={`card ${u.card}`}>

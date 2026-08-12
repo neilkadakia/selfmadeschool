@@ -655,6 +655,70 @@ p {
   padding: 110px 32px 120px;
 }
 
+.parts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+  margin: 0 0 64px;
+}
+
+.part-num {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(56px, 8vw, 72px);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.part-bar {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(14, 14, 18, 0.08);
+  margin: 14px 0 16px;
+  overflow: hidden;
+}
+
+.part-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 999px;
+}
+
+.part--acc .part-fill {
+  background: var(--acc);
+}
+
+.part--vio .part-fill {
+  background: var(--vio);
+}
+
+.part--coral .part-fill {
+  background: var(--coral);
+}
+
+.part-name {
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+}
+
+.part-label {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted-on-paper);
+}
+
+.sample-note {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin: 0 0 18px;
+}
+
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
