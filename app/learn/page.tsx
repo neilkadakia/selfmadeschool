@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import Learn from "@/components/Learn";
+import LearnHome from "@/components/lms/LearnHome";
 
 export const metadata: Metadata = {
-  title: "The 13th Grade — Self Made School",
+  title: "My Learning — Self Made School",
   description:
-    "24 units across three parts — Growing Your Mindset, Mastering Money, Life's Big Calls. Read the chapter, watch the 10-minute module, do the thing. Free.",
+    "Three courses on mindset, money, and life's big calls. Free, self-paced, no account needed.",
 };
 
 export default function Page() {
-  return <Learn />;
+  return <LearnHome />;
 }

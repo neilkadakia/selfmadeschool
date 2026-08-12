@@ -23,7 +23,7 @@ export const PARTS: Part[] = [
     name: "Growing Your Mindset",
     tone: "acc",
     tagline: "The operating system everything else runs on.",
-    action: "Do one rep from this chapter today — small counts.",
+    action: "Try one small thing from this chapter today — small counts.",
     units: [
       { slug: "mindset-hacks", title: "Mindset Hacks", blurb: "Habits, discipline, and talking to yourself like a coach instead of a critic.", live: true },
       { slug: "comparison-trap", title: "The Comparison Trap", blurb: "Instagram is not a benchmark. Building your own scoreboard.", live: false },
@@ -31,7 +31,7 @@ export const PARTS: Part[] = [
       { slug: "habit-loops", title: "Habit Loops", blurb: "Cue, routine, reward — wiring the boring stuff to run on autopilot.", live: false },
       { slug: "emotional-intelligence", title: "Emotional Intelligence 101", blurb: "Reading the room, naming the feeling, responding instead of reacting.", live: false },
       { slug: "boundaries", title: "Boundaries", blurb: "Saying no without burning bridges — at work, at home, in the group chat.", live: false },
-      { slug: "failure-reps", title: "Failure Reps", blurb: "Getting told no on purpose until it stops being scary.", live: false },
+      { slug: "rejection-practice", title: "Rejection Practice", blurb: "Getting told no on purpose until it stops being scary.", live: false },
       { slug: "purpose-roughly", title: "Purpose, Roughly", blurb: "You don't need a calling. You need a direction and a next step.", live: false },
     ],
   },

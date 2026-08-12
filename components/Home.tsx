@@ -280,7 +280,7 @@ export default function Home() {
         </h1>
         <div data-hero-sub className="hero-sub">
           <p className="hero-copy">
-            Working on your mindset, your money, and dealing with life's big calls — all the adult stuff you were supposed to just <em>know</em>. We teach
+            Working on your mindset, your money, and dealing with life&apos;s big calls — all the adult stuff you were supposed to just <em>know</em>. We teach
             it in plain English. You crush it. Welcome to Self Made School.
           </p>
           <div className="hero-ctas">
@@ -433,7 +433,7 @@ export default function Home() {
               The textbook adulthood never gave you.
             </h2>
             <p data-reveal className="book-blurb">
-              Every unit of The 13th Grade — working on your mindset, your money, and dealing with life's big calls — rewritten as a book you can
+              Every unit of The 13th Grade — working on your mindset, your money, and dealing with life&apos;s big calls — rewritten as a book you can
               highlight, gift, and re-read the night before a big decision. Plain English, cover to cover.
             </p>
             <div data-reveal className="book-meta">
