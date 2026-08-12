@@ -1,4 +1,5 @@
 import Home from "@/components/Home";
+import { FAQS } from "@/lib/faqs";
 import { siteUrl } from "@/lib/site";
 
 const jsonLd = {
@@ -19,6 +20,14 @@ const jsonLd = {
         "The intro course. Working on your mindset, your money, and dealing with life's big calls — the foundations of running your own life, in 24 units.",
       isAccessibleForFree: true,
       provider: { "@id": `${siteUrl}/#org` },
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: FAQS.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
     },
   ],
 };

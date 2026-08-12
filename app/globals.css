@@ -374,6 +374,15 @@ p {
     padding: 76px 20px 84px;
   }
 
+  .faq {
+    padding: 76px 20px 84px;
+  }
+
+  .faq-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
   .enroll {
     padding: 90px 20px;
   }
@@ -1259,6 +1268,37 @@ p {
     grid-template-columns: 1fr;
     gap: 48px;
   }
+}
+
+/* ---------- FAQ ---------- */
+
+.faq {
+  background: var(--ink);
+  padding: 110px 32px 120px;
+}
+
+.h2--faq {
+  margin: 0 0 56px;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 44px 56px;
+}
+
+.faq-q {
+  font-weight: 700;
+  font-size: 21px;
+  letter-spacing: -0.01em;
+  margin: 0 0 10px;
+}
+
+.faq-a {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted-on-ink);
 }
 
 /* ---------- Enroll ---------- */

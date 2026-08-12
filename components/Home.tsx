@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Wordmark from "./Wordmark";
+import { FAQS } from "@/lib/faqs";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 
 const UNITS = [
@@ -475,6 +476,25 @@ export default function Home() {
             <div data-sticker className="sticker sticker--book">
               parent approved ✓
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" className="faq">
+        <div className="container">
+          <p data-reveal className="kicker kicker--acc">
+            Office Hours
+          </p>
+          <h2 data-reveal className="h2 h2--faq">
+            Questions everyone asks.
+          </h2>
+          <div className="faq-grid">
+            {FAQS.map((f) => (
+              <div key={f.q} data-reveal className="faq-item">
+                <h3 className="faq-q">{f.q}</h3>
+                <p className="faq-a">{f.a}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
