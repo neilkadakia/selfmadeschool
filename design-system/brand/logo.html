@@ -1,0 +1,56 @@
+<!-- @dsCard group="Brand" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 28px; font-family: "Instrument Sans", sans-serif; background: var(--ink); color: var(--paper); }
+  .spec { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; margin: 26px 0 14px; }
+  .spec:first-child { margin-top: 0; }
+  .wordmark { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; letter-spacing: -0.02em; position: relative; display: inline-block; white-space: nowrap; padding: 0 0 6px; }
+  .wordmark .dash { color: var(--acc); font-size: 0.68em; vertical-align: 0.1em; }
+  .wordmark svg { position: absolute; left: 0; bottom: 0; width: 100%; height: 5px; overflow: visible; }
+  .wm-lg { font-size: 44px; }
+  .wm-sm { font-size: 22px; }
+  .row { display: flex; gap: 26px; align-items: center; flex-wrap: wrap; }
+  .stops { display: flex; gap: 12px; margin-top: 10px; }
+  .stop { border-radius: 10px; padding: 10px 14px; font-size: 12px; font-weight: 700; color: var(--ink); }
+  .fav { border-radius: 12px; }
+</style>
+</head>
+<body>
+  <p class="spec">Dawn Sweep wordmark — Bricolage 800, green hyphen, gradient sweep underline with green arrow tip</p>
+  <span class="wordmark wm-lg">SELF<span class="dash">-</span>MADE SCHOOL
+    <svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="dawn-lg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs>
+      <path d="M6,15.5 C90,12 190,8.5 268,4.5 L268,11.5 C190,14.5 90,17 6,19 Z" fill="url(#dawn-lg)"/>
+      <path d="M264,0.5 L298,8 L265,15.5 Z" fill="#43DE7B"/>
+    </svg>
+  </span>
+  <p class="spec">Nav scale (22px)</p>
+  <span class="wordmark wm-sm">SELF<span class="dash">-</span>MADE SCHOOL
+    <svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="dawn-sm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs>
+      <path d="M6,15.5 C90,12 190,8.5 268,4.5 L268,11.5 C190,14.5 90,17 6,19 Z" fill="url(#dawn-sm)"/>
+      <path d="M264,0.5 L298,8 L265,15.5 Z" fill="#43DE7B"/>
+    </svg>
+  </span>
+  <p class="spec">Favicon — dawn sweep + arrow on ink, radius 14/64</p>
+  <div class="row">
+    <svg class="fav" width="64" height="64" viewBox="0 0 64 64"><defs><linearGradient id="dawn-fav" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#0E0E12"/><path d="M9,46 C24,42 37,34 47,24 L52,29 C42,40 26,47 10,51 Z" fill="url(#dawn-fav)"/><path d="M42,13 L61,23 L51,38 Z" fill="#43DE7B"/></svg>
+    <svg class="fav" width="32" height="32" viewBox="0 0 64 64"><defs><linearGradient id="dawn-fav2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#0E0E12"/><path d="M9,46 C24,42 37,34 47,24 L52,29 C42,40 26,47 10,51 Z" fill="url(#dawn-fav2)"/><path d="M42,13 L61,23 L51,38 Z" fill="#43DE7B"/></svg>
+  </div>
+  <p class="spec">Dawn gradient stops (logo only — not part of the UI palette)</p>
+  <div class="stops">
+    <span class="stop" style="background:#F5A83C;">#F5A83C · 0%</span>
+    <span class="stop" style="background:#B8C94F;">#B8C94F · 55%</span>
+    <span class="stop" style="background:#43DE7B;">#43DE7B · 100%</span>
+  </div>
+</body>
+</html>

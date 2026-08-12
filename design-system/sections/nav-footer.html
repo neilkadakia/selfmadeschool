@@ -17,7 +17,9 @@
   a:hover { color: var(--acc); }
   .nav { display: flex; align-items: center; justify-content: space-between; padding: 18px 32px; backdrop-filter: blur(12px); background: rgba(14,14,18,0.55); border-bottom: 1px solid rgba(242,238,227,0.08); }
   .nav-logo { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
-  .nav-badge { display: inline-flex; width: 34px; height: 34px; border-radius: 50%; background: var(--acc); color: var(--ink); align-items: center; justify-content: center; font-size: 13px; transform: rotate(-8deg); }
+  .wordmark { position: relative; display: inline-block; white-space: nowrap; padding: 0 0 6px; }
+  .wordmark .dash { color: var(--acc); font-size: 0.68em; vertical-align: 0.1em; }
+  .wordmark svg { position: absolute; left: 0; bottom: 0; width: 100%; height: 5px; overflow: visible; }
   .nav-links { display: flex; gap: 28px; font-size: 14px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; align-items: center; }
   .nav-link { opacity: 0.8; }
   .nav-cta { background: var(--acc); color: var(--ink); padding: 10px 22px; border-radius: 999px; font-weight: 700; }
@@ -30,7 +32,7 @@
 <body>
   <p class="spec">Nav — fixed, rgba(14,14,18,0.55) + blur(12px), 1px bottom border</p>
   <div class="nav">
-    <a href="#" class="nav-logo"><span class="nav-badge">SM</span><span>SELF MADE SCHOOL</span></a>
+    <a href="#" class="nav-logo"><span class="wordmark">SELF<span class="dash">-</span>MADE SCHOOL<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="dawn-nav-card" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><path d="M6,15.5 C90,12 190,8.5 268,4.5 L268,11.5 C190,14.5 90,17 6,19 Z" fill="url(#dawn-nav-card)"/><path d="M264,0.5 L298,8 L265,15.5 Z" fill="#43DE7B"/></svg></span></a>
     <nav class="nav-links">
       <a href="#" class="nav-link">Syllabus</a>
       <a href="#" class="nav-link">The Grades</a>
@@ -42,7 +44,7 @@
   </div>
   <p class="spec">Footer — space-between, muted 0.55 links (hover green)</p>
   <footer class="footer">
-    <span class="footer-logo">SELF MADE SCHOOL</span>
+    <span class="footer-logo"><span class="wordmark">SELF<span class="dash">-</span>MADE SCHOOL<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="dawn-foot-card" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><path d="M6,15.5 C90,12 190,8.5 268,4.5 L268,11.5 C190,14.5 90,17 6,19 Z" fill="url(#dawn-foot-card)"/><path d="M264,0.5 L298,8 L265,15.5 Z" fill="#43DE7B"/></svg></span></span>
     <div class="footer-links"><a href="#">Syllabus</a><a href="#">How It Works</a><a href="#">About</a><a href="#">Enroll</a></div>
     <span>© 2026 Self Made School. Not actual financial advice — actual life advice.</span>
   </footer>
