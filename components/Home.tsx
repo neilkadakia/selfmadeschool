@@ -429,7 +429,7 @@ export default function Home() {
             </h2>
             <p data-reveal className="book-blurb">
               Every unit of The 13th Grade — working on your mindset, your money, and dealing with life's big calls — rewritten as a book you can
-              dog-ear, gift, and re-read the night before a big decision. Plain English, cover to cover.
+              highlight, gift, and re-read the night before a big decision. Plain English, cover to cover.
             </p>
             <div data-reveal className="book-meta">
               <span className="pill pill--ink-coral">312 pages</span>
