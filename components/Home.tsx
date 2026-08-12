@@ -232,7 +232,7 @@ export default function Home() {
     <div ref={rootRef}>
       <header id="top" ref={heroRef} className="hero">
         <div data-wm aria-hidden="true" className="wm">
-          S<span className="wm-dash">-</span>M
+          SM
         </div>
         <div data-sticker className="sticker sticker--quiz">
           no pop quizzes ✓

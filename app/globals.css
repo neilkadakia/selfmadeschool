@@ -485,13 +485,6 @@ p {
   z-index: 0;
 }
 
-.wm-dash {
-  -webkit-text-stroke: 0;
-  color: rgba(67, 222, 123, 0.26);
-  font-size: 0.48em;
-  vertical-align: 0.14em;
-}
-
 .sticker {
   position: absolute;
   padding: 10px 20px;
