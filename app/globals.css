@@ -4,6 +4,7 @@
   --acc: #43DE7B;
   --vio: #5B7CFA;
   --coral: #FFB43A;
+  --lime: #B8C94F;
   --muted-on-ink: rgba(242, 238, 227, 0.75);
   --muted-on-paper: rgba(14, 14, 18, 0.75);
 }
@@ -699,6 +700,11 @@ p {
   color: var(--ink);
 }
 
+.card--lime {
+  background: var(--lime);
+  color: var(--ink);
+}
+
 .card-top {
   display: flex;
   justify-content: space-between;
@@ -743,6 +749,11 @@ p {
   color: var(--coral);
 }
 
+.pill--ink-lime {
+  background: var(--ink);
+  color: var(--lime);
+}
+
 .pill--vio {
   background: var(--vio);
   color: #ffffff;
@@ -772,7 +783,8 @@ p {
 }
 
 .card--acc .card-body,
-.card--coral .card-body {
+.card--coral .card-body,
+.card--lime .card-body {
   opacity: 0.75;
 }
 

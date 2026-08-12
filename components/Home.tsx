@@ -41,8 +41,8 @@ const UNITS = [
     lessons: "6 lessons",
     title: "Invest, Eventually",
     body: "401(k)s and index funds for people with fifty bucks and a dream.",
-    card: "card--vio",
-    pill: "pill--white-vio",
+    card: "card--lime",
+    pill: "pill--ink-lime",
   },
   {
     unit: "UNIT 06",
