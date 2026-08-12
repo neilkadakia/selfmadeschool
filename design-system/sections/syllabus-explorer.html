@@ -1,0 +1,81 @@
+<!-- @dsCard group="Sections" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; --pink: #FF9DE2; --lime: #B8C94F; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 40px 32px 56px; font-family: "Instrument Sans", sans-serif; background: var(--paper); color: var(--ink); }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  .kicker { font-size: 13px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--vio); margin: 0 0 14px; }
+  .h2 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(32px, 5vw, 52px); line-height: 0.98; letter-spacing: -0.02em; text-transform: uppercase; margin: 0 0 32px; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 26px; }
+  .tab { display: inline-flex; align-items: center; gap: 12px; padding: 13px 22px; border-radius: 999px; border: 2px solid rgba(14,14,18,0.16); background: none; font-weight: 700; font-size: 15.5px; }
+  .tab-count { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.55; }
+  .tab.active-acc { background: var(--acc); border-color: var(--acc); }
+
+  .railwrap { position: relative; }
+  .rail { display: flex; gap: 18px; overflow-x: auto; padding: 6px 4px 18px; scrollbar-width: none; -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent); mask-image: linear-gradient(90deg, #000 92%, transparent); }
+  .rail::-webkit-scrollbar { display: none; }
+  .card { flex: 0 0 270px; min-height: 190px; border-radius: 24px; padding: 24px 22px; display: flex; flex-direction: column; justify-content: space-between; }
+  .card--ink { background: var(--ink); color: var(--paper); }
+  .card--vio { background: var(--vio); color: #fff; }
+  .card--acc { background: var(--acc); color: var(--ink); }
+  .card--coral { background: var(--coral); color: var(--ink); }
+  .card-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .unit-label { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; }
+  .pill { font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; white-space: nowrap; }
+  .pill--acc { background: rgba(67,222,123,0.2); color: var(--acc); }
+  .pill--white { background: rgba(255,255,255,0.22); color: #fff; }
+  .pill--ink { background: rgba(14,14,18,0.14); color: var(--ink); }
+  .card-title { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 21px; letter-spacing: -0.01em; line-height: 1.1; margin: 14px 0 8px; }
+  .card-body { margin: 0; font-size: 14px; line-height: 1.5; opacity: 0.78; }
+
+  .arrows { position: absolute; right: 0; top: -68px; display: flex; gap: 10px; }
+  .arrow { width: 46px; height: 46px; border-radius: 999px; border: 2px solid rgba(14,14,18,0.2); background: none; font-size: 19px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; }
+  .arrow.hovered { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .note { margin: 8px 0 0; font-size: 14px; color: rgba(14,14,18,0.6); }
+  .note b { color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">The 13th Grade — Intro Course Syllabus</p>
+  <h2 class="h2">24 units. Zero lectures about mitochondria.</h2>
+
+  <div class="railwrap">
+    <div class="tabs">
+      <span class="tab active-acc">Growing Your Mindset <span class="tab-count">8 units</span></span>
+      <span class="tab">Mastering Money <span class="tab-count">8 units</span></span>
+      <span class="tab">Life&rsquo;s Big Calls <span class="tab-count">8 units</span></span>
+    </div>
+    <div class="arrows"><span class="arrow">←</span><span class="arrow hovered">→</span></div>
+    <div class="rail">
+      <div class="card card--ink">
+        <div class="card-top"><span class="unit-label">Unit 01</span><span class="pill pill--acc">Full lesson</span></div>
+        <div><h3 class="card-title">Mindset Hacks</h3><p class="card-body">Habits, discipline, and talking to yourself like a coach instead of a critic.</p></div>
+      </div>
+      <div class="card card--vio">
+        <div class="card-top"><span class="unit-label">Unit 02</span><span class="pill pill--white">In the book</span></div>
+        <div><h3 class="card-title">The Comparison Trap</h3><p class="card-body">Instagram is not a benchmark. Building your own scoreboard.</p></div>
+      </div>
+      <div class="card card--acc">
+        <div class="card-top"><span class="unit-label">Unit 03</span><span class="pill pill--ink">In the book</span></div>
+        <div><h3 class="card-title">First Principles Thinking</h3><p class="card-body">Strip a problem down to what&rsquo;s actually true, then rebuild from there.</p></div>
+      </div>
+      <div class="card card--coral">
+        <div class="card-top"><span class="unit-label">Unit 04</span><span class="pill pill--ink">In the book</span></div>
+        <div><h3 class="card-title">Habit Loops</h3><p class="card-body">Cue, routine, reward — wiring the boring stuff to run on autopilot.</p></div>
+      </div>
+    </div>
+  </div>
+  <p class="note">Every part is 8 units — each pairs a book chapter with a 10-minute module. <b>See the Full Course →</b></p>
+</div>
+</body>
+</html>
