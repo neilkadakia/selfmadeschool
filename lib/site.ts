@@ -1,4 +1,4 @@
 // Canonical site URL for metadata, sitemap, and structured data.
-// Set NEXT_PUBLIC_SITE_URL to the production domain when deploying.
+// NEXT_PUBLIC_SITE_URL overrides (e.g. for a staging build).
 export const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://selfmadeschool.org";
