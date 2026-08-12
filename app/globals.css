@@ -117,19 +117,6 @@ p {
   gap: 10px;
 }
 
-.nav-badge {
-  display: inline-flex;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: var(--acc);
-  color: var(--ink);
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  transform: rotate(-8deg);
-}
-
 .nav-links {
   display: flex;
   gap: 28px;
