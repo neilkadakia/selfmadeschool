@@ -42,16 +42,16 @@ const UNITS = [
     lessons: "6 lessons",
     title: "Invest, Eventually",
     body: "401(k)s and index funds for people with fifty bucks and a dream.",
-    card: "card--lime",
-    pill: "pill--ink-lime",
+    card: "card--pink",
+    pill: "pill--ink-pink",
   },
   {
     unit: "UNIT 06",
-    lessons: "8 lessons",
+    lessons: "8 units",
     title: "The Big Calls",
     body: "Career moves, new cities, big relationships — a framework for the decisions that shape your decade.",
-    card: "card--ink",
-    pill: "pill--coral",
+    card: "card--lime",
+    pill: "pill--ink-lime",
   },
 ];
 
