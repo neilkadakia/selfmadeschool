@@ -1,16 +1,23 @@
-name: Deploy to Hostinger
+name: Build and publish deploy branch
+
+# Builds the static site and publishes out/ to the `deploy` branch.
+# Hostinger's Git integration watches `deploy` and pulls it into
+# public_html via webhook — no FTP credentials or secrets needed.
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 concurrency:
   group: deploy
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build-and-publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,18 +31,10 @@ jobs:
 
       - run: npm run build
 
-      # Uploads the static export to Hostinger. Requires three repo secrets
-      # (Settings -> Secrets and variables -> Actions):
-      #   FTP_SERVER   - e.g. ftp://185.x.x.x or the hostname from hPanel
-      #   FTP_USERNAME - the FTP account scoped to selfmadeschool.org
-      #   FTP_PASSWORD - that account's password
-      # The FTP account's directory must be domains/selfmadeschool.org/public_html
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Publish out/ to deploy branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          local-dir: ./out/
-          server-dir: ./
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          publish_branch: deploy
+          commit_message: "Deploy: ${{ github.event.head_commit.message || 'manual run' }}"
