@@ -1,0 +1,41 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # Uploads the static export to Hostinger. Requires three repo secrets
+      # (Settings -> Secrets and variables -> Actions):
+      #   FTP_SERVER   - e.g. ftp://185.x.x.x or the hostname from hPanel
+      #   FTP_USERNAME - the FTP account scoped to selfmadeschool.org
+      #   FTP_PASSWORD - that account's password
+      # The FTP account's directory must be domains/selfmadeschool.org/public_html
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./out/
+          server-dir: ./
