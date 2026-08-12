@@ -3,59 +3,9 @@
 import Link from "next/link";
 import { useRef } from "react";
 import Wordmark from "./Wordmark";
+import SyllabusExplorer from "./SyllabusExplorer";
 import { FAQS } from "@/lib/faqs";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
-
-const UNITS = [
-  {
-    unit: "UNIT 01",
-    lessons: "6 lessons",
-    title: "Money 101",
-    body: "Budgeting that doesn't feel like punishment. Where your paycheck actually goes.",
-    card: "card--ink",
-    pill: "pill--acc",
-  },
-  {
-    unit: "UNIT 02",
-    lessons: "5 lessons",
-    title: "Tax Season, Decoded",
-    body: "W-2? 1099? Refund? Plain English, before April ruins your month.",
-    card: "card--vio",
-    pill: "pill--white-vio",
-  },
-  {
-    unit: "UNIT 03",
-    lessons: "7 lessons",
-    title: "Credit Glow-Up",
-    body: 'From "no score" to "approved" — without falling for a single trap.',
-    card: "card--acc",
-    pill: "pill--ink-acc",
-  },
-  {
-    unit: "UNIT 04",
-    lessons: "5 lessons",
-    title: "Mindset Hacks",
-    body: "Habits, discipline, and talking to yourself like a coach instead of a critic.",
-    card: "card--coral",
-    pill: "pill--ink-coral",
-  },
-  {
-    unit: "UNIT 05",
-    lessons: "6 lessons",
-    title: "Invest, Eventually",
-    body: "401(k)s and index funds for people with fifty bucks and a dream.",
-    card: "card--pink",
-    pill: "pill--ink-pink",
-  },
-  {
-    unit: "UNIT 06",
-    lessons: "8 units",
-    title: "The Big Calls",
-    body: "Career moves, new cities, big relationships — a framework for the decisions that shape your decade.",
-    card: "card--lime",
-    pill: "pill--ink-lime",
-  },
-];
 
 const GRADES = [
   {
@@ -125,12 +75,6 @@ const STEPS = [
   },
 ];
 
-const PARTS = [
-  { name: "Growing Your Mindset", tone: "part--acc" },
-  { name: "Mastering Money", tone: "part--vio" },
-  { name: "Life's Big Calls", tone: "part--coral" },
-];
-
 const STATS = [
   { count: 40, suffix: "+", display: "40+", label: "Lessons live now", tone: "stat--acc" },
   { count: 10, suffix: " min", display: "10 min", label: "Average lesson", tone: "stat--vio" },
@@ -191,16 +135,6 @@ export default function Home() {
             scrollTrigger: { trigger: el, start: "top 88%", once: true },
             onComplete: () => gsap.set(el, { clearProps: "transform,opacity" }),
           });
-        });
-
-        // Course-map bars sweep in when the parts row reveals
-        gsap.from("[data-part-fill]", {
-          scaleX: 0,
-          transformOrigin: "left center",
-          duration: 1.1,
-          stagger: 0.15,
-          ease: "power3.out",
-          scrollTrigger: { trigger: "[data-parts]", start: "top 85%", once: true },
         });
 
         // Pinned horizontal scroll
@@ -312,36 +246,8 @@ export default function Home() {
           <h2 data-reveal className="h2">
             24 units. Zero lectures about mitochondria.
           </h2>
-          <div data-parts data-reveal className="parts">
-            {PARTS.map((p) => (
-              <div key={p.name} className={`part ${p.tone}`}>
-                <span data-count={8} className="part-num">
-                  8
-                </span>
-                <div className="part-bar">
-                  <span data-part-fill className="part-fill" />
-                </div>
-                <h3 className="part-name">{p.name}</h3>
-                <p className="part-label">8 units · 8 chapters in the book</p>
-              </div>
-            ))}
-          </div>
-          <p data-reveal className="sample-note">
-            A few units from the syllabus —
-          </p>
-          <div className="card-grid">
-            {UNITS.map((u) => (
-              <div key={u.unit} data-card className={`card ${u.card}`}>
-                <div className="card-top">
-                  <span className="unit-label">{u.unit}</span>
-                  <span className={`pill ${u.pill}`}>{u.lessons}</span>
-                </div>
-                <div>
-                  <h3 className="card-title">{u.title}</h3>
-                  <p className="card-body">{u.body}</p>
-                </div>
-              </div>
-            ))}
+          <div data-reveal>
+            <SyllabusExplorer />
           </div>
         </div>
       </section>

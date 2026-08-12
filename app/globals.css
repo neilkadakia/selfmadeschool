@@ -338,9 +338,16 @@ p {
     margin: 0 0 44px;
   }
 
-  .card-grid,
   .grade-grid {
     grid-template-columns: 1fr;
+  }
+
+  .syl-arrows {
+    display: none;
+  }
+
+  .syl-card {
+    flex-basis: 78vw;
   }
 
   .how-head {
@@ -664,74 +671,174 @@ p {
   padding: 110px 32px 120px;
 }
 
-.parts {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 22px;
-  margin: 0 0 64px;
+/* Syllabus explorer — part tabs + swipeable unit rail */
+
+.syl-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 26px;
 }
 
-.part-num {
+.syl-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 22px;
+  border-radius: 999px;
+  border: 2px solid rgba(14, 14, 18, 0.16);
+  background: none;
+  color: var(--ink);
+  font-family: var(--font-instrument), sans-serif;
+  font-weight: 700;
+  font-size: 15.5px;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+
+.syl-tab:hover {
+  border-color: rgba(14, 14, 18, 0.45);
+}
+
+.syl-tab:active {
+  transform: scale(0.98);
+}
+
+.syl-tab-count {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+.syl-tab--acc.is-active {
+  background: var(--acc);
+  border-color: var(--acc);
+}
+
+.syl-tab--vio.is-active {
+  background: var(--vio);
+  border-color: var(--vio);
+  color: #fff;
+}
+
+.syl-tab--coral.is-active {
+  background: var(--coral);
+  border-color: var(--coral);
+}
+
+.syl-tab.is-active .syl-tab-count {
+  opacity: 0.75;
+}
+
+.syl-railwrap {
+  position: relative;
+}
+
+.syl-rail {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 6px 4px 18px;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, #000 92%, transparent);
+}
+
+.syl-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.syl-rail:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.syl-card {
+  flex: 0 0 clamp(240px, 26vw, 300px);
+  scroll-snap-align: start;
+  min-height: 190px;
+  padding: 24px 22px;
+  animation: syl-card-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i) * 45ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .syl-card {
+    animation: none;
+  }
+}
+
+@keyframes syl-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.syl-card-title {
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
-  font-size: clamp(56px, 8vw, 72px);
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-
-.part-bar {
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(14, 14, 18, 0.08);
-  margin: 14px 0 16px;
-  overflow: hidden;
-}
-
-.part-fill {
-  display: block;
-  height: 100%;
-  width: 100%;
-  border-radius: 999px;
-}
-
-.part--acc .part-fill {
-  background: var(--acc);
-}
-
-.part--vio .part-fill {
-  background: var(--vio);
-}
-
-.part--coral .part-fill {
-  background: var(--coral);
-}
-
-.part-name {
-  font-weight: 700;
-  font-size: 20px;
+  font-size: 21px;
   letter-spacing: -0.01em;
-  margin: 0 0 6px;
+  line-height: 1.1;
+  margin: 14px 0 8px;
 }
 
-.part-label {
+.syl-card-body {
   margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  opacity: 0.78;
+}
+
+.syl-arrows {
+  position: absolute;
+  right: 0;
+  top: -68px;
+  display: flex;
+  gap: 10px;
+}
+
+.syl-arrow {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 2px solid rgba(14, 14, 18, 0.2);
+  background: none;
+  color: var(--ink);
+  font-size: 19px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.syl-arrow:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.syl-arrow:active {
+  transform: scale(0.94);
+}
+
+.syl-note {
+  margin: 8px 0 0;
   font-size: 14px;
   color: var(--muted-on-paper);
 }
 
-.sample-note {
-  font-size: 13px;
+.syl-note-link {
   font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  opacity: 0.55;
-  margin: 0 0 18px;
-}
-
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 22px;
+  color: var(--ink);
 }
 
 .card {
