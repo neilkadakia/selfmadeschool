@@ -1,0 +1,63 @@
+<!-- @dsCard group="Sections" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; --muted: rgba(242,238,227,0.68); }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 40px 32px 56px; font-family: "Instrument Sans", sans-serif; background: var(--ink); color: var(--paper); }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  .label { font-size: 13px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin: 40px 0 16px; }
+  .label:first-child { margin-top: 0; }
+
+  /* Study Hall dashboard card */
+  .studyhall { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 24px; border-radius: 18px; border: 1px solid rgba(91,124,250,0.45); background: rgba(91,124,250,0.08); }
+  .sh-title { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 19px; letter-spacing: -0.01em; text-transform: uppercase; color: #a5b8ff; display: block; }
+  .sh-sub { font-size: 13.5px; color: var(--muted); }
+  .sh-arrow { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 26px; color: #a5b8ff; }
+
+  /* Final intro */
+  .kicker { font-size: 13px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--coral); margin: 0 0 12px; }
+  .h1 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(34px, 5vw, 54px); line-height: 0.95; letter-spacing: -0.03em; text-transform: uppercase; margin: 0 0 12px; }
+  .sub { font-size: 16px; line-height: 1.6; color: var(--muted); margin: 0 0 20px; max-width: 52ch; }
+  .btn { display: inline-block; background: var(--acc); color: var(--ink); font-weight: 700; font-size: 16px; border-radius: 999px; padding: 15px 32px; }
+
+  /* Level-up toast */
+  .toast { display: inline-flex; align-items: center; gap: 12px; padding: 16px 22px; border-radius: 18px; background: var(--paper); color: var(--ink); box-shadow: 0 18px 44px rgba(14,14,18,0.55); }
+  .toast-level { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 18px; text-transform: uppercase; background: linear-gradient(90deg, #d98a17, #7d9926, #1d9e50); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .toast-xp { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 22px; color: #1d9e50; }
+
+  /* Honors line */
+  .cert { background: var(--paper); color: var(--ink); border-radius: 18px; padding: 30px; text-align: center; }
+  .cert-course { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 30px; text-transform: uppercase; margin: 0 0 8px; }
+  .honors { font-size: 14px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: #1d9e50; margin: 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="label">Study Hall — dashboard shortcut</p>
+  <div class="studyhall">
+    <span><span class="sh-title">Study Hall</span><span class="sh-sub">A quick flashcard round from your completed units</span></span>
+    <span class="sh-arrow">→</span>
+  </div>
+
+  <p class="label">The Final — intro screen</p>
+  <p class="kicker">The Final — The 13th Grade</p>
+  <h2 class="h1">Twelve questions. One course.</h2>
+  <p class="sub">Drawn from every unit you just finished, shuffled fresh each attempt. Score 10 or better and your certificate reads <strong>With Honors</strong>.</p>
+  <span class="btn">Begin the Final</span>
+
+  <p class="label">Level-up toast + honors certificate line</p>
+  <p><span class="toast"><span class="toast-level">Level Up — Junior</span><span class="toast-xp">+100 XP</span></span></p>
+  <div class="cert" style="margin-top:16px">
+    <p class="cert-course">The 13th Grade</p>
+    <p class="honors">— With Honors —</p>
+  </div>
+</div>
+</body>
+</html>
