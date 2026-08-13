@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import Wordmark from "./Wordmark";
 import SyllabusExplorer from "./SyllabusExplorer";
+import Newsletter from "./Newsletter";
 import { FAQS } from "@/lib/faqs";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 
@@ -271,7 +272,7 @@ export default function Home() {
                   <h3 className="grade-title">{g.title}</h3>
                   <p className="grade-body">{g.body}</p>
                   <Link
-                    href={g.link.startsWith("Enroll") ? "/learn" : "#enroll"}
+                    href={g.link.startsWith("Enroll") ? "/learn" : "#newsletter"}
                     className={`grade-link ${g.tone}`}
                   >
                     {g.link}
@@ -405,6 +406,27 @@ export default function Home() {
                 <p className="faq-a">{f.a}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="newsletter" className="newsletter">
+        <div className="container nl-wrap">
+          <div data-reveal className="nl-copy">
+            <p className="kicker kicker--acc">Extra Credit</p>
+            <h2 className="h2 nl-h2">
+              One lesson in your
+              <br />
+              inbox, every week.
+            </h2>
+            <p className="nl-sub">
+              Mindset, money, and the big calls — the knowledge keeps coming between units. It also
+              puts you first in line when The 14th and 15th Grades open. No spam, unsubscribe
+              anytime.
+            </p>
+          </div>
+          <div data-reveal className="nl-side">
+            <Newsletter />
           </div>
         </div>
       </section>
