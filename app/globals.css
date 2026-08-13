@@ -3256,6 +3256,21 @@ kbd {
   border-color: rgba(242, 238, 227, 0.45);
 }
 
+/* Hero mantra — the school's loop, stated once, small */
+
+.hero-mantra {
+  margin: 26px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #f5a83c, #b8c94f, #43de7b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  width: fit-content;
+}
+
 /* Quotes (homepage, real students only) */
 
 .quotes {
