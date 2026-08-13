@@ -1,0 +1,9 @@
+# Deny web access to the fallback data directory (used only if the
+# external data dir is unavailable). JSON stores must never be served.
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^data/ - [F,L]
+</IfModule>
+<FilesMatch "\.json$">
+  Require all denied
+</FilesMatch>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import AuthGate from "@/components/lms/AuthGate";
 import CoursePage from "@/components/lms/CoursePage";
 import LegacyRedirect from "@/components/lms/LegacyRedirect";
 import { COURSES, getCourse, LEGACY_UNIT_REDIRECTS } from "@/lib/lms";
@@ -22,6 +23,7 @@ export async function generateMetadata({
   return {
     title: `${c.title} — Self Made School`,
     description: c.description,
+    robots: { index: false }, // private while the LMS is in closed session
   };
 }
 
@@ -29,5 +31,9 @@ export default async function Page({ params }: { params: Promise<{ course: strin
   const { course } = await params;
   const redirect = LEGACY_UNIT_REDIRECTS[course];
   if (!getCourse(course) && redirect) return <LegacyRedirect to={redirect} />;
-  return <CoursePage slug={course} />;
+  return (
+    <AuthGate>
+      <CoursePage slug={course} />
+    </AuthGate>
+  );
 }

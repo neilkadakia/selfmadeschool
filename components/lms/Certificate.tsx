@@ -66,8 +66,8 @@ export default function Certificate() {
           </Link>
           <h1 className="lms-section-h">Your certificate</h1>
           <p className="lms-section-sub">
-            Put your name on it, then print it or save it as a PDF. It lives on this device — like
-            everything else here, no account needed.
+            Put your name on it, then print it or save it as a PDF. It&apos;s tied to your account,
+            earned the only way possible — by finishing.
           </p>
           <input
             className="lms-cert-name"

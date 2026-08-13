@@ -52,11 +52,31 @@ export default function LearnHome() {
       <RewardToast reward={lms.reward} onDone={lms.clearReward} />
       <div className="learn-wrap">
         <header className="learn-head">
+          {lms.auth && (
+            <div className="lms-profile">
+              <span className="lms-avatar" aria-hidden="true">
+                {(lms.auth.name || lms.auth.email).slice(0, 1).toUpperCase()}
+              </span>
+              <span className="lms-profile-main">
+                <span className="lms-profile-name">{lms.auth.name}</span>
+                <span className="lms-profile-sub">
+                  {lms.sync === "saving"
+                    ? "Saving to your account…"
+                    : lms.sync === "error"
+                      ? "Offline — saved on this device"
+                      : "Synced to your account ✓"}
+                </span>
+              </span>
+              <button className="lms-signout" onClick={() => lms.logout()}>
+                Sign Out
+              </button>
+            </div>
+          )}
           <p className="kicker kicker--acc">Self Made School — My Learning</p>
           <h1 className="learn-h1">Class is in session.</h1>
           <p className="learn-sub">
-            Three courses, one rule: read the chapter, watch the module, do the thing. Everything
-            saves on this device — no account, no pop quizzes.
+            Three courses, one rule: read the chapter, watch the module, do the thing. Your progress
+            is saved to your account and follows you to any device. No pop quizzes.
           </p>
 
           <div className="lms-stats" aria-label="Your learning stats">

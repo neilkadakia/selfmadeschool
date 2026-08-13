@@ -1,14 +1,18 @@
 "use client";
 
-// All LMS progress lives in this browser — no accounts, no forms.
-// A module-level store backed by localStorage; every component that calls
-// useLms() shares the same live state via useSyncExternalStore.
+// LMS state: a module-level store shared by every component via
+// useSyncExternalStore. Signed-in users sync to the school server
+// (PHP API) with a debounced push; local storage is the offline cache,
+// keyed per account so profiles never bleed into each other.
 
 import { useSyncExternalStore } from "react";
 import { COURSES, XP, type Badge, badgeById } from "@/lib/lms";
+import { apiGetProgress, apiLogin, apiLogout, apiPutProgress, type AuthUser } from "@/lib/api";
 
 const KEY = "sms-lms-v2";
 const V1_KEY = "sms-progress-v1";
+const AUTH_KEY = "sms-auth-v1";
+const PUSH_DEBOUNCE_MS = 1500;
 
 export type LmsState = {
   done: Record<string, string[]>; // courseSlug -> completed unit slugs
@@ -23,8 +27,15 @@ export type LmsState = {
 };
 
 export type Reward = { xp: number; badges: Badge[] };
+export type SyncStatus = "idle" | "saving" | "saved" | "error";
 
-type Snapshot = { state: LmsState; loaded: boolean; reward: Reward | null };
+type Snapshot = {
+  state: LmsState;
+  loaded: boolean;
+  reward: Reward | null;
+  auth: AuthUser | null;
+  sync: SyncStatus;
+};
 
 const EMPTY: LmsState = {
   done: {},
@@ -38,22 +49,41 @@ const EMPTY: LmsState = {
   name: "",
 };
 
-const SERVER_SNAPSHOT: Snapshot = { state: EMPTY, loaded: false, reward: null };
+const SERVER_SNAPSHOT: Snapshot = {
+  state: EMPTY,
+  loaded: false,
+  reward: null,
+  auth: null,
+  sync: "idle",
+};
 
 let snapshot: Snapshot = SERVER_SNAPSHOT;
 const listeners = new Set<() => void>();
+let pushTimer: ReturnType<typeof setTimeout> | null = null;
 
 function emit(next: Partial<Snapshot>) {
   snapshot = { ...snapshot, ...next };
   listeners.forEach((l) => l());
 }
 
-function persist(state: LmsState) {
+function storageKey(auth: AuthUser | null): string {
+  return auth ? `${KEY}:${auth.email}` : KEY;
+}
+
+function persistLocal(state: LmsState, auth: AuthUser | null) {
   try {
-    localStorage.setItem(KEY, JSON.stringify(state));
+    localStorage.setItem(storageKey(auth), JSON.stringify(state));
   } catch {
-    // Private mode or blocked storage — progress just won't persist.
+    // Private mode or blocked storage — progress just won't persist locally.
   }
+}
+
+function readLocal(auth: AuthUser | null): LmsState | null {
+  try {
+    const raw = localStorage.getItem(storageKey(auth));
+    if (raw) return { ...EMPTY, ...JSON.parse(raw) };
+  } catch {}
+  return null;
 }
 
 function localDay(offset = 0): string {
@@ -106,18 +136,76 @@ function migrateV1(): LmsState | null {
   }
 }
 
-function ensureLoaded() {
-  if (snapshot.loaded || typeof window === "undefined") return;
-  let state = EMPTY;
+function readAuth(): AuthUser | null {
   try {
-    const raw = localStorage.getItem(KEY);
-    if (raw) state = { ...EMPTY, ...JSON.parse(raw) };
-    else state = migrateV1() ?? EMPTY;
+    const raw = localStorage.getItem(AUTH_KEY);
+    if (raw) return JSON.parse(raw);
   } catch {}
-  emit({ state, loaded: true });
+  return null;
 }
 
-// Apply a mutation, derive badges, persist, and surface any xp/badge gain as a reward toast.
+function persistAuth(auth: AuthUser | null) {
+  try {
+    if (auth) localStorage.setItem(AUTH_KEY, JSON.stringify(auth));
+    else localStorage.removeItem(AUTH_KEY);
+  } catch {}
+}
+
+function schedulePush() {
+  const { auth } = snapshot;
+  if (!auth) return;
+  if (pushTimer) clearTimeout(pushTimer);
+  emit({ sync: "saving" });
+  pushTimer = setTimeout(async () => {
+    const current = snapshot;
+    if (!current.auth) return;
+    const res = await apiPutProgress(current.auth.token, current.state);
+    if (res.status === 401) {
+      // Session died server-side — drop it locally too.
+      persistAuth(null);
+      emit({ auth: null, sync: "idle" });
+      return;
+    }
+    emit({ sync: res.ok ? "saved" : "error" });
+  }, PUSH_DEBOUNCE_MS);
+}
+
+// Pull the account's progress from the server; adopt local progress upward
+// if the server has none yet (first sign-in keeps anonymous work).
+async function pullServerState(auth: AuthUser) {
+  const res = await apiGetProgress(auth.token);
+  if (res.status === 401) {
+    persistAuth(null);
+    emit({ auth: null });
+    return;
+  }
+  if (!res.ok) {
+    emit({ sync: "error" });
+    return;
+  }
+  const serverState = res.data.state as LmsState | null;
+  if (serverState) {
+    const state = withDerivedBadges({ ...EMPTY, ...serverState });
+    persistLocal(state, auth);
+    emit({ state, sync: "saved" });
+  } else {
+    // New account: keep whatever progress is on this device and push it up.
+    persistLocal(snapshot.state, auth);
+    const put = await apiPutProgress(auth.token, snapshot.state);
+    emit({ sync: put.ok ? "saved" : "error" });
+  }
+}
+
+function ensureLoaded() {
+  if (snapshot.loaded || typeof window === "undefined") return;
+  const auth = readAuth();
+  let state = readLocal(auth);
+  if (!state && !auth) state = migrateV1();
+  emit({ state: state ?? EMPTY, auth, loaded: true });
+  if (auth) void pullServerState(auth);
+}
+
+// Apply a mutation, derive badges, persist, sync, and surface rewards.
 function apply(fn: (s: LmsState) => LmsState) {
   const prev = snapshot.state;
   const next = withDerivedBadges(fn(prev));
@@ -127,7 +215,7 @@ function apply(fn: (s: LmsState) => LmsState) {
     .filter((b) => !prev.badges.includes(b))
     .map(badgeById)
     .filter((b): b is Badge => Boolean(b));
-  persist(next);
+  persistLocal(next, snapshot.auth);
   emit({
     state: next,
     reward:
@@ -135,6 +223,7 @@ function apply(fn: (s: LmsState) => LmsState) {
         ? { xp: Math.max(0, gainedXp), badges: newBadges }
         : snapshot.reward,
   });
+  schedulePush();
 }
 
 function subscribe(cb: () => void) {
@@ -146,6 +235,31 @@ function subscribe(cb: () => void) {
 const actions = {
   clearReward() {
     if (snapshot.reward) emit({ reward: null });
+  },
+
+  async login(email: string, password: string): Promise<{ ok: boolean; error?: string }> {
+    const res = await apiLogin(email, password);
+    if (!res.ok) {
+      return { ok: false, error: (res.data.error as string) ?? "Sign-in failed." };
+    }
+    const user = res.data.user as { email: string; name: string; role: "admin" | "student" };
+    const auth: AuthUser = { ...user, token: res.data.token as string };
+    persistAuth(auth);
+    // Carry this device's progress into the account (server copy wins if it exists).
+    let state = snapshot.state;
+    if (!state.name && user.name) state = { ...state, name: user.name };
+    emit({ auth, state });
+    await pullServerState(auth);
+    return { ok: true };
+  },
+
+  logout() {
+    const { auth } = snapshot;
+    if (auth) apiLogout(auth.token);
+    if (pushTimer) clearTimeout(pushTimer);
+    persistAuth(null);
+    const anon = readLocal(null) ?? EMPTY;
+    emit({ auth: null, state: anon, sync: "idle" });
   },
 
   toggleDone(course: string, unit: string) {
@@ -225,6 +339,8 @@ export function useLms() {
     state: snap.state,
     loaded: snap.loaded,
     reward: snap.reward,
+    auth: snap.auth,
+    sync: snap.sync,
     isDone: (course: string, unit: string) => (snap.state.done[course] ?? []).includes(unit),
     ...actions,
   };

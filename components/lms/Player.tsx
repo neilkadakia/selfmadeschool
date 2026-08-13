@@ -231,7 +231,7 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
             }}
             rows={4}
           />
-          <p className="lms-notes-hint">{noteSaved ? "Saved on this device ✓" : "Saves when you click away"}</p>
+          <p className="lms-notes-hint">{noteSaved ? "Saved ✓" : "Saves when you click away"}</p>
         </section>
 
         <div className="unit-actions">

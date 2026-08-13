@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import AuthGate from "@/components/lms/AuthGate";
 import Certificate from "@/components/lms/Certificate";
 
 export const metadata: Metadata = {
@@ -11,7 +12,9 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <Suspense fallback={<div className="learn" />}>
-      <Certificate />
+      <AuthGate>
+        <Certificate />
+      </AuthGate>
     </Suspense>
   );
 }
