@@ -62,3 +62,19 @@ export async function apiChangePassword(token: string, current: string, next: st
     body: { action: "change_password", current, next },
   });
 }
+
+export async function apiFeedbackSubmit(token: string, text: string, context: string) {
+  return call("feedback.php", { method: "POST", token, body: { action: "submit", text, context } });
+}
+
+export async function apiFeedbackList(token: string) {
+  return call("feedback.php", { token });
+}
+
+export async function apiFeedbackModerate(token: string, id: string, action: "approve" | "unapprove" | "delete") {
+  return call("feedback.php", { method: "POST", token, body: { action, id } });
+}
+
+export async function apiQuotesPublic() {
+  return call("feedback.php");
+}

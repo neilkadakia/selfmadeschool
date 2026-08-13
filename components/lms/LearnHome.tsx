@@ -4,6 +4,7 @@ import Link from "next/link";
 import { BADGES, COURSES, levelFor, courseUnits } from "@/lib/lms";
 import { useLms, courseProgress } from "@/components/useLms";
 import CommandK from "./CommandK";
+import FeedbackCard from "./FeedbackCard";
 import RewardToast from "./RewardToast";
 
 function Flame({ lit }: { lit: boolean }) {
@@ -184,6 +185,8 @@ export default function LearnHome() {
             );
           })}
         </section>
+
+        <FeedbackCard totalDone={totalDone} />
 
         <section className="lms-badges" aria-label="Badges">
           <h2 className="lms-section-h">Report card</h2>

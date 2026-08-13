@@ -10,11 +10,22 @@ import {
   apiUserCreate,
   apiNewsletterList,
   apiChangePassword,
+  apiFeedbackList,
+  apiFeedbackModerate,
 } from "@/lib/api";
 import { useLms } from "@/components/useLms";
 
 type Student = { email: string; name: string; role: string };
 type Subscriber = { email: string; created: string; source: string };
+type Quote = {
+  id: string;
+  text: string;
+  name: string;
+  email?: string;
+  context: string;
+  created: string;
+  approved: boolean;
+};
 
 export default function Admin() {
   const lms = useLms();
@@ -23,6 +34,7 @@ export default function Admin() {
 
   const [students, setStudents] = useState<Student[] | null>(null);
   const [subs, setSubs] = useState<Subscriber[] | null>(null);
+  const [quotes, setQuotes] = useState<Quote[] | null>(null);
   const [msg, setMsg] = useState("");
 
   // Create-student form
@@ -41,6 +53,9 @@ export default function Admin() {
     });
     void apiNewsletterList(token).then((r) => {
       if (r.ok) setSubs(r.data.subscribers as Subscriber[]);
+    });
+    void apiFeedbackList(token).then((r) => {
+      if (r.ok) setQuotes(r.data.quotes as Quote[]);
     });
   }, [token, isAdmin]);
 
@@ -185,6 +200,56 @@ export default function Admin() {
                 Copy All Emails
               </button>
             </>
+          )}
+        </section>
+
+        <section className="lms-section">
+          <h2 className="lms-section-h">Student quotes</h2>
+          <p className="lms-section-sub">
+            {quotes ? `${quotes.length} submitted.` : "Loading…"} Approved quotes appear on the
+            homepage with the student&apos;s first name.
+          </p>
+          {quotes && quotes.length > 0 && (
+            <div className="lms-admin-quotes">
+              {quotes.map((q) => (
+                <div key={q.id} className={`lms-admin-quote${q.approved ? " is-live" : ""}`}>
+                  <p className="lms-admin-quote-text">&quot;{q.text}&quot;</p>
+                  <p className="lms-admin-meta">
+                    {q.name} ({q.email}) · {q.context} · {q.created.slice(0, 10)}
+                    {q.approved && " · LIVE ON HOMEPAGE"}
+                  </p>
+                  <div className="lms-admin-quote-actions">
+                    <button
+                      className="lms-signout"
+                      onClick={async () => {
+                        const action = q.approved ? "unapprove" : "approve";
+                        const r = await apiFeedbackModerate(token, q.id, action);
+                        if (r.ok) {
+                          setQuotes((prev) =>
+                            prev!.map((x) => (x.id === q.id ? { ...x, approved: !q.approved } : x))
+                          );
+                          flash(action === "approve" ? "Quote is live on the homepage." : "Quote taken down.");
+                        }
+                      }}
+                    >
+                      {q.approved ? "Take Down" : "Approve"}
+                    </button>
+                    <button
+                      className="lms-signout"
+                      onClick={async () => {
+                        const r = await apiFeedbackModerate(token, q.id, "delete");
+                        if (r.ok) {
+                          setQuotes((prev) => prev!.filter((x) => x.id !== q.id));
+                          flash("Quote deleted.");
+                        }
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           )}
         </section>
 

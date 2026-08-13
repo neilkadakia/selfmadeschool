@@ -5,6 +5,7 @@ import { useRef } from "react";
 import Wordmark from "./Wordmark";
 import SyllabusExplorer from "./SyllabusExplorer";
 import Newsletter from "./Newsletter";
+import Quotes from "./Quotes";
 import { FAQS } from "@/lib/faqs";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 
@@ -323,10 +324,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <blockquote data-reveal className="quote">
-            <p>&quot;I came for the money stuff. The mindset unit is the one I keep re-watching.&quot;</p>
-            <cite>— Maya, 24 · The 13th Grade, Class of &apos;26</cite>
-          </blockquote>
+          <Quotes />
         </div>
       </section>
 

@@ -3256,6 +3256,70 @@ kbd {
   border-color: rgba(242, 238, 227, 0.45);
 }
 
+/* Quotes (homepage, real students only) */
+
+.quotes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+/* Feedback card (dashboard) */
+
+.lms-feedback {
+  margin-top: 76px;
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-radius: 24px;
+  padding: 28px;
+}
+
+.lms-feedback-form {
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.lms-feedback-thanks {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--acc);
+  font-weight: 700;
+}
+
+/* Admin quote moderation */
+
+.lms-admin-quotes {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 640px;
+}
+
+.lms-admin-quote {
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-radius: 16px;
+  padding: 18px 20px;
+}
+
+.lms-admin-quote.is-live {
+  border-color: rgba(67, 222, 123, 0.5);
+}
+
+.lms-admin-quote-text {
+  margin: 0 0 8px;
+  font-size: 15.5px;
+  line-height: 1.55;
+}
+
+.lms-admin-quote-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
 /* Study Hall + Final + Admin */
 
 .lms-studyhall {

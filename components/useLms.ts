@@ -26,6 +26,7 @@ export type LmsState = {
   name: string; // for the certificate
   reviewLast: string; // last Study Hall session day (yyyy-mm-dd)
   finals: Record<string, { score: number; total: number; passed: boolean; date: string }>;
+  feedbackAt: string; // when this student submitted their quote ("" = never)
 };
 
 export type Reward = { xp: number; badges: Badge[]; levelUp?: string };
@@ -51,6 +52,7 @@ const EMPTY: LmsState = {
   name: "",
   reviewLast: "",
   finals: {},
+  feedbackAt: "",
 };
 
 const SERVER_SNAPSHOT: Snapshot = {
@@ -349,6 +351,11 @@ const actions = {
       }
       return touchStreak(next);
     });
+  },
+
+  // No XP for feedback on purpose — quotes stay unbought.
+  feedbackDone() {
+    apply((s) => (s.feedbackAt ? s : { ...s, feedbackAt: localDay() }));
   },
 
   finalResult(course: string, score: number, total: number) {
