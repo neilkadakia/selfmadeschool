@@ -9,8 +9,8 @@ const LINKS = [
   { href: "/#syllabus", label: "Syllabus" },
   { href: "/#grades", label: "The Grades" },
   { href: "/#how", label: "How It Works" },
-  { href: "/#receipts", label: "Receipts" },
   { href: "/#book", label: "The Book" },
+  { href: "/#faq", label: "FAQ" },
 ];
 
 export default function Nav() {
