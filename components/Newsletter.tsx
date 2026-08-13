@@ -1,7 +1,7 @@
 "use client";
 
-// Extra Credit — the weekly newsletter signup. Doubles as the waitlist
-// for the 14th and 15th Grades.
+// Extra Credit — the weekly newsletter signup, styled as a paper
+// enrollment slip. Doubles as the waitlist for the 14th and 15th Grades.
 
 import { useState, type FormEvent } from "react";
 
@@ -39,7 +39,9 @@ export default function Newsletter() {
   if (status === "done" || status === "already") {
     return (
       <div className="nl-done" role="status">
+        <p className="nl-slip-kicker">Enrollment Slip · Received</p>
         <p className="nl-done-big">{status === "already" ? "Already enrolled." : "You're in."}</p>
+        <span className="nl-sweep" aria-hidden="true" />
         <p className="nl-done-sub">
           {status === "already"
             ? "This email is on the list — the next lesson is on its way."
@@ -50,38 +52,46 @@ export default function Newsletter() {
   }
 
   return (
-    <form className="nl-form" onSubmit={submit}>
-      {/* Honeypot — humans never see or fill this. */}
-      <input
-        type="text"
-        name="school"
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden="true"
-        className="nl-trap"
-        onChange={() => {}}
-      />
-      <label className="visually-hidden" htmlFor="nl-email">
-        Email address
-      </label>
-      <input
-        id="nl-email"
-        className="nl-input"
-        type="email"
-        required
-        placeholder="you@example.com"
-        autoComplete="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button className="btn btn--solid nl-btn" type="submit" disabled={status === "busy"}>
-        {status === "busy" ? "Enrolling…" : "Count Me In"}
-      </button>
-      {status === "error" && (
-        <p className="nl-error" role="alert">
-          {error}
-        </p>
-      )}
-    </form>
+    <>
+      <p className="nl-slip-kicker">Enrollment Slip</p>
+      <h3 className="nl-slip-title">Get on the list.</h3>
+      <span className="nl-sweep" aria-hidden="true" />
+      <form className="nl-form" onSubmit={submit}>
+        {/* Honeypot — humans never see or fill this. */}
+        <input
+          type="text"
+          name="school"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="nl-trap"
+          onChange={() => {}}
+        />
+        <div className="nl-row">
+          <label className="visually-hidden" htmlFor="nl-email">
+            Email address
+          </label>
+          <input
+            id="nl-email"
+            className="nl-input"
+            type="email"
+            required
+            placeholder="you@example.com"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <button className="btn btn--ink nl-btn" type="submit" disabled={status === "busy"}>
+            {status === "busy" ? "Enrolling…" : "Count Me In"}
+          </button>
+        </div>
+        {status === "error" && (
+          <p className="nl-error" role="alert">
+            {error}
+          </p>
+        )}
+        <p className="nl-fine">One email a week · No spam · Unsubscribe anytime</p>
+      </form>
+    </>
   );
 }
