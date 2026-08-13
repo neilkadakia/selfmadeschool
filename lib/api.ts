@@ -39,3 +39,26 @@ export async function apiGetProgress(token: string) {
 export async function apiPutProgress(token: string, state: unknown) {
   return call("progress.php", { method: "PUT", token, body: { state } });
 }
+
+export async function apiUsersList(token: string) {
+  return call("users.php", { token });
+}
+
+export async function apiUserCreate(
+  token: string,
+  user: { email: string; password: string; name: string; role?: string }
+) {
+  return call("users.php", { method: "POST", token, body: { action: "create", ...user } });
+}
+
+export async function apiNewsletterList(token: string) {
+  return call("newsletter.php", { token });
+}
+
+export async function apiChangePassword(token: string, current: string, next: string) {
+  return call("auth.php", {
+    method: "POST",
+    token,
+    body: { action: "change_password", current, next },
+  });
+}

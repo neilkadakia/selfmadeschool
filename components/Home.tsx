@@ -77,7 +77,7 @@ const STEPS = [
 ];
 
 const STATS = [
-  { count: 40, suffix: "+", display: "40+", label: "Lessons live now", tone: "stat--acc" },
+  { count: 24, suffix: "/24", display: "24/24", label: "13th Grade units live", tone: "stat--acc" },
   { count: 10, suffix: " min", display: "10 min", label: "Average lesson", tone: "stat--vio" },
   { count: 0, prefix: "$", display: "$0", label: "Tuition, forever", tone: "stat--coral" },
   { count: 0, display: "0", label: "Pop quizzes", tone: "" },

@@ -55,9 +55,14 @@ export default function CoursePage({ slug }: { slug: string }) {
               {p.done === 0 ? "Start Unit 01 →" : p.pct === 100 ? "Review the Course →" : "Continue →"}
             </Link>
             {p.pct === 100 ? (
-              <Link href={`/learn/certificate/?course=${course.slug}`} className="btn btn--outline">
-                Get Your Certificate
-              </Link>
+              <>
+                <Link href={`/learn/final/?course=${course.slug}`} className="btn btn--outline">
+                  {state.finals[course.slug]?.passed ? "Final Passed ✓" : "Take the Final"}
+                </Link>
+                <Link href={`/learn/certificate/?course=${course.slug}`} className="btn btn--outline">
+                  Get Your Certificate
+                </Link>
+              </>
             ) : (
               <Link href="/#book" className="btn btn--outline">
                 Get the Book
@@ -98,14 +103,20 @@ export default function CoursePage({ slug }: { slug: string }) {
                         className={
                           isDone
                             ? "pill pill--acc"
-                            : hasLesson
+                            : hasLesson || u.live
                               ? `pill row-pill--${part.tone}`
-                              : u.live
-                                ? `pill row-pill--${part.tone}`
-                                : "pill row-pill--dim"
+                              : "pill row-pill--dim"
                         }
                       >
-                        {isDone ? "Done ✓" : hasLesson ? "Full lesson" : u.live ? "10-min module" : "Chapter first"}
+                        {isDone
+                          ? "Done ✓"
+                          : hasLesson && u.live
+                            ? "Lesson + module"
+                            : hasLesson
+                              ? "Full lesson"
+                              : u.live
+                                ? "10-min module"
+                                : "Chapter first"}
                       </span>
                     </Link>
                   );

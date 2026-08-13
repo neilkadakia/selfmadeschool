@@ -137,7 +137,17 @@ export const BADGES: Badge[] = [
   { id: "streak-7", name: "Full Week", blurb: "Learn seven days in a row.", icon: "7d" },
   { id: "well-rounded", name: "Well Rounded", blurb: "Complete a unit in all three courses.", icon: "◎" },
   { id: "course-done", name: "Graduate", blurb: "Finish an entire course.", icon: "★" },
+  { id: "study-hall", name: "Study Hall", blurb: "Finish a review session.", icon: "▥" },
+  { id: "honors", name: "With Honors", blurb: "Pass a course final with 10 of 12 or better.", icon: "H" },
 ];
+
+export const XP_EXTRA = {
+  review: 25, // once per day
+  final: 200, // first pass per course
+} as const;
+
+export const FINAL_QUESTIONS = 12;
+export const FINAL_PASS = 10;
 
 export function badgeById(id: string): Badge | undefined {
   return BADGES.find((b) => b.id === id);

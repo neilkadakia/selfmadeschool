@@ -6,7 +6,7 @@
 // keyed per account so profiles never bleed into each other.
 
 import { useSyncExternalStore } from "react";
-import { COURSES, XP, type Badge, badgeById } from "@/lib/lms";
+import { COURSES, XP, XP_EXTRA, FINAL_PASS, levelFor, type Badge, badgeById } from "@/lib/lms";
 import { apiGetProgress, apiLogin, apiLogout, apiPutProgress, type AuthUser } from "@/lib/api";
 
 const KEY = "sms-lms-v2";
@@ -24,9 +24,11 @@ export type LmsState = {
   activity: string[]; // recent active days, yyyy-mm-dd (local)
   badges: string[];
   name: string; // for the certificate
+  reviewLast: string; // last Study Hall session day (yyyy-mm-dd)
+  finals: Record<string, { score: number; total: number; passed: boolean; date: string }>;
 };
 
-export type Reward = { xp: number; badges: Badge[] };
+export type Reward = { xp: number; badges: Badge[]; levelUp?: string };
 export type SyncStatus = "idle" | "saving" | "saved" | "error";
 
 type Snapshot = {
@@ -47,6 +49,8 @@ const EMPTY: LmsState = {
   activity: [],
   badges: [],
   name: "",
+  reviewLast: "",
+  finals: {},
 };
 
 const SERVER_SNAPSHOT: Snapshot = {
@@ -215,12 +219,15 @@ function apply(fn: (s: LmsState) => LmsState) {
     .filter((b) => !prev.badges.includes(b))
     .map(badgeById)
     .filter((b): b is Badge => Boolean(b));
+  const prevLevel = levelFor(prev.xp);
+  const nextLevel = levelFor(next.xp);
+  const levelUp = nextLevel.index > prevLevel.index ? nextLevel.name : undefined;
   persistLocal(next, snapshot.auth);
   emit({
     state: next,
     reward:
-      gainedXp > 0 || newBadges.length > 0
-        ? { xp: Math.max(0, gainedXp), badges: newBadges }
+      gainedXp > 0 || newBadges.length > 0 || levelUp
+        ? { xp: Math.max(0, gainedXp), badges: newBadges, levelUp }
         : snapshot.reward,
   });
   schedulePush();
@@ -325,6 +332,44 @@ const actions = {
 
   setName(name: string) {
     apply((s) => (s.name === name ? s : { ...s, name }));
+  },
+
+  // Study Hall: XP once per local day, streak counts every session.
+  reviewDone() {
+    apply((s) => {
+      const today = localDay();
+      const firstToday = s.reviewLast !== today;
+      let next: LmsState = {
+        ...s,
+        reviewLast: today,
+        xp: s.xp + (firstToday ? XP_EXTRA.review : 0),
+      };
+      if (!next.badges.includes("study-hall")) {
+        next = { ...next, badges: [...next.badges, "study-hall"] };
+      }
+      return touchStreak(next);
+    });
+  },
+
+  finalResult(course: string, score: number, total: number) {
+    apply((s) => {
+      const passed = score >= FINAL_PASS;
+      const prev = s.finals[course];
+      const firstPass = passed && !prev?.passed;
+      const best =
+        !prev || score > prev.score
+          ? { score, total, passed: passed || Boolean(prev?.passed), date: localDay() }
+          : { ...prev, passed: prev.passed || passed };
+      let next: LmsState = {
+        ...s,
+        finals: { ...s.finals, [course]: best },
+        xp: s.xp + (firstPass ? XP_EXTRA.final : 0),
+      };
+      if (firstPass && !next.badges.includes("honors")) {
+        next = { ...next, badges: [...next.badges, "honors"] };
+      }
+      return touchStreak(next);
+    });
   },
 };
 

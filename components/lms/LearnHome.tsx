@@ -67,6 +67,11 @@ export default function LearnHome() {
                       : "Synced to your account ✓"}
                 </span>
               </span>
+              {lms.auth.role === "admin" && (
+                <Link href="/learn/admin" className="lms-signout">
+                  Faculty Lounge
+                </Link>
+              )}
               <button className="lms-signout" onClick={() => lms.logout()}>
                 Sign Out
               </button>
@@ -130,6 +135,22 @@ export default function LearnHome() {
               →
             </span>
           </Link>
+
+          {totalDone > 0 && (
+            <Link href="/learn/review" className="lms-studyhall">
+              <span className="lms-studyhall-main">
+                <span className="lms-studyhall-title">Study Hall</span>
+                <span className="lms-studyhall-sub">
+                  {state.reviewLast === days[6].key
+                    ? "Reviewed today ✓ — more never hurts"
+                    : "A quick flashcard round from your completed units"}
+                </span>
+              </span>
+              <span className="lms-continue-arrow" aria-hidden="true">
+                →
+              </span>
+            </Link>
+          )}
         </header>
 
         <section className="lms-courses" aria-label="Courses">

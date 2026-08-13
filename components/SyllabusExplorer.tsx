@@ -73,7 +73,7 @@ export default function SyllabusExplorer() {
               >
                 <div className="card-top">
                   <span className="unit-label">Unit {String(active * 8 + i + 1).padStart(2, "0")}</span>
-                  <span className={`pill ${tone.pill}`}>{u.live ? "Full lesson" : "In the book"}</span>
+                  <span className={`pill ${tone.pill}`}>{u.live ? "Lesson + module" : "Full lesson"}</span>
                 </div>
                 <div>
                   <h3 className="syl-card-title">{u.title}</h3>

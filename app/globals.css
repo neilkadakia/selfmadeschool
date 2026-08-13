@@ -3256,6 +3256,141 @@ kbd {
   border-color: rgba(242, 238, 227, 0.45);
 }
 
+/* Study Hall + Final + Admin */
+
+.lms-studyhall {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 14px;
+  padding: 18px 24px;
+  border-radius: 18px;
+  border: 1px solid rgba(91, 124, 250, 0.45);
+  background: rgba(91, 124, 250, 0.08);
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.lms-studyhall:hover {
+  transform: translateY(-2px);
+  background: rgba(91, 124, 250, 0.14);
+  color: inherit;
+}
+
+.lms-studyhall-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lms-studyhall-title {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #a5b8ff;
+}
+
+.lms-studyhall-sub {
+  font-size: 13.5px;
+  color: var(--muted-on-ink);
+}
+
+.lms-studyhall .lms-continue-arrow {
+  font-size: 26px;
+  color: #a5b8ff;
+}
+
+.lms-review-deck {
+  margin-top: 12px;
+}
+
+.lms-final {
+  margin-top: 20px;
+}
+
+.lms-final-score {
+  margin: 6px 0 14px;
+  text-align: left;
+}
+
+.lms-toast-level {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  background: linear-gradient(90deg, #d98a17, #7d9926, #1d9e50);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lms-cert-honors {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin: 0;
+  color: #1d9e50;
+}
+
+.lms-admin-flash {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border-left: 4px solid var(--acc);
+  background: rgba(67, 222, 123, 0.1);
+  font-size: 14.5px;
+}
+
+.lms-admin-table {
+  border-top: 1px solid rgba(242, 238, 227, 0.12);
+  margin-bottom: 22px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.lms-admin-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 8px;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.12);
+  font-size: 14.5px;
+}
+
+.lms-admin-name {
+  font-weight: 700;
+}
+
+.lms-admin-email {
+  color: var(--muted-on-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lms-admin-meta {
+  font-size: 13px;
+  color: var(--muted-on-ink);
+  white-space: nowrap;
+}
+
+.lms-admin-form {
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.lms-admin-copy {
+  margin-top: 4px;
+}
+
 /* Certificate */
 
 .lms-cert-controls {

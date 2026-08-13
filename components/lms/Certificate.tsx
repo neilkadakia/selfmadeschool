@@ -99,6 +99,9 @@ export default function Certificate() {
               completed all {course.parts.reduce((a, p) => a + p.units.length, 0)} units of
             </p>
             <p className="lms-cert-course">{course.title}</p>
+            {state.finals[course.slug]?.passed && (
+              <p className="lms-cert-honors">— With Honors —</p>
+            )}
             <p className="lms-cert-text lms-cert-sub">{course.headline}</p>
             <div className="lms-cert-foot">
               <span>{today}</span>

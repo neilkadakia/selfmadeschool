@@ -17,6 +17,21 @@ if ($method !== 'POST') respond(405, ['error' => 'GET or POST only.']);
 $in = body_json();
 $action = $in['action'] ?? 'login';
 
+if ($action === 'change_password') {
+    $auth = require_auth();
+    $current = (string)($in['current'] ?? '');
+    $next = (string)($in['next'] ?? '');
+    if (strlen($next) < 10) respond(400, ['error' => 'New password must be at least 10 characters.']);
+    $users = read_store('users');
+    $user = $users[$auth['email']] ?? null;
+    if (!$user || !password_verify($current, $user['hash'] ?? '')) {
+        respond(401, ['error' => 'Current password is wrong.']);
+    }
+    $users[$auth['email']]['hash'] = password_hash($next, PASSWORD_DEFAULT);
+    write_store('users', $users);
+    respond(200, ['ok' => true]);
+}
+
 if ($action === 'logout') {
     $token = bearer_token();
     if ($token !== '') {
