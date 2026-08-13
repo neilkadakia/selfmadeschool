@@ -1,4 +1,6 @@
 User-Agent: *
 Allow: /
+Disallow: /learn/
+Disallow: /api/
 
 Sitemap: https://selfmadeschool.org/sitemap.xml
