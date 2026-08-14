@@ -4,8 +4,10 @@ import Link from "next/link";
 import { BADGES, COURSES, levelFor, courseUnits } from "@/lib/lms";
 import { allBosses } from "@/lib/game";
 import { dueQuestions } from "@/lib/mastery";
+import { profileComplete } from "@/lib/api";
 import { useLms, courseProgress } from "@/components/useLms";
 import AvatarStudio from "./AvatarStudio";
+import EnrollmentCard from "./EnrollmentCard";
 import Bulletin from "./Bulletin";
 import CommandK from "./CommandK";
 import FeedbackCard from "./FeedbackCard";
@@ -31,6 +33,24 @@ export default function LearnHome() {
   const level = levelFor(state.xp);
 
   const totalDone = Object.values(state.done).reduce((a, b) => a + b.length, 0);
+
+  // Front Office comes first: class starts once the school can reach you.
+  if (loaded && lms.auth && !profileComplete(lms.auth)) {
+    return (
+      <div className="learn">
+        <RewardToast reward={lms.reward} onDone={lms.clearReward} />
+        <div className="learn-wrap lms-gate">
+          <p className="kicker kicker--acc">Front Office</p>
+          <h1 className="learn-h1">First, your enrollment card.</h1>
+          <p className="learn-sub">
+            Every student files one — your name as it should read on your certificate,
+            and a phone number so the school can reach you. Thirty seconds, once.
+          </p>
+          <EnrollmentCard />
+        </div>
+      </div>
+    );
+  }
 
   // Picture Day comes before the dashboard: no portrait, no desk.
   if (loaded && lms.auth && !state.avatar.created) {

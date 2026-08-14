@@ -111,10 +111,25 @@ function issue_token(string $email): string {
     return $token;
 }
 
+// Loose phone check: common punctuation allowed, 7–15 digits underneath.
+// Returns the trimmed value, '' when blank, or null when it can't be a phone.
+function clean_phone(string $raw): ?string {
+    $phone = trim(preg_replace('/\s+/', ' ', $raw));
+    if ($phone === '') return '';
+    if (mb_strlen($phone) > 24) return null;
+    if (!preg_match('/^\+?[0-9 ().\-]+$/', $phone)) return null;
+    $digits = preg_replace('/\D/', '', $phone);
+    $n = strlen($digits);
+    return ($n >= 7 && $n <= 15) ? $phone : null;
+}
+
 function public_user(string $email, array $user): array {
     return [
         'email' => $email,
         'name' => $user['name'] ?? '',
+        'first' => $user['first'] ?? '',
+        'last' => $user['last'] ?? '',
+        'phone' => $user['phone'] ?? '',
         'role' => $user['role'] ?? 'student',
     ];
 }

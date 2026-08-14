@@ -6,7 +6,7 @@
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { COURSES, BADGES, levelFor } from "@/lib/lms";
-import { apiUpdateProfile, apiChangePassword } from "@/lib/api";
+import { apiUpdateProfile, apiChangePassword, type AuthUser } from "@/lib/api";
 import { useLms, courseProgress } from "@/components/useLms";
 import AvatarStudio from "./AvatarStudio";
 import Portrait from "./Portrait";
@@ -16,7 +16,9 @@ import Ring from "./Ring";
 export default function Profile() {
   const lms = useLms();
   const { state, loaded, auth } = lms;
-  const [name, setName] = useState<string | null>(null);
+  const [first, setFirst] = useState<string | null>(null);
+  const [last, setLast] = useState<string | null>(null);
+  const [phone, setPhone] = useState<string | null>(null);
   const [pwCurrent, setPwCurrent] = useState("");
   const [pwNext, setPwNext] = useState("");
   const [msg, setMsg] = useState("");
@@ -25,7 +27,11 @@ export default function Profile() {
 
   if (!loaded || !auth) return <div className="learn" />;
 
-  const displayName = name ?? auth.name;
+  // Older accounts predate the split card — offer the display name halved.
+  const guessed = (auth.name ?? "").trim().split(/\s+/).filter(Boolean);
+  const firstVal = first ?? (auth.first || guessed[0] || "");
+  const lastVal = last ?? (auth.last || guessed.slice(1).join(" "));
+  const phoneVal = phone ?? (auth.phone || "");
   const level = levelFor(state.xp);
   const totalDone = Object.values(state.done).reduce((a, b) => a + b.length, 0);
 
@@ -34,16 +40,18 @@ export default function Profile() {
     setTimeout(() => setMsg(""), 4000);
   };
 
-  const saveName = async (e: FormEvent) => {
+  const saveIdentity = async (e: FormEvent) => {
     e.preventDefault();
-    const trimmed = displayName.trim();
-    if (!trimmed || trimmed === auth.name) return;
-    const res = await apiUpdateProfile(auth.token, trimmed);
+    const res = await apiUpdateProfile(auth.token, {
+      first: firstVal.trim(),
+      last: lastVal.trim(),
+      phone: phoneVal.trim(),
+    });
     if (res.ok) {
-      lms.renameAuth(trimmed);
-      flash("Name updated — your certificate uses it too.");
+      lms.adoptAuthUser(res.data.user as Partial<Omit<AuthUser, "token">>);
+      flash("Enrollment card updated — your certificate uses your full name.");
     } else {
-      flash((res.data.error as string) ?? "Could not update the name.");
+      flash((res.data.error as string) ?? "Could not update the card.");
     }
   };
 
@@ -171,22 +179,59 @@ export default function Profile() {
 
         <section className="lms-section lms-gate">
           <h2 className="lms-section-h">Identity</h2>
-          <form className="lms-admin-form" onSubmit={saveName}>
-            <label className="lms-login-label" htmlFor="pf-name">
-              Display name — appears on your certificate
-            </label>
-            <input
-              id="pf-name"
-              className="lms-cert-name"
-              value={displayName}
-              maxLength={60}
-              required
-              onChange={(e) => setName(e.target.value)}
-            />
+          <p className="lms-section-sub">
+            Your enrollment card. The full name appears on your certificate; the phone
+            number is for the front office only — never public.
+          </p>
+          <form className="lms-admin-form" onSubmit={saveIdentity}>
+            <div className="lms-form-row">
+              <div>
+                <label className="lms-login-label" htmlFor="pf-first">
+                  First Name
+                </label>
+                <input
+                  id="pf-first"
+                  className="lms-cert-name"
+                  value={firstVal}
+                  maxLength={40}
+                  required
+                  autoComplete="given-name"
+                  onChange={(e) => setFirst(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="lms-login-label" htmlFor="pf-last">
+                  Last Name
+                </label>
+                <input
+                  id="pf-last"
+                  className="lms-cert-name"
+                  value={lastVal}
+                  maxLength={40}
+                  required
+                  autoComplete="family-name"
+                  onChange={(e) => setLast(e.target.value)}
+                />
+              </div>
+            </div>
             <label className="lms-login-label">Email</label>
             <input className="lms-cert-name" value={auth.email} disabled aria-label="Email (fixed)" />
+            <label className="lms-login-label" htmlFor="pf-phone">
+              Telephone
+            </label>
+            <input
+              id="pf-phone"
+              className="lms-cert-name"
+              type="tel"
+              value={phoneVal}
+              maxLength={24}
+              required
+              autoComplete="tel"
+              placeholder="+1 555 010 2030"
+              onChange={(e) => setPhone(e.target.value)}
+            />
             <button className="btn btn--solid lms-login-btn" type="submit">
-              Save Name
+              Save Enrollment Card
             </button>
           </form>
         </section>

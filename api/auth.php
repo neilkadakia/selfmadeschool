@@ -19,13 +19,31 @@ $action = $in['action'] ?? 'login';
 
 if ($action === 'update_profile') {
     $auth = require_auth();
-    $name = trim($in['name'] ?? '');
-    if ($name === '' || mb_strlen($name) > 60) respond(400, ['error' => 'Name must be 1-60 characters.']);
     $users = read_store('users');
     if (!isset($users[$auth['email']])) respond(401, ['error' => 'Account not found.']);
-    $users[$auth['email']]['name'] = $name;
+    $u = $users[$auth['email']];
+    if (isset($in['first']) || isset($in['last'])) {
+        $first = trim($in['first'] ?? '');
+        $last = trim($in['last'] ?? '');
+        if ($first === '' || mb_strlen($first) > 40) respond(400, ['error' => 'First name must be 1-40 characters.']);
+        if ($last === '' || mb_strlen($last) > 40) respond(400, ['error' => 'Last name must be 1-40 characters.']);
+        $u['first'] = $first;
+        $u['last'] = $last;
+        $u['name'] = $first . ' ' . $last;
+    } elseif (isset($in['name'])) {
+        // Legacy single-field rename, kept for older clients.
+        $name = trim($in['name']);
+        if ($name === '' || mb_strlen($name) > 60) respond(400, ['error' => 'Name must be 1-60 characters.']);
+        $u['name'] = $name;
+    }
+    if (array_key_exists('phone', $in)) {
+        $phone = clean_phone((string)$in['phone']);
+        if ($phone === null) respond(400, ['error' => 'That phone number does not look right.']);
+        $u['phone'] = $phone;
+    }
+    $users[$auth['email']] = $u;
     write_store('users', $users);
-    respond(200, ['ok' => true, 'user' => public_user($auth['email'], $users[$auth['email']])]);
+    respond(200, ['ok' => true, 'user' => public_user($auth['email'], $u)]);
 }
 
 if ($action === 'change_password') {

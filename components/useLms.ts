@@ -18,7 +18,14 @@ import {
   type GearSlot,
 } from "@/lib/game";
 import { MASTER_STREAK, XP_MASTERED, type MasteryMap } from "@/lib/mastery";
-import { apiGetProgress, apiLogin, apiLogout, apiPutProgress, type AuthUser } from "@/lib/api";
+import {
+  apiGetProgress,
+  apiLogin,
+  apiLogout,
+  apiPutProgress,
+  apiWhoami,
+  type AuthUser,
+} from "@/lib/api";
 
 const KEY = "sms-lms-v2";
 const V1_KEY = "sms-progress-v1";
@@ -203,9 +210,23 @@ function schedulePush() {
   }, PUSH_DEBOUNCE_MS);
 }
 
+// Refresh identity fields (name, first, last, phone) from the server so a
+// contact card filed on one device shows up on every other one.
+async function refreshAuthUser(auth: AuthUser) {
+  const res = await apiWhoami(auth.token);
+  if (!res.ok) return;
+  const user = res.data.user as Partial<AuthUser> | undefined;
+  const current = snapshot.auth;
+  if (!user || !current || current.token !== auth.token) return;
+  const next = { ...current, ...user, token: auth.token };
+  persistAuth(next);
+  emit({ auth: next });
+}
+
 // Pull the account's progress from the server; adopt local progress upward
 // if the server has none yet (first sign-in keeps anonymous work).
 async function pullServerState(auth: AuthUser) {
+  void refreshAuthUser(auth);
   const res = await apiGetProgress(auth.token);
   if (res.status === 401) {
     persistAuth(null);
@@ -284,7 +305,7 @@ const actions = {
     if (!res.ok) {
       return { ok: false, error: (res.data.error as string) ?? "Sign-in failed." };
     }
-    const user = res.data.user as { email: string; name: string; role: "admin" | "student" };
+    const user = res.data.user as Omit<AuthUser, "token">;
     const auth: AuthUser = { ...user, token: res.data.token as string };
     persistAuth(auth);
     // Carry this device's progress into the account (server copy wins if it exists).
@@ -404,13 +425,14 @@ const actions = {
     apply((s) => (s.theme === theme ? s : { ...s, theme }));
   },
 
-  // After the server accepts a new display name, keep the session in step.
-  renameAuth(name: string) {
+  // After the server accepts new profile details (enrollment card, rename),
+  // keep the session — and the certificate name — in step.
+  adoptAuthUser(user: Partial<Omit<AuthUser, "token">>) {
     if (!snapshot.auth) return;
-    const auth = { ...snapshot.auth, name };
+    const auth = { ...snapshot.auth, ...user };
     persistAuth(auth);
     emit({ auth });
-    apply((s) => (s.name === name ? s : { ...s, name }));
+    apply((s) => (s.name === auth.name ? s : { ...s, name: auth.name }));
   },
 
   // Wipes learning data; keeps identity, theme, and the submitted-quote flag.

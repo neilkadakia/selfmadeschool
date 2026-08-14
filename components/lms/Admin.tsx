@@ -22,7 +22,7 @@ import {
 import { COURSES, courseUnits } from "@/lib/lms";
 import { useLms } from "@/components/useLms";
 
-type Student = { email: string; name: string; role: string };
+type Student = { email: string; name: string; phone?: string; role: string };
 type Subscriber = { email: string; created: string; source: string };
 type Quote = {
   id: string;
@@ -62,8 +62,10 @@ export default function Admin() {
   const [msg, setMsg] = useState("");
 
   // Create-student form
-  const [nName, setNName] = useState("");
+  const [nFirst, setNFirst] = useState("");
+  const [nLast, setNLast] = useState("");
   const [nEmail, setNEmail] = useState("");
+  const [nPhone, setNPhone] = useState("");
   const [nPass, setNPass] = useState("");
 
   // Change-password form
@@ -119,11 +121,19 @@ export default function Admin() {
 
   const createStudent = async (e: FormEvent) => {
     e.preventDefault();
-    const res = await apiUserCreate(token, { email: nEmail.trim(), password: nPass, name: nName.trim() });
+    const res = await apiUserCreate(token, {
+      email: nEmail.trim(),
+      password: nPass,
+      first: nFirst.trim(),
+      last: nLast.trim(),
+      phone: nPhone.trim(),
+    });
     if (res.ok) {
       flash(`Account created for ${nEmail.trim()}.`);
-      setNName("");
+      setNFirst("");
+      setNLast("");
       setNEmail("");
+      setNPhone("");
       setNPass("");
       const r = await apiUsersList(token);
       if (r.ok) setStudents(r.data.users as Student[]);
@@ -280,11 +290,12 @@ export default function Admin() {
             Invites are manual while the school is in closed session.
           </p>
           {students && (
-            <div className="lms-admin-table">
+            <div className="lms-admin-table lms-roster">
               {students.map((s) => (
                 <div key={s.email} className="lms-admin-row">
                   <span className="lms-admin-name">{s.name}</span>
                   <span className="lms-admin-email">{s.email}</span>
+                  <span className="lms-admin-meta">{s.phone || "—"}</span>
                   <span className={`pill ${s.role === "admin" ? "pill--acc" : "row-pill--dim"}`}>
                     {s.role}
                   </span>
@@ -293,13 +304,24 @@ export default function Admin() {
             </div>
           )}
           <form className="lms-admin-form" onSubmit={createStudent}>
-            <input
-              className="lms-cert-name"
-              placeholder="Full name"
-              required
-              value={nName}
-              onChange={(e) => setNName(e.target.value)}
-            />
+            <div className="lms-form-row">
+              <input
+                className="lms-cert-name"
+                placeholder="First name"
+                required
+                maxLength={40}
+                value={nFirst}
+                onChange={(e) => setNFirst(e.target.value)}
+              />
+              <input
+                className="lms-cert-name"
+                placeholder="Last name"
+                required
+                maxLength={40}
+                value={nLast}
+                onChange={(e) => setNLast(e.target.value)}
+              />
+            </div>
             <input
               className="lms-cert-name"
               type="email"
@@ -307,6 +329,14 @@ export default function Admin() {
               required
               value={nEmail}
               onChange={(e) => setNEmail(e.target.value)}
+            />
+            <input
+              className="lms-cert-name"
+              type="tel"
+              placeholder="Telephone (optional — they can add it)"
+              maxLength={24}
+              value={nPhone}
+              onChange={(e) => setNPhone(e.target.value)}
             />
             <input
               className="lms-cert-name"

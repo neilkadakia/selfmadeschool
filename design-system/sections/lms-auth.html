@@ -21,6 +21,10 @@
   .btn { display: inline-block; background: var(--acc); color: var(--ink); font-weight: 700; font-size: 16px; border: none; border-radius: 999px; padding: 15px 32px; }
   .error { max-width: 420px; margin: 0 0 16px; padding: 12px 16px; border-radius: 12px; border-left: 4px solid #ff6b6b; background: rgba(255,107,107,0.1); font-size: 14.5px; }
 
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 420px; }
+  .form-row .input { max-width: none; }
+  .note { max-width: 420px; margin: 14px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--muted); }
+
   .profile { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 18px; border: 1px solid rgba(242,238,227,0.14); max-width: 460px; }
   .avatar { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 14px; background: linear-gradient(135deg, #F5A83C, #B8C94F, #43DE7B); color: var(--ink); font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 20px; }
   .p-main { flex: 1; display: flex; flex-direction: column; gap: 2px; }
@@ -40,6 +44,27 @@
   <input class="input" type="password" value="••••••••••••" readonly>
   <p class="error">Wrong email or password.</p>
   <span class="btn">Sign In</span>
+
+  <p class="label">Front Office — enrollment card (first sign-in gate)</p>
+  <p class="kicker">Front Office</p>
+  <h1 class="h1" style="font-size:38px">First, your enrollment card.</h1>
+  <p class="sub">Every student files one — your name as it should read on your certificate, and a phone number so the school can reach you. Thirty seconds, once.</p>
+  <div class="form-row">
+    <div>
+      <label class="f-label">First Name</label>
+      <input class="input" value="Neil" readonly>
+    </div>
+    <div>
+      <label class="f-label">Last Name</label>
+      <input class="input" value="Kadakia" readonly>
+    </div>
+  </div>
+  <label class="f-label">Email — Your Sign-In</label>
+  <input class="input" value="you@example.com" readonly>
+  <label class="f-label">Telephone</label>
+  <input class="input" value="+1 555 010 2030" readonly>
+  <span class="btn">File My Enrollment Card</span>
+  <p class="note">Only the front office sees this — it never appears on the Honor Roll, and it can be updated anytime in the Student File.</p>
 
   <p class="label">Profile chip — signed in, sync status</p>
   <div class="profile">

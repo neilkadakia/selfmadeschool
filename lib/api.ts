@@ -1,6 +1,19 @@
 // Thin client for the PHP LMS API (same origin in production).
 
-export type AuthUser = { email: string; name: string; role: "admin" | "student"; token: string };
+export type AuthUser = {
+  email: string;
+  name: string;
+  first?: string;
+  last?: string;
+  phone?: string;
+  role: "admin" | "student";
+  token: string;
+};
+
+// The contact card is complete once the front office has all three.
+export function profileComplete(u: { first?: string; last?: string; phone?: string } | null): boolean {
+  return Boolean(u && u.first && u.last && u.phone);
+}
 
 const BASE = "/api";
 
@@ -50,17 +63,31 @@ export async function apiClassOverview(token: string) {
 
 export async function apiUserCreate(
   token: string,
-  user: { email: string; password: string; name: string; role?: string }
+  user: {
+    email: string;
+    password: string;
+    first: string;
+    last: string;
+    phone?: string;
+    role?: string;
+  }
 ) {
   return call("users.php", { method: "POST", token, body: { action: "create", ...user } });
+}
+
+export async function apiWhoami(token: string) {
+  return call("auth.php", { token });
 }
 
 export async function apiNewsletterList(token: string) {
   return call("newsletter.php", { token });
 }
 
-export async function apiUpdateProfile(token: string, name: string) {
-  return call("auth.php", { method: "POST", token, body: { action: "update_profile", name } });
+export async function apiUpdateProfile(
+  token: string,
+  profile: { first: string; last: string; phone: string }
+) {
+  return call("auth.php", { method: "POST", token, body: { action: "update_profile", ...profile } });
 }
 
 export async function apiChangePassword(token: string, current: string, next: string) {
