@@ -1,7 +1,8 @@
 "use client";
 
-// Your page: identity, appearance, security, insights, and your data.
-// Everything editable in one place; everything syncs to the account.
+// The Student File. The hero is your literal Student ID card; below it,
+// insights run full-width and the settings sit as a two-up card grid
+// instead of a long stack. Everything still syncs to the account.
 
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
@@ -13,6 +14,17 @@ import AvatarStudio from "./AvatarStudio";
 import Portrait from "./Portrait";
 import RewardToast from "./RewardToast";
 import Ring from "./Ring";
+
+// Static barcode for the ID card foot — pure decoration, fixed pattern.
+const ID_BARS = (() => {
+  const widths = [2, 1, 3, 1, 2, 4, 1, 2, 1, 3, 2, 1, 4, 2, 1, 3, 1, 2, 3, 1, 2, 4, 1, 2];
+  let x = 0;
+  return widths.map((w) => {
+    const bar = { x, w };
+    x += w + 2;
+    return bar;
+  });
+})();
 
 export default function Profile() {
   const lms = useLms();
@@ -106,28 +118,61 @@ export default function Profile() {
           ← My Learning
         </Link>
 
-        <div className="lms-profile-hero">
-          {state.avatar.created ? (
-            <span className="lms-portrait-big" aria-hidden="true">
-              <Portrait
-                avatar={state.avatar}
-                equipped={state.equipped}
-                size={92}
-                aura={auraFor(state.equipped, state.xp).tier}
-              />
+        <p className="kicker kicker--acc">Student File</p>
+
+        <div className="lms-idcard">
+          <div className="lms-idcard-top">
+            <span className="lms-idcard-brand">Self-Made School</span>
+            <span className="lms-idcard-type">Student ID</span>
+          </div>
+          <div className="lms-idcard-body">
+            <span className="lms-idcard-photo" aria-hidden="true">
+              {state.avatar.created ? (
+                <Portrait
+                  avatar={state.avatar}
+                  equipped={state.equipped}
+                  size={96}
+                  aura={auraFor(state.equipped, state.xp).tier}
+                />
+              ) : (
+                <span className="lms-avatar lms-avatar--big">
+                  {(auth.name || auth.email).slice(0, 1).toUpperCase()}
+                </span>
+              )}
             </span>
-          ) : (
-            <span className="lms-avatar lms-avatar--big" aria-hidden="true">
-              {(auth.name || auth.email).slice(0, 1).toUpperCase()}
+            <div className="lms-idcard-info">
+              <h1 className="lms-idcard-name">{auth.name}</h1>
+              <dl className="lms-idcard-rows">
+                <div>
+                  <dt>Email</dt>
+                  <dd title={auth.email}>{auth.email}</dd>
+                </div>
+                <div>
+                  <dt>Telephone</dt>
+                  <dd>{auth.phone || "—"}</dd>
+                </div>
+                <div>
+                  <dt>Birthday</dt>
+                  <dd>{auth.dob || "—"}</dd>
+                </div>
+                <div>
+                  <dt>Level</dt>
+                  <dd>
+                    {level.name} · {state.xp} XP
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+          <div className="lms-idcard-foot">
+            <svg className="lms-idcard-code" viewBox="0 0 70 20" aria-hidden="true">
+              {ID_BARS.map((b) => (
+                <rect key={b.x} x={b.x} y="0" width={b.w} height="20" fill="currentColor" />
+              ))}
+            </svg>
+            <span>
+              {auth.role === "admin" ? "Faculty" : "Student"} · Never Expires
             </span>
-          )}
-          <div>
-            <p className="kicker kicker--acc">Student File</p>
-            <h1 className="learn-h1 lms-profile-h1">{auth.name}</h1>
-            <p className="lms-profile-meta">
-              {auth.email} · {level.name} · {state.xp} XP
-              {auth.role === "admin" && " · Faculty"}
-            </p>
           </div>
         </div>
 
@@ -186,13 +231,14 @@ export default function Profile() {
           </div>
         </section>
 
-        <section className="lms-section lms-gate">
-          <h2 className="lms-section-h">Identity</h2>
-          <p className="lms-section-sub">
-            Your Student ID. The full name appears on your certificate; the phone
-            number is for the front office only — never public.
-          </p>
-          <form className="lms-admin-form" onSubmit={saveIdentity}>
+        <div className="lms-profile-cols">
+          <section className="lms-pcard">
+            <h2 className="lms-pcard-h">Identity</h2>
+            <p className="lms-pcard-sub">
+              Your Student ID. The full name appears on your certificate; the phone
+              number is for the front office only — never public.
+            </p>
+            <form className="lms-admin-form" onSubmit={saveIdentity}>
             <div className="lms-form-row">
               <div>
                 <label className="lms-login-label" htmlFor="pf-first">
@@ -261,14 +307,14 @@ export default function Profile() {
             <button className="btn btn--solid lms-login-btn" type="submit">
               Save Student ID
             </button>
-          </form>
-        </section>
+            </form>
+          </section>
 
-        <section className="lms-section">
-          <h2 className="lms-section-h">Appearance</h2>
-          <p className="lms-section-sub">
-            Your portrait, and how class looks on every device you sign into.
-          </p>
+          <section className={`lms-pcard${retaking ? " lms-pcard--wide" : ""}`}>
+            <h2 className="lms-pcard-h">Appearance</h2>
+            <p className="lms-pcard-sub">
+              Your portrait, and how class looks on every device you sign into.
+            </p>
           <div className="lms-portrait-edit">
             <Portrait avatar={state.avatar} equipped={state.equipped} size={84} />
             <div className="lms-portrait-actions">
@@ -303,11 +349,14 @@ export default function Profile() {
               Day Class
             </button>
           </div>
-        </section>
+          </section>
 
-        <section className="lms-section lms-gate">
-          <h2 className="lms-section-h">Security</h2>
-          <form className="lms-admin-form" onSubmit={changePassword}>
+          <section className="lms-pcard">
+            <h2 className="lms-pcard-h">Security</h2>
+            <p className="lms-pcard-sub">
+              Ten characters minimum. Changing it here signs out no one — sessions stay put.
+            </p>
+            <form className="lms-admin-form" onSubmit={changePassword}>
             <input
               className="lms-cert-name"
               type="password"
@@ -330,15 +379,15 @@ export default function Profile() {
             <button className="btn btn--outline lms-login-btn" type="submit">
               Change Password
             </button>
-          </form>
-        </section>
+            </form>
+          </section>
 
-        <section className="lms-section lms-gate">
-          <h2 className="lms-section-h">Your data</h2>
-          <p className="lms-section-sub">
-            It&apos;s yours. Take a copy anytime, or wipe the slate and run the course again.
-          </p>
-          <div className="learn-ctas">
+          <section className="lms-pcard">
+            <h2 className="lms-pcard-h">Your Data</h2>
+            <p className="lms-pcard-sub">
+              It&apos;s yours. Take a copy anytime, or wipe the slate and run the course again.
+            </p>
+            <div className="lms-pcard-actions">
             <button className="btn btn--outline lms-login-btn" onClick={exportData}>
               Download My Data
             </button>
@@ -360,8 +409,9 @@ export default function Profile() {
             <button className="btn btn--outline lms-login-btn" onClick={() => lms.logout()}>
               Sign Out
             </button>
-          </div>
-        </section>
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   );

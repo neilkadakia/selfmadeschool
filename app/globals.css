@@ -3523,6 +3523,208 @@ kbd {
   color: var(--muted-on-ink);
 }
 
+/* ---------- The Student ID card (Student File hero) ---------- */
+
+.lms-idcard {
+  max-width: 620px;
+  margin: 14px 0 8px;
+  border: 1px solid rgba(242, 238, 227, 0.2);
+  border-radius: 22px;
+  overflow: hidden;
+  background:
+    radial-gradient(140% 120% at 0% 0%, rgba(67, 222, 123, 0.1), transparent 55%),
+    radial-gradient(120% 110% at 100% 100%, rgba(91, 124, 250, 0.1), transparent 55%),
+    rgba(242, 238, 227, 0.03);
+}
+
+.lms-idcard-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 22px;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.12);
+}
+
+.lms-idcard-brand {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lms-idcard-type {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--acc);
+}
+
+.lms-idcard-body {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+  padding: 20px 22px;
+}
+
+.lms-idcard-photo {
+  flex-shrink: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 112px;
+  height: 120px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(242, 238, 227, 0.12);
+  background: rgba(242, 238, 227, 0.06);
+}
+
+.lms-idcard-info {
+  flex: 1;
+  min-width: 220px;
+}
+
+.lms-idcard-name {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(24px, 3.4vw, 34px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin: 0 0 14px;
+}
+
+.lms-idcard-rows {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 20px;
+  margin: 0;
+}
+
+.lms-idcard-rows dt {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-on-ink);
+  margin-bottom: 2px;
+}
+
+.lms-idcard-rows dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lms-idcard-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 22px 12px;
+  border-top: 1px solid rgba(242, 238, 227, 0.12);
+  color: var(--muted-on-ink);
+}
+
+.lms-idcard-code {
+  height: 20px;
+  width: 70px;
+  opacity: 0.7;
+}
+
+.lms-idcard-foot span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ---------- Student File settings: two-up cards, not a stack ---------- */
+
+.lms-profile-cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+  margin-top: 34px;
+}
+
+.lms-pcard {
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-radius: 20px;
+  padding: 24px 26px;
+  background: rgba(242, 238, 227, 0.02);
+}
+
+.lms-pcard--wide {
+  grid-column: 1 / -1;
+}
+
+.lms-pcard-h {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+}
+
+.lms-pcard-sub {
+  margin: 0 0 18px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--muted-on-ink);
+}
+
+.lms-pcard-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  max-width: 420px;
+}
+
+.lms-pcard-actions .btn {
+  text-align: center;
+}
+
+@media (max-width: 880px) {
+  .lms-profile-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+html.lms-light .lms-idcard {
+  border-color: rgba(14, 14, 18, 0.2);
+  background:
+    radial-gradient(140% 120% at 0% 0%, rgba(67, 222, 123, 0.12), transparent 55%),
+    radial-gradient(120% 110% at 100% 100%, rgba(91, 124, 250, 0.12), transparent 55%),
+    rgba(14, 14, 18, 0.025);
+}
+
+html.lms-light .lms-idcard-top,
+html.lms-light .lms-idcard-foot {
+  border-color: rgba(14, 14, 18, 0.12);
+}
+
+html.lms-light .lms-idcard-photo {
+  border-color: rgba(14, 14, 18, 0.12);
+  background: rgba(14, 14, 18, 0.05);
+}
+
+html.lms-light .lms-pcard {
+  border-color: rgba(14, 14, 18, 0.16);
+  background: rgba(14, 14, 18, 0.02);
+}
+
 .lms-insights {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -4156,11 +4358,17 @@ html.lms-light input[type="date"].lms-cert-name {
   }
 }
 
-/* Side-by-side inputs (first + last name). */
+/* Side-by-side inputs (first + last name, phone + birthday). */
 .lms-form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+}
+
+@media (max-width: 480px) {
+  .lms-form-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 .lms-enroll-note {

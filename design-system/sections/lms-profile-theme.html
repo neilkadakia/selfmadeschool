@@ -15,11 +15,21 @@
   .label { font-size: 13px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin: 40px 0 16px; }
   .label:first-child { margin-top: 0; }
 
-  .hero { display: flex; align-items: center; gap: 22px; }
-  .avatar { display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 72px; border-radius: 22px; background: linear-gradient(135deg, #F5A83C, #B8C94F, #43DE7B); color: var(--ink); font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 32px; }
-  .kicker { font-size: 13px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--acc); margin: 0 0 8px; }
-  .h1 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 40px; line-height: 0.95; letter-spacing: -0.03em; text-transform: uppercase; margin: 0 0 8px; }
-  .meta { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .idcard { max-width: 560px; border: 1px solid rgba(242,238,227,0.2); border-radius: 22px; overflow: hidden; background: radial-gradient(140% 120% at 0% 0%, rgba(67,222,123,0.1), transparent 55%), radial-gradient(120% 110% at 100% 100%, rgba(91,124,250,0.1), transparent 55%), rgba(242,238,227,0.03); }
+  .id-top { display: flex; justify-content: space-between; padding: 12px 22px; border-bottom: 1px solid rgba(242,238,227,0.12); }
+  .id-brand { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .id-type { font-size: 11px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--acc); }
+  .id-body { display: flex; gap: 22px; padding: 20px 22px; align-items: center; }
+  .id-photo { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; width: 100px; height: 108px; border-radius: 16px; border: 1px solid rgba(242,238,227,0.12); background: rgba(242,238,227,0.06); font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 40px; color: var(--acc); }
+  .id-name { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 30px; line-height: 0.95; letter-spacing: -0.02em; text-transform: uppercase; margin: 0 0 14px; }
+  .id-rows { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; margin: 0; }
+  .id-rows dt { font-size: 10.5px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+  .id-rows dd { margin: 0; font-size: 14px; font-weight: 600; }
+  .id-foot { display: flex; justify-content: space-between; align-items: center; padding: 10px 22px 12px; border-top: 1px solid rgba(242,238,227,0.12); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+  .pcols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+  .pcard { border: 1px solid rgba(242,238,227,0.14); border-radius: 20px; padding: 22px 24px; background: rgba(242,238,227,0.02); }
+  .pcard h3 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 20px; margin: 0 0 6px; }
+  .pcard p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--muted); }
 
   .insights { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
   .card { border: 1px solid rgba(242,238,227,0.14); border-radius: 18px; padding: 20px 22px; }
@@ -48,14 +58,30 @@
 </head>
 <body>
 <div class="wrap">
-  <p class="label">Student File — profile hero</p>
-  <div class="hero">
-    <span class="avatar">N</span>
-    <div>
-      <p class="kicker">Student File</p>
-      <p class="h1">Neil</p>
-      <p class="meta">neil@example.com · Junior · 850 XP · Faculty</p>
+  <p class="label">Student File hero — the literal Student ID card (portrait w/ aura, contact rows, barcode foot)</p>
+  <div class="idcard">
+    <div class="id-top"><span class="id-brand">Self-Made School</span><span class="id-type">Student ID</span></div>
+    <div class="id-body">
+      <span class="id-photo">N</span>
+      <div>
+        <p class="id-name">Neil Kadakia</p>
+        <dl class="id-rows">
+          <div><dt>Email</dt><dd>neil@example.com</dd></div>
+          <div><dt>Telephone</dt><dd>+1 555 010 2030</dd></div>
+          <div><dt>Birthday</dt><dd>1999-04-12</dd></div>
+          <div><dt>Level</dt><dd>Junior · 850 XP</dd></div>
+        </dl>
+      </div>
     </div>
+    <div class="id-foot"><span>▮▮ ▮ ▮▮▮ ▮ ▮ ▮▮</span><span>Faculty · Never Expires</span></div>
+  </div>
+
+  <p class="label">Settings — two-up cards (Identity | Appearance / Security | Your Data), not a stack; Appearance spans full width while Picture Day is open</p>
+  <div class="pcols">
+    <div class="pcard"><h3>Identity</h3><p>Your Student ID. The full name appears on your certificate; the phone number is for the front office only — never public.</p></div>
+    <div class="pcard"><h3>Appearance</h3><p>Your portrait, and how class looks on every device you sign into.</p></div>
+    <div class="pcard"><h3>Security</h3><p>Ten characters minimum. Changing it here signs out no one — sessions stay put.</p></div>
+    <div class="pcard"><h3>Your Data</h3><p>It's yours. Take a copy anytime, or wipe the slate and run the course again.</p></div>
   </div>
 
   <p class="label">Insights — activity bars, mastery ring</p>
