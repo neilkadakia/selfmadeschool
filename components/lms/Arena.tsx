@@ -22,6 +22,7 @@ import {
   partQuestions,
 } from "@/lib/game";
 import { seedFrom, shuffled } from "@/lib/shuffle";
+import { isFaculty } from "@/lib/api";
 import { useLms } from "@/components/useLms";
 import CommandK from "./CommandK";
 import MonsterArt from "./MonsterArt";
@@ -40,7 +41,7 @@ function ArenaIndex() {
   const lms = useLms();
   const { state } = lms;
   // Faculty carry a hall pass to every fight — for demos and quality checks.
-  const isAdmin = lms.auth?.role === "admin";
+  const isAdmin = isFaculty(lms.auth?.role);
 
   return (
     <div className="learn">
@@ -168,9 +169,9 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
   }
 
   const done = state.done[course.slug] ?? [];
-  // Faculty hall pass: admins can demo any boss without finishing the part.
+  // Faculty hall pass: educators and up can demo any boss unfinished.
   const unlocked =
-    lms.auth?.role === "admin" || part.units.every((u) => done.includes(u.slug));
+    isFaculty(lms.auth?.role) || part.units.every((u) => done.includes(u.slug));
   const questions = shuffled(partQuestions(course, part), seed);
   const round = questions.length > 0 ? questions[qi % questions.length] : null;
   const q = round?.question ?? null;

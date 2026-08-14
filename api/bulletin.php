@@ -25,7 +25,8 @@ if ($method === 'GET') {
 }
 
 if ($method !== 'POST') respond(405, ['error' => 'GET or POST only.']);
-if (($auth['user']['role'] ?? '') !== 'admin') respond(403, ['error' => 'Admin only.']);
+// Faculty (educator and up) pin and take down notes.
+require_rank($auth, ROLE_RANK['educator']);
 
 $in = body_json();
 $action = $in['action'] ?? 'post';

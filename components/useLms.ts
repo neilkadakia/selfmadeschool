@@ -20,6 +20,7 @@ import {
 import { MASTER_STREAK, XP_MASTERED, type MasteryMap } from "@/lib/mastery";
 import {
   apiGetProgress,
+  apiImpersonate,
   apiLogin,
   apiLogout,
   apiPutProgress,
@@ -30,6 +31,8 @@ import {
 const KEY = "sms-lms-v2";
 const V1_KEY = "sms-progress-v1";
 const AUTH_KEY = "sms-auth-v1";
+// While Acting As someone, the real account waits here.
+const ACTOR_KEY = "sms-auth-actor-v1";
 const PUSH_DEBOUNCE_MS = 1500;
 
 export type LmsState = {
@@ -63,6 +66,7 @@ type Snapshot = {
   loaded: boolean;
   reward: Reward | null;
   auth: AuthUser | null;
+  actor: AuthUser | null; // set while Acting As: the real signed-in account
   sync: SyncStatus;
 };
 
@@ -94,6 +98,7 @@ const SERVER_SNAPSHOT: Snapshot = {
   loaded: false,
   reward: null,
   auth: null,
+  actor: null,
   sync: "idle",
 };
 
@@ -191,6 +196,36 @@ function persistAuth(auth: AuthUser | null) {
   } catch {}
 }
 
+function readActor(): AuthUser | null {
+  try {
+    const raw = localStorage.getItem(ACTOR_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return null;
+}
+
+function persistActor(actor: AuthUser | null) {
+  try {
+    if (actor) localStorage.setItem(ACTOR_KEY, JSON.stringify(actor));
+    else localStorage.removeItem(ACTOR_KEY);
+  } catch {}
+}
+
+// A session died server-side. If we were Acting As someone, fall back
+// to the real account; otherwise sign out locally too.
+function dropDeadSession() {
+  const actor = snapshot.actor;
+  if (actor) {
+    persistActor(null);
+    persistAuth(actor);
+    emit({ auth: actor, actor: null, state: readLocal(actor) ?? EMPTY, sync: "idle" });
+    void pullServerState(actor);
+  } else {
+    persistAuth(null);
+    emit({ auth: null, sync: "idle" });
+  }
+}
+
 function schedulePush() {
   const { auth } = snapshot;
   if (!auth) return;
@@ -201,9 +236,7 @@ function schedulePush() {
     if (!current.auth) return;
     const res = await apiPutProgress(current.auth.token, current.state);
     if (res.status === 401) {
-      // Session died server-side — drop it locally too.
-      persistAuth(null);
-      emit({ auth: null, sync: "idle" });
+      dropDeadSession();
       return;
     }
     emit({ sync: res.ok ? "saved" : "error" });
@@ -229,8 +262,7 @@ async function pullServerState(auth: AuthUser) {
   void refreshAuthUser(auth);
   const res = await apiGetProgress(auth.token);
   if (res.status === 401) {
-    persistAuth(null);
-    emit({ auth: null });
+    if (snapshot.auth?.token === auth.token) dropDeadSession();
     return;
   }
   if (!res.ok) {
@@ -253,9 +285,10 @@ async function pullServerState(auth: AuthUser) {
 function ensureLoaded() {
   if (snapshot.loaded || typeof window === "undefined") return;
   const auth = readAuth();
+  const actor = readActor();
   let state = readLocal(auth);
   if (!state && !auth) state = migrateV1();
-  emit({ state: state ?? EMPTY, auth, loaded: true });
+  emit({ state: state ?? EMPTY, auth, actor: auth ? actor : null, loaded: true });
   if (auth) void pullServerState(auth);
 }
 
@@ -308,21 +341,57 @@ const actions = {
     const user = res.data.user as Omit<AuthUser, "token">;
     const auth: AuthUser = { ...user, token: res.data.token as string };
     persistAuth(auth);
+    persistActor(null); // a fresh sign-in is never an impersonation
     // Carry this device's progress into the account (server copy wins if it exists).
     let state = snapshot.state;
     if (!state.name && user.name) state = { ...state, name: user.name };
-    emit({ auth, state });
+    emit({ auth, actor: null, state });
     await pullServerState(auth);
     return { ok: true };
   },
 
   logout() {
-    const { auth } = snapshot;
+    const { auth, actor } = snapshot;
     if (auth) apiLogout(auth.token);
+    // Signing out while Acting As ends BOTH sessions — no ghost admin.
+    if (actor) apiLogout(actor.token);
     if (pushTimer) clearTimeout(pushTimer);
     persistAuth(null);
+    persistActor(null);
     const anon = readLocal(null) ?? EMPTY;
-    emit({ auth: null, state: anon, sync: "idle" });
+    emit({ auth: null, actor: null, state: anon, sync: "idle" });
+  },
+
+  // Act As: swap the session for a lower-ranked account; the real one
+  // waits in the actor slot. Their progress loads exactly as if they
+  // signed in — because as far as the store cares, they did.
+  async actAs(email: string): Promise<{ ok: boolean; error?: string }> {
+    const { auth } = snapshot;
+    if (!auth) return { ok: false, error: "Not signed in." };
+    const res = await apiImpersonate(auth.token, email);
+    if (!res.ok) {
+      return { ok: false, error: (res.data.error as string) ?? "Could not act as that account." };
+    }
+    const user = res.data.user as Omit<AuthUser, "token">;
+    const next: AuthUser = { ...user, token: res.data.token as string };
+    if (pushTimer) clearTimeout(pushTimer);
+    persistActor(auth);
+    persistAuth(next);
+    emit({ auth: next, actor: auth, state: readLocal(next) ?? EMPTY, sync: "idle" });
+    await pullServerState(next);
+    return { ok: true };
+  },
+
+  // Hand the keys back: kill the impersonated session, restore yourself.
+  returnToSelf() {
+    const { auth, actor } = snapshot;
+    if (!actor) return;
+    if (auth) apiLogout(auth.token);
+    if (pushTimer) clearTimeout(pushTimer);
+    persistActor(null);
+    persistAuth(actor);
+    emit({ auth: actor, actor: null, state: readLocal(actor) ?? EMPTY, sync: "idle" });
+    void pullServerState(actor);
   },
 
   toggleDone(course: string, unit: string) {
@@ -582,6 +651,7 @@ export function useLms() {
     loaded: snap.loaded,
     reward: snap.reward,
     auth: snap.auth,
+    actor: snap.actor,
     sync: snap.sync,
     isDone: (course: string, unit: string) => (snap.state.done[course] ?? []).includes(unit),
     ...actions,

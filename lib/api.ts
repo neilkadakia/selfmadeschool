@@ -1,5 +1,32 @@
 // Thin client for the PHP LMS API (same origin in production).
 
+// The role ladder, lowest to highest. Rank gates every faculty surface,
+// and Act As only reaches strictly below your own rank.
+export type Role = "student" | "educator" | "admin" | "global_admin";
+
+export const ROLE_RANK: Record<Role, number> = {
+  student: 0,
+  educator: 1,
+  admin: 2,
+  global_admin: 3,
+};
+
+export const ROLE_LABEL: Record<Role, string> = {
+  student: "Student",
+  educator: "Educator",
+  admin: "Administrator",
+  global_admin: "Global Admin",
+};
+
+export function rankOf(role: string | undefined): number {
+  return ROLE_RANK[(role ?? "student") as Role] ?? 0;
+}
+
+// Educator and up — the people who see the Faculty Lounge.
+export function isFaculty(role: string | undefined): boolean {
+  return rankOf(role) >= ROLE_RANK.educator;
+}
+
 export type AuthUser = {
   email: string;
   name: string;
@@ -7,7 +34,7 @@ export type AuthUser = {
   last?: string;
   phone?: string;
   dob?: string; // yyyy-mm-dd
-  role: "admin" | "student";
+  role: Role;
   token: string;
 };
 
@@ -81,6 +108,14 @@ export async function apiUserCreate(
 
 export async function apiWhoami(token: string) {
   return call("auth.php", { token });
+}
+
+export async function apiImpersonate(token: string, email: string) {
+  return call("auth.php", { method: "POST", token, body: { action: "impersonate", email } });
+}
+
+export async function apiSetRole(token: string, email: string, role: Role) {
+  return call("users.php", { method: "POST", token, body: { action: "set_role", email, role } });
 }
 
 export async function apiNewsletterList(token: string) {

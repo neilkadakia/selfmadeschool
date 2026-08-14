@@ -10,6 +10,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { COURSES, levelFor } from "@/lib/lms";
+import { isFaculty } from "@/lib/api";
 import { useLms, courseProgress } from "@/components/useLms";
 import Portrait from "@/components/lms/Portrait";
 import Wordmark from "@/components/Wordmark";
@@ -41,15 +42,39 @@ export default function Classroom({ children }: { children: React.ReactNode }) {
       ?.scrollIntoView({ block: "nearest", inline: "center" });
   }, [pathname, ready]);
 
-  if (isPlayer || !lms.loaded || !lms.auth) return <>{children}</>;
+  // While Acting As someone, a banner rides above everything — the
+  // player included — so nobody forgets whose account they're driving.
+  const banner =
+    lms.actor && lms.auth ? (
+      <div className="lms-actas-bar" role="status">
+        <span className="lms-actas-text">
+          Acting as <strong>{lms.auth.name || lms.auth.email}</strong> — everything you do lands
+          on their account.
+        </span>
+        <button className="lms-actas-return" onClick={() => lms.returnToSelf()}>
+          Return to Your Account
+        </button>
+      </div>
+    ) : null;
+
+  if (isPlayer || !lms.loaded || !lms.auth) {
+    return (
+      <>
+        {banner}
+        {children}
+      </>
+    );
+  }
 
   const level = levelFor(lms.state.xp);
   const isActive = (href: string, exact: boolean) =>
     exact ? pathname === href || pathname === `${href}/` : pathname.startsWith(href);
 
   return (
-    <div className="classroom">
-      <aside className="classroom-side">
+    <>
+      {banner}
+      <div className="classroom">
+        <aside className="classroom-side">
         <Link href="/learn" className="classroom-brand">
           <Wordmark gid="dawn-classroom" />
         </Link>
@@ -101,7 +126,7 @@ export default function Classroom({ children }: { children: React.ReactNode }) {
           >
             Student File
           </Link>
-          {lms.auth.role === "admin" && (
+          {isFaculty(lms.auth.role) && (
             <Link
               href="/learn/admin"
               className={`classroom-link${isActive("/learn/admin", false) ? " is-here" : ""}`}
@@ -140,7 +165,8 @@ export default function Classroom({ children }: { children: React.ReactNode }) {
           ← Back to the Website
         </Link>
       </aside>
-      <div className="classroom-main">{children}</div>
-    </div>
+        <div className="classroom-main">{children}</div>
+      </div>
+    </>
   );
 }

@@ -47,9 +47,9 @@ if ($method === 'GET' && isset($_GET['leaderboard'])) {
 }
 
 if ($method === 'GET' && isset($_GET['all'])) {
-    // Class overview — admin only: one row per student, from their synced state.
-    if (($auth['user']['role'] ?? '') !== 'admin') respond(403, ['error' => 'Admin only.']);
-    $users = read_store('users');
+    // Class overview — faculty (educator and up): one row per student.
+    require_rank($auth, ROLE_RANK['educator']);
+    $users = read_users();
     $rows = [];
     foreach ($users as $email => $u) {
         $saved = read_store('progress_' . sha1($email));

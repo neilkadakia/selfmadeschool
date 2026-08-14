@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { COURSES, BADGES, levelFor } from "@/lib/lms";
 import { auraFor } from "@/lib/game";
-import { apiUpdateProfile, apiChangePassword, type AuthUser } from "@/lib/api";
+import { ROLE_LABEL, apiUpdateProfile, apiChangePassword, type AuthUser } from "@/lib/api";
 import { useLms, courseProgress } from "@/components/useLms";
 import AvatarStudio from "./AvatarStudio";
 import Portrait from "./Portrait";
@@ -171,7 +171,7 @@ export default function Profile() {
               ))}
             </svg>
             <span>
-              {auth.role === "admin" ? "Faculty" : "Student"} · Never Expires
+              {ROLE_LABEL[auth.role] ?? "Student"} · Never Expires
             </span>
           </div>
         </div>

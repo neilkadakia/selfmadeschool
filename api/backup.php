@@ -58,7 +58,8 @@ if ($key !== '') {
 }
 
 $auth = require_auth();
-if (($auth['user']['role'] ?? '') !== 'admin') respond(403, ['error' => 'Admin only.']);
+// School ops belong to the Global Administrator alone.
+require_rank($auth, ROLE_RANK['global_admin']);
 
 if ($method === 'GET') {
     $host = $_SERVER['HTTP_HOST'] ?? 'selfmadeschool.org';
