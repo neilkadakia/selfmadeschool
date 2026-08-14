@@ -251,7 +251,7 @@ export default function Home() {
             The 13th Grade — Intro Course Syllabus
           </p>
           <h2 data-reveal className="h2">
-            24 units. Zero lectures about mitochondria.
+            24 units. Zero lectures about trigonometry.
           </h2>
           <div data-reveal>
             <SyllabusExplorer />
