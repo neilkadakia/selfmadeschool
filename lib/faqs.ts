@@ -10,7 +10,7 @@ export const FAQS = [
   },
   {
     q: "How long does it take?",
-    a: "24 units at your own pace. Most people do a unit a week — the modules are 10 minutes, and the homework is your real life.",
+    a: "It's designed as a 24-week run — one unit a week. Each week is light: the module runs under 20 minutes, the chapter reads in about 20, and the homework is your real life. Move faster if you want; the pace is yours.",
   },
   {
     q: "Is this financial advice?",

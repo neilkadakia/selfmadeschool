@@ -50,7 +50,7 @@ const STEPS = [
   {
     num: "02",
     title: "Watch",
-    body: 'Each chapter pairs with a 10-minute companion module. No 40-slide decks, no "circle back."',
+    body: 'Each chapter pairs with a companion module under 20 minutes. No 40-slide decks, no "circle back."',
     tone: "how-panel--vio",
     icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z",
   },

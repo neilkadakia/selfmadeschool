@@ -94,7 +94,7 @@ export default function SyllabusExplorer() {
       </div>
 
       <p className="syl-note">
-        Every part is 8 units — each pairs a book chapter with a 10-minute module.{" "}
+        Every part is 8 units — one a week, each pairing a book chapter with a companion module, about 20 minutes apiece.{" "}
         <Link href="/learn/the-13th-grade" className="syl-note-link">
           See the Full Course →
         </Link>

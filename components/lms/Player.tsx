@@ -211,7 +211,7 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
             <div className="panel panel--watch">
               <p className="panel-kicker">Watch</p>
               <p className="panel-title">Module in production</p>
-              <p className="panel-body">The 10-minute module for this unit is being filmed. The chapter has you covered.</p>
+              <p className="panel-body">This unit&apos;s module is being filmed. The chapter has you covered.</p>
             </div>
             <div className="panel panel--do">
               <p className="panel-kicker">Do</p>
