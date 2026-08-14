@@ -157,6 +157,12 @@ p {
   opacity: 1;
 }
 
+/* Quiet account link, set off from the section links by a hairline. */
+.nav-link--login {
+  padding-left: 28px;
+  border-left: 1px solid rgba(242, 238, 227, 0.18);
+}
+
 .nav-cta {
   background: var(--acc);
   color: var(--ink);
@@ -258,6 +264,7 @@ p {
 .nav-overlay a:nth-child(5) { transition-delay: 0.16s; }
 .nav-overlay a:nth-child(6) { transition-delay: 0.2s; }
 .nav-overlay a:nth-child(7) { transition-delay: 0.24s; }
+.nav-overlay a:nth-child(8) { transition-delay: 0.28s; }
 
 .nav-overlay .nav-overlay-cta {
   margin-top: 22px;
@@ -1642,6 +1649,12 @@ p {
   margin: 24px 0 0;
   font-size: 14px;
   opacity: 0.65;
+}
+
+.enroll-signin {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* ---------- Footer ---------- */

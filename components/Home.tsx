@@ -445,7 +445,11 @@ export default function Home() {
           </Link>
         </div>
         <p data-reveal className="enroll-note">
-          No credit card. Ironically.
+          No credit card. Ironically. Already enrolled?{" "}
+          <Link href="/learn" className="enroll-signin">
+            Sign In
+          </Link>
+          .
         </p>
       </section>
     </div>

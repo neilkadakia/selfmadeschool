@@ -37,8 +37,8 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
         <h1 className="learn-h1">Class is invite-only.</h1>
         <p className="learn-sub">
           The learning section is in closed session while we finish building it. If you have an
-          account, sign in — your progress follows you to any device. No account yet? The waitlist
-          lives on the <Link href="/#enroll">home page</Link>.
+          account, sign in — your progress follows you to any device. No account yet? Join the
+          waitlist on the <Link href="/#newsletter">home page</Link> and you&apos;re first in line.
         </p>
         <form className="lms-login" onSubmit={submit}>
           <label className="lms-login-label" htmlFor="gate-email">

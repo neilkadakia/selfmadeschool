@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Wordmark from "./Wordmark";
+import { useLms } from "./useLms";
 
 const LINKS = [
   { href: "/#syllabus", label: "Syllabus" },
@@ -17,6 +18,9 @@ export default function Nav() {
   const isAbout = usePathname() === "/about";
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  // Signed-in students get "Classroom"; everyone else gets Log In + Enroll.
+  const { auth, loaded } = useLms();
+  const student = loaded ? auth : null;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -51,9 +55,20 @@ export default function Nav() {
         <Link href="/about" onClick={close}>
           About
         </Link>
-        <Link href="/learn" className="nav-overlay-cta" onClick={close}>
-          Enroll Free
-        </Link>
+        {student ? (
+          <Link href="/learn" className="nav-overlay-cta" onClick={close}>
+            Classroom
+          </Link>
+        ) : (
+          <>
+            <Link href="/learn" onClick={close}>
+              Log In
+            </Link>
+            <Link href="/#enroll" className="nav-overlay-cta" onClick={close}>
+              Enroll Free
+            </Link>
+          </>
+        )}
       </div>
       <header className={scrolled ? "nav nav--scrolled" : "nav"}>
       <Link href="/" className="nav-logo" onClick={close}>
@@ -71,9 +86,20 @@ export default function Nav() {
         >
           About
         </Link>
-        <Link href="/learn" className="nav-cta">
-          Enroll Free
-        </Link>
+        {student ? (
+          <Link href="/learn" className="nav-cta">
+            Classroom
+          </Link>
+        ) : (
+          <>
+            <Link href="/learn" className="nav-link nav-link--login">
+              Log In
+            </Link>
+            <Link href="/#enroll" className="nav-cta">
+              Enroll Free
+            </Link>
+          </>
+        )}
         <button
           type="button"
           className="nav-burger"
