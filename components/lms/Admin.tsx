@@ -13,7 +13,11 @@ import {
   apiFeedbackList,
   apiFeedbackModerate,
   apiClassOverview,
+  apiBulletinList,
+  apiBulletinPost,
+  apiBulletinDelete,
 } from "@/lib/api";
+import { COURSES, courseUnits } from "@/lib/lms";
 import { useLms } from "@/components/useLms";
 
 type Student = { email: string; name: string; role: string };
@@ -37,7 +41,9 @@ type ClassRow = {
   badges: number;
   finals: number;
   lastActive: string;
+  done?: Record<string, string[]>;
 };
+type Note = { id: string; text: string; author: string; created: string };
 
 export default function Admin() {
   const lms = useLms();
@@ -48,6 +54,8 @@ export default function Admin() {
   const [subs, setSubs] = useState<Subscriber[] | null>(null);
   const [quotes, setQuotes] = useState<Quote[] | null>(null);
   const [classRows, setClassRows] = useState<ClassRow[] | null>(null);
+  const [notes, setNotes] = useState<Note[] | null>(null);
+  const [noteText, setNoteText] = useState("");
   const [msg, setMsg] = useState("");
 
   // Create-student form
@@ -72,6 +80,9 @@ export default function Admin() {
     });
     void apiClassOverview(token).then((r) => {
       if (r.ok) setClassRows(r.data.students as ClassRow[]);
+    });
+    void apiBulletinList(token).then((r) => {
+      if (r.ok) setNotes(r.data.notes as Note[]);
     });
   }, [token, isAdmin]);
 
@@ -127,6 +138,19 @@ export default function Admin() {
     }
   };
 
+  const postNote = async (e: FormEvent) => {
+    e.preventDefault();
+    const res = await apiBulletinPost(token, noteText.trim());
+    if (res.ok) {
+      flash("Pinned to the bulletin.");
+      setNoteText("");
+      const r = await apiBulletinList(token);
+      if (r.ok) setNotes(r.data.notes as Note[]);
+    } else {
+      flash((res.data.error as string) ?? "Could not pin the note.");
+    }
+  };
+
   const copyEmails = () => {
     if (!subs?.length) return;
     void navigator.clipboard.writeText(subs.map((s) => s.email).join(", ")).then(() => flash("Emails copied to clipboard."));
@@ -149,7 +173,8 @@ export default function Admin() {
         <section className="lms-section">
           <h2 className="lms-section-h">Class progress</h2>
           <p className="lms-section-sub">
-            Every student&apos;s synced state, ranked by XP. This is the whole gradebook.
+            Every student&apos;s synced state, ranked by XP. The dot strip is the training matrix —
+            one dot per unit in the catalog, filled when it&apos;s done.
           </p>
           {classRows && classRows.length > 0 && (
             <div className="lms-admin-table lms-classbook">
@@ -162,19 +187,84 @@ export default function Admin() {
                 <span>Last active</span>
               </div>
               {classRows.map((r) => (
-                <div key={r.email} className="lms-admin-row lms-classbook-row">
-                  <span className="lms-admin-name" title={r.email}>
-                    {r.name || r.email}
-                  </span>
-                  <span>{r.units}</span>
-                  <span>{r.xp}</span>
-                  <span>{r.streak}d</span>
-                  <span>{r.badges}</span>
-                  <span className="lms-admin-meta">{r.lastActive ? r.lastActive.slice(0, 10) : "—"}</span>
+                <div key={r.email} className="lms-classbook-item">
+                  <div className="lms-admin-row lms-classbook-row">
+                    <span className="lms-admin-name" title={r.email}>
+                      {r.name || r.email}
+                    </span>
+                    <span>{r.units}</span>
+                    <span>{r.xp}</span>
+                    <span>{r.streak}d</span>
+                    <span>{r.badges}</span>
+                    <span className="lms-admin-meta">{r.lastActive ? r.lastActive.slice(0, 10) : "—"}</span>
+                  </div>
+                  <div className="lms-matrix">
+                    {COURSES.map((c) => {
+                      const dc = r.done?.[c.slug] ?? [];
+                      return (
+                        <span key={c.slug} className="lms-matrix-course">
+                          {courseUnits(c).map((u) => (
+                            <span
+                              key={u.slug}
+                              className={`lms-matrix-cell${
+                                dc.includes(u.slug) ? ` is-done fill--${c.tone}` : ""
+                              }`}
+                              title={`${c.title} · ${u.title}`}
+                            />
+                          ))}
+                        </span>
+                      );
+                    })}
+                  </div>
                 </div>
               ))}
             </div>
           )}
+        </section>
+
+        <section className="lms-section">
+          <h2 className="lms-section-h">Homeroom Bulletin</h2>
+          <p className="lms-section-sub">
+            Pin a note and every student sees it at the top of their dashboard. Keep it short —
+            it reads like a note on the classroom door.
+          </p>
+          {notes && notes.length > 0 && (
+            <div className="lms-admin-table">
+              {notes.map((n) => (
+                <div key={n.id} className="lms-admin-row lms-bulletin-row">
+                  <span className="lms-admin-name">{n.text}</span>
+                  <span className="lms-admin-meta">{n.created.slice(0, 10)}</span>
+                  <button
+                    className="lms-signout"
+                    onClick={async () => {
+                      const r = await apiBulletinDelete(token, n.id);
+                      if (r.ok) {
+                        setNotes((prev) => prev!.filter((x) => x.id !== n.id));
+                        flash("Note taken down.");
+                      }
+                    }}
+                  >
+                    Take Down
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+          <form className="lms-admin-form" onSubmit={postNote}>
+            <textarea
+              className="lms-cert-name lms-bulletin-input"
+              placeholder="Note for the whole class (3–500 characters)"
+              required
+              minLength={3}
+              maxLength={500}
+              rows={3}
+              value={noteText}
+              onChange={(e) => setNoteText(e.target.value)}
+            />
+            <button className="btn btn--solid lms-login-btn" type="submit">
+              Pin to the Bulletin
+            </button>
+          </form>
         </section>
 
         <section className="lms-section">

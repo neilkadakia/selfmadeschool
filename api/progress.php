@@ -9,6 +9,43 @@ $auth = require_auth();
 $store = 'progress_' . sha1($auth['email']);
 $method = $_SERVER['REQUEST_METHOD'] ?? '';
 
+if ($method === 'GET' && isset($_GET['leaderboard'])) {
+    // Honor Roll — any signed-in student: names and numbers only, no emails.
+    $users = read_store('users');
+    $rows = [];
+    foreach ($users as $email => $u) {
+        $saved = read_store('progress_' . sha1($email));
+        $state = $saved['state'] ?? [];
+        $doneTotal = 0;
+        foreach (($state['done'] ?? []) as $list) $doneTotal += count($list);
+        $rows[] = [
+            'email' => $email,
+            'name' => ($u['name'] ?? '') !== '' ? $u['name'] : 'Student',
+            'xp' => (int)($state['xp'] ?? 0),
+            'streak' => (int)($state['streak']['count'] ?? 0),
+            'units' => $doneTotal,
+        ];
+    }
+    usort($rows, fn($a, $b) => $b['xp'] <=> $a['xp']);
+    $you = null;
+    $board = [];
+    foreach ($rows as $i => $r) {
+        $isYou = $r['email'] === $auth['email'];
+        if ($isYou) $you = ['rank' => $i + 1, 'xp' => $r['xp']];
+        if ($i < 10) {
+            $board[] = [
+                'rank' => $i + 1,
+                'you' => $isYou,
+                'name' => $r['name'],
+                'xp' => $r['xp'],
+                'streak' => $r['streak'],
+                'units' => $r['units'],
+            ];
+        }
+    }
+    respond(200, ['ok' => true, 'board' => $board, 'you' => $you, 'classSize' => count($rows)]);
+}
+
 if ($method === 'GET' && isset($_GET['all'])) {
     // Class overview — admin only: one row per student, from their synced state.
     if (($auth['user']['role'] ?? '') !== 'admin') respond(403, ['error' => 'Admin only.']);
@@ -33,6 +70,8 @@ if ($method === 'GET' && isset($_GET['all'])) {
             'badges' => count($state['badges'] ?? []),
             'finals' => $finalsPassed,
             'lastActive' => $saved['updatedAt'] ?? '',
+            // Per-course done lists so the gradebook can draw the unit matrix.
+            'done' => (object)($state['done'] ?? []),
         ];
     }
     usort($rows, fn($a, $b) => $b['xp'] <=> $a['xp']);

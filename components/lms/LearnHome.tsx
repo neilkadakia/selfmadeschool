@@ -3,10 +3,13 @@
 import Link from "next/link";
 import { BADGES, COURSES, levelFor, courseUnits } from "@/lib/lms";
 import { useLms, courseProgress } from "@/components/useLms";
+import Bulletin from "./Bulletin";
 import CommandK from "./CommandK";
 import FeedbackCard from "./FeedbackCard";
+import HonorRoll from "./HonorRoll";
 import RewardToast from "./RewardToast";
 import Ring from "./Ring";
+import TodayPlan from "./TodayPlan";
 
 function Flame({ lit }: { lit: boolean }) {
   return (
@@ -161,6 +164,17 @@ export default function LearnHome() {
             </span>
           </Link>
 
+          <Bulletin />
+
+          {loaded && (
+            <TodayPlan
+              state={state}
+              todayKey={days[6].key}
+              nextHref={`/learn/${nextCourse.slug}/${nextUnit.slug}`}
+              totalDone={totalDone}
+            />
+          )}
+
           {totalDone > 0 && (
             <div className="lms-foryou">
               <Link href="/learn/review" className="lms-studyhall">
@@ -234,6 +248,8 @@ export default function LearnHome() {
         </section>
 
         <FeedbackCard totalDone={totalDone} />
+
+        <HonorRoll />
 
         <section className="lms-badges" aria-label="Badges">
           <h2 className="lms-section-h">Report card</h2>

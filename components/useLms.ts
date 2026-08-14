@@ -24,6 +24,7 @@ export type LmsState = {
   activity: string[]; // recent active days, yyyy-mm-dd (local)
   badges: string[];
   name: string; // for the certificate
+  lastUnitDay: string; // last day a unit was completed (yyyy-mm-dd), for Today's Plan
   reviewLast: string; // last Study Hall session day (yyyy-mm-dd)
   finals: Record<string, { score: number; total: number; passed: boolean; date: string }>;
   feedbackAt: string; // when this student submitted their quote ("" = never)
@@ -51,6 +52,7 @@ const EMPTY: LmsState = {
   activity: [],
   badges: [],
   name: "",
+  lastUnitDay: "",
   reviewLast: "",
   finals: {},
   feedbackAt: "",
@@ -287,6 +289,7 @@ const actions = {
         ...s,
         done: { ...s.done, [course]: [...list, unit] },
         xp: s.xp + XP.unit,
+        lastUnitDay: localDay(),
       });
     });
   },

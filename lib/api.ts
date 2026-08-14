@@ -86,3 +86,19 @@ export async function apiFeedbackModerate(token: string, id: string, action: "ap
 export async function apiQuotesPublic() {
   return call("feedback.php");
 }
+
+export async function apiLeaderboard(token: string) {
+  return call("progress.php?leaderboard=1", { token });
+}
+
+export async function apiBulletinList(token: string) {
+  return call("bulletin.php", { token });
+}
+
+export async function apiBulletinPost(token: string, text: string) {
+  return call("bulletin.php", { method: "POST", token, body: { action: "post", text } });
+}
+
+export async function apiBulletinDelete(token: string, id: string) {
+  return call("bulletin.php", { method: "POST", token, body: { action: "delete", id } });
+}
