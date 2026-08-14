@@ -8,6 +8,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 import { COURSES, levelFor } from "@/lib/lms";
 import { useLms, courseProgress } from "@/components/useLms";
 import Wordmark from "@/components/Wordmark";
@@ -26,6 +27,17 @@ export default function Classroom({ children }: { children: React.ReactNode }) {
   // named depth-2 rooms which can never collide with a course slug.
   const segs = pathname.split("/").filter(Boolean);
   const isPlayer = segs.length === 3;
+
+  // On phones the sidebar is a horizontal scroll bar — keep the active
+  // room visible. block: "nearest" makes this a no-op vertically. The
+  // ready flag matters: on first load the shell mounts only after auth
+  // loads, without a pathname change.
+  const ready = lms.loaded && Boolean(lms.auth);
+  useEffect(() => {
+    document
+      .querySelector(".classroom-side .is-here")
+      ?.scrollIntoView({ block: "nearest", inline: "center" });
+  }, [pathname, ready]);
 
   if (isPlayer || !lms.loaded || !lms.auth) return <>{children}</>;
 

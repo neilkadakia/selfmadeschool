@@ -173,29 +173,6 @@ export default function LearnHome() {
               })}
             </section>
 
-            <section className="lms-badges" aria-label="Badges">
-              <h2 className="lms-section-h">Report card</h2>
-              <p className="lms-section-sub">
-                Badges you earn by showing up. No participation trophies — every one of these means
-                something happened.
-              </p>
-              <div className="lms-badge-grid">
-                {BADGES.map((b) => {
-                  const earned = state.badges.includes(b.id);
-                  return (
-                    <div key={b.id} className={`lms-badge${earned ? " is-earned" : ""}`} title={b.blurb}>
-                      <span className="lms-badge-icon">{b.icon}</span>
-                      <span className="lms-badge-name">{b.name}</span>
-                      <span className="lms-badge-blurb">{b.blurb}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
-
-            <p className="lms-hint">
-              Tip: press <kbd>Ctrl</kbd>+<kbd>K</kbd> to jump to any unit.
-            </p>
           </div>
 
           <aside className="learn-rail" aria-label="Your stats and plan">
@@ -250,6 +227,30 @@ export default function LearnHome() {
             <FeedbackCard totalDone={totalDone} />
           </aside>
         </div>
+
+        <section className="lms-badges" aria-label="Badges">
+          <h2 className="lms-section-h">Report card</h2>
+          <p className="lms-section-sub">
+            Badges you earn by showing up. No participation trophies — every one of these means
+            something happened.
+          </p>
+          <div className="lms-badge-grid">
+            {BADGES.map((b) => {
+              const earned = state.badges.includes(b.id);
+              return (
+                <div key={b.id} className={`lms-badge${earned ? " is-earned" : ""}`} title={b.blurb}>
+                  <span className="lms-badge-icon">{b.icon}</span>
+                  <span className="lms-badge-name">{b.name}</span>
+                  <span className="lms-badge-blurb">{b.blurb}</span>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <p className="lms-hint">
+          Tip: press <kbd>Ctrl</kbd>+<kbd>K</kbd> to jump to any unit.
+        </p>
       </div>
     </div>
   );

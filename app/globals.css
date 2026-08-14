@@ -310,23 +310,13 @@ p {
     padding: 14px 18px;
   }
 
+  /* The menu carries the CTA on phones — the pill would crowd the wordmark. */
+  .nav-cta {
+    display: none;
+  }
+
   .hero {
     padding: 120px 20px 48px;
-  }
-
-  .sticker {
-    font-size: 12px;
-    padding: 8px 16px;
-  }
-
-  .sticker--quiz {
-    top: 13%;
-    right: 4%;
-  }
-
-  .sticker--free {
-    bottom: 26%;
-    right: 8%;
   }
 
   .marquee-track {
@@ -532,6 +522,25 @@ p {
   background: var(--coral);
   color: var(--ink);
   transform: rotate(-6deg);
+}
+
+/* After the base rules so they actually win — an earlier copy of these
+   overrides sat above the bases and silently lost the cascade. */
+@media (max-width: 640px) {
+  .sticker {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+
+  .sticker--quiz {
+    top: 21%;
+    right: 4%;
+  }
+
+  .sticker--free {
+    bottom: 26%;
+    right: 8%;
+  }
 }
 
 .hero-h1 {
@@ -4485,10 +4494,6 @@ html.lms-light .classroom .lms-signout {
   margin-top: 48px;
 }
 
-.learn-colmain .lms-badges {
-  margin-top: 56px;
-}
-
 .learn-rail .lms-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -4545,14 +4550,28 @@ html.lms-light .classroom .lms-signout {
   margin-top: 0;
 }
 
+/* Single column: dissolve both column wrappers so every card takes part
+   in one flex order — vitals (plan, stats) land right under the continue
+   card instead of below the whole page. */
 @media (max-width: 1200px) {
   .learn-cols {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
   }
 
+  .learn-colmain,
   .learn-rail {
-    position: static;
+    display: contents;
   }
+
+  .learn-cols .lms-continue { order: 1; }
+  .learn-cols .lms-bulletin { order: 2; }
+  .learn-cols .lms-plan { order: 3; margin-top: 14px; }
+  .learn-cols .lms-stats { order: 4; margin-top: 14px; }
+  .learn-cols .lms-foryou { order: 5; }
+  .learn-cols .lms-courses { order: 6; margin-top: 42px; }
+  .learn-cols .lms-section { order: 7; margin-top: 42px; }
+  .learn-cols .lms-feedback { order: 8; margin-top: 14px; }
 }
 
 /* ---------- Today's Plan / Homeroom Bulletin / Honor Roll / training matrix ---------- */
@@ -4822,7 +4841,7 @@ html.lms-light .lms-matrix-cell:not(.is-done) {
 @media (max-width: 1080px) {
   .lms-player {
     grid-template-columns: minmax(0, 1fr);
-    padding: 120px 24px 90px;
+    padding: 28px 20px 84px;
   }
 
   .lms-side {
