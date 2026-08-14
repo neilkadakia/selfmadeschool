@@ -525,6 +525,14 @@ p {
   transform: rotate(-6deg);
 }
 
+.sticker--academic {
+  top: 42%;
+  right: 6%;
+  background: var(--acc);
+  color: var(--ink);
+  transform: rotate(5deg);
+}
+
 /* After the base rules so they actually win — an earlier copy of these
    overrides sat above the bases and silently lost the cascade. */
 @media (max-width: 640px) {
@@ -541,6 +549,11 @@ p {
   .sticker--free {
     bottom: 26%;
     right: 8%;
+  }
+
+  /* Phones carry the non-academic line in the hero copy instead. */
+  .sticker--academic {
+    display: none;
   }
 }
 

@@ -194,6 +194,9 @@ export default function Home() {
         <div data-sticker className="sticker sticker--free">
           actually free
         </div>
+        <div data-sticker className="sticker sticker--academic">
+          0% academic
+        </div>
         <p data-hero-kicker className="kicker kicker--acc kicker--hero">
           ★ Pre-launch — founding class forming
         </p>
@@ -216,8 +219,9 @@ export default function Home() {
         </h1>
         <div data-hero-sub className="hero-sub">
           <p className="hero-copy">
-            Working on your mindset, your money, and dealing with life&apos;s big calls — all the adult stuff you were supposed to just <em>know</em>. We teach
-            it in plain English. You crush it. Welcome to Self Made School.
+            Working on your mindset, your money, and dealing with life&apos;s big calls — all the adult stuff you were supposed to just <em>know</em>.
+            Deliberately non-academic: no grades, no degrees, no lecture halls — plain English and skills you use the same week. You crush it. Welcome to
+            Self Made School.
           </p>
           <div className="hero-ctas">
             <Link href="/demo" className="btn btn--solid">

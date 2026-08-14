@@ -21,6 +21,10 @@ export const FAQS = [
     a: "Anyone 18–30 who got handed adulthood without a manual — students, first-jobbers, new-city movers — and the parents who want to give their kids a head start.",
   },
   {
+    q: "Is this an actual school?",
+    a: "Deliberately not. Self Made School is a non-academic program: no accreditation, no degrees, no transcripts, nothing to fail. The school theming is there because it's fun — the material is practical life skills you use the same week you learn them.",
+  },
+  {
     q: "Can I enroll right now?",
     a: "Not quite yet — we're pre-launch, and the 13th Grade is running with a small invite-only founding class while we finish building. The waitlist (the monthly email below) is the line: those inboxes hear first when doors open. Meanwhile, Unit 01 is free to try as the demo lesson.",
   },
