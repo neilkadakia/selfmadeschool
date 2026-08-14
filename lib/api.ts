@@ -102,3 +102,19 @@ export async function apiBulletinPost(token: string, text: string) {
 export async function apiBulletinDelete(token: string, id: string) {
   return call("bulletin.php", { method: "POST", token, body: { action: "delete", id } });
 }
+
+export async function apiRequestReset(email: string) {
+  return call("auth.php", { method: "POST", body: { action: "request_reset", email } });
+}
+
+export async function apiResetPassword(email: string, code: string, next: string) {
+  return call("auth.php", { method: "POST", body: { action: "reset_password", email, code, next } });
+}
+
+export async function apiBackupInfo(token: string) {
+  return call("backup.php", { token });
+}
+
+export async function apiBackupRun(token: string) {
+  return call("backup.php", { method: "POST", token });
+}

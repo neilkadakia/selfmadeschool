@@ -66,11 +66,14 @@ export default function Nav() {
           </Link>
         ) : (
           <>
+            <Link href="/demo" onClick={close}>
+              Demo Lesson
+            </Link>
             <Link href="/learn" onClick={close}>
               Log In
             </Link>
-            <Link href="/#enroll" className="nav-overlay-cta" onClick={close}>
-              Enroll Free
+            <Link href="/#newsletter" className="nav-overlay-cta" onClick={close}>
+              Join the Waitlist
             </Link>
           </>
         )}
@@ -100,8 +103,8 @@ export default function Nav() {
             <Link href="/learn" className="nav-link nav-link--login">
               Log In
             </Link>
-            <Link href="/#enroll" className="nav-cta">
-              Enroll Free
+            <Link href="/#newsletter" className="nav-cta">
+              Join the Waitlist
             </Link>
           </>
         )}

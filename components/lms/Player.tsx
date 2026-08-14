@@ -10,7 +10,9 @@ import RewardToast from "./RewardToast";
 import Quiz from "./Quiz";
 import Deck from "./Deck";
 
-function Block({ block }: { block: LessonBlock }) {
+// Exported for the public demo lesson, which renders the same blocks
+// outside the auth gate.
+export function Block({ block }: { block: LessonBlock }) {
   switch (block.kind) {
     case "p":
       return <p className="lms-p">{block.text}</p>;

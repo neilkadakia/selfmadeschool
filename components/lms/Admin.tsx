@@ -16,6 +16,8 @@ import {
   apiBulletinList,
   apiBulletinPost,
   apiBulletinDelete,
+  apiBackupInfo,
+  apiBackupRun,
 } from "@/lib/api";
 import { COURSES, courseUnits } from "@/lib/lms";
 import { useLms } from "@/components/useLms";
@@ -56,6 +58,7 @@ export default function Admin() {
   const [classRows, setClassRows] = useState<ClassRow[] | null>(null);
   const [notes, setNotes] = useState<Note[] | null>(null);
   const [noteText, setNoteText] = useState("");
+  const [cronUrl, setCronUrl] = useState("");
   const [msg, setMsg] = useState("");
 
   // Create-student form
@@ -83,6 +86,9 @@ export default function Admin() {
     });
     void apiBulletinList(token).then((r) => {
       if (r.ok) setNotes(r.data.notes as Note[]);
+    });
+    void apiBackupInfo(token).then((r) => {
+      if (r.ok) setCronUrl(r.data.cronUrl as string);
     });
   }, [token, isAdmin]);
 
@@ -388,6 +394,44 @@ export default function Admin() {
               ))}
             </div>
           )}
+        </section>
+
+        <section className="lms-section">
+          <h2 className="lms-section-h">School ops</h2>
+          <p className="lms-section-sub">
+            Backups zip every data store into <code>sms-lms-backups/</code> next to the data
+            folder — newest 14 kept. For a nightly run, add a cron job in Hostinger&apos;s hPanel
+            (Advanced → Cron Jobs) with the command below. For uptime, point a free monitor
+            (e.g. UptimeRobot) at <code>/api/health.php</code>.
+          </p>
+          {cronUrl && (
+            <div className="lms-ops-cron">
+              <code>curl -s &quot;{cronUrl}&quot; &gt; /dev/null</code>
+              <button
+                className="lms-signout"
+                onClick={() => {
+                  void navigator.clipboard
+                    .writeText(`curl -s "${cronUrl}" > /dev/null`)
+                    .then(() => flash("Cron command copied."));
+                }}
+              >
+                Copy
+              </button>
+            </div>
+          )}
+          <button
+            className="btn btn--outline lms-login-btn"
+            onClick={async () => {
+              const r = await apiBackupRun(token);
+              if (r.ok) {
+                flash(`Backup saved: ${r.data.file as string} (${r.data.stores as number} stores).`);
+              } else {
+                flash((r.data.error as string) ?? "Backup failed.");
+              }
+            }}
+          >
+            Run Backup Now
+          </button>
         </section>
 
         <section className="lms-section lms-gate">

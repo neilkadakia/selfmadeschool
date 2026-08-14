@@ -21,7 +21,11 @@ export const FAQS = [
     a: "Anyone 18–30 who got handed adulthood without a manual — students, first-jobbers, new-city movers — and the parents who want to give their kids a head start.",
   },
   {
+    q: "Can I enroll right now?",
+    a: "Not quite yet — we're pre-launch, and the 13th Grade is running with a small invite-only founding class while we finish building. The waitlist (the monthly email below) is the line: those inboxes hear first when doors open. Meanwhile, Unit 01 is free to try as the demo lesson.",
+  },
+  {
     q: "When do the 14th and 15th Grades open?",
-    a: "The 14th Grade (all money) is next up; the 15th (life's big calls) follows. Join the waitlist from the Grades section and you'll be the first to know.",
+    a: "The 14th Grade (all money) is next up; the 15th (life's big calls) follows. The same waitlist covers all three — you'll be the first to know.",
   },
 ];

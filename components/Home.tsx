@@ -195,7 +195,7 @@ export default function Home() {
           actually free
         </div>
         <p data-hero-kicker className="kicker kicker--acc kicker--hero">
-          ★ Class is in session
+          ★ Pre-launch — founding class forming
         </p>
         <h1 className="hero-h1">
           <span className="hline-mask">
@@ -220,8 +220,8 @@ export default function Home() {
             it in plain English. You crush it. Welcome to Self Made School.
           </p>
           <div className="hero-ctas">
-            <Link href="/learn" className="btn btn--solid">
-              Enroll Free →
+            <Link href="/demo" className="btn btn--solid">
+              Try the Demo Lesson →
             </Link>
             <a href="#syllabus" className="btn btn--outline">
               See the Syllabus
@@ -419,9 +419,9 @@ export default function Home() {
               inbox, every month.
             </h2>
             <p className="nl-sub">
-              Mindset, money, and the big calls — the knowledge keeps coming between units. It also
-              puts you first in line when The 14th and 15th Grades open. No spam, unsubscribe
-              anytime.
+              Mindset, money, and the big calls — one real lesson a month while we finish building.
+              This list is also the waitlist: when the founding class opens, these inboxes hear
+              first. No spam, unsubscribe anytime.
             </p>
           </div>
           <div data-reveal className="nl-side">
@@ -432,7 +432,7 @@ export default function Home() {
 
       <section id="enroll" className="enroll">
         <p data-reveal className="kicker kicker--enroll">
-          Enrollment is open
+          Pre-launch — doors open soon
         </p>
         <h2 data-reveal className="h2 h2--enroll">
           Your first adult
@@ -440,12 +440,16 @@ export default function Home() {
           decision? This one.
         </h2>
         <div data-reveal className="enroll-ctas">
-          <Link href="/learn" className="btn btn--ink">
-            Start the 13th Grade — Free
+          <a href="#newsletter" className="btn btn--ink">
+            Join the Waitlist
+          </a>
+          <Link href="/demo" className="btn btn--ink">
+            Try the Demo Lesson
           </Link>
         </div>
         <p data-reveal className="enroll-note">
-          No credit card. Ironically. Already enrolled?{" "}
+          The founding class is invite-only while we finish building — the waitlist is the line.
+          Free when it opens. No credit card. Ironically. Already enrolled?{" "}
           <Link href="/learn" className="enroll-signin">
             Sign In
           </Link>
