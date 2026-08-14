@@ -43,6 +43,72 @@ if ($action === 'change_password') {
     respond(200, ['ok' => true]);
 }
 
+if ($action === 'request_reset') {
+    // Always answers ok — no account enumeration. Codes are six digits,
+    // live 15 minutes, and re-requests inside 60s are silently ignored.
+    $email = strtolower(trim($in['email'] ?? ''));
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) respond(200, ['ok' => true]);
+    $users = read_store('users');
+    if (isset($users[$email])) {
+        $resets = read_store('resets');
+        $entry = $resets[$email] ?? null;
+        if (!$entry || ($entry['sent'] ?? 0) < time() - 60) {
+            $code = (string)random_int(100000, 999999);
+            $resets[$email] = [
+                'code' => $code,
+                'exp' => time() + 15 * 60,
+                'tries' => 0,
+                'sent' => time(),
+            ];
+            write_store('resets', $resets);
+            $subject = 'Self Made School — your password reset code';
+            $body = "Your reset code is: $code\n\n"
+                . "It expires in 15 minutes. Enter it on the sign-in page along with your new password.\n\n"
+                . "If you didn't ask for this, you can ignore this email — your password hasn't changed.";
+            $headers = "From: Self Made School <noreply@selfmadeschool.org>\r\n"
+                . "Content-Type: text/plain; charset=utf-8";
+            @mail($email, $subject, $body, $headers);
+        }
+    }
+    respond(200, ['ok' => true]);
+}
+
+if ($action === 'reset_password') {
+    $email = strtolower(trim($in['email'] ?? ''));
+    $code = trim((string)($in['code'] ?? ''));
+    $next = (string)($in['next'] ?? '');
+    if (strlen($next) < 10) respond(400, ['error' => 'New password must be at least 10 characters.']);
+    $resets = read_store('resets');
+    $entry = $resets[$email] ?? null;
+    if (!$entry || ($entry['exp'] ?? 0) < time()) {
+        respond(400, ['error' => 'Code expired or not found — request a new one.']);
+    }
+    $entry['tries'] = ($entry['tries'] ?? 0) + 1;
+    if ($entry['tries'] > 5) {
+        unset($resets[$email]);
+        write_store('resets', $resets);
+        respond(429, ['error' => 'Too many attempts — request a new code.']);
+    }
+    $resets[$email] = $entry;
+    write_store('resets', $resets);
+    if (!hash_equals($entry['code'], $code)) {
+        respond(400, ['error' => 'Wrong code — check the email and try again.']);
+    }
+    $users = read_store('users');
+    if (!isset($users[$email])) respond(400, ['error' => 'Account not found.']);
+    $users[$email]['hash'] = password_hash($next, PASSWORD_DEFAULT);
+    write_store('users', $users);
+    unset($resets[$email]);
+    write_store('resets', $resets);
+    // Every existing session dies with the old password.
+    $tokens = read_store('tokens');
+    foreach ($tokens as $t => $e) {
+        if (($e['email'] ?? '') === $email) unset($tokens[$t]);
+    }
+    write_store('tokens', $tokens);
+    respond(200, ['ok' => true]);
+}
+
 if ($action === 'logout') {
     $token = bearer_token();
     if ($token !== '') {
