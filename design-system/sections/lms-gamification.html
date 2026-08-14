@@ -46,6 +46,37 @@
   .toast-xp { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 22px; color: #1d9e50; }
   .toast-badge { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; }
   .toast-badge .b-icon { width: 28px; height: 28px; font-size: 12px; border-radius: 8px; }
+
+  /* Today's Plan — daily attendance sheet */
+  .plan { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding: 14px 20px; border-radius: 18px; border: 1px dashed rgba(242,238,227,0.28); font-size: 14px; }
+  .plan-h { font-size: 11.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .plan-item { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+  .plan-item.done { opacity: 0.55; text-decoration: line-through; text-decoration-thickness: 1px; }
+  .plan-box { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid rgba(242,238,227,0.4); font-size: 12px; font-weight: 800; color: var(--acc); }
+  .plan-item.done .plan-box { border-color: var(--acc); background: rgba(67,222,123,0.12); }
+  .plan-dismissed { font-weight: 700; color: var(--acc); }
+
+  /* Homeroom Bulletin — pinned note */
+  .bulletin { display: flex; gap: 14px; padding: 16px 22px; border-radius: 18px; border: 1px solid rgba(255,180,58,0.5); background: rgba(255,180,58,0.08); }
+  .bulletin-h { display: block; margin-bottom: 4px; font-size: 11.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--coral); }
+  .bulletin-text { margin: 0; font-size: 14.5px; line-height: 1.55; }
+  .bulletin-meta { font-size: 13px; color: var(--muted); }
+
+  /* Honor Roll — class leaderboard */
+  .honor { border-top: 1px solid rgba(242,238,227,0.12); }
+  .honor-row { display: grid; grid-template-columns: 44px minmax(0,1.6fr) minmax(0,1fr) auto auto 72px; gap: 14px; align-items: center; padding: 12px 10px; border-bottom: 1px solid rgba(242,238,227,0.12); font-size: 14.5px; }
+  .honor-row.you { background: rgba(67,222,123,0.07); }
+  .honor-rank { font-weight: 800; }
+  .honor-name { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+  .honor-dim { font-size: 13px; color: var(--muted); white-space: nowrap; }
+  .honor-xp { font-weight: 800; text-align: right; }
+  .pill { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: var(--acc); color: var(--ink); }
+
+  /* Training matrix — one dot per unit, per student (admin gradebook) */
+  .matrix { display: inline-flex; flex-wrap: wrap; gap: 3px; }
+  .cell { width: 9px; height: 9px; border-radius: 3px; background: rgba(242,238,227,0.14); }
+  .cell.on { background: var(--acc); }
+  .cell.on.vio { background: var(--vio); }
 </style>
 </head>
 <body>
@@ -82,6 +113,45 @@
   </div>
   <p style="margin-top:22px">
     <span class="toast"><span class="toast-xp">+150 XP</span><span class="toast-badge"><span class="b-icon">A+</span> Straight A</span></span>
+  </p>
+
+  <p class="label">Today's Plan — daily attendance sheet, dashed border, strike when done</p>
+  <div class="plan">
+    <span class="plan-h">Today's Plan</span>
+    <span class="plan-item done"><span class="plan-box">✓</span>Show Up</span>
+    <span class="plan-item"><span class="plan-box"></span>Learn One New Thing</span>
+    <span class="plan-item"><span class="plan-box"></span>Study Hall Review</span>
+  </div>
+  <p style="margin-top:12px" class="plan">
+    <span class="plan-h">All done</span>
+    <span class="plan-item done"><span class="plan-box">✓</span>Show Up</span>
+    <span class="plan-item done"><span class="plan-box">✓</span>Learn One New Thing</span>
+    <span class="plan-item done"><span class="plan-box">✓</span>Study Hall Review</span>
+    <span class="plan-dismissed">Class dismissed 🎓</span>
+  </p>
+
+  <p class="label">Homeroom Bulletin — amber pinned note from the teacher</p>
+  <div class="bulletin">
+    <span style="font-size:18px" aria-hidden="true">📌</span>
+    <div>
+      <span class="bulletin-h">Homeroom Bulletin</span>
+      <p class="bulletin-text">New unit drops Friday: The Salary Talk. Finish Rejection Practice first — it sets it up.<span class="bulletin-meta"> — Neil · 2026-08-13</span></p>
+    </div>
+  </div>
+
+  <p class="label">Honor Roll — class leaderboard, medals top 3, green wash on your row</p>
+  <div class="honor">
+    <div class="honor-row"><span class="honor-rank">🥇</span><span class="honor-name">Priya S.</span><span class="honor-dim">Senior</span><span class="honor-dim">18 units</span><span class="honor-dim">12d 🔥</span><span class="honor-xp">2450 XP</span></div>
+    <div class="honor-row you"><span class="honor-rank">🥈</span><span class="honor-name">Dev K. <span class="pill">You</span></span><span class="honor-dim">Junior</span><span class="honor-dim">11 units</span><span class="honor-dim">5d 🔥</span><span class="honor-xp">1520 XP</span></div>
+    <div class="honor-row"><span class="honor-rank">🥉</span><span class="honor-name">Marcus T.</span><span class="honor-dim">Sophomore</span><span class="honor-dim">7 units</span><span class="honor-dim">—</span><span class="honor-xp">890 XP</span></div>
+    <div class="honor-row"><span class="honor-rank">#4</span><span class="honor-name">Ana R.</span><span class="honor-dim">Freshman</span><span class="honor-dim">3 units</span><span class="honor-dim">2d 🔥</span><span class="honor-xp">380 XP</span></div>
+  </div>
+
+  <p class="label">Training matrix — admin gradebook, one dot per unit, tone per course</p>
+  <p class="matrix">
+    <span class="cell on"></span><span class="cell on"></span><span class="cell on"></span><span class="cell on"></span><span class="cell on"></span><span class="cell on"></span><span class="cell on"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span>
+    <span style="width:10px"></span>
+    <span class="cell on vio"></span><span class="cell on vio"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span>
   </p>
 </div>
 </body>
