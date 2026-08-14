@@ -1,0 +1,87 @@
+<!-- @dsCard group="Sections" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; --muted: rgba(242,238,227,0.68); }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 40px 32px 56px; font-family: "Instrument Sans", sans-serif; background: var(--ink); color: var(--paper); }
+  .wrap { max-width: 860px; margin: 0 auto; }
+  .label { font-size: 13px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin: 40px 0 16px; }
+  .label:first-child { margin-top: 0; }
+
+  .hero { display: flex; align-items: center; gap: 22px; }
+  .avatar { display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 72px; border-radius: 22px; background: linear-gradient(135deg, #F5A83C, #B8C94F, #43DE7B); color: var(--ink); font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 32px; }
+  .kicker { font-size: 13px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--acc); margin: 0 0 8px; }
+  .h1 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 40px; line-height: 0.95; letter-spacing: -0.03em; text-transform: uppercase; margin: 0 0 8px; }
+  .meta { margin: 0; font-size: 14.5px; color: var(--muted); }
+
+  .insights { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  .card { border: 1px solid rgba(242,238,227,0.14); border-radius: 18px; padding: 20px 22px; }
+  .c-label { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+  .bars { display: flex; align-items: flex-end; gap: 3px; height: 44px; margin-bottom: 10px; }
+  .bar { flex: 1; height: 30%; border-radius: 3px; background: rgba(242,238,227,0.12); }
+  .bar.on { height: 100%; background: var(--acc); }
+  .big { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 40px; line-height: 1; margin: 0 0 10px; }
+  .foot { font-size: 13px; color: var(--muted); margin: 0; }
+
+  .ringrow { display: flex; align-items: center; gap: 14px; border: 1px solid rgba(242,238,227,0.14); border-radius: 18px; padding: 16px 18px; max-width: 320px; }
+  .ring { width: 64px; height: 64px; }
+  .ring .track { fill: none; stroke: rgba(242,238,227,0.12); stroke-width: 7; }
+  .ring .fill { fill: none; stroke: var(--acc); stroke-width: 7; stroke-linecap: round; transform: rotate(-90deg); transform-origin: center; }
+  .ring text { fill: var(--paper); font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 13px; }
+  .r-name { font-weight: 700; font-size: 15px; flex: 1; }
+  .r-count { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 14px; color: var(--muted); }
+
+  .themes { display: flex; gap: 14px; }
+  .swatch { display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 18px; border: 2px solid rgba(242,238,227,0.18); font-weight: 700; font-size: 14.5px; }
+  .swatch.active { border-color: var(--acc); }
+  .preview { width: 120px; height: 64px; border-radius: 10px; background-image: linear-gradient(90deg,#F5A83C,#B8C94F,#43DE7B); background-size: 40px 6px; background-repeat: no-repeat; background-position: 14px 14px; }
+  .preview.dark { background-color: #16161c; border: 1px solid rgba(242,238,227,0.2); }
+  .preview.light { background-color: var(--paper); border: 1px solid rgba(14,14,18,0.2); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="label">Student File — profile hero</p>
+  <div class="hero">
+    <span class="avatar">N</span>
+    <div>
+      <p class="kicker">Student File</p>
+      <p class="h1">Neil</p>
+      <p class="meta">neil@example.com · Junior · 850 XP · Faculty</p>
+    </div>
+  </div>
+
+  <p class="label">Insights — activity bars, mastery ring</p>
+  <div class="insights">
+    <div class="card">
+      <p class="c-label">Activity — last 30 days</p>
+      <div class="bars"><span class="bar"></span><span class="bar on"></span><span class="bar on"></span><span class="bar"></span><span class="bar on"></span><span class="bar"></span><span class="bar on"></span><span class="bar on"></span><span class="bar on"></span><span class="bar"></span><span class="bar on"></span><span class="bar"></span><span class="bar on"></span><span class="bar on"></span></div>
+      <p class="foot">9 active days · 4-day streak</p>
+    </div>
+    <div class="card">
+      <p class="c-label">Knowledge checks</p>
+      <p class="big">86%</p>
+      <p class="foot">average across 7 checks</p>
+    </div>
+  </div>
+  <div class="ringrow" style="margin-top:14px">
+    <svg class="ring" viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"/><circle class="fill" cx="32" cy="32" r="26" stroke-dasharray="163.4" stroke-dashoffset="49"/><text x="32" y="37" text-anchor="middle">70%</text></svg>
+    <span class="r-name">The 13th Grade</span>
+    <span class="r-count">17/24</span>
+  </div>
+
+  <p class="label">Appearance — Night School / Day Class</p>
+  <div class="themes">
+    <div class="swatch active"><span class="preview dark"></span>Night School</div>
+    <div class="swatch"><span class="preview light"></span>Day Class</div>
+  </div>
+</div>
+</body>
+</html>
