@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { BADGES, COURSES, levelFor, courseUnits } from "@/lib/lms";
+import { allBosses } from "@/lib/game";
 import { useLms, courseProgress } from "@/components/useLms";
+import AvatarStudio from "./AvatarStudio";
 import Bulletin from "./Bulletin";
 import CommandK from "./CommandK";
 import FeedbackCard from "./FeedbackCard";
@@ -28,6 +30,34 @@ export default function LearnHome() {
   const level = levelFor(state.xp);
 
   const totalDone = Object.values(state.done).reduce((a, b) => a + b.length, 0);
+
+  // Picture Day comes before the dashboard: no portrait, no desk.
+  if (loaded && lms.auth && !state.avatar.created) {
+    return (
+      <div className="learn">
+        <RewardToast reward={lms.reward} onDone={lms.clearReward} />
+        <div className="learn-wrap">
+          <p className="kicker kicker--acc">Picture Day</p>
+          <h1 className="learn-h1">First, the portrait.</h1>
+          <p className="learn-sub">
+            Every student gets one. Build yours — it fights beside you in the Arena, wears
+            whatever you buy in the Locker, and can be retaken anytime.
+          </p>
+          <AvatarStudio firstRun />
+        </div>
+      </div>
+    );
+  }
+
+  // Boss card: the first fully-finished part whose monster is undefeated.
+  const bossReady = allBosses().find((b) => {
+    const done = state.done[b.course.slug] ?? [];
+    return (
+      b.part.units.length > 0 &&
+      b.part.units.every((u) => done.includes(u.slug)) &&
+      !state.battles[b.key]?.won
+    );
+  });
 
   // Next up: a course you've started but not finished, else the first unfinished course.
   const inProgress = COURSES.find((c) => {
@@ -117,6 +147,23 @@ export default function LearnHome() {
                     →
                   </span>
                 </Link>
+                {bossReady && (
+                  <Link
+                    href={`/learn/arena/?course=${bossReady.course.slug}&part=${bossReady.partIndex}`}
+                    className="lms-studyhall lms-bossready"
+                  >
+                    <span className="lms-studyhall-main">
+                      <span className="lms-studyhall-title">Boss Ready</span>
+                      <span className="lms-studyhall-sub">
+                        {bossReady.monster.name} guards {bossReady.part.name} — settle it in the
+                        Arena
+                      </span>
+                    </span>
+                    <span className="lms-continue-arrow" aria-hidden="true">
+                      →
+                    </span>
+                  </Link>
+                )}
                 {sharpen && (
                   <Link
                     href={`/learn/${sharpen.course}/${sharpen.slug}#quiz`}
@@ -191,6 +238,10 @@ export default function LearnHome() {
               <div className="lms-stat">
                 <span className="lms-stat-num">{loaded ? totalDone : 0}</span>
                 <span className="lms-stat-label">units done</span>
+              </div>
+              <div className="lms-stat">
+                <span className="lms-stat-num">{loaded ? state.credits : 0}</span>
+                <span className="lms-stat-label">credits</span>
               </div>
               <div className="lms-stat lms-stat--level">
                 <span className="lms-stat-num">{level.name}</span>

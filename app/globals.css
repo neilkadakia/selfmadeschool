@@ -4581,7 +4581,7 @@ html.lms-light .classroom .lms-signout {
 
 .learn-rail .lms-stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   margin: 0;
 }
@@ -4657,6 +4657,505 @@ html.lms-light .classroom .lms-signout {
   .learn-cols .lms-courses { order: 6; margin-top: 42px; }
   .learn-cols .lms-section { order: 7; margin-top: 42px; }
   .learn-cols .lms-feedback { order: 8; margin-top: 14px; }
+}
+
+/* ---------- Picture Day / The Locker / The Arena ---------- */
+
+.lms-studio {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 36px;
+  align-items: start;
+  margin-top: 34px;
+}
+
+.lms-studio-stage {
+  position: relative;
+  background: #fdfbf5;
+  border-radius: 10px;
+  padding: 20px 20px 46px;
+  transform: rotate(-2deg);
+  box-shadow: 0 18px 44px rgba(14, 14, 18, 0.45);
+}
+
+.lms-studio-frame {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 8px;
+  border-radius: 4px;
+  background: repeating-linear-gradient(90deg, #d8d2c2 0 8px, transparent 8px 14px);
+}
+
+.lms-studio-panel {
+  max-width: 520px;
+}
+
+.lms-studio-row {
+  margin-bottom: 18px;
+}
+
+.lms-studio-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-on-ink);
+}
+
+.lms-studio-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lms-studio-chip {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(242, 238, 227, 0.25);
+  background: none;
+  color: inherit;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.lms-studio-chip:hover {
+  border-color: rgba(242, 238, 227, 0.5);
+}
+
+.lms-studio-chip.is-on {
+  border-color: var(--acc);
+  background: rgba(67, 222, 123, 0.12);
+  color: var(--acc);
+}
+
+.lms-studio-swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  border: 2px solid rgba(242, 238, 227, 0.2);
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.lms-studio-swatch:hover {
+  transform: translateY(-2px);
+}
+
+.lms-studio-swatch.is-on {
+  border-color: var(--acc);
+  box-shadow: 0 0 0 2px rgba(67, 222, 123, 0.35);
+}
+
+.lms-studio-note {
+  margin: 14px 0 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--muted-on-ink);
+  max-width: 420px;
+}
+
+.lms-locker-top {
+  margin-top: 8px;
+}
+
+.lms-locker-me {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.lms-locker-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.lms-locker-credit {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--acc);
+}
+
+.lms-locker-credit em {
+  font-family: var(--font-instrument), sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--muted-on-ink);
+}
+
+.lms-locker-stat {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.lms-gear-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.lms-gear {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(242, 238, 227, 0.14);
+}
+
+.lms-gear.is-equipped {
+  border-color: rgba(67, 222, 123, 0.55);
+  background: rgba(67, 222, 123, 0.06);
+}
+
+.lms-gear-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.lms-gear-name {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.lms-gear-stat {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--coral);
+  font-variant-numeric: tabular-nums;
+}
+
+.lms-gear-blurb {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+  flex: 1;
+}
+
+.lms-gear-foot {
+  margin-top: 4px;
+}
+
+.lms-gear-buy {
+  font-size: 14px;
+  padding: 10px 20px;
+}
+
+.lms-gear-buy:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Arena */
+
+.lms-boss-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 34px;
+}
+
+.lms-boss {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 22px;
+  border-radius: 20px;
+  border: 1px solid rgba(242, 238, 227, 0.14);
+}
+
+.lms-boss.is-open {
+  border-color: rgba(255, 180, 58, 0.5);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.lms-boss.is-open:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 180, 58, 0.07);
+  color: inherit;
+}
+
+.lms-boss-art.is-locked {
+  filter: grayscale(1);
+  opacity: 0.45;
+}
+
+.lms-boss-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.lms-boss-name {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+
+.lms-boss-sub {
+  font-size: 13px;
+  color: var(--muted-on-ink);
+}
+
+.lms-arena-wrap {
+  max-width: 860px;
+}
+
+.lms-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding: 30px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 180, 58, 0.4);
+  background: rgba(255, 180, 58, 0.05);
+}
+
+.lms-vs-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.lms-vs-name {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.lms-vs-stats {
+  font-size: 13px;
+  color: var(--muted-on-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.lms-vs-mark {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 44px;
+  color: var(--coral);
+  letter-spacing: -0.02em;
+}
+
+.lms-arena-intro {
+  margin-top: 22px;
+}
+
+.lms-arena-taunt {
+  margin: 0 0 8px;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+}
+
+.lms-arena-weak {
+  margin: 0 0 22px;
+  font-size: 14.5px;
+  color: var(--muted-on-ink);
+}
+
+.lms-hpbars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 22px 0 18px;
+}
+
+.lms-hp-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  min-width: 0;
+}
+
+.lms-hp-head span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lms-hp-head em {
+  margin-left: auto;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-on-ink);
+}
+
+.lms-hp-track {
+  display: block;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(242, 238, 227, 0.1);
+  overflow: hidden;
+}
+
+.lms-hp-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lms-hp-fill--you {
+  background: var(--acc);
+}
+
+@keyframes arenaShake {
+  0%, 100% { transform: none; }
+  25% { transform: translateX(-7px); }
+  75% { transform: translateX(7px); }
+}
+
+@keyframes arenaPow {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.015); }
+  100% { transform: scale(1); }
+}
+
+.lms-arena-quiz.arena-hit-you {
+  animation: arenaShake 0.35s ease;
+}
+
+.lms-arena-quiz.arena-hit-boss {
+  animation: arenaPow 0.35s ease;
+}
+
+.lms-arena-end {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.lms-arena-end-h {
+  margin-bottom: 4px;
+}
+
+.lms-toast-credits {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  color: #b07515;
+}
+
+.classroom-avatar--live {
+  flex-shrink: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  overflow: hidden;
+  background: rgba(242, 238, 227, 0.1);
+}
+
+.lms-bossready {
+  border-color: rgba(255, 180, 58, 0.55);
+  background: rgba(255, 180, 58, 0.1);
+}
+
+.lms-bossready .lms-studyhall-title {
+  color: var(--coral);
+}
+
+html.lms-light .lms-studio-chip {
+  border-color: rgba(14, 14, 18, 0.3);
+}
+
+html.lms-light .lms-studio-chip.is-on {
+  border-color: #1d9e50;
+  background: rgba(29, 158, 80, 0.1);
+  color: #157a3e;
+}
+
+html.lms-light .lms-studio-swatch {
+  border-color: rgba(14, 14, 18, 0.2);
+}
+
+html.lms-light .lms-studio-swatch.is-on {
+  border-color: #1d9e50;
+  box-shadow: 0 0 0 2px rgba(29, 158, 80, 0.3);
+}
+
+html.lms-light .lms-studio-stage {
+  box-shadow: 0 14px 34px rgba(14, 14, 18, 0.18);
+  border: 1px solid rgba(14, 14, 18, 0.1);
+}
+
+html.lms-light .lms-gear,
+html.lms-light .lms-boss {
+  border-color: rgba(14, 14, 18, 0.16);
+}
+
+html.lms-light .lms-gear.is-equipped {
+  border-color: rgba(29, 158, 80, 0.6);
+  background: rgba(29, 158, 80, 0.06);
+}
+
+html.lms-light .lms-boss.is-open {
+  border-color: rgba(176, 117, 21, 0.5);
+}
+
+html.lms-light .lms-hp-track {
+  background: rgba(14, 14, 18, 0.1);
+}
+
+html.lms-light .lms-hp-fill--you {
+  background: #1d9e50;
+}
+
+html.lms-light .lms-locker-credit {
+  color: #157a3e;
+}
+
+@media (max-width: 760px) {
+  .lms-studio {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .lms-vs {
+    gap: 18px;
+  }
+
+  .lms-vs-mark {
+    font-size: 30px;
+  }
+
+  .lms-hpbars {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 }
 
 /* ---------- Today's Plan / Homeroom Bulletin / Honor Roll / training matrix ---------- */

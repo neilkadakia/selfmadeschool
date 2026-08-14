@@ -48,6 +48,7 @@ export default function RewardToast({
     <div ref={hostRef} className="lms-toast" role="status">
       {reward.levelUp && <span className="lms-toast-level">Level Up — {reward.levelUp}</span>}
       {reward.xp > 0 && <span className="lms-toast-xp">+{reward.xp} XP</span>}
+      {reward.credits > 0 && <span className="lms-toast-credits">+{reward.credits} Cr</span>}
       {reward.badges.map((b) => (
         <span key={b.id} className="lms-toast-badge">
           <span className="lms-badge-icon">{b.icon}</span> {b.name}

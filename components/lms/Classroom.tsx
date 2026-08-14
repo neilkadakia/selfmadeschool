@@ -11,11 +11,13 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { COURSES, levelFor } from "@/lib/lms";
 import { useLms, courseProgress } from "@/components/useLms";
+import Portrait from "@/components/lms/Portrait";
 import Wordmark from "@/components/Wordmark";
 
 const ROOMS = [
   { href: "/learn", label: "My Desk", exact: true },
   { href: "/learn/review", label: "Study Hall", exact: false },
+  { href: "/learn/arena", label: "The Arena", exact: false },
   { href: "/learn/certificate", label: "Certificates", exact: false },
 ];
 
@@ -85,6 +87,15 @@ export default function Classroom({ children }: { children: React.ReactNode }) {
           })}
           <span className="classroom-label">Account</span>
           <Link
+            href="/learn/locker"
+            className={`classroom-link${isActive("/learn/locker", false) ? " is-here" : ""}`}
+          >
+            The Locker
+            {lms.state.credits > 0 && (
+              <span className="classroom-course-pct">{lms.state.credits} Cr</span>
+            )}
+          </Link>
+          <Link
             href="/learn/profile"
             className={`classroom-link${isActive("/learn/profile", false) ? " is-here" : ""}`}
           >
@@ -100,9 +111,15 @@ export default function Classroom({ children }: { children: React.ReactNode }) {
           )}
         </nav>
         <div className="classroom-user">
-          <span className="lms-avatar classroom-avatar" aria-hidden="true">
-            {(lms.auth.name || lms.auth.email).slice(0, 1).toUpperCase()}
-          </span>
+          {lms.state.avatar.created ? (
+            <span className="classroom-avatar classroom-avatar--live" aria-hidden="true">
+              <Portrait avatar={lms.state.avatar} equipped={lms.state.equipped} size={40} />
+            </span>
+          ) : (
+            <span className="lms-avatar classroom-avatar" aria-hidden="true">
+              {(lms.auth.name || lms.auth.email).slice(0, 1).toUpperCase()}
+            </span>
+          )}
           <span className="classroom-user-main">
             <span className="classroom-user-name">{lms.auth.name || lms.auth.email}</span>
             <span className="classroom-user-sub">

@@ -7,6 +7,16 @@
 
 import { useSyncExternalStore } from "react";
 import { COURSES, XP, XP_EXTRA, FINAL_PASS, levelFor, type Badge, badgeById } from "@/lib/lms";
+import {
+  BATTLE,
+  CREDITS,
+  DEFAULT_AVATAR,
+  gearById,
+  type AvatarConfig,
+  type AvatarState,
+  type Equipped,
+  type GearSlot,
+} from "@/lib/game";
 import { apiGetProgress, apiLogin, apiLogout, apiPutProgress, type AuthUser } from "@/lib/api";
 
 const KEY = "sms-lms-v2";
@@ -29,9 +39,14 @@ export type LmsState = {
   finals: Record<string, { score: number; total: number; passed: boolean; date: string }>;
   feedbackAt: string; // when this student submitted their quote ("" = never)
   theme: "dark" | "light"; // LMS appearance, follows the account
+  credits: number; // spendable school credits (XP is never spent)
+  avatar: AvatarState;
+  gear: string[]; // owned gear ids
+  equipped: Equipped;
+  battles: Record<string, { won: boolean; attempts: number; date: string }>; // partKey -> record
 };
 
-export type Reward = { xp: number; badges: Badge[]; levelUp?: string };
+export type Reward = { xp: number; credits: number; badges: Badge[]; levelUp?: string };
 export type SyncStatus = "idle" | "saving" | "saved" | "error";
 
 type Snapshot = {
@@ -57,6 +72,11 @@ const EMPTY: LmsState = {
   finals: {},
   feedbackAt: "",
   theme: "dark",
+  credits: 0,
+  avatar: DEFAULT_AVATAR,
+  gear: [],
+  equipped: {},
+  battles: {},
 };
 
 const SERVER_SNAPSHOT: Snapshot = {
@@ -221,6 +241,7 @@ function apply(fn: (s: LmsState) => LmsState) {
   const next = withDerivedBadges(fn(prev));
   if (next === prev) return;
   const gainedXp = next.xp - prev.xp;
+  const gainedCredits = next.credits - prev.credits;
   const newBadges = next.badges
     .filter((b) => !prev.badges.includes(b))
     .map(badgeById)
@@ -232,8 +253,13 @@ function apply(fn: (s: LmsState) => LmsState) {
   emit({
     state: next,
     reward:
-      gainedXp > 0 || newBadges.length > 0 || levelUp
-        ? { xp: Math.max(0, gainedXp), badges: newBadges, levelUp }
+      gainedXp > 0 || gainedCredits > 0 || newBadges.length > 0 || levelUp
+        ? {
+            xp: Math.max(0, gainedXp),
+            credits: Math.max(0, gainedCredits),
+            badges: newBadges,
+            levelUp,
+          }
         : snapshot.reward,
   });
   schedulePush();
@@ -283,12 +309,14 @@ const actions = {
           ...s,
           done: { ...s.done, [course]: list.filter((u) => u !== unit) },
           xp: Math.max(0, s.xp - XP.unit),
+          credits: Math.max(0, s.credits - CREDITS.unit),
         };
       }
       return touchStreak({
         ...s,
         done: { ...s.done, [course]: [...list, unit] },
         xp: s.xp + XP.unit,
+        credits: s.credits + CREDITS.unit,
         lastUnitDay: localDay(),
       });
     });
@@ -303,6 +331,7 @@ const actions = {
         ...s,
         quizBest: { ...s.quizBest, [key]: Math.max(best, correct) },
         xp: s.xp + (firstPerfect ? XP.quizPerfect : 0),
+        credits: s.credits + (firstPerfect ? CREDITS.quizPerfect : 0),
       };
       if (firstPerfect && !next.badges.includes("quiz-perfect")) {
         next = { ...next, badges: [...next.badges, "quiz-perfect"] };
@@ -315,7 +344,12 @@ const actions = {
     const key = `${course}/${unit}`;
     apply((s) => {
       if (s.decksDone.includes(key)) return s;
-      let next: LmsState = { ...s, decksDone: [...s.decksDone, key], xp: s.xp + XP.deck };
+      let next: LmsState = {
+        ...s,
+        decksDone: [...s.decksDone, key],
+        xp: s.xp + XP.deck,
+        credits: s.credits + CREDITS.deck,
+      };
       if (!next.badges.includes("deck-done")) {
         next = { ...next, badges: [...next.badges, "deck-done"] };
       }
@@ -384,6 +418,79 @@ const actions = {
       theme: s.theme,
       feedbackAt: s.feedbackAt,
     }));
+  },
+
+  // Picture Day. First save also pays out back-pay Credits for work
+  // already done, so long-time students don't start the shop broke.
+  saveAvatar(cfg: AvatarConfig) {
+    apply((s) => {
+      let credits = s.credits;
+      if (!s.avatar.created) {
+        const unitsDone = Object.values(s.done).reduce((a, b) => a + b.length, 0);
+        let perfects = 0;
+        for (const c of COURSES) {
+          for (const [slug, lesson] of Object.entries(c.lessons)) {
+            if ((s.quizBest[`${c.slug}/${slug}`] ?? -1) >= lesson.quiz.length) perfects++;
+          }
+        }
+        credits +=
+          unitsDone * CREDITS.unit + perfects * CREDITS.quizPerfect + s.decksDone.length * CREDITS.deck;
+      }
+      return { ...s, credits, avatar: { ...cfg, created: true } };
+    });
+  },
+
+  buyGear(id: string) {
+    const item = gearById(id);
+    apply((s) => {
+      if (!item || s.gear.includes(id) || s.credits < item.price) return s;
+      let next: LmsState = {
+        ...s,
+        credits: s.credits - item.price,
+        gear: [...s.gear, id],
+        equipped: { ...s.equipped, [item.slot]: id },
+      };
+      if (!next.badges.includes("suited-up")) {
+        next = { ...next, badges: [...next.badges, "suited-up"] };
+      }
+      return next;
+    });
+  },
+
+  setEquipped(slot: GearSlot, id: string | null) {
+    apply((s) => {
+      if (id !== null && !s.gear.includes(id)) return s;
+      const equipped = { ...s.equipped };
+      if (id === null) delete equipped[slot];
+      else equipped[slot] = id;
+      return { ...s, equipped };
+    });
+  },
+
+  // Arena outcome. Attempts count feeds the question-order seed; the
+  // first win on a boss pays out, rematches are for pride (and a little XP).
+  battleResult(key: string, won: boolean) {
+    apply((s) => {
+      const prev = s.battles[key];
+      const firstWin = won && !prev?.won;
+      let next: LmsState = {
+        ...s,
+        battles: {
+          ...s.battles,
+          [key]: {
+            won: Boolean(prev?.won) || won,
+            attempts: (prev?.attempts ?? 0) + 1,
+            date: localDay(),
+          },
+        },
+        xp: s.xp + (firstWin ? BATTLE.xpFirstWin : won ? BATTLE.xpRematchWin : 0),
+        credits: s.credits + (firstWin ? CREDITS.battleFirstWin : 0),
+      };
+      if (firstWin && !next.badges.includes("slayer")) {
+        next = { ...next, badges: [...next.badges, "slayer"] };
+      }
+      return won ? touchStreak(next) : next;
+    });
   },
 
   finalResult(course: string, score: number, total: number) {
