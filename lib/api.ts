@@ -44,6 +44,10 @@ export async function apiUsersList(token: string) {
   return call("users.php", { token });
 }
 
+export async function apiClassOverview(token: string) {
+  return call("progress.php?all=1", { token });
+}
+
 export async function apiUserCreate(
   token: string,
   user: { email: string; password: string; name: string; role?: string }
@@ -53,6 +57,10 @@ export async function apiUserCreate(
 
 export async function apiNewsletterList(token: string) {
   return call("newsletter.php", { token });
+}
+
+export async function apiUpdateProfile(token: string, name: string) {
+  return call("auth.php", { method: "POST", token, body: { action: "update_profile", name } });
 }
 
 export async function apiChangePassword(token: string, current: string, next: string) {

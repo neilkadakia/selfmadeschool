@@ -17,6 +17,17 @@ if ($method !== 'POST') respond(405, ['error' => 'GET or POST only.']);
 $in = body_json();
 $action = $in['action'] ?? 'login';
 
+if ($action === 'update_profile') {
+    $auth = require_auth();
+    $name = trim($in['name'] ?? '');
+    if ($name === '' || mb_strlen($name) > 60) respond(400, ['error' => 'Name must be 1-60 characters.']);
+    $users = read_store('users');
+    if (!isset($users[$auth['email']])) respond(401, ['error' => 'Account not found.']);
+    $users[$auth['email']]['name'] = $name;
+    write_store('users', $users);
+    respond(200, ['ok' => true, 'user' => public_user($auth['email'], $users[$auth['email']])]);
+}
+
 if ($action === 'change_password') {
     $auth = require_auth();
     $current = (string)($in['current'] ?? '');

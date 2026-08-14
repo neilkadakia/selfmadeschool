@@ -27,6 +27,7 @@ export type LmsState = {
   reviewLast: string; // last Study Hall session day (yyyy-mm-dd)
   finals: Record<string, { score: number; total: number; passed: boolean; date: string }>;
   feedbackAt: string; // when this student submitted their quote ("" = never)
+  theme: "dark" | "light"; // LMS appearance, follows the account
 };
 
 export type Reward = { xp: number; badges: Badge[]; levelUp?: string };
@@ -53,6 +54,7 @@ const EMPTY: LmsState = {
   reviewLast: "",
   finals: {},
   feedbackAt: "",
+  theme: "dark",
 };
 
 const SERVER_SNAPSHOT: Snapshot = {
@@ -356,6 +358,29 @@ const actions = {
   // No XP for feedback on purpose — quotes stay unbought.
   feedbackDone() {
     apply((s) => (s.feedbackAt ? s : { ...s, feedbackAt: localDay() }));
+  },
+
+  setTheme(theme: "dark" | "light") {
+    apply((s) => (s.theme === theme ? s : { ...s, theme }));
+  },
+
+  // After the server accepts a new display name, keep the session in step.
+  renameAuth(name: string) {
+    if (!snapshot.auth) return;
+    const auth = { ...snapshot.auth, name };
+    persistAuth(auth);
+    emit({ auth });
+    apply((s) => (s.name === name ? s : { ...s, name }));
+  },
+
+  // Wipes learning data; keeps identity, theme, and the submitted-quote flag.
+  resetProgress() {
+    apply((s) => ({
+      ...EMPTY,
+      name: s.name,
+      theme: s.theme,
+      feedbackAt: s.feedbackAt,
+    }));
   },
 
   finalResult(course: string, score: number, total: number) {

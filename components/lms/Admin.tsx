@@ -12,6 +12,7 @@ import {
   apiChangePassword,
   apiFeedbackList,
   apiFeedbackModerate,
+  apiClassOverview,
 } from "@/lib/api";
 import { useLms } from "@/components/useLms";
 
@@ -26,6 +27,17 @@ type Quote = {
   created: string;
   approved: boolean;
 };
+type ClassRow = {
+  email: string;
+  name: string;
+  role: string;
+  units: number;
+  xp: number;
+  streak: number;
+  badges: number;
+  finals: number;
+  lastActive: string;
+};
 
 export default function Admin() {
   const lms = useLms();
@@ -35,6 +47,7 @@ export default function Admin() {
   const [students, setStudents] = useState<Student[] | null>(null);
   const [subs, setSubs] = useState<Subscriber[] | null>(null);
   const [quotes, setQuotes] = useState<Quote[] | null>(null);
+  const [classRows, setClassRows] = useState<ClassRow[] | null>(null);
   const [msg, setMsg] = useState("");
 
   // Create-student form
@@ -56,6 +69,9 @@ export default function Admin() {
     });
     void apiFeedbackList(token).then((r) => {
       if (r.ok) setQuotes(r.data.quotes as Quote[]);
+    });
+    void apiClassOverview(token).then((r) => {
+      if (r.ok) setClassRows(r.data.students as ClassRow[]);
     });
   }, [token, isAdmin]);
 
@@ -129,6 +145,37 @@ export default function Admin() {
             {msg}
           </p>
         )}
+
+        <section className="lms-section">
+          <h2 className="lms-section-h">Class progress</h2>
+          <p className="lms-section-sub">
+            Every student&apos;s synced state, ranked by XP. This is the whole gradebook.
+          </p>
+          {classRows && classRows.length > 0 && (
+            <div className="lms-admin-table lms-classbook">
+              <div className="lms-admin-row lms-classbook-head">
+                <span>Student</span>
+                <span>Units</span>
+                <span>XP</span>
+                <span>Streak</span>
+                <span>Badges</span>
+                <span>Last active</span>
+              </div>
+              {classRows.map((r) => (
+                <div key={r.email} className="lms-admin-row lms-classbook-row">
+                  <span className="lms-admin-name" title={r.email}>
+                    {r.name || r.email}
+                  </span>
+                  <span>{r.units}</span>
+                  <span>{r.xp}</span>
+                  <span>{r.streak}d</span>
+                  <span>{r.badges}</span>
+                  <span className="lms-admin-meta">{r.lastActive ? r.lastActive.slice(0, 10) : "—"}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
 
         <section className="lms-section">
           <h2 className="lms-section-h">Students</h2>

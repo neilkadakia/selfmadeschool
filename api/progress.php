@@ -9,6 +9,36 @@ $auth = require_auth();
 $store = 'progress_' . sha1($auth['email']);
 $method = $_SERVER['REQUEST_METHOD'] ?? '';
 
+if ($method === 'GET' && isset($_GET['all'])) {
+    // Class overview — admin only: one row per student, from their synced state.
+    if (($auth['user']['role'] ?? '') !== 'admin') respond(403, ['error' => 'Admin only.']);
+    $users = read_store('users');
+    $rows = [];
+    foreach ($users as $email => $u) {
+        $saved = read_store('progress_' . sha1($email));
+        $state = $saved['state'] ?? [];
+        $doneTotal = 0;
+        foreach (($state['done'] ?? []) as $list) $doneTotal += count($list);
+        $finalsPassed = 0;
+        foreach (($state['finals'] ?? []) as $f) {
+            if (!empty($f['passed'])) $finalsPassed++;
+        }
+        $rows[] = [
+            'email' => $email,
+            'name' => $u['name'] ?? '',
+            'role' => $u['role'] ?? 'student',
+            'units' => $doneTotal,
+            'xp' => (int)($state['xp'] ?? 0),
+            'streak' => (int)($state['streak']['count'] ?? 0),
+            'badges' => count($state['badges'] ?? []),
+            'finals' => $finalsPassed,
+            'lastActive' => $saved['updatedAt'] ?? '',
+        ];
+    }
+    usort($rows, fn($a, $b) => $b['xp'] <=> $a['xp']);
+    respond(200, ['ok' => true, 'students' => $rows]);
+}
+
 if ($method === 'GET') {
     $saved = read_store($store);
     respond(200, [

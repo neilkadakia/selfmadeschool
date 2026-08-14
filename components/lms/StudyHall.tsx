@@ -22,22 +22,29 @@ export default function StudyHall() {
   const [flipped, setFlipped] = useState(false);
   const [finished, setFinished] = useState(false);
 
-  // All flashcards from completed units that have lessons.
+  // Flashcards from completed units — weakest knowledge checks first
+  // (adaptive review: what you missed comes back sooner).
   const pool = useMemo<ReviewCard[]>(() => {
-    const cards: ReviewCard[] = [];
+    const seed = seedFrom(`${state.reviewLast}|${state.xp}`);
+    const groups: { weakness: number; cards: ReviewCard[] }[] = [];
     for (const course of COURSES) {
       const done = state.done[course.slug] ?? [];
       for (const unit of courseUnits(course)) {
         const lesson = course.lessons[unit.slug];
         if (!lesson || !done.includes(unit.slug)) continue;
-        for (const c of lesson.cards) {
-          cards.push({ ...c, source: unit.title });
-        }
+        const best = state.quizBest[`${course.slug}/${unit.slug}`] ?? -1;
+        const weakness = best < 0 ? 1.25 : 1 - best / lesson.quiz.length;
+        groups.push({
+          weakness,
+          cards: shuffled(
+            lesson.cards.map((c) => ({ ...c, source: unit.title })),
+            seed + best
+          ),
+        });
       }
     }
-    // Order varies session to session via a seed built from progress state.
-    const seed = seedFrom(`${state.reviewLast}|${state.xp}|${cards.length}`);
-    return shuffled(cards, seed).slice(0, SESSION_SIZE);
+    groups.sort((a, b) => b.weakness - a.weakness);
+    return groups.flatMap((g) => g.cards).slice(0, SESSION_SIZE);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded]);
 

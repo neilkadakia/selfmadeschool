@@ -3333,6 +3333,528 @@ kbd {
   width: fit-content;
 }
 
+/* ---------- For you row + rings + profile + insights ---------- */
+
+.lms-foryou {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.lms-foryou .lms-studyhall {
+  margin-top: 0;
+}
+
+.lms-sharpen {
+  border-color: rgba(255, 180, 58, 0.5);
+  background: rgba(255, 180, 58, 0.08);
+}
+
+.lms-sharpen:hover {
+  background: rgba(255, 180, 58, 0.14);
+}
+
+.lms-sharpen .lms-studyhall-title,
+.lms-sharpen .lms-continue-arrow {
+  color: var(--coral);
+}
+
+.lms-ring {
+  width: 64px;
+  height: 64px;
+}
+
+.lms-ring-track {
+  fill: none;
+  stroke: rgba(242, 238, 227, 0.12);
+  stroke-width: 7;
+}
+
+.lms-ring-fill {
+  fill: none;
+  stroke-width: 7;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ring--acc {
+  stroke: var(--acc);
+}
+
+.ring--vio {
+  stroke: var(--vio);
+}
+
+.ring--coral {
+  stroke: var(--coral);
+}
+
+.lms-ring-text {
+  fill: currentColor;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.lms-course .lms-ring {
+  width: 46px;
+  height: 46px;
+}
+
+.lms-course-top-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lms-profile-id {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+.lms-profile-id:hover {
+  color: inherit;
+}
+
+.lms-profile-hero {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin: 0 0 34px;
+}
+
+.lms-avatar--big {
+  width: 72px;
+  height: 72px;
+  border-radius: 22px;
+  font-size: 32px;
+}
+
+.lms-profile-h1 {
+  font-size: clamp(34px, 5vw, 56px);
+  margin-bottom: 8px;
+}
+
+.lms-profile-meta {
+  margin: 0;
+  font-size: 14.5px;
+  color: var(--muted-on-ink);
+}
+
+.lms-insights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.lms-insight-card {
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-radius: 18px;
+  padding: 20px 22px;
+}
+
+.lms-insight-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-on-ink);
+  margin: 0 0 12px;
+}
+
+.lms-insight-big {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1;
+  margin: 0 0 10px;
+}
+
+.lms-insight-foot {
+  font-size: 13px;
+  color: var(--muted-on-ink);
+  margin: 0;
+}
+
+.lms-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 44px;
+  margin-bottom: 10px;
+}
+
+.lms-bar {
+  flex: 1;
+  height: 30%;
+  border-radius: 3px;
+  background: rgba(242, 238, 227, 0.12);
+}
+
+.lms-bar.is-on {
+  height: 100%;
+  background: var(--acc);
+}
+
+.lms-mastery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.lms-mastery-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-radius: 18px;
+  padding: 16px 18px;
+  transition: background 0.2s ease;
+}
+
+.lms-mastery-item:hover {
+  background: rgba(242, 238, 227, 0.05);
+  color: inherit;
+}
+
+.lms-mastery-name {
+  font-weight: 700;
+  font-size: 15px;
+  flex: 1;
+}
+
+.lms-mastery-count {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--muted-on-ink);
+  white-space: nowrap;
+}
+
+.lms-themes {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.lms-theme-swatch {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 16px;
+  border-radius: 18px;
+  border: 2px solid rgba(242, 238, 227, 0.18);
+  background: none;
+  color: inherit;
+  font-family: var(--font-instrument), sans-serif;
+  font-weight: 700;
+  font-size: 14.5px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.15s ease;
+}
+
+.lms-theme-swatch:hover {
+  transform: translateY(-2px);
+}
+
+.lms-theme-swatch.is-active {
+  border-color: var(--acc);
+}
+
+.lms-theme-preview {
+  width: 120px;
+  height: 64px;
+  border-radius: 10px;
+}
+
+.lms-theme-swatch--dark .lms-theme-preview {
+  background: var(--ink);
+  border: 1px solid rgba(242, 238, 227, 0.2);
+  background-image: linear-gradient(90deg, #f5a83c, #b8c94f, #43de7b);
+  background-size: 40px 6px;
+  background-repeat: no-repeat;
+  background-position: 14px 14px;
+}
+
+.lms-theme-swatch--light .lms-theme-preview {
+  background: var(--paper);
+  border: 1px solid rgba(14, 14, 18, 0.2);
+  background-image: linear-gradient(90deg, #f5a83c, #b8c94f, #43de7b);
+  background-size: 40px 6px;
+  background-repeat: no-repeat;
+  background-position: 14px 14px;
+}
+
+.lms-classbook .lms-admin-row {
+  grid-template-columns: minmax(0, 2fr) repeat(4, minmax(0, 0.7fr)) minmax(0, 1fr);
+}
+
+.lms-classbook-head {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-on-ink);
+}
+
+/* ---------- Day Class (light theme) ---------- */
+
+html.lms-light .learn,
+html.lms-light .lms-player {
+  background: var(--paper);
+  color: var(--ink);
+  --muted-on-ink: rgba(14, 14, 18, 0.62);
+}
+
+html.lms-light .learn .btn--outline,
+html.lms-light .lms-player .btn--outline {
+  border-color: rgba(14, 14, 18, 0.35);
+  color: var(--ink);
+}
+
+html.lms-light .learn .btn--outline:hover,
+html.lms-light .lms-player .btn--outline:hover {
+  border-color: var(--ink);
+  background: rgba(14, 14, 18, 0.05);
+  color: var(--ink);
+}
+
+html.lms-light .lms-stat,
+html.lms-light .lms-week,
+html.lms-light .lms-course,
+html.lms-light .lms-badge,
+html.lms-light .lms-insight-card,
+html.lms-light .lms-mastery-item,
+html.lms-light .lms-quiz,
+html.lms-light .lms-deck,
+html.lms-light .lms-feedback,
+html.lms-light .lms-profile,
+html.lms-light .lms-admin-quote,
+html.lms-light .lms-theme-swatch {
+  border-color: rgba(14, 14, 18, 0.16);
+}
+
+html.lms-light .lms-admin-quote.is-live {
+  border-color: rgba(29, 158, 80, 0.6);
+}
+
+html.lms-light .lms-theme-swatch.is-active {
+  border-color: #1d9e50;
+}
+
+html.lms-light .unit-rows,
+html.lms-light .unit-row,
+html.lms-light .lms-admin-table,
+html.lms-light .lms-admin-row,
+html.lms-light .unit-nav {
+  border-color: rgba(14, 14, 18, 0.14);
+}
+
+html.lms-light .unit-row:hover,
+html.lms-light .lms-mastery-item:hover {
+  background: rgba(14, 14, 18, 0.045);
+}
+
+html.lms-light .learn-bar,
+html.lms-light .lms-level-bar,
+html.lms-light .lms-course-bar {
+  background: rgba(14, 14, 18, 0.1);
+}
+
+html.lms-light .lms-day-dot {
+  background: rgba(14, 14, 18, 0.12);
+}
+
+html.lms-light .lms-day-dot.is-active {
+  background: #1d9e50;
+  box-shadow: none;
+}
+
+html.lms-light .lms-bar {
+  background: rgba(14, 14, 18, 0.1);
+}
+
+html.lms-light .lms-bar.is-on {
+  background: #1d9e50;
+}
+
+html.lms-light .lms-ring-track {
+  stroke: rgba(14, 14, 18, 0.1);
+}
+
+html.lms-light .lms-flame {
+  color: rgba(14, 14, 18, 0.2);
+}
+
+html.lms-light .lms-flame.is-lit {
+  color: #d98a17;
+}
+
+/* Paper-on-paper cards invert to ink */
+html.lms-light .lms-continue,
+html.lms-light .lms-bigfact,
+html.lms-light .lms-card3d-front,
+html.lms-light .lms-toast,
+html.lms-light .panel--read {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+html.lms-light .lms-continue:hover {
+  color: var(--paper);
+  box-shadow: 0 18px 44px rgba(14, 14, 18, 0.3);
+}
+
+html.lms-light .lms-continue .tone-acc {
+  color: var(--acc);
+}
+
+html.lms-light .lms-continue .tone-coral {
+  color: var(--coral);
+}
+
+html.lms-light .lms-toast-xp {
+  color: var(--acc);
+}
+
+html.lms-light .lms-studyhall-title,
+html.lms-light .lms-studyhall .lms-continue-arrow {
+  color: var(--vio);
+}
+
+html.lms-light .lms-sharpen .lms-studyhall-title,
+html.lms-light .lms-sharpen .lms-continue-arrow {
+  color: #d98a17;
+}
+
+html.lms-light .row-pill--vio {
+  color: var(--vio);
+}
+
+html.lms-light .row-pill--coral {
+  color: #b06f0e;
+}
+
+html.lms-light .row-pill--acc {
+  color: #157a3e;
+}
+
+html.lms-light .row-pill--dim {
+  background: rgba(14, 14, 18, 0.07);
+  color: rgba(14, 14, 18, 0.55);
+}
+
+html.lms-light .lms-quiz-opt {
+  background: rgba(14, 14, 18, 0.035);
+  border-color: rgba(14, 14, 18, 0.18);
+  color: var(--ink);
+}
+
+html.lms-light .lms-quiz-opt:hover:not(:disabled) {
+  background: rgba(14, 14, 18, 0.07);
+  border-color: rgba(14, 14, 18, 0.35);
+}
+
+html.lms-light .lms-quiz-letter {
+  border-color: rgba(14, 14, 18, 0.3);
+}
+
+html.lms-light .lms-quiz-best {
+  color: #157a3e;
+}
+
+html.lms-light .panel--watch {
+  border-color: rgba(14, 14, 18, 0.2);
+}
+
+html.lms-light .watch-frame {
+  background: rgba(14, 14, 18, 0.06);
+}
+
+html.lms-light .lms-notes,
+html.lms-light .lms-cert-name,
+html.lms-light .lms-login-input {
+  background: rgba(14, 14, 18, 0.04);
+  border-color: rgba(14, 14, 18, 0.22);
+  color: var(--ink);
+}
+
+html.lms-light .lms-signout {
+  border-color: rgba(14, 14, 18, 0.3);
+  color: var(--ink);
+}
+
+html.lms-light .lms-signout:hover {
+  background: rgba(14, 14, 18, 0.06);
+  border-color: rgba(14, 14, 18, 0.5);
+}
+
+html.lms-light .lms-side-unit:hover {
+  background: rgba(14, 14, 18, 0.05);
+}
+
+html.lms-light .lms-side-unit.is-active {
+  background: rgba(14, 14, 18, 0.09);
+}
+
+html.lms-light .lms-side-unit.is-done .lms-side-check {
+  color: #157a3e;
+}
+
+html.lms-light .lms-badge-icon {
+  color: var(--ink);
+}
+
+html.lms-light .lms-badge.is-earned {
+  border-color: rgba(29, 158, 80, 0.5);
+}
+
+html.lms-light .lms-cert {
+  border: 1px solid rgba(14, 14, 18, 0.18);
+}
+
+html.lms-light .lms-cert-honors,
+html.lms-light .nl-done-big {
+  color: #157a3e;
+}
+
+html.lms-light kbd {
+  border-color: rgba(14, 14, 18, 0.25);
+  background: rgba(14, 14, 18, 0.05);
+}
+
+html.lms-light .lms-callout {
+  background: rgba(29, 158, 80, 0.08);
+  border-left-color: #1d9e50;
+}
+
+html.lms-light .lms-side {
+  background: var(--paper);
+}
+
+html.lms-light .lms-side-toggle {
+  background: rgba(14, 14, 18, 0.05);
+  border-color: rgba(14, 14, 18, 0.25);
+  color: var(--ink);
+}
+
+html.lms-light .lms-admin-flash {
+  border-left-color: #1d9e50;
+  background: rgba(29, 158, 80, 0.08);
+}
+
+html.lms-light .kicker--acc {
+  color: #157a3e;
+}
+
 /* Quotes (homepage, real students only) */
 
 .quotes {

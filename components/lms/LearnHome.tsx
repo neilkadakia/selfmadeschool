@@ -6,6 +6,7 @@ import { useLms, courseProgress } from "@/components/useLms";
 import CommandK from "./CommandK";
 import FeedbackCard from "./FeedbackCard";
 import RewardToast from "./RewardToast";
+import Ring from "./Ring";
 
 function Flame({ lit }: { lit: boolean }) {
   return (
@@ -36,6 +37,24 @@ export default function LearnHome() {
     courseUnits(nextCourse).find((u) => !(state.done[nextCourse.slug] ?? []).includes(u.slug)) ??
     courseUnits(nextCourse)[0];
 
+  // Sharpen: the completed unit with the weakest (or missing) knowledge check.
+  let sharpen: { course: string; slug: string; title: string; best: number } | null = null;
+  let weakest = 1;
+  for (const course of COURSES) {
+    const done = state.done[course.slug] ?? [];
+    for (const u of courseUnits(course)) {
+      const lesson = course.lessons[u.slug];
+      if (!lesson || !done.includes(u.slug)) continue;
+      const best = state.quizBest[`${course.slug}/${u.slug}`] ?? -1;
+      if (best >= lesson.quiz.length) continue;
+      const ratio = best < 0 ? -0.25 : best / lesson.quiz.length;
+      if (ratio < weakest) {
+        weakest = ratio;
+        sharpen = { course: course.slug, slug: u.slug, title: u.title, best };
+      }
+    }
+  }
+
   // Last 7 local days for the activity dots.
   const days = Array.from({ length: 7 }, (_, i) => {
     const d = new Date();
@@ -55,19 +74,24 @@ export default function LearnHome() {
         <header className="learn-head">
           {lms.auth && (
             <div className="lms-profile">
-              <span className="lms-avatar" aria-hidden="true">
-                {(lms.auth.name || lms.auth.email).slice(0, 1).toUpperCase()}
-              </span>
-              <span className="lms-profile-main">
-                <span className="lms-profile-name">{lms.auth.name}</span>
-                <span className="lms-profile-sub">
-                  {lms.sync === "saving"
-                    ? "Saving to your account…"
-                    : lms.sync === "error"
-                      ? "Offline — saved on this device"
-                      : "Synced to your account ✓"}
+              <Link href="/learn/profile" className="lms-profile-id">
+                <span className="lms-avatar" aria-hidden="true">
+                  {(lms.auth.name || lms.auth.email).slice(0, 1).toUpperCase()}
                 </span>
-              </span>
+                <span className="lms-profile-main">
+                  <span className="lms-profile-name">{lms.auth.name}</span>
+                  <span className="lms-profile-sub">
+                    {lms.sync === "saving"
+                      ? "Saving to your account…"
+                      : lms.sync === "error"
+                        ? "Offline — saved on this device"
+                        : "Synced to your account ✓"}
+                  </span>
+                </span>
+              </Link>
+              <Link href="/learn/profile" className="lms-signout">
+                Profile
+              </Link>
               {lms.auth.role === "admin" && (
                 <Link href="/learn/admin" className="lms-signout">
                   Faculty Lounge
@@ -138,19 +162,39 @@ export default function LearnHome() {
           </Link>
 
           {totalDone > 0 && (
-            <Link href="/learn/review" className="lms-studyhall">
-              <span className="lms-studyhall-main">
-                <span className="lms-studyhall-title">Study Hall</span>
-                <span className="lms-studyhall-sub">
-                  {state.reviewLast === days[6].key
-                    ? "Reviewed today ✓ — more never hurts"
-                    : "A quick flashcard round from your completed units"}
+            <div className="lms-foryou">
+              <Link href="/learn/review" className="lms-studyhall">
+                <span className="lms-studyhall-main">
+                  <span className="lms-studyhall-title">Study Hall</span>
+                  <span className="lms-studyhall-sub">
+                    {state.reviewLast === days[6].key
+                      ? "Reviewed today ✓ — more never hurts"
+                      : "Weak spots first — flashcards from your completed units"}
+                  </span>
                 </span>
-              </span>
-              <span className="lms-continue-arrow" aria-hidden="true">
-                →
-              </span>
-            </Link>
+                <span className="lms-continue-arrow" aria-hidden="true">
+                  →
+                </span>
+              </Link>
+              {sharpen && (
+                <Link
+                  href={`/learn/${sharpen.course}/${sharpen.slug}#quiz`}
+                  className="lms-studyhall lms-sharpen"
+                >
+                  <span className="lms-studyhall-main">
+                    <span className="lms-studyhall-title">Sharpen</span>
+                    <span className="lms-studyhall-sub">
+                      {sharpen.best < 0
+                        ? `You skipped the knowledge check on ${sharpen.title}`
+                        : `${sharpen.title}: best score ${sharpen.best}/4 — run it back`}
+                    </span>
+                  </span>
+                  <span className="lms-continue-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </Link>
+              )}
+            </div>
           )}
         </header>
 
@@ -165,8 +209,11 @@ export default function LearnHome() {
               >
                 <div className="lms-course-top">
                   <p className={`lms-course-kicker tone-${course.tone}`}>{course.kicker}</p>
-                  {course.status === "preview" && <span className="pill row-pill--dim">Demo Preview</span>}
-                  {p.pct === 100 && <span className="pill pill--acc">Complete ✓</span>}
+                  <span className="lms-course-top-right">
+                    {course.status === "preview" && <span className="pill row-pill--dim">Demo Preview</span>}
+                    {p.pct === 100 && <span className="pill pill--acc">Complete ✓</span>}
+                    <Ring pct={p.pct} tone={course.tone} />
+                  </span>
                 </div>
                 <h2 className="lms-course-title">{course.title}</h2>
                 <p className="lms-course-blurb">{course.headline}</p>
