@@ -160,7 +160,7 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
                   </svg>
                 </div>
               ) : (
-                <p className="lms-muted">Module in production — the written lesson above has you covered.</p>
+                <p className="lms-muted">Video in production — the written lesson above has you covered.</p>
               )}
             </section>
 
@@ -204,14 +204,14 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
                 Chapter {unit.part.units.findIndex((u) => u.slug === unit.slug) + 1}
               </p>
               <p className="panel-body">
-                This unit is chapter-first: the full treatment lives in the book, and the module is
+                This unit is chapter-first: the full treatment lives in the book, and the video is
                 in production. The blurb version — {unit.blurb.toLowerCase()}
               </p>
             </div>
             <div className="panel panel--watch">
               <p className="panel-kicker">Watch</p>
-              <p className="panel-title">Module in production</p>
-              <p className="panel-body">This unit&apos;s module is being filmed. The chapter has you covered.</p>
+              <p className="panel-title">Video in production</p>
+              <p className="panel-body">This unit&apos;s video is being filmed. The chapter has you covered.</p>
             </div>
             <div className="panel panel--do">
               <p className="panel-kicker">Do</p>

@@ -1,11 +1,11 @@
 // The 13th Grade — 24 units in three parts of eight.
-// Each unit pairs a book chapter with a 10-minute module.
+// Each unit pairs a book chapter with a bite-size online lesson.
 
 export type Unit = {
   slug: string;
   title: string;
   blurb: string;
-  live: boolean; // module recorded and available (vs. chapter-first)
+  live: boolean; // video recorded and available (vs. chapter-first)
 };
 
 export type Part = {

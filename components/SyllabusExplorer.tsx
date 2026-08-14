@@ -73,7 +73,7 @@ export default function SyllabusExplorer() {
               >
                 <div className="card-top">
                   <span className="unit-label">Unit {String(active * 8 + i + 1).padStart(2, "0")}</span>
-                  <span className={`pill ${tone.pill}`}>{u.live ? "Lesson + module" : "Full lesson"}</span>
+                  <span className={`pill ${tone.pill}`}>{u.live ? "Lesson + video" : "Full lesson"}</span>
                 </div>
                 <div>
                   <h3 className="syl-card-title">{u.title}</h3>
@@ -94,7 +94,7 @@ export default function SyllabusExplorer() {
       </div>
 
       <p className="syl-note">
-        Every part is 8 units — one a week, each pairing a book chapter with a companion module, about 20 minutes apiece.{" "}
+        Every part is 8 units — one a week, about 20 minutes apiece, each paired with a chapter of the book.{" "}
         <Link href="/learn/the-13th-grade" className="syl-note-link">
           See the Full Course →
         </Link>

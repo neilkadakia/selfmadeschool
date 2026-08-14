@@ -111,11 +111,11 @@ export default function CoursePage({ slug }: { slug: string }) {
                         {isDone
                           ? "Done ✓"
                           : hasLesson && u.live
-                            ? "Lesson + module"
+                            ? "Lesson + video"
                             : hasLesson
                               ? "Full lesson"
                               : u.live
-                                ? "10-min module"
+                                ? "Video lesson"
                                 : "Chapter first"}
                       </span>
                     </Link>

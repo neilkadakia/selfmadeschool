@@ -55,7 +55,7 @@ export const COURSES: Course[] = [
     status: "live",
     headline: "The intro course. Everything school skipped.",
     description:
-      "Working on your mindset, your money, and dealing with life's big calls — 24 units, each pairing a book chapter with a 10-minute module.",
+      "Working on your mindset, your money, and dealing with life's big calls — 24 bite-size units, each paired with a chapter of the book.",
     parts: PARTS,
     lessons: LESSONS_13,
   },

@@ -2,7 +2,7 @@
 export const FAQS = [
   {
     q: "Is it actually free?",
-    a: "The 13th Grade is free — every module, no trial clock, no card required. The book is the only thing that costs money, and the course never requires it.",
+    a: "The 13th Grade is free — every unit, no trial clock, no card required. The book is the only thing that costs money, and the course never requires it.",
   },
   {
     q: "Do I need the book to take the course?",
@@ -10,7 +10,7 @@ export const FAQS = [
   },
   {
     q: "How long does it take?",
-    a: "It's designed as a 24-week run — one unit a week. Each week is light: the module runs under 20 minutes, the chapter reads in about 20, and the homework is your real life. Move faster if you want; the pace is yours.",
+    a: "It's designed as a 24-week run — one unit a week. Each week is light: the unit is under 20 minutes online, the chapter reads in about 20, and the homework is your real life. Move faster if you want; the pace is yours.",
   },
   {
     q: "Is this financial advice?",
