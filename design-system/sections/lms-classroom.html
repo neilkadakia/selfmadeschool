@@ -1,0 +1,118 @@
+<!-- @dsCard group="Sections" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; --muted: rgba(242,238,227,0.68); }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Instrument Sans", sans-serif; background: #17171d; color: var(--paper); padding: 28px; }
+  a { color: inherit; text-decoration: none; }
+  .spec { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; margin: 0 0 12px; }
+
+  /* Classroom shell: 256px sticky sidebar + main; marketing nav/footer hidden on /learn */
+  .shell { display: grid; grid-template-columns: 256px minmax(0,1fr); min-height: 560px; background: var(--ink); border-radius: 18px; overflow: hidden; }
+  .side { display: flex; flex-direction: column; padding: 24px 18px 20px; background: rgba(242,238,227,0.03); border-right: 1px solid rgba(242,238,227,0.1); }
+  .brand { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 16px; letter-spacing: -0.02em; margin: 0 6px 10px; }
+  .brand em { color: var(--acc); font-style: normal; }
+  .nav { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .label { margin: 18px 12px 7px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .link { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 10px; font-size: 13.5px; font-weight: 600; opacity: 0.82; }
+  .link:hover { opacity: 1; background: rgba(242,238,227,0.06); }
+  .link.here { opacity: 1; background: rgba(67,222,123,0.1); color: var(--acc); }
+  .gradenum { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 8px; border: 1.5px solid currentColor; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 12px; }
+  .t-acc { color: var(--acc); } .t-vio { color: var(--vio); } .t-coral { color: var(--coral); }
+  .cname { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--paper); }
+  .cpct { font-size: 11.5px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .user { display: flex; align-items: center; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(242,238,227,0.12); }
+  .avatar { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 11px; background: linear-gradient(135deg,#f5a83c,#b8c94f,#43de7b); color: var(--ink); font-weight: 800; font-size: 15px; }
+  .uname { font-size: 13px; font-weight: 700; }
+  .usub { font-size: 11px; color: var(--muted); }
+  .signout { margin-left: auto; font-size: 11px; font-weight: 700; padding: 6px 11px; border: 1px solid rgba(242,238,227,0.25); border-radius: 999px; background: none; color: var(--paper); }
+  .exit { margin: 14px 12px 0; font-size: 12.5px; font-weight: 600; opacity: 0.55; }
+
+  /* Main: content column + 330px sticky right rail */
+  .main { padding: 36px 34px; }
+  .kicker { font-size: 12px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--acc); margin: 0 0 8px; }
+  .h1 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 34px; line-height: 0.95; letter-spacing: -0.03em; text-transform: uppercase; margin: 0 0 22px; }
+  .cols { display: grid; grid-template-columns: minmax(0,1fr) 200px; gap: 22px; align-items: start; }
+  .continue { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 22px; border-radius: 18px; background: var(--paper); color: var(--ink); }
+  .c-kicker { display: block; font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: #1d9e50; margin-bottom: 4px; }
+  .c-title { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 18px; }
+  .cardrow { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .mini { padding: 13px 16px; border-radius: 14px; border: 1px solid rgba(91,124,250,0.45); background: rgba(91,124,250,0.08); font-size: 12px; }
+  .mini.amber { border-color: rgba(255,180,58,0.5); background: rgba(255,180,58,0.08); }
+  .mini b { display: block; font-size: 13px; margin-bottom: 3px; }
+  .rail { display: flex; flex-direction: column; gap: 10px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .stat { padding: 10px 8px; border-radius: 12px; border: 1px solid rgba(242,238,227,0.14); text-align: left; }
+  .stat b { display: block; font-family: "Bricolage Grotesque", sans-serif; font-size: 16px; }
+  .stat span { font-size: 9.5px; color: var(--muted); }
+  .plan { padding: 12px 14px; border-radius: 14px; border: 1px dashed rgba(242,238,227,0.28); font-size: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .plan .ph { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .box { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; border-radius: 4px; border: 1.5px solid rgba(242,238,227,0.4); font-size: 10px; font-weight: 800; color: var(--acc); margin-right: 7px; vertical-align: -3px; }
+  .done { opacity: 0.55; text-decoration: line-through; }
+  .done .box { border-color: var(--acc); background: rgba(67,222,123,0.12); }
+</style>
+</head>
+<body>
+  <p class="spec">Classroom shell — signed-in /learn only: 256px sticky left nav + main with 330px right rail. Marketing nav/footer hidden on /learn; unit player keeps its own immersive layout. Mobile: sidebar becomes a sticky horizontal tab bar.</p>
+  <div class="shell">
+    <aside class="side">
+      <a href="#" class="brand">SELF-MADE <em>SCHOOL</em></a>
+      <nav class="nav">
+        <span class="label">My Learning</span>
+        <a href="#" class="link here">My Desk</a>
+        <a href="#" class="link">Study Hall</a>
+        <a href="#" class="link">Certificates</a>
+        <span class="label">Courses</span>
+        <a href="#" class="link"><span class="gradenum t-acc">13</span><span class="cname">The 13th Grade</span><span class="cpct">5/24</span></a>
+        <a href="#" class="link"><span class="gradenum t-vio">14</span><span class="cname">The 14th Grade</span><span class="cpct">demo</span></a>
+        <a href="#" class="link"><span class="gradenum t-coral">15</span><span class="cname">The 15th Grade</span><span class="cpct">demo</span></a>
+        <span class="label">Account</span>
+        <a href="#" class="link">Student File</a>
+        <a href="#" class="link">Faculty Lounge</a>
+      </nav>
+      <div class="user">
+        <span class="avatar">S</span>
+        <span><span class="uname">Sam Student</span><br><span class="usub">Sophomore</span></span>
+        <button class="signout">Sign Out</button>
+      </div>
+      <a href="#" class="exit">← Back to the Website</a>
+    </aside>
+    <div class="main">
+      <p class="kicker">My Desk</p>
+      <h1 class="h1">Class is in session.</h1>
+      <div class="cols">
+        <div>
+          <div class="continue">
+            <span><span class="c-kicker">Continue — The 13th Grade</span><span class="c-title">Unit 04 · Habit Loops</span></span>
+            <span style="font-size:20px">→</span>
+          </div>
+          <div class="cardrow">
+            <div class="mini"><b style="color:var(--vio)">Study Hall</b>Weak spots first — flashcards from finished units.</div>
+            <div class="mini amber"><b style="color:var(--coral)">Sharpen</b>You skipped the check on First Principles.</div>
+          </div>
+        </div>
+        <aside class="rail">
+          <div class="stats">
+            <div class="stat"><b>🔥 4</b><span>day streak</span></div>
+            <div class="stat"><b>610</b><span>XP</span></div>
+            <div class="stat"><b>5</b><span>units done</span></div>
+          </div>
+          <div class="plan">
+            <span class="ph">Today's Plan</span>
+            <span class="done"><span class="box">✓</span>Show Up</span>
+            <span><span class="box"></span>Learn One New Thing</span>
+            <span><span class="box"></span>Study Hall Review</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
