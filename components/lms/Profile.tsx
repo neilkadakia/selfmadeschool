@@ -5,7 +5,7 @@
 
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
-import { COURSES, BADGES, levelFor, courseUnits } from "@/lib/lms";
+import { COURSES, BADGES, levelFor } from "@/lib/lms";
 import { apiUpdateProfile, apiChangePassword } from "@/lib/api";
 import { useLms, courseProgress } from "@/components/useLms";
 import RewardToast from "./RewardToast";
