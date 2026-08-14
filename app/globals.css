@@ -1468,11 +1468,16 @@ p {
   border: 0;
 }
 
+/* Paper band between the dark FAQ and the green enroll close, so the
+   page ends dark → cream → green instead of two dark sections mushing. */
 .newsletter {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--paper);
+  color: var(--ink);
   padding: 110px 32px;
-  border-top: 1px solid rgba(242, 238, 227, 0.1);
+}
+
+.newsletter .kicker--acc {
+  color: #157a3e;
 }
 
 .nl-wrap {
@@ -1490,19 +1495,20 @@ p {
   max-width: 480px;
   font-size: 16px;
   line-height: 1.65;
-  color: var(--muted-on-ink);
+  color: var(--muted-on-paper);
   margin: 0;
 }
 
 /* The slip: a paper artifact with a sticker tilt, like the book cover */
 
 .nl-side {
-  background: var(--paper);
+  background: #fffdf7;
   color: var(--ink);
+  border: 1px solid rgba(14, 14, 18, 0.14);
   border-radius: 24px;
   padding: 34px 32px 30px;
   transform: rotate(-1.4deg);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 24px 60px rgba(14, 14, 18, 0.16);
 }
 
 .nl-slip-kicker {
