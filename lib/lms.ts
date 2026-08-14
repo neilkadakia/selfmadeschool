@@ -102,7 +102,7 @@ export const XP = {
 } as const;
 
 export const LEVELS = [
-  { at: 0, name: "New Kid" },
+  { at: 0, name: "Freshman" },
   { at: 300, name: "Sophomore" },
   { at: 700, name: "Junior" },
   { at: 1200, name: "Senior" },
