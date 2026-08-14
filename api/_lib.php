@@ -5,8 +5,30 @@
 declare(strict_types=1);
 
 const TOKEN_TTL = 60 * 60 * 24 * 30; // 30 days
+const IMPERSONATE_TTL = 60 * 60 * 2; // Act As sessions die after 2 hours
 const LOCKOUT_ATTEMPTS = 5;
 const LOCKOUT_SECONDS = 15 * 60;
+
+// The role ladder. Rank gates everything: an action requires a minimum
+// rank, and Act As only ever reaches strictly below your own.
+const ROLE_RANK = [
+    'student' => 0,
+    'educator' => 1,
+    'admin' => 2,
+    'global_admin' => 3,
+];
+
+function role_rank(?string $role): int {
+    return ROLE_RANK[$role ?? ''] ?? 0;
+}
+
+function auth_rank(array $auth): int {
+    return role_rank($auth['user']['role'] ?? 'student');
+}
+
+function require_rank(array $auth, int $min): void {
+    if (auth_rank($auth) < $min) respond(403, ['error' => 'Not allowed for your role.']);
+}
 
 function data_dir(): string {
     static $dir = null;
@@ -73,6 +95,31 @@ function write_store(string $name, array $data): void {
     rename($tmp, $path);
 }
 
+// Users store, with a one-time migration: if no Global Administrator
+// exists yet, the earliest-created legacy admin becomes one. On the
+// live school that is the founding account.
+function read_users(): array {
+    $users = read_store('users');
+    foreach ($users as $u) {
+        if (($u['role'] ?? '') === 'global_admin') return $users;
+    }
+    $oldest = null;
+    $oldestCreated = null;
+    foreach ($users as $email => $u) {
+        if (($u['role'] ?? '') !== 'admin') continue;
+        $created = $u['created'] ?? '9999';
+        if ($oldestCreated === null || strcmp($created, $oldestCreated) < 0) {
+            $oldestCreated = $created;
+            $oldest = $email;
+        }
+    }
+    if ($oldest !== null) {
+        $users[$oldest]['role'] = 'global_admin';
+        write_store('users', $users);
+    }
+    return $users;
+}
+
 function body_json(): array {
     $raw = file_get_contents('php://input');
     $data = json_decode($raw ?: '{}', true);
@@ -83,7 +130,8 @@ function bearer_token(): string {
     return trim($_SERVER['HTTP_X_AUTH_TOKEN'] ?? '');
 }
 
-// Returns ['email' => ..., 'user' => [...]] or responds 401.
+// Returns ['email' => ..., 'user' => [...], 'actor' => ?string] or responds 401.
+// 'actor' is set when this session is an Act As impersonation.
 function require_auth(): array {
     $token = bearer_token();
     if ($token === '') respond(401, ['error' => 'Not signed in.']);
@@ -92,13 +140,13 @@ function require_auth(): array {
     if (!$entry || ($entry['exp'] ?? 0) < time()) {
         respond(401, ['error' => 'Session expired — sign in again.']);
     }
-    $users = read_store('users');
+    $users = read_users();
     $user = $users[$entry['email']] ?? null;
     if (!$user) respond(401, ['error' => 'Account not found.']);
-    return ['email' => $entry['email'], 'user' => $user];
+    return ['email' => $entry['email'], 'user' => $user, 'actor' => $entry['actor'] ?? null];
 }
 
-function issue_token(string $email): string {
+function issue_token(string $email, ?string $actor = null, ?int $ttl = null): string {
     $token = bin2hex(random_bytes(32));
     $tokens = read_store('tokens');
     $now = time();
@@ -106,7 +154,9 @@ function issue_token(string $email): string {
     foreach ($tokens as $t => $e) {
         if (($e['exp'] ?? 0) < $now) unset($tokens[$t]);
     }
-    $tokens[$token] = ['email' => $email, 'exp' => $now + TOKEN_TTL];
+    $entry = ['email' => $email, 'exp' => $now + ($ttl ?? TOKEN_TTL)];
+    if ($actor !== null) $entry['actor'] = $actor;
+    $tokens[$token] = $entry;
     write_store('tokens', $tokens);
     return $token;
 }

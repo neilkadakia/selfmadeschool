@@ -1,6 +1,7 @@
 <?php
-// One-time bootstrap: creates the first (admin) account, then goes dead.
-// Only works while zero users exist — after that, use users.php as admin.
+// One-time bootstrap: creates the first account — the Global
+// Administrator — then goes dead. Only works while zero users exist;
+// after that, use users.php as an administrator.
 
 declare(strict_types=1);
 require __DIR__ . '/_lib.php';
@@ -26,7 +27,7 @@ if ($name === '') respond(400, ['error' => 'Name required.']);
 
 $users[$email] = [
     'name' => $name,
-    'role' => 'admin',
+    'role' => 'global_admin',
     'hash' => password_hash($password, PASSWORD_DEFAULT),
     'created' => gmdate('c'),
 ];

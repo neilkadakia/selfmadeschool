@@ -9,7 +9,11 @@ $method = $_SERVER['REQUEST_METHOD'] ?? '';
 
 if ($method === 'GET') {
     $auth = require_auth();
-    respond(200, ['ok' => true, 'user' => public_user($auth['email'], $auth['user'])]);
+    respond(200, [
+        'ok' => true,
+        'user' => public_user($auth['email'], $auth['user']),
+        'actor' => $auth['actor'],
+    ]);
 }
 
 if ($method !== 'POST') respond(405, ['error' => 'GET or POST only.']);
@@ -132,6 +136,26 @@ if ($action === 'reset_password') {
     respond(200, ['ok' => true]);
 }
 
+if ($action === 'impersonate') {
+    // Act As: administrators and above may work as a lower-ranked account.
+    // The issued session is short-lived and remembers who is really driving.
+    $auth = require_auth();
+    require_rank($auth, ROLE_RANK['admin']);
+    if ($auth['actor'] !== null) respond(400, ['error' => 'Already acting as someone — return first.']);
+    $target = strtolower(trim($in['email'] ?? ''));
+    $users = read_users();
+    if (!isset($users[$target])) respond(404, ['error' => 'No such account.']);
+    if ($target === $auth['email']) respond(400, ['error' => 'That is already you.']);
+    if (role_rank($users[$target]['role'] ?? 'student') >= auth_rank($auth)) {
+        respond(403, ['error' => 'You can only act as roles below your own.']);
+    }
+    respond(200, [
+        'ok' => true,
+        'token' => issue_token($target, $auth['email'], IMPERSONATE_TTL),
+        'user' => public_user($target, $users[$target]),
+    ]);
+}
+
 if ($action === 'logout') {
     $token = bearer_token();
     if ($token !== '') {
@@ -155,7 +179,7 @@ if ($f['until'] > time()) {
 
 usleep(250000); // flat cost on every attempt
 
-$users = read_store('users');
+$users = read_users();
 $user = $users[$email] ?? null;
 $ok = $user && password_verify($password, $user['hash'] ?? '');
 

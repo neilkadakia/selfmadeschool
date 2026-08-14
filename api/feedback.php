@@ -10,14 +10,14 @@ $method = $_SERVER['REQUEST_METHOD'] ?? '';
 
 if ($method === 'GET') {
     $all = read_store('feedback');
-    // Admin with a valid token sees everything; the public sees approved only.
+    // Administrators and up see everything; the public sees approved only.
     $isAdmin = false;
     if (bearer_token() !== '') {
         $tokens = read_store('tokens');
         $entry = $tokens[bearer_token()] ?? null;
         if ($entry && ($entry['exp'] ?? 0) >= time()) {
-            $users = read_store('users');
-            $isAdmin = (($users[$entry['email']]['role'] ?? '') === 'admin');
+            $users = read_users();
+            $isAdmin = role_rank($users[$entry['email']]['role'] ?? '') >= ROLE_RANK['admin'];
         }
     }
     $list = [];
@@ -64,8 +64,8 @@ if ($action === 'submit') {
     respond(200, ['ok' => true, 'id' => $id]);
 }
 
-// Moderation is admin-only.
-if (($auth['user']['role'] ?? '') !== 'admin') respond(403, ['error' => 'Admin only.']);
+// Moderation is for administrators and up.
+require_rank($auth, ROLE_RANK['admin']);
 $id = (string)($in['id'] ?? '');
 if (!isset($all[$id])) respond(404, ['error' => 'Quote not found.']);
 

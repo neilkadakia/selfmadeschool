@@ -9,7 +9,7 @@ $method = $_SERVER['REQUEST_METHOD'] ?? '';
 
 if ($method === 'GET') {
     $auth = require_auth();
-    if (($auth['user']['role'] ?? '') !== 'admin') respond(403, ['error' => 'Admin only.']);
+    require_rank($auth, ROLE_RANK['admin']);
     $subs = read_store('newsletter');
     $list = [];
     foreach ($subs as $email => $s) {

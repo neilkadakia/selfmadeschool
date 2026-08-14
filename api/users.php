@@ -1,17 +1,17 @@
 <?php
-// Admin-only account management: list users, create invite accounts.
+// Faculty account management. Educators and up can read the roster;
+// administrators and up create accounts (only below their own rank);
+// only the Global Administrator changes roles.
 
 declare(strict_types=1);
 require __DIR__ . '/_lib.php';
 cors_and_preflight();
 
 $auth = require_auth();
-if (($auth['user']['role'] ?? '') !== 'admin') {
-    respond(403, ['error' => 'Admin only.']);
-}
+require_rank($auth, ROLE_RANK['educator']);
 
 $method = $_SERVER['REQUEST_METHOD'] ?? '';
-$users = read_store('users');
+$users = read_users();
 
 if ($method === 'GET') {
     $list = [];
@@ -24,7 +24,25 @@ if ($method !== 'POST') respond(405, ['error' => 'GET or POST only.']);
 $in = body_json();
 $action = $in['action'] ?? 'create';
 
+if ($action === 'set_role') {
+    require_rank($auth, ROLE_RANK['global_admin']);
+    $target = strtolower(trim($in['email'] ?? ''));
+    $role = (string)($in['role'] ?? '');
+    if (!isset($users[$target])) respond(404, ['error' => 'No such account.']);
+    if ($target === $auth['email']) respond(400, ['error' => 'You cannot change your own role.']);
+    if (($users[$target]['role'] ?? '') === 'global_admin') {
+        respond(400, ['error' => 'There is exactly one Global Administrator.']);
+    }
+    if (!in_array($role, ['student', 'educator', 'admin'], true)) {
+        respond(400, ['error' => 'Role must be student, educator, or admin.']);
+    }
+    $users[$target]['role'] = $role;
+    write_store('users', $users);
+    respond(200, ['ok' => true, 'user' => public_user($target, $users[$target])]);
+}
+
 if ($action === 'create') {
+    require_rank($auth, ROLE_RANK['admin']);
     $email = strtolower(trim($in['email'] ?? ''));
     $password = (string)($in['password'] ?? '');
     $first = trim($in['first'] ?? '');
@@ -44,13 +62,22 @@ if ($action === 'create') {
     $dob = clean_dob((string)($in['dob'] ?? ''));
     if ($dob === null) respond(400, ['error' => 'That birthday does not look right.']);
     if (isset($users[$email])) respond(409, ['error' => 'Account already exists.']);
+    $role = (string)($in['role'] ?? 'student');
+    if ($role === '') $role = 'student';
+    if (!in_array($role, ['student', 'educator', 'admin'], true)) {
+        respond(400, ['error' => 'Role must be student, educator, or admin.']);
+    }
+    // You can only create accounts strictly below your own rank.
+    if (role_rank($role) >= auth_rank($auth)) {
+        respond(403, ['error' => 'You can only create roles below your own.']);
+    }
     $users[$email] = [
         'name' => $name,
         'first' => $first,
         'last' => $last,
         'phone' => $phone,
         'dob' => $dob,
-        'role' => ($in['role'] ?? '') === 'admin' ? 'admin' : 'student',
+        'role' => $role,
         'hash' => password_hash($password, PASSWORD_DEFAULT),
         'created' => gmdate('c'),
     ];
