@@ -44,7 +44,8 @@ export default function LearnHome() {
           <h1 className="learn-h1">First, your Student ID.</h1>
           <p className="learn-sub">
             Every student carries one — your name as it should read on your certificate,
-            and a phone number so the school can reach you. Thirty seconds, once.
+            a phone number so the school can reach you, and your birthday. Thirty
+            seconds, once.
           </p>
           <StudentId />
         </div>
@@ -129,7 +130,7 @@ export default function LearnHome() {
           <p className="kicker kicker--acc">My Desk</p>
           <h1 className="learn-h1">Class is in session.</h1>
           <p className="learn-sub">
-            Three courses, one rule: read the chapter, watch the module, do the thing. Your progress
+            Three courses, one rule: read the chapter, watch the video, do the thing. Your progress
             is saved to your account and follows you to any device. No pop quizzes.
           </p>
         </header>

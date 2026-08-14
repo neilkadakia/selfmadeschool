@@ -123,6 +123,19 @@ function clean_phone(string $raw): ?string {
     return ($n >= 7 && $n <= 15) ? $phone : null;
 }
 
+// Birthday check: YYYY-MM-DD (what <input type=date> sends), a real
+// calendar date, not in the future, not implausibly old.
+// Returns the value, '' when blank, or null when it can't be a birthday.
+function clean_dob(string $raw): ?string {
+    $dob = trim($raw);
+    if ($dob === '') return '';
+    if (!preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $dob, $m)) return null;
+    if ((int)$m[1] < 1900) return null;
+    if (!checkdate((int)$m[2], (int)$m[3], (int)$m[1])) return null;
+    if ($dob > gmdate('Y-m-d')) return null;
+    return $dob;
+}
+
 function public_user(string $email, array $user): array {
     return [
         'email' => $email,
@@ -130,6 +143,7 @@ function public_user(string $email, array $user): array {
         'first' => $user['first'] ?? '',
         'last' => $user['last'] ?? '',
         'phone' => $user['phone'] ?? '',
+        'dob' => $user['dob'] ?? '',
         'role' => $user['role'] ?? 'student',
     ];
 }

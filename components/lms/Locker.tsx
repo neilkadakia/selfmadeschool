@@ -51,7 +51,7 @@ function GearCard({ item }: { item: Gear }) {
             disabled={!affordable}
             onClick={() => lms.buyGear(item.id)}
           >
-            {affordable ? `Buy — ${item.price} Cr` : `${item.price} Cr`}
+            {affordable ? `Buy — ${item.price} Cr` : `Need ${item.price} Cr`}
           </button>
         )}
       </div>

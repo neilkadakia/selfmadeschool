@@ -20,6 +20,7 @@ export default function Profile() {
   const [first, setFirst] = useState<string | null>(null);
   const [last, setLast] = useState<string | null>(null);
   const [phone, setPhone] = useState<string | null>(null);
+  const [dob, setDob] = useState<string | null>(null);
   const [pwCurrent, setPwCurrent] = useState("");
   const [pwNext, setPwNext] = useState("");
   const [msg, setMsg] = useState("");
@@ -33,6 +34,7 @@ export default function Profile() {
   const firstVal = first ?? (auth.first || guessed[0] || "");
   const lastVal = last ?? (auth.last || guessed.slice(1).join(" "));
   const phoneVal = phone ?? (auth.phone || "");
+  const dobVal = dob ?? (auth.dob || "");
   const level = levelFor(state.xp);
   const totalDone = Object.values(state.done).reduce((a, b) => a + b.length, 0);
 
@@ -47,6 +49,7 @@ export default function Profile() {
       first: firstVal.trim(),
       last: lastVal.trim(),
       phone: phoneVal.trim(),
+      dob: dobVal,
     });
     if (res.ok) {
       lms.adoptAuthUser(res.data.user as Partial<Omit<AuthUser, "token">>);
@@ -222,20 +225,39 @@ export default function Profile() {
             </div>
             <label className="lms-login-label">Email</label>
             <input className="lms-cert-name" value={auth.email} disabled aria-label="Email (fixed)" />
-            <label className="lms-login-label" htmlFor="pf-phone">
-              Telephone
-            </label>
-            <input
-              id="pf-phone"
-              className="lms-cert-name"
-              type="tel"
-              value={phoneVal}
-              maxLength={24}
-              required
-              autoComplete="tel"
-              placeholder="+1 555 010 2030"
-              onChange={(e) => setPhone(e.target.value)}
-            />
+            <div className="lms-form-row">
+              <div>
+                <label className="lms-login-label" htmlFor="pf-phone">
+                  Telephone
+                </label>
+                <input
+                  id="pf-phone"
+                  className="lms-cert-name"
+                  type="tel"
+                  value={phoneVal}
+                  maxLength={24}
+                  required
+                  autoComplete="tel"
+                  placeholder="+1 555 010 2030"
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="lms-login-label" htmlFor="pf-dob">
+                  Birthday
+                </label>
+                <input
+                  id="pf-dob"
+                  className="lms-cert-name"
+                  type="date"
+                  value={dobVal}
+                  required
+                  autoComplete="bday"
+                  min="1900-01-01"
+                  onChange={(e) => setDob(e.target.value)}
+                />
+              </div>
+            </div>
             <button className="btn btn--solid lms-login-btn" type="submit">
               Save Student ID
             </button>

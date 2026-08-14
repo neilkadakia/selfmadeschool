@@ -4126,9 +4126,18 @@ html.lms-light .kicker--acc {
   gap: 0;
 }
 
-/* Student roster: name / email / phone / role pill. */
+/* Student roster: name / email / phone / birthday / role pill. */
 .lms-roster .lms-admin-row {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 0.9fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 0.9fr) minmax(0, 0.7fr) auto;
+}
+
+/* Native date pickers follow the classroom theme. */
+input[type="date"].lms-cert-name {
+  color-scheme: dark;
+}
+
+html.lms-light input[type="date"].lms-cert-name {
+  color-scheme: light;
 }
 
 @media (max-width: 640px) {
@@ -4928,9 +4937,19 @@ html.lms-light .classroom .lms-signout {
   padding: 10px 20px;
 }
 
+/* Can't afford it yet: stays fully readable, just clearly not a live
+   button — muted border, bright price. */
 .lms-gear-buy:disabled {
-  opacity: 0.45;
   cursor: not-allowed;
+  color: var(--paper);
+  border-color: rgba(242, 238, 227, 0.22);
+  background: rgba(242, 238, 227, 0.05);
+}
+
+html.lms-light .lms-gear-buy:disabled {
+  color: var(--ink);
+  border-color: rgba(14, 14, 18, 0.22);
+  background: rgba(14, 14, 18, 0.045);
 }
 
 /* Arena */

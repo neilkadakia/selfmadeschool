@@ -41,6 +41,11 @@ if ($action === 'update_profile') {
         if ($phone === null) respond(400, ['error' => 'That phone number does not look right.']);
         $u['phone'] = $phone;
     }
+    if (array_key_exists('dob', $in)) {
+        $dob = clean_dob((string)$in['dob']);
+        if ($dob === null) respond(400, ['error' => 'That birthday does not look right.']);
+        $u['dob'] = $dob;
+    }
     $users[$auth['email']] = $u;
     write_store('users', $users);
     respond(200, ['ok' => true, 'user' => public_user($auth['email'], $u)]);

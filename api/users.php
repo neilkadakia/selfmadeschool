@@ -41,12 +41,15 @@ if ($action === 'create') {
     if ($name === '') respond(400, ['error' => 'Name required.']);
     $phone = clean_phone((string)($in['phone'] ?? ''));
     if ($phone === null) respond(400, ['error' => 'That phone number does not look right.']);
+    $dob = clean_dob((string)($in['dob'] ?? ''));
+    if ($dob === null) respond(400, ['error' => 'That birthday does not look right.']);
     if (isset($users[$email])) respond(409, ['error' => 'Account already exists.']);
     $users[$email] = [
         'name' => $name,
         'first' => $first,
         'last' => $last,
         'phone' => $phone,
+        'dob' => $dob,
         'role' => ($in['role'] ?? '') === 'admin' ? 'admin' : 'student',
         'hash' => password_hash($password, PASSWORD_DEFAULT),
         'created' => gmdate('c'),

@@ -6,13 +6,16 @@ export type AuthUser = {
   first?: string;
   last?: string;
   phone?: string;
+  dob?: string; // yyyy-mm-dd
   role: "admin" | "student";
   token: string;
 };
 
-// The contact card is complete once the front office has all three.
-export function profileComplete(u: { first?: string; last?: string; phone?: string } | null): boolean {
-  return Boolean(u && u.first && u.last && u.phone);
+// The Student ID is complete once the front office has all four.
+export function profileComplete(
+  u: { first?: string; last?: string; phone?: string; dob?: string } | null
+): boolean {
+  return Boolean(u && u.first && u.last && u.phone && u.dob);
 }
 
 const BASE = "/api";
@@ -69,6 +72,7 @@ export async function apiUserCreate(
     first: string;
     last: string;
     phone?: string;
+    dob?: string;
     role?: string;
   }
 ) {
@@ -85,7 +89,7 @@ export async function apiNewsletterList(token: string) {
 
 export async function apiUpdateProfile(
   token: string,
-  profile: { first: string; last: string; phone: string }
+  profile: { first: string; last: string; phone: string; dob: string }
 ) {
   return call("auth.php", { method: "POST", token, body: { action: "update_profile", ...profile } });
 }

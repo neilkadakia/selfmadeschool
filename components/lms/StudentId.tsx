@@ -17,6 +17,7 @@ export default function StudentId() {
   const [first, setFirst] = useState(auth?.first || guessed[0] || "");
   const [last, setLast] = useState(auth?.last || guessed.slice(1).join(" ") || "");
   const [phone, setPhone] = useState(auth?.phone ?? "");
+  const [dob, setDob] = useState(auth?.dob ?? "");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
@@ -30,6 +31,7 @@ export default function StudentId() {
       first: first.trim(),
       last: last.trim(),
       phone: phone.trim(),
+      dob,
     });
     setBusy(false);
     if (res.ok) {
@@ -81,20 +83,39 @@ export default function StudentId() {
         disabled
         aria-label="Email (fixed)"
       />
-      <label className="lms-login-label" htmlFor="enroll-phone">
-        Telephone
-      </label>
-      <input
-        id="enroll-phone"
-        className="lms-cert-name lms-login-input"
-        type="tel"
-        autoComplete="tel"
-        required
-        maxLength={24}
-        placeholder="+1 555 010 2030"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}
-      />
+      <div className="lms-form-row">
+        <div>
+          <label className="lms-login-label" htmlFor="enroll-phone">
+            Telephone
+          </label>
+          <input
+            id="enroll-phone"
+            className="lms-cert-name lms-login-input"
+            type="tel"
+            autoComplete="tel"
+            required
+            maxLength={24}
+            placeholder="+1 555 010 2030"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </div>
+        <div>
+          <label className="lms-login-label" htmlFor="enroll-dob">
+            Birthday
+          </label>
+          <input
+            id="enroll-dob"
+            className="lms-cert-name lms-login-input"
+            type="date"
+            autoComplete="bday"
+            required
+            min="1900-01-01"
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
+          />
+        </div>
+      </div>
       {error && (
         <p className="lms-login-error" role="alert">
           {error}

@@ -22,7 +22,7 @@ import {
 import { COURSES, courseUnits } from "@/lib/lms";
 import { useLms } from "@/components/useLms";
 
-type Student = { email: string; name: string; phone?: string; role: string };
+type Student = { email: string; name: string; phone?: string; dob?: string; role: string };
 type Subscriber = { email: string; created: string; source: string };
 type Quote = {
   id: string;
@@ -66,6 +66,7 @@ export default function Admin() {
   const [nLast, setNLast] = useState("");
   const [nEmail, setNEmail] = useState("");
   const [nPhone, setNPhone] = useState("");
+  const [nDob, setNDob] = useState("");
   const [nPass, setNPass] = useState("");
 
   // Change-password form
@@ -127,6 +128,7 @@ export default function Admin() {
       first: nFirst.trim(),
       last: nLast.trim(),
       phone: nPhone.trim(),
+      dob: nDob,
     });
     if (res.ok) {
       flash(`Account created for ${nEmail.trim()}.`);
@@ -134,6 +136,7 @@ export default function Admin() {
       setNLast("");
       setNEmail("");
       setNPhone("");
+      setNDob("");
       setNPass("");
       const r = await apiUsersList(token);
       if (r.ok) setStudents(r.data.users as Student[]);
@@ -296,6 +299,7 @@ export default function Admin() {
                   <span className="lms-admin-name">{s.name}</span>
                   <span className="lms-admin-email">{s.email}</span>
                   <span className="lms-admin-meta">{s.phone || "—"}</span>
+                  <span className="lms-admin-meta">{s.dob || "—"}</span>
                   <span className={`pill ${s.role === "admin" ? "pill--acc" : "row-pill--dim"}`}>
                     {s.role}
                   </span>
@@ -330,14 +334,24 @@ export default function Admin() {
               value={nEmail}
               onChange={(e) => setNEmail(e.target.value)}
             />
-            <input
-              className="lms-cert-name"
-              type="tel"
-              placeholder="Telephone (optional — they can add it)"
-              maxLength={24}
-              value={nPhone}
-              onChange={(e) => setNPhone(e.target.value)}
-            />
+            <div className="lms-form-row">
+              <input
+                className="lms-cert-name"
+                type="tel"
+                placeholder="Telephone (optional)"
+                maxLength={24}
+                value={nPhone}
+                onChange={(e) => setNPhone(e.target.value)}
+              />
+              <input
+                className="lms-cert-name"
+                type="date"
+                aria-label="Birthday (optional — they can add it)"
+                min="1900-01-01"
+                value={nDob}
+                onChange={(e) => setNDob(e.target.value)}
+              />
+            </div>
             <input
               className="lms-cert-name"
               type="text"
