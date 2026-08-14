@@ -6,7 +6,7 @@ export const FAQS = [
   },
   {
     q: "Do I need the book to take the course?",
-    a: "No — they're companions. Each chapter pairs with a 10-minute module, so you can read first, watch first, or mix. Together is better; either alone still works.",
+    a: "No — the course stands on its own. But it's highly recommended: the units are bite-size versions of the concepts, and the book breaks the same ideas down in much more detail. Course to get moving, book to go deep.",
   },
   {
     q: "How long does it take?",
