@@ -219,9 +219,9 @@ export default function Home() {
         </h1>
         <div data-hero-sub className="hero-sub">
           <p className="hero-copy">
-            Working on your mindset, your money, and dealing with life&apos;s big calls — all the adult stuff you were supposed to just <em>know</em>.
-            Deliberately non-academic: no grades, no degrees, no lecture halls — plain English and skills you use the same week. You crush it. Welcome to
-            Self Made School.
+            We&apos;re here to help you build your mindset, your relationship with money, and how to navigate life&apos;s other big calls — all the adult
+            stuff you were supposed to just <em>know</em>. Deliberately non-academic: no grades, no degrees, no lecture halls — plain English and skills
+            you use the same week. You crush it. Time to start making yourself.
           </p>
           <div className="hero-ctas">
             <Link href="/demo" className="btn btn--solid">
