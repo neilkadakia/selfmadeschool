@@ -6,6 +6,7 @@
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { useLms } from "@/components/useLms";
+import Wordmark from "@/components/Wordmark";
 
 export default function AuthGate({ children }: { children: React.ReactNode }) {
   const lms = useLms();
@@ -33,6 +34,9 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
   return (
     <div className="learn">
       <div className="learn-wrap lms-gate">
+        <Link href="/" className="lms-gate-brand">
+          <Wordmark gid="dawn-gate" />
+        </Link>
         <p className="kicker kicker--acc">Students Only</p>
         <h1 className="learn-h1">Class is invite-only.</h1>
         <p className="learn-sub">

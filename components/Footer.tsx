@@ -1,7 +1,13 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Wordmark from "./Wordmark";
 
 export default function Footer() {
+  // The classroom has its own shell — the marketing footer stays out of it.
+  if (usePathname().startsWith("/learn")) return null;
+
   return (
     <footer className="footer">
       <span className="footer-logo">

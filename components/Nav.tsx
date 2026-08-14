@@ -15,7 +15,9 @@ const LINKS = [
 ];
 
 export default function Nav() {
-  const isAbout = usePathname() === "/about";
+  const pathname = usePathname();
+  const isAbout = pathname === "/about";
+  const inClassroom = pathname.startsWith("/learn");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   // Signed-in students get "Classroom"; everyone else gets Log In + Enroll.
@@ -37,6 +39,9 @@ export default function Nav() {
   }, [open]);
 
   const close = () => setOpen(false);
+
+  // The classroom has its own shell — the marketing nav stays out of it.
+  if (inClassroom) return null;
 
   return (
     <>
