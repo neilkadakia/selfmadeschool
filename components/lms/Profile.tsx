@@ -6,6 +6,7 @@
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { COURSES, BADGES, levelFor } from "@/lib/lms";
+import { auraFor } from "@/lib/game";
 import { apiUpdateProfile, apiChangePassword, type AuthUser } from "@/lib/api";
 import { useLms, courseProgress } from "@/components/useLms";
 import AvatarStudio from "./AvatarStudio";
@@ -105,7 +106,12 @@ export default function Profile() {
         <div className="lms-profile-hero">
           {state.avatar.created ? (
             <span className="lms-portrait-big" aria-hidden="true">
-              <Portrait avatar={state.avatar} equipped={state.equipped} size={92} />
+              <Portrait
+                avatar={state.avatar}
+                equipped={state.equipped}
+                size={92}
+                aura={auraFor(state.equipped, state.xp).tier}
+              />
             </span>
           ) : (
             <span className="lms-avatar lms-avatar--big" aria-hidden="true">

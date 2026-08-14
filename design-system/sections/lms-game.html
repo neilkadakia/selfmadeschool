@@ -41,9 +41,28 @@
   .hp { width: 320px; }
   .hp-head { display: flex; gap: 8px; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
   .hp-head em { margin-left: auto; font-style: normal; color: var(--muted); }
-  .hp-track { display: block; height: 10px; border-radius: 999px; background: rgba(242,238,227,0.1); overflow: hidden; }
+  .hp-track { position: relative; display: block; height: 13px; border-radius: 999px; background: rgba(242,238,227,0.1); overflow: hidden; }
+  .hp-track::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: repeating-linear-gradient(90deg, transparent 0 18px, rgba(14,14,18,0.35) 18px 20px); }
   .hp-fill { display: block; height: 100%; border-radius: 999px; }
-  .vs { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 40px; color: var(--coral); align-self: center; }
+  .vs { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 40px; color: var(--coral); align-self: center; transform: rotate(-4deg); }
+
+  /* Aura tiers + power meter */
+  .tier { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; border: 1.5px solid; border-radius: 999px; padding: 5px 12px; margin: 0 8px 8px 0; }
+  .tier small { font-weight: 700; letter-spacing: 0; text-transform: none; opacity: 0.75; }
+  .power { max-width: 480px; }
+  .power-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+  .power-num { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 26px; line-height: 1; }
+  .power-track { position: relative; display: block; height: 12px; border-radius: 999px; background: rgba(242,238,227,0.1); }
+  .power-fill { display: block; height: 100%; border-radius: 999px; }
+  .power-notch { position: absolute; top: -3px; bottom: -3px; width: 2px; background: rgba(242,238,227,0.35); }
+
+  /* Battle stage */
+  .bstage { display: flex; align-items: center; gap: 26px; padding: 20px 26px 26px; border-radius: 24px; border: 1px solid rgba(255,180,58,0.28); background: radial-gradient(120% 60% at 50% 100%, rgba(255,180,58,0.1), transparent 60%), rgba(242,238,227,0.02); width: max-content; }
+  .dmg { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 26px; color: var(--paper); text-shadow: 0 2px 10px rgba(14,14,18,0.55); }
+  .dmg.crit { color: var(--coral); font-size: 36px; }
+  .dmg.you { color: #ff6b6b; }
+  .combo { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.04em; color: var(--acc); border: 1.5px solid rgba(67,222,123,0.6); border-radius: 999px; padding: 5px 12px; }
+  .critword { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 19px; letter-spacing: 0.05em; color: var(--coral); display: inline-block; transform: rotate(-6deg); }
 </style>
 </head>
 <body>
@@ -72,7 +91,7 @@
     </div>
   </div>
 
-  <p class="label">The Locker — gear cards; Credits (earned: unit 20 · perfect check 10 · deck 5 · first boss win 60) buy ATK/DEF that draws on the portrait</p>
+  <p class="label">The Locker — gear cards with cropped-SVG item icons; Credits (unit 20 · perfect check 10 · deck 5 · first boss win 60) buy ATK/DEF that draws on the portrait and feeds Power</p>
   <div class="row">
     <div class="gear equipped">
       <div class="gear-head"><span class="gear-name">Sharpened №2 Pencil</span><span class="gear-stat">+5 ATK</span></div>
@@ -86,7 +105,46 @@
     </div>
   </div>
 
-  <p class="label">The Arena — boss per completed part; quiz combat (right = hit for ATK, wrong = take monsterATK − DEF); amber frames</p>
+  <p class="label">Aura tiers — Power = ATK + DEF + grade level; the portrait glows brighter as you build yourself (glow → sparks → ground ring → halo)</p>
+  <p style="margin:0 0 4px">
+    <span class="tier" style="border-color:rgba(242,238,227,0.3)">Finding Your Feet <small>&lt; 32</small></span>
+    <span class="tier" style="border-color:#5B7CFA;color:#5B7CFA">Warming Up <small>32</small></span>
+    <span class="tier" style="border-color:#43DE7B;color:#43DE7B">On a Roll <small>50</small></span>
+    <span class="tier" style="border-color:#FFB43A;color:#FFB43A">Force of Nature <small>72</small></span>
+    <span class="tier" style="border-color:#8a6bf2;color:#8a6bf2">Self Made <small>95</small></span>
+  </p>
+  <div class="power" style="margin-top:14px">
+    <div class="power-head"><span style="font-size:12px;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)">Power</span><span class="power-num">84</span><span class="tier" style="margin-left:auto;border-color:#FFB43A;color:#FFB43A">Force of Nature</span></div>
+    <span class="power-track">
+      <span class="power-notch" style="left:31%"></span><span class="power-notch" style="left:49%"></span><span class="power-notch" style="left:70%"></span><span class="power-notch" style="left:92%"></span>
+      <span class="power-fill" style="width:82%;background:#FFB43A"></span>
+    </span>
+  </div>
+
+  <p class="label">The Arena battle stage — segmented HP bars, floating damage numbers, combos (+2 per consecutive hit, 3rd goes CRITICAL), lunge / shake / KO / fall-over animations; boss idles with a bob</p>
+  <div class="bstage">
+    <div>
+      <div class="hp" style="width:240px;margin-bottom:10px">
+        <div class="hp-head"><span>Sam</span><em>88/100</em></div>
+        <span class="hp-track"><span class="hp-fill" style="width:88%;background:var(--acc)"></span></span>
+      </div>
+      <span class="dmg you">−6</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+      <span class="combo">Combo ×2</span>
+      <span class="critword">CRITICAL!</span>
+      <span class="vs" style="font-size:30px">VS</span>
+    </div>
+    <div>
+      <div class="hp" style="width:240px;margin-bottom:10px">
+        <div class="hp-head"><span>The Inner Critic</span><em>27/95</em></div>
+        <span class="hp-track"><span class="hp-fill" style="width:28%;background:#8a6bf2"></span></span>
+      </div>
+      <span class="dmg crit">−37</span> <span class="dmg">−33</span>
+    </div>
+  </div>
+
+  <p class="label">Boss card — stat line (HP · hits for N); beaten bosses render desaturated with X eyes and a Defeated pill</p>
   <div class="row">
     <div class="boss">
       <svg viewBox="0 0 140 140" width="96" height="96">
@@ -96,18 +154,7 @@
         <circle cx="53" cy="66" r="5" fill="#14141a"/><circle cx="87" cy="66" r="5" fill="#14141a"/>
         <path d="M50 88 Q70 80 90 88 L86 96 L80 90 L74 97 L70 90 L66 97 L60 90 L54 96 Z" fill="#fff" stroke="#14141a" stroke-width="2"/>
       </svg>
-      <div><span class="boss-name">The Inner Critic</span><span class="boss-sub">The 13th Grade · Growing Your Mindset</span><span class="pill">Ready to Fight</span></div>
-    </div>
-    <span class="vs">VS</span>
-    <div>
-      <div class="hp" style="margin-bottom:14px">
-        <div class="hp-head"><span>Sam</span><em>81/100</em></div>
-        <span class="hp-track"><span class="hp-fill" style="width:81%;background:var(--acc)"></span></span>
-      </div>
-      <div class="hp">
-        <div class="hp-head"><span>The Inner Critic</span><em>49/95</em></div>
-        <span class="hp-track"><span class="hp-fill" style="width:52%;background:#8a6bf2"></span></span>
-      </div>
+      <div><span class="boss-name">The Inner Critic</span><span class="boss-sub">The 13th Grade · Growing Your Mindset<br>95 HP · hits for 28</span><span class="pill">Ready to Fight</span></div>
     </div>
   </div>
 </div>

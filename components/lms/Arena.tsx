@@ -2,8 +2,9 @@
 
 // The After-School Arena. Every completed part unlocks its boss; the
 // fight is the part's own quiz questions wearing a monster costume.
-// Right answer → you land a hit. Wrong answer → you take one. Gear
-// from the Locker moves the numbers.
+// Right answer → you lunge and land a hit. Wrong answer → it hits you.
+// Chain right answers into combos; three in a row goes critical. Gear
+// and grade level from the Locker move every number.
 
 import Link from "next/link";
 import { useState } from "react";
@@ -14,6 +15,7 @@ import {
   CREDITS,
   allBosses,
   attackFor,
+  auraFor,
   defenseFor,
   monsterFor,
   partKey,
@@ -25,6 +27,14 @@ import CommandK from "./CommandK";
 import MonsterArt from "./MonsterArt";
 import Portrait from "./Portrait";
 import RewardToast from "./RewardToast";
+
+// Combo math: every consecutive hit before this one adds +2 damage
+// (capped), and the third hit in a row upgrades to a critical.
+const COMBO_BONUS_CAP = 6;
+const comboBonus = (combo: number) => Math.min(COMBO_BONUS_CAP, combo * 2);
+const isCrit = (combo: number) => combo >= 2;
+
+type Hit = { target: "you" | "boss"; amount: number; crit: boolean };
 
 function ArenaIndex() {
   const lms = useLms();
@@ -44,8 +54,8 @@ function ArenaIndex() {
         <h1 className="learn-h1">Something guards every section.</h1>
         <p className="learn-sub">
           Finish all the units in a part and its boss steps out. The fight runs on that part&apos;s
-          knowledge checks — right answers land hits, wrong ones take them. Gear up in{" "}
-          <Link href="/learn/locker">the Locker</Link> first.
+          knowledge checks — right answers land hits, three in a row goes critical, wrong ones
+          hurt. Gear up in <Link href="/learn/locker">the Locker</Link> first.
         </p>
 
         <div className="lms-boss-grid">
@@ -58,13 +68,18 @@ function ArenaIndex() {
             const won = state.battles[key]?.won;
             const card = (
               <>
-                <div className={`lms-boss-art${canFight ? "" : " is-locked"}`}>
-                  <MonsterArt monster={monster} size={110} />
+                <div
+                  className={`lms-boss-art${canFight ? "" : " is-locked"}${won ? " is-beaten" : ""}`}
+                >
+                  <MonsterArt monster={monster} size={110} hurt={Boolean(won)} />
                 </div>
                 <div className="lms-boss-main">
                   <span className="lms-boss-name">{monster.name}</span>
                   <span className="lms-boss-sub">
                     {course.title} · {part.name}
+                  </span>
+                  <span className="lms-boss-sub lms-boss-statline">
+                    {BATTLE.monsterHp(partIndex)} HP · hits for {BATTLE.monsterAtk(partIndex)}
                   </span>
                   <span
                     className={
@@ -123,8 +138,9 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
   const monster = course ? monsterFor(course, partIndex) : null;
   const maxMonsterHp = BATTLE.monsterHp(partIndex);
   const monsterAtk = BATTLE.monsterAtk(partIndex);
-  const myAtk = attackFor(state.equipped);
+  const myAtk = attackFor(state.equipped, state.xp);
   const myDef = defenseFor(state.equipped);
+  const aura = auraFor(state.equipped, state.xp);
   const hitTaken = Math.max(BATTLE.minDamage, monsterAtk - myDef);
 
   const [phase, setPhase] = useState<"intro" | "fight" | "won" | "lost">("intro");
@@ -133,6 +149,8 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
   const [picked, setPicked] = useState<number | null>(null);
   const [playerHp, setPlayerHp] = useState<number>(BATTLE.playerHp);
   const [monsterHp, setMonsterHp] = useState<number>(maxMonsterHp);
+  const [combo, setCombo] = useState(0);
+  const [lastHit, setLastHit] = useState<Hit | null>(null);
   const [firstWin, setFirstWin] = useState(false);
 
   if (!course || !part || !monster) {
@@ -163,6 +181,8 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
     setPicked(null);
     setPlayerHp(BATTLE.playerHp);
     setMonsterHp(maxMonsterHp);
+    setCombo(0);
+    setLastHit(null);
     setPhase("fight");
   };
 
@@ -172,8 +192,13 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
     // Battle misses feed the make-up pile too — Study Hall picks them up.
     lms.questionResult(round.key, oi === q.answer);
     if (oi === q.answer) {
-      setMonsterHp((hp) => Math.max(0, hp - myAtk));
+      const dmg = myAtk + comboBonus(combo);
+      setLastHit({ target: "boss", amount: dmg, crit: isCrit(combo) });
+      setCombo((c) => c + 1);
+      setMonsterHp((hp) => Math.max(0, hp - dmg));
     } else {
+      setLastHit({ target: "you", amount: hitTaken, crit: false });
+      setCombo(0);
       setPlayerHp((hp) => Math.max(0, hp - hitTaken));
     }
   };
@@ -213,6 +238,11 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
     );
   }
 
+  const struck = picked !== null && lastHit !== null;
+  const bossStruck = struck && lastHit.target === "boss";
+  const youStruck = struck && lastHit.target === "you";
+  const firstName = state.name ? state.name.split(" ")[0] : "You";
+
   return (
     <div className="learn">
       <RewardToast reward={lms.reward} onDone={lms.clearReward} />
@@ -223,9 +253,14 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
 
         {phase === "intro" && (
           <div className="lms-vs">
-            <div className="lms-vs-side">
-              <Portrait avatar={state.avatar} equipped={state.equipped} size={120} />
+            <div className="lms-vs-side lms-vs-side--you">
+              <Portrait avatar={state.avatar} equipped={state.equipped} size={120} aura={aura.tier} />
               <span className="lms-vs-name">{state.name || "You"}</span>
+              {aura.color && (
+                <span className="lms-vs-tier" style={{ color: aura.color }}>
+                  {aura.name}
+                </span>
+              )}
               <span className="lms-vs-stats">
                 ⚔ {myAtk} · ⛨ {myDef} · {BATTLE.playerHp} HP
               </span>
@@ -233,8 +268,10 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
             <span className="lms-vs-mark" aria-hidden="true">
               VS
             </span>
-            <div className="lms-vs-side">
-              <MonsterArt monster={monster} size={130} />
+            <div className="lms-vs-side lms-vs-side--boss">
+              <span className="lms-idle">
+                <MonsterArt monster={monster} size={130} />
+              </span>
               <span className="lms-vs-name">{monster.name}</span>
               <span className="lms-vs-stats">
                 ⚔ {monsterAtk} · {maxMonsterHp} HP
@@ -267,32 +304,92 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
 
         {phase === "fight" && q && (
           <>
-            <div className="lms-hpbars">
-              <div className="lms-hp">
-                <span className="lms-hp-head">
-                  <Portrait avatar={state.avatar} equipped={state.equipped} size={34} />
-                  <span>{state.name ? state.name.split(" ")[0] : "You"}</span>
-                  <em>{playerHp}/{BATTLE.playerHp}</em>
-                </span>
-                <span className="lms-hp-track">
-                  <span
-                    className="lms-hp-fill lms-hp-fill--you"
-                    style={{ width: `${(playerHp / BATTLE.playerHp) * 100}%` }}
+            <div className="lms-stage">
+              <div className="lms-fighter">
+                <div className="lms-hp">
+                  <span className="lms-hp-head">
+                    <span>{firstName}</span>
+                    <em>
+                      {playerHp}/{BATTLE.playerHp}
+                    </em>
+                  </span>
+                  <span className="lms-hp-track">
+                    <span
+                      className={`lms-hp-fill lms-hp-fill--you${
+                        playerHp <= BATTLE.playerHp * 0.3 ? " is-low" : ""
+                      }`}
+                      style={{ width: `${(playerHp / BATTLE.playerHp) * 100}%` }}
+                    />
+                  </span>
+                </div>
+                <div
+                  className={`lms-fighter-art${bossStruck ? " is-attacking" : ""}${
+                    youStruck ? " is-hit" : ""
+                  }${playerHp <= 0 ? " is-ko" : ""}`}
+                >
+                  <Portrait
+                    avatar={state.avatar}
+                    equipped={state.equipped}
+                    size={110}
+                    aura={aura.tier}
                   />
-                </span>
+                  {youStruck && (
+                    <span key={`d${qi}`} className="lms-dmg lms-dmg--you" aria-hidden="true">
+                      −{lastHit.amount}
+                    </span>
+                  )}
+                </div>
               </div>
-              <div className="lms-hp">
-                <span className="lms-hp-head">
-                  <MonsterArt monster={monster} size={34} hurt={monsterHp === 0} />
-                  <span>{monster.name}</span>
-                  <em>{monsterHp}/{maxMonsterHp}</em>
-                </span>
-                <span className="lms-hp-track">
-                  <span
-                    className="lms-hp-fill lms-hp-fill--boss"
-                    style={{ width: `${(monsterHp / maxMonsterHp) * 100}%`, background: monster.color }}
-                  />
-                </span>
+
+              <div className="lms-stage-mid" aria-live="polite">
+                {combo >= 2 && (
+                  <span key={`c${combo}`} className="lms-combo">
+                    Combo ×{combo}
+                  </span>
+                )}
+                {bossStruck && lastHit.crit && (
+                  <span key={`k${qi}`} className="lms-crit" aria-hidden="true">
+                    CRITICAL!
+                  </span>
+                )}
+              </div>
+
+              <div className="lms-fighter">
+                <div className="lms-hp">
+                  <span className="lms-hp-head">
+                    <span>{monster.name}</span>
+                    <em>
+                      {monsterHp}/{maxMonsterHp}
+                    </em>
+                  </span>
+                  <span className="lms-hp-track">
+                    <span
+                      className="lms-hp-fill lms-hp-fill--boss"
+                      style={{
+                        width: `${(monsterHp / maxMonsterHp) * 100}%`,
+                        background: monster.color,
+                      }}
+                    />
+                  </span>
+                </div>
+                <div
+                  className={`lms-fighter-art lms-fighter-art--boss${
+                    youStruck ? " is-attacking" : ""
+                  }${bossStruck ? ` is-hit${lastHit.crit ? " is-crit" : ""}` : ""}${
+                    monsterHp <= 0 ? " is-defeated" : " lms-idle"
+                  }`}
+                >
+                  <MonsterArt monster={monster} size={118} hurt={monsterHp === 0} />
+                  {bossStruck && (
+                    <span
+                      key={`d${qi}`}
+                      className={`lms-dmg lms-dmg--boss${lastHit.crit ? " lms-dmg--crit" : ""}`}
+                      aria-hidden="true"
+                    >
+                      −{lastHit.amount}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -305,7 +402,9 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
               <div className="lms-quiz-head">
                 <span className="lms-quiz-progress">Round {qi + 1}</span>
                 <span className="lms-quiz-best">
-                  Right = you hit for {myAtk} · Wrong = it hits for {hitTaken}
+                  Hit for {myAtk + comboBonus(combo)}
+                  {isCrit(combo) ? " — CRITICAL up" : combo > 0 ? ` (combo +${comboBonus(combo)})` : ""} ·
+                  it hits for {hitTaken}
                 </span>
               </div>
               <p className="lms-quiz-q">{q.q}</p>
@@ -324,10 +423,14 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
                   );
                 })}
               </div>
-              {picked !== null && (
+              {picked !== null && lastHit && (
                 <div className={`lms-quiz-explain${picked === q.answer ? " is-right" : ""}`}>
                   <strong>
-                    {picked === q.answer ? `Clean hit — ${myAtk} damage.` : `It got you for ${hitTaken}.`}
+                    {picked === q.answer
+                      ? lastHit.crit
+                        ? `CRITICAL — ${lastHit.amount} damage!`
+                        : `Clean hit — ${lastHit.amount} damage.`
+                      : `It got you for ${lastHit.amount}.`}
                   </strong>{" "}
                   {q.explain}
                 </div>
@@ -347,7 +450,14 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
 
         {phase === "won" && (
           <div className="lms-arena-end">
-            <MonsterArt monster={monster} size={150} hurt />
+            <div className="lms-arena-scene">
+              <span className="lms-victor">
+                <Portrait avatar={state.avatar} equipped={state.equipped} size={130} aura={aura.tier} />
+              </span>
+              <span className="lms-fallen">
+                <MonsterArt monster={monster} size={140} hurt />
+              </span>
+            </div>
             <p className="kicker kicker--acc">Victory</p>
             <h2 className="learn-h1 lms-arena-end-h">{monster.name} is toast.</h2>
             <p className="learn-sub">
@@ -368,7 +478,14 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
 
         {phase === "lost" && (
           <div className="lms-arena-end">
-            <MonsterArt monster={monster} size={150} />
+            <div className="lms-arena-scene">
+              <span className="lms-ko-you">
+                <Portrait avatar={state.avatar} equipped={state.equipped} size={110} aura={0} />
+              </span>
+              <span className="lms-gloat">
+                <MonsterArt monster={monster} size={150} />
+              </span>
+            </div>
             <p className="kicker kicker--coral">Knocked Out</p>
             <h2 className="learn-h1 lms-arena-end-h">Walk it off.</h2>
             <p className="learn-sub">

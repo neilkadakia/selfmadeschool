@@ -1,21 +1,24 @@
 "use client";
 
-// The Locker: your portrait, your gear, and the school store. Credits
-// come from finished units, perfect checks, decks, and boss battles;
-// gear changes your Arena numbers, so shopping is strategy.
+// The Locker: your build, your gear, and the school store. Credits come
+// from doing the work; gear raises your Power; Power draws itself on the
+// portrait as an aura. You're not dressing a character — you're building
+// yourself, and the build should LOOK like something.
 
 import Link from "next/link";
 import { useState } from "react";
 import {
+  AURA_TIERS,
   GEAR,
   GEAR_SLOTS,
   attackFor,
+  auraFor,
   defenseFor,
   type Gear,
 } from "@/lib/game";
 import { useLms } from "@/components/useLms";
 import AvatarStudio from "./AvatarStudio";
-import Portrait from "./Portrait";
+import Portrait, { GearIcon } from "./Portrait";
 import RewardToast from "./RewardToast";
 
 function GearCard({ item }: { item: Gear }) {
@@ -27,6 +30,9 @@ function GearCard({ item }: { item: Gear }) {
   return (
     <div className={`lms-gear${owned ? " is-owned" : ""}${equipped ? " is-equipped" : ""}`}>
       <div className="lms-gear-head">
+        <span className="lms-gear-icon">
+          <GearIcon id={item.id} slot={item.slot} />
+        </span>
         <span className="lms-gear-name">{item.name}</span>
         <span className="lms-gear-stat">{item.atk > 0 ? `+${item.atk} ATK` : `+${item.def} DEF`}</span>
       </div>
@@ -58,6 +64,10 @@ export default function Locker() {
   const { state } = lms;
   const [retaking, setRetaking] = useState(false);
 
+  const aura = auraFor(state.equipped, state.xp);
+  const maxPower = AURA_TIERS[AURA_TIERS.length - 1].at;
+  const powerPct = Math.min(100, Math.round((aura.power / maxPower) * 100));
+
   return (
     <div className="learn">
       <RewardToast reward={lms.reward} onDone={lms.clearReward} />
@@ -66,25 +76,61 @@ export default function Locker() {
           ← My Learning
         </Link>
         <p className="kicker kicker--acc">The Locker</p>
-        <h1 className="learn-h1">Suit up.</h1>
+        <h1 className="learn-h1">Build yourself.</h1>
         <p className="learn-sub">
-          Credits come from doing the work — units, perfect knowledge checks, flashcard decks,
-          boss battles. Spend them here. Everything you equip counts in{" "}
-          <Link href="/learn/arena">the Arena</Link>.
+          Credits come from doing the work — units, perfect knowledge checks, decks, boss
+          battles. Spend them on gear, and watch the portrait change: your Power grows with
+          what you carry <em>and</em> what you&apos;ve learned, and past a point it starts to
+          show. Everything you equip counts in <Link href="/learn/arena">the Arena</Link>.
         </p>
 
         <div className="lms-locker-top">
           <div className="lms-locker-me">
-            <Portrait avatar={state.avatar} equipped={state.equipped} size={150} />
+            <div className={`lms-locker-portrait${aura.tier >= 3 ? " is-radiant" : ""}`}>
+              <Portrait avatar={state.avatar} equipped={state.equipped} size={150} aura={aura.tier} />
+            </div>
             <div className="lms-locker-stats">
               <span className="lms-locker-credit">
                 {state.credits} <em>Credits</em>
               </span>
-              <span className="lms-locker-stat">⚔ Attack {attackFor(state.equipped)}</span>
+              <span className="lms-locker-stat">⚔ Attack {attackFor(state.equipped, state.xp)}</span>
               <span className="lms-locker-stat">⛨ Defense {defenseFor(state.equipped)}</span>
               <button className="lms-signout" onClick={() => setRetaking((r) => !r)}>
                 {retaking ? "Close Picture Day" : "Retake Picture Day"}
               </button>
+            </div>
+            <div className="lms-power">
+              <div className="lms-power-head">
+                <span className="lms-power-label">Power</span>
+                <span className="lms-power-num">{aura.power}</span>
+                <span
+                  className="lms-power-tier"
+                  style={aura.color ? { color: aura.color, borderColor: aura.color } : undefined}
+                >
+                  {aura.name}
+                </span>
+              </div>
+              <span className="lms-power-track">
+                {AURA_TIERS.slice(1).map((t) => (
+                  <span
+                    key={t.at}
+                    className="lms-power-notch"
+                    style={{ left: `${(t.at / maxPower) * 100}%` }}
+                  />
+                ))}
+                <span
+                  className="lms-power-fill"
+                  style={{
+                    width: `${powerPct}%`,
+                    background: aura.color ?? "rgba(242,238,227,0.35)",
+                  }}
+                />
+              </span>
+              <p className="lms-power-foot">
+                {aura.next
+                  ? `${aura.next.needs} more Power to go ${aura.next.name} — gear up, level up, or both.`
+                  : "Maximum aura. The portrait can't get any louder."}
+              </p>
             </div>
           </div>
           {retaking && <AvatarStudio onDone={() => setRetaking(false)} />}
@@ -103,7 +149,7 @@ export default function Locker() {
 
         <p className="lms-hint">
           Short on Credits? Every finished unit pays 20, a perfect check pays 10, and a first boss
-          win pays 60.
+          win pays 60. Grade levels add attack all by themselves — wisdom is a weapon here.
         </p>
       </div>
     </div>

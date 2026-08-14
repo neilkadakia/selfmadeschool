@@ -4877,12 +4877,28 @@ html.lms-light .classroom .lms-signout {
 
 .lms-gear-head {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
 }
 
+.lms-gear-icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid rgba(242, 238, 227, 0.12);
+  background: rgba(242, 238, 227, 0.05);
+}
+
+.lms-gear.is-equipped .lms-gear-icon {
+  border-color: rgba(67, 222, 123, 0.5);
+  background: rgba(67, 222, 123, 0.1);
+}
+
 .lms-gear-name {
+  flex: 1;
   font-weight: 700;
   font-size: 15px;
 }
@@ -5033,11 +5049,177 @@ html.lms-light .classroom .lms-signout {
   color: var(--muted-on-ink);
 }
 
-.lms-hpbars {
+/* ---------- The battle stage ---------- */
+
+.lms-stage {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
+  grid-template-columns: 1fr 92px 1fr;
+  align-items: start;
+  gap: 10px;
   margin: 22px 0 18px;
+  padding: 18px 18px 26px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 180, 58, 0.28);
+  background:
+    radial-gradient(120% 60% at 50% 100%, rgba(255, 180, 58, 0.1), transparent 60%),
+    rgba(242, 238, 227, 0.02);
+}
+
+.lms-fighter {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.lms-fighter-art {
+  position: relative;
+  align-self: center;
+}
+
+.lms-fighter-art.is-attacking {
+  animation: lungeRight 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lms-fighter-art--boss.is-attacking {
+  animation: lungeLeft 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lms-fighter-art.is-hit {
+  animation: hitShake 0.5s ease;
+}
+
+.lms-fighter-art.is-hit.is-crit {
+  animation: hitShakeBig 0.55s ease;
+}
+
+.lms-fighter-art.is-ko {
+  filter: grayscale(1) brightness(0.75);
+  transform: rotate(8deg);
+  transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.lms-fighter-art.is-defeated {
+  animation: fallOver 0.8s ease forwards;
+  transform-origin: 50% 88%;
+}
+
+.lms-idle,
+.lms-fighter-art--boss.lms-idle {
+  animation: bossBob 3.2s ease-in-out infinite;
+}
+
+@keyframes lungeRight {
+  0% { transform: none; }
+  35% { transform: translateX(26px) rotate(3deg); }
+  100% { transform: none; }
+}
+
+@keyframes lungeLeft {
+  0% { transform: none; }
+  35% { transform: translateX(-26px) rotate(-3deg); }
+  100% { transform: none; }
+}
+
+@keyframes hitShake {
+  0% { transform: none; filter: brightness(2.1) saturate(0.4); }
+  20% { transform: translateX(-9px) rotate(-2deg); }
+  45% { transform: translateX(8px) rotate(2deg); filter: brightness(1.4); }
+  70% { transform: translateX(-5px); }
+  100% { transform: none; filter: none; }
+}
+
+@keyframes hitShakeBig {
+  0% { transform: scale(1.06); filter: brightness(2.4) saturate(0.3); }
+  20% { transform: translateX(-14px) rotate(-4deg) scale(1.04); }
+  45% { transform: translateX(12px) rotate(4deg); filter: brightness(1.5); }
+  70% { transform: translateX(-7px); }
+  100% { transform: none; filter: none; }
+}
+
+@keyframes bossBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes fallOver {
+  0% { transform: none; opacity: 1; }
+  100% { transform: rotate(96deg) translateY(4px); opacity: 0.5; }
+}
+
+.lms-dmg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  pointer-events: none;
+  animation: dmgFloat 1.1s ease-out forwards;
+  text-shadow: 0 2px 10px rgba(14, 14, 18, 0.55);
+}
+
+.lms-dmg--you {
+  color: #ff6b6b;
+}
+
+.lms-dmg--boss {
+  color: var(--paper);
+}
+
+.lms-dmg--crit {
+  color: var(--coral);
+  font-size: 36px;
+}
+
+@keyframes dmgFloat {
+  0% { opacity: 0; transform: translate(-50%, 10px) scale(0.7); }
+  18% { opacity: 1; transform: translate(-50%, -6px) scale(1.12); }
+  100% { opacity: 0; transform: translate(-50%, -52px) scale(1); }
+}
+
+.lms-stage-mid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 150px;
+}
+
+.lms-combo {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--acc);
+  border: 1.5px solid rgba(67, 222, 123, 0.6);
+  border-radius: 999px;
+  padding: 5px 12px;
+  white-space: nowrap;
+  animation: comboPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lms-crit {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: 0.05em;
+  color: var(--coral);
+  transform: rotate(-6deg);
+  white-space: nowrap;
+  animation: critPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes comboPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes critPop {
+  0% { transform: rotate(-6deg) scale(0.4); opacity: 0; }
+  55% { transform: rotate(-6deg) scale(1.25); opacity: 1; }
+  100% { transform: rotate(-6deg) scale(1); opacity: 1; }
 }
 
 .lms-hp-head {
@@ -5064,11 +5246,26 @@ html.lms-light .classroom .lms-signout {
 }
 
 .lms-hp-track {
+  position: relative;
   display: block;
-  height: 10px;
+  height: 13px;
   border-radius: 999px;
   background: rgba(242, 238, 227, 0.1);
   overflow: hidden;
+}
+
+/* Segment ticks — reads like a fighting-game health bar. */
+.lms-hp-track::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 18px,
+    rgba(14, 14, 18, 0.35) 18px 20px
+  );
+  pointer-events: none;
 }
 
 .lms-hp-fill {
@@ -5080,6 +5277,15 @@ html.lms-light .classroom .lms-signout {
 
 .lms-hp-fill--you {
   background: var(--acc);
+}
+
+.lms-hp-fill--you.is-low {
+  background: #ff6b6b;
+  animation: lowPulse 0.9s ease-in-out infinite;
+}
+
+@keyframes lowPulse {
+  50% { opacity: 0.55; }
 }
 
 @keyframes arenaShake {
@@ -5119,6 +5325,273 @@ html.lms-light .classroom .lms-signout {
   font-weight: 800;
   font-size: 22px;
   color: #b07515;
+}
+
+/* ---------- Aura: power drawn on the portrait ---------- */
+
+.pt-aura-glow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: auraPulse 3.4s ease-in-out infinite;
+}
+
+.pt-spark {
+  animation: sparkTwinkle 2.4s ease-in-out infinite;
+}
+
+.pt-spark--2 { animation-delay: 0.5s; }
+.pt-spark--3 { animation-delay: 0.9s; }
+.pt-spark--4 { animation-delay: 1.3s; }
+.pt-spark--5 { animation-delay: 1.8s; }
+
+.pt-halo {
+  animation: haloBob 3.6s ease-in-out infinite;
+}
+
+@keyframes auraPulse {
+  0%, 100% { opacity: 0.75; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+
+@keyframes sparkTwinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+
+@keyframes haloBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2.5px); }
+}
+
+/* ---------- The Locker: power meter ---------- */
+
+.lms-locker-portrait.is-radiant svg {
+  filter: drop-shadow(0 0 20px rgba(255, 180, 58, 0.3));
+}
+
+.lms-power {
+  flex-basis: 100%;
+  max-width: 480px;
+  margin-top: 10px;
+}
+
+.lms-power-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.lms-power-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-on-ink);
+}
+
+.lms-power-num {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.lms-power-tier {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1.5px solid rgba(242, 238, 227, 0.3);
+  border-radius: 999px;
+  padding: 4px 11px;
+  white-space: nowrap;
+}
+
+.lms-power-track {
+  position: relative;
+  display: block;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(242, 238, 227, 0.1);
+}
+
+.lms-power-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1), background 0.6s ease;
+}
+
+.lms-power-notch {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  background: rgba(242, 238, 227, 0.35);
+  border-radius: 1px;
+}
+
+.lms-power-foot {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--muted-on-ink);
+}
+
+/* ---------- VS intro drama ---------- */
+
+.lms-vs-side--you {
+  animation: vsInLeft 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.lms-vs-side--boss {
+  animation: vsInRight 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+
+.lms-vs .lms-vs-mark {
+  animation: vsPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.32s both;
+}
+
+.lms-vs-tier {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@keyframes vsInLeft {
+  from { opacity: 0; transform: translateX(-36px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes vsInRight {
+  from { opacity: 0; transform: translateX(36px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes vsPop {
+  0% { opacity: 0; transform: scale(0.3) rotate(-10deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-4deg); }
+}
+
+/* ---------- Victory / defeat scenes ---------- */
+
+.lms-arena-scene {
+  display: flex;
+  align-items: flex-end;
+  gap: 34px;
+  margin-bottom: 8px;
+}
+
+.lms-victor {
+  animation: victorBounce 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
+}
+
+.lms-fallen {
+  display: inline-block;
+  transform-origin: 50% 88%;
+  animation: fallOver 0.8s ease 0.3s both;
+}
+
+.lms-ko-you {
+  display: inline-block;
+  filter: grayscale(0.85) brightness(0.8);
+  transform: rotate(8deg);
+  opacity: 0.85;
+}
+
+.lms-gloat {
+  display: inline-block;
+  animation: gloatBob 1.5s ease-in-out infinite;
+}
+
+@keyframes victorBounce {
+  0% { transform: translateY(26px) scale(0.92); opacity: 0; }
+  100% { transform: none; opacity: 1; }
+}
+
+@keyframes gloatBob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-9px) rotate(2deg); }
+}
+
+/* Beaten bosses on the Arena index wear their defeat. */
+
+.lms-boss-art.is-beaten {
+  opacity: 0.55;
+  filter: saturate(0.5);
+}
+
+.lms-boss.is-open:hover .lms-boss-art:not(.is-beaten) svg {
+  animation: bossBob 1.4s ease-in-out infinite;
+}
+
+.lms-boss-statline {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Light theme */
+
+html.lms-light .lms-dmg--boss {
+  color: var(--ink);
+  text-shadow: none;
+}
+
+html.lms-light .lms-stage {
+  background:
+    radial-gradient(120% 60% at 50% 100%, rgba(255, 180, 58, 0.14), transparent 60%),
+    rgba(14, 14, 18, 0.025);
+}
+
+html.lms-light .lms-power-track,
+html.lms-light .lms-power-notch {
+  background-color: rgba(14, 14, 18, 0.14);
+}
+
+html.lms-light .lms-power-tier {
+  border-color: rgba(14, 14, 18, 0.3);
+}
+
+html.lms-light .lms-gear-icon {
+  border-color: rgba(14, 14, 18, 0.14);
+  background: rgba(14, 14, 18, 0.04);
+}
+
+/* Stillness for those who asked for it. */
+
+@media (prefers-reduced-motion: reduce) {
+  .pt-aura-glow,
+  .pt-spark,
+  .pt-halo,
+  .lms-idle,
+  .lms-fighter-art--boss.lms-idle,
+  .lms-fighter-art.is-attacking,
+  .lms-fighter-art--boss.is-attacking,
+  .lms-fighter-art.is-hit,
+  .lms-fighter-art.is-hit.is-crit,
+  .lms-hp-fill--you.is-low,
+  .lms-vs-side--you,
+  .lms-vs-side--boss,
+  .lms-vs .lms-vs-mark,
+  .lms-victor,
+  .lms-gloat,
+  .lms-boss.is-open:hover .lms-boss-art:not(.is-beaten) svg {
+    animation: none;
+  }
+
+  .lms-dmg {
+    animation: none;
+    opacity: 1;
+    transform: translate(-50%, -24px);
+  }
+
+  .lms-fallen,
+  .lms-fighter-art.is-defeated {
+    animation: none;
+    transform: rotate(96deg) translateY(4px);
+    opacity: 0.5;
+  }
 }
 
 .classroom-avatar--live {
@@ -5252,9 +5725,40 @@ html.lms-light .lms-locker-credit {
     font-size: 30px;
   }
 
-  .lms-hpbars {
-    grid-template-columns: 1fr;
-    gap: 12px;
+  .lms-stage {
+    grid-template-columns: 1fr 58px 1fr;
+    padding: 14px 12px 20px;
+    gap: 8px;
+  }
+
+  .lms-stage-mid {
+    min-height: 110px;
+  }
+
+  .lms-fighter-art svg {
+    width: 82px;
+    height: auto;
+  }
+
+  .lms-dmg {
+    font-size: 21px;
+  }
+
+  .lms-dmg--crit {
+    font-size: 27px;
+  }
+
+  .lms-crit {
+    font-size: 15px;
+  }
+
+  .lms-combo {
+    font-size: 12px;
+    padding: 4px 9px;
+  }
+
+  .lms-arena-scene {
+    gap: 20px;
   }
 }
 

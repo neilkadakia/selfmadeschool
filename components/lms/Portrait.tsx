@@ -1,16 +1,73 @@
 // The student portrait: a layered flat-sticker SVG built from the
 // avatar config plus whatever gear is equipped. Pure and prop-driven —
-// safe anywhere, from the 34px sidebar chip to the Arena.
+// safe anywhere, from the 34px sidebar chip to the Arena. Pass an aura
+// tier and the figure visibly powers up: glow, sparks, halo.
 
+import { useId } from "react";
 import {
+  AURA_TIERS,
   HAIR_COLORS,
   OUTFIT_COLORS,
   SKIN_TONES,
   type AvatarConfig,
   type Equipped,
+  type GearSlot,
 } from "@/lib/game";
 
 const INK = "#14141a";
+
+// Four-point spark, drawn at the origin — position with transform.
+function Spark({ x, y, s, color, i }: { x: number; y: number; s: number; color: string; i: number }) {
+  return (
+    <path
+      className={`pt-spark pt-spark--${i}`}
+      transform={`translate(${x} ${y}) scale(${s})`}
+      d="M0 -5 L1.6 -1.6 L5 0 L1.6 1.6 L0 5 L-1.6 1.6 L-5 0 L-1.6 -1.6 Z"
+      fill={color}
+    />
+  );
+}
+
+// The power made visible. Tiers stack: glow → sparks → ground ring → halo.
+function Aura({ tier, uid }: { tier: number; uid: string }) {
+  const color = AURA_TIERS[tier]?.color;
+  if (!color || tier < 1) return null;
+  return (
+    <g className="pt-aura">
+      <defs>
+        <radialGradient id={`${uid}-aura`} cx="50%" cy="52%" r="50%">
+          <stop offset="0%" stopColor={color} stopOpacity={0.28 + tier * 0.08} />
+          <stop offset="62%" stopColor={color} stopOpacity={0.12 + tier * 0.04} />
+          <stop offset="100%" stopColor={color} stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <ellipse className="pt-aura-glow" cx="60" cy="80" rx="56" ry="68" fill={`url(#${uid}-aura)`} />
+      {tier >= 2 && (
+        <>
+          <Spark x={18} y={52} s={1} color={color} i={1} />
+          <Spark x={104} y={64} s={0.8} color={color} i={2} />
+          <Spark x={26} y={104} s={0.7} color={color} i={3} />
+        </>
+      )}
+      {tier >= 3 && (
+        <>
+          <ellipse cx="60" cy="138" rx="34" ry="6" fill={color} opacity="0.3" />
+          <Spark x={98} y={26} s={1.1} color={color} i={4} />
+          <Spark x={12} y={78} s={0.9} color={color} i={5} />
+        </>
+      )}
+      {tier >= 4 && (
+        <g className="pt-halo">
+          <ellipse cx="60" cy="6" rx="17" ry="4.5" fill="none" stroke={color} strokeWidth="3" opacity="0.9" />
+          <g stroke={color} strokeWidth="2.4" strokeLinecap="round" opacity="0.75">
+            <line x1="24" y1="10" x2="30" y2="18" />
+            <line x1="96" y1="10" x2="90" y2="18" />
+          </g>
+        </g>
+      )}
+    </g>
+  );
+}
 
 function Hair({ style, color }: { style: number; color: string }) {
   switch (style) {
@@ -192,15 +249,38 @@ function Helmet({ id }: { id: string }) {
   }
 }
 
+// A gear item alone, cropped out of the portrait coordinate space —
+// the Locker uses these as shop icons so you can see what you're buying.
+const ICON_VIEW: Record<GearSlot, string> = {
+  weapon: "74 22 50 82",
+  shield: "2 60 44 56",
+  armor: "24 58 72 58",
+  helmet: "14 -4 92 48",
+};
+
+export function GearIcon({ id, slot, size = 44 }: { id: string; slot: GearSlot; size?: number }) {
+  return (
+    <svg viewBox={ICON_VIEW[slot]} width={size} height={size} aria-hidden="true">
+      {slot === "weapon" && <Weapon id={id} />}
+      {slot === "shield" && <Shield id={id} />}
+      {slot === "armor" && <Armor id={id} body={0} />}
+      {slot === "helmet" && <Helmet id={id} />}
+    </svg>
+  );
+}
+
 export default function Portrait({
   avatar,
   equipped = {},
   size = 120,
+  aura = 0,
 }: {
   avatar: AvatarConfig;
   equipped?: Equipped;
   size?: number;
+  aura?: number;
 }) {
+  const uid = useId();
   const skin = SKIN_TONES[avatar.skin]?.color ?? SKIN_TONES[1].color;
   const hairColor = HAIR_COLORS[avatar.hairColor]?.color ?? HAIR_COLORS[0].color;
   const outfit = OUTFIT_COLORS[avatar.outfit]?.color ?? OUTFIT_COLORS[0].color;
@@ -216,6 +296,8 @@ export default function Portrait({
       role="img"
       aria-label="Your student portrait"
     >
+      <Aura tier={aura} uid={uid} />
+
       {/* Legs + shoes */}
       <rect x="47" y="106" width="11" height="30" rx="4" fill="#2c2c38" />
       <rect x="62" y="106" width="11" height="30" rx="4" fill="#2c2c38" />

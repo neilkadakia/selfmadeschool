@@ -1,7 +1,7 @@
 // The game layer: avatars, Credits, gear, and Arena boss battles.
 // Pure data + math — no storage here (that lives in useLms).
 
-import { COURSES, type Course, type Part, type QuizQuestion } from "./lms";
+import { COURSES, levelFor, type Course, type Part, type QuizQuestion } from "./lms";
 import { questionKey } from "./mastery";
 
 // ---------- Avatar ----------
@@ -203,9 +203,13 @@ export function gearById(id: string): Gear | undefined {
 
 export type Equipped = Partial<Record<GearSlot, string>>;
 
-export function attackFor(equipped: Equipped): number {
+// Levels sharpen the blade: every grade level adds +2 attack. Gear is what
+// you carry; XP is what you ARE. Both show up in the swing.
+export const ATK_PER_LEVEL = 2;
+
+export function attackFor(equipped: Equipped, xp = 0): number {
   const weapon = equipped.weapon ? gearById(equipped.weapon) : undefined;
-  return BATTLE.baseAtk + (weapon?.atk ?? 0);
+  return BATTLE.baseAtk + (weapon?.atk ?? 0) + levelFor(xp).index * ATK_PER_LEVEL;
 }
 
 export function defenseFor(equipped: Equipped): number {
@@ -213,6 +217,37 @@ export function defenseFor(equipped: Equipped): number {
     const g = equipped[slot] ? gearById(equipped[slot]!) : undefined;
     return sum + (g?.def ?? 0);
   }, 0);
+}
+
+// ---------- Power + aura ----------
+// Power is the one number that says how built you are: attack + defense +
+// grade level. It maps to an aura tier that literally draws on the portrait
+// — the whole point of the game layer is watching yourself get stronger.
+
+export const AURA_TIERS = [
+  { at: 0, name: "Finding Your Feet", color: null as string | null },
+  { at: 32, name: "Warming Up", color: "#5B7CFA" },
+  { at: 50, name: "On a Roll", color: "#43DE7B" },
+  { at: 72, name: "Force of Nature", color: "#FFB43A" },
+  { at: 95, name: "Self Made", color: "#8a6bf2" },
+] as const;
+
+export function powerFor(equipped: Equipped, xp: number): number {
+  return attackFor(equipped, xp) + defenseFor(equipped) + levelFor(xp).index * 4;
+}
+
+export function auraFor(equipped: Equipped, xp: number) {
+  const power = powerFor(equipped, xp);
+  let tier = 0;
+  for (let i = 0; i < AURA_TIERS.length; i++) if (power >= AURA_TIERS[i].at) tier = i;
+  const next = AURA_TIERS[tier + 1];
+  return {
+    tier,
+    power,
+    name: AURA_TIERS[tier].name,
+    color: AURA_TIERS[tier].color,
+    next: next ? { name: next.name, needs: next.at - power } : null,
+  };
 }
 
 // ---------- Monsters + battles ----------
