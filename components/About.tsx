@@ -124,8 +124,14 @@ export default function About() {
             What we believe
           </p>
           <h2 data-reveal className="h2 h2--beliefs">
-            Three house rules
+            Academics are overrated.
           </h2>
+          <p data-reveal className="beliefs-lede">
+            There — we said it. Life doesn&apos;t grade essays; it hands you decisions. What adults
+            actually need are real-life skills, and the most successful, most effective adults all
+            share one habit: they learned how to learn, and they never stopped. That&apos;s the whole
+            school, and it runs on three house rules.
+          </p>
           <div className="grade-grid">
             {RULES.map((r) => (
               <div key={r.num} data-card className={`card rule-card ${r.card}`}>

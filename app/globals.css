@@ -1769,6 +1769,14 @@ p {
   padding: 110px 32px;
 }
 
+.beliefs-lede {
+  max-width: 680px;
+  font-size: 17.5px;
+  line-height: 1.65;
+  color: var(--muted-on-ink);
+  margin: -34px 0 52px;
+}
+
 .rule-card {
   padding: 38px 32px;
   min-height: 260px;
