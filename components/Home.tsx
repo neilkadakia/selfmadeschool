@@ -416,7 +416,7 @@ export default function Home() {
             <h2 className="h2 nl-h2">
               One lesson in your
               <br />
-              inbox, every week.
+              inbox, every month.
             </h2>
             <p className="nl-sub">
               Mindset, money, and the big calls — the knowledge keeps coming between units. It also

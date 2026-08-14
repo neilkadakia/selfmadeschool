@@ -1,6 +1,6 @@
 "use client";
 
-// Extra Credit — the weekly newsletter signup, styled as a paper
+// Extra Credit — the monthly newsletter signup, styled as a paper
 // enrollment slip. Doubles as the waitlist for the 14th and 15th Grades.
 
 import { useState, type FormEvent } from "react";
@@ -90,7 +90,7 @@ export default function Newsletter() {
             {error}
           </p>
         )}
-        <p className="nl-fine">One email a week · No spam · Unsubscribe anytime</p>
+        <p className="nl-fine">One email a month · No spam · Unsubscribe anytime</p>
       </form>
     </>
   );
