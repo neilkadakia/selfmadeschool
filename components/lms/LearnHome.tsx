@@ -7,7 +7,7 @@ import { dueQuestions } from "@/lib/mastery";
 import { profileComplete } from "@/lib/api";
 import { useLms, courseProgress } from "@/components/useLms";
 import AvatarStudio from "./AvatarStudio";
-import EnrollmentCard from "./EnrollmentCard";
+import StudentId from "./StudentId";
 import Bulletin from "./Bulletin";
 import CommandK from "./CommandK";
 import FeedbackCard from "./FeedbackCard";
@@ -41,12 +41,12 @@ export default function LearnHome() {
         <RewardToast reward={lms.reward} onDone={lms.clearReward} />
         <div className="learn-wrap lms-gate">
           <p className="kicker kicker--acc">Front Office</p>
-          <h1 className="learn-h1">First, your enrollment card.</h1>
+          <h1 className="learn-h1">First, your Student ID.</h1>
           <p className="learn-sub">
-            Every student files one — your name as it should read on your certificate,
+            Every student carries one — your name as it should read on your certificate,
             and a phone number so the school can reach you. Thirty seconds, once.
           </p>
-          <EnrollmentCard />
+          <StudentId />
         </div>
       </div>
     );

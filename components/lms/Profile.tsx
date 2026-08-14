@@ -50,7 +50,7 @@ export default function Profile() {
     });
     if (res.ok) {
       lms.adoptAuthUser(res.data.user as Partial<Omit<AuthUser, "token">>);
-      flash("Enrollment card updated — your certificate uses your full name.");
+      flash("Student ID updated — your certificate uses your full name.");
     } else {
       flash((res.data.error as string) ?? "Could not update the card.");
     }
@@ -186,7 +186,7 @@ export default function Profile() {
         <section className="lms-section lms-gate">
           <h2 className="lms-section-h">Identity</h2>
           <p className="lms-section-sub">
-            Your enrollment card. The full name appears on your certificate; the phone
+            Your Student ID. The full name appears on your certificate; the phone
             number is for the front office only — never public.
           </p>
           <form className="lms-admin-form" onSubmit={saveIdentity}>
@@ -237,7 +237,7 @@ export default function Profile() {
               onChange={(e) => setPhone(e.target.value)}
             />
             <button className="btn btn--solid lms-login-btn" type="submit">
-              Save Enrollment Card
+              Save Student ID
             </button>
           </form>
         </section>

@@ -425,7 +425,7 @@ const actions = {
     apply((s) => (s.theme === theme ? s : { ...s, theme }));
   },
 
-  // After the server accepts new profile details (enrollment card, rename),
+  // After the server accepts new profile details (Student ID, rename),
   // keep the session — and the certificate name — in step.
   adoptAuthUser(user: Partial<Omit<AuthUser, "token">>) {
     if (!snapshot.auth) return;

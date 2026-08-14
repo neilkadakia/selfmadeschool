@@ -1,14 +1,14 @@
 "use client";
 
-// Front Office enrollment card: the school asks every student for a real
-// contact record — first name, last name, phone — before class starts.
+// The Student ID: the school asks every student for a real contact
+// record — first name, last name, phone — before class starts.
 // Email is the sign-in and stays fixed. Nothing here is ever public.
 
 import { useState, type FormEvent } from "react";
 import { apiUpdateProfile, type AuthUser } from "@/lib/api";
 import { useLms } from "@/components/useLms";
 
-export default function EnrollmentCard() {
+export default function StudentId() {
   const lms = useLms();
   const auth = lms.auth;
   // Long-time students already gave us a display name — split it so the
@@ -101,7 +101,7 @@ export default function EnrollmentCard() {
         </p>
       )}
       <button className="btn btn--solid lms-login-btn" type="submit" disabled={busy}>
-        {busy ? "Filing…" : "File My Enrollment Card"}
+        {busy ? "Printing…" : "Issue My Student ID"}
       </button>
       <p className="lms-enroll-note">
         Only the front office sees this — it never appears on the Honor Roll, your
