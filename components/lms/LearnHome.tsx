@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { BADGES, COURSES, levelFor, courseUnits } from "@/lib/lms";
 import { allBosses } from "@/lib/game";
+import { dueQuestions } from "@/lib/mastery";
 import { useLms, courseProgress } from "@/components/useLms";
 import AvatarStudio from "./AvatarStudio";
 import Bulletin from "./Bulletin";
@@ -138,9 +139,14 @@ export default function LearnHome() {
                   <span className="lms-studyhall-main">
                     <span className="lms-studyhall-title">Study Hall</span>
                     <span className="lms-studyhall-sub">
-                      {state.reviewLast === days[6].key
-                        ? "Reviewed today ✓ — more never hurts"
-                        : "Weak spots first — flashcards from your completed units"}
+                      {(() => {
+                        const makeup = dueQuestions(state.mastery).length;
+                        if (makeup > 0)
+                          return `${makeup} make-up question${makeup === 1 ? "" : "s"} in the pile — clear it, then flashcards`;
+                        return state.reviewLast === days[6].key
+                          ? "Reviewed today ✓ — more never hurts"
+                          : "Weak spots first — flashcards from your completed units";
+                      })()}
                     </span>
                   </span>
                   <span className="lms-continue-arrow" aria-hidden="true">

@@ -29,6 +29,8 @@ import RewardToast from "./RewardToast";
 function ArenaIndex() {
   const lms = useLms();
   const { state } = lms;
+  // Faculty carry a hall pass to every fight — for demos and quality checks.
+  const isAdmin = lms.auth?.role === "admin";
 
   return (
     <div className="learn">
@@ -52,10 +54,11 @@ function ArenaIndex() {
             const partDone = part.units.filter((u) => done.includes(u.slug)).length;
             const total = part.units.length;
             const unlocked = partDone === total && total > 0;
+            const canFight = unlocked || isAdmin;
             const won = state.battles[key]?.won;
             const card = (
               <>
-                <div className={`lms-boss-art${unlocked ? "" : " is-locked"}`}>
+                <div className={`lms-boss-art${canFight ? "" : " is-locked"}`}>
                   <MonsterArt monster={monster} size={110} />
                 </div>
                 <div className="lms-boss-main">
@@ -65,15 +68,27 @@ function ArenaIndex() {
                   </span>
                   <span
                     className={
-                      won ? "pill pill--acc" : unlocked ? "pill row-pill--coral" : "pill row-pill--dim"
+                      won
+                        ? "pill pill--acc"
+                        : unlocked
+                          ? "pill row-pill--coral"
+                          : canFight
+                            ? "pill row-pill--vio"
+                            : "pill row-pill--dim"
                     }
                   >
-                    {won ? "Defeated ✓ — Rematch" : unlocked ? "Ready to Fight" : `Locked — ${partDone}/${total} units`}
+                    {won
+                      ? "Defeated ✓ — Rematch"
+                      : unlocked
+                        ? "Ready to Fight"
+                        : canFight
+                          ? `Faculty Pass — ${partDone}/${total} units`
+                          : `Locked — ${partDone}/${total} units`}
                   </span>
                 </div>
               </>
             );
-            return unlocked ? (
+            return canFight ? (
               <Link
                 key={key}
                 href={`/learn/arena/?course=${course.slug}&part=${partIndex}`}
@@ -135,9 +150,12 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
   }
 
   const done = state.done[course.slug] ?? [];
-  const unlocked = part.units.every((u) => done.includes(u.slug));
+  // Faculty hall pass: admins can demo any boss without finishing the part.
+  const unlocked =
+    lms.auth?.role === "admin" || part.units.every((u) => done.includes(u.slug));
   const questions = shuffled(partQuestions(course, part), seed);
-  const q = questions.length > 0 ? questions[qi % questions.length] : null;
+  const round = questions.length > 0 ? questions[qi % questions.length] : null;
+  const q = round?.question ?? null;
 
   const begin = () => {
     setSeed(seedFrom(`${key}:${state.battles[key]?.attempts ?? 0}`));
@@ -149,8 +167,10 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
   };
 
   const answer = (oi: number) => {
-    if (picked !== null || !q) return;
+    if (picked !== null || !q || !round) return;
     setPicked(oi);
+    // Battle misses feed the make-up pile too — Study Hall picks them up.
+    lms.questionResult(round.key, oi === q.answer);
     if (oi === q.answer) {
       setMonsterHp((hp) => Math.max(0, hp - myAtk));
     } else {

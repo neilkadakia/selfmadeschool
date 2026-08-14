@@ -9,10 +9,12 @@ export default function Quiz({
   questions,
   best,
   onComplete,
+  onAnswer,
 }: {
   questions: QuizQuestion[];
   best: number | undefined;
   onComplete: (correct: number, total: number) => void;
+  onAnswer?: (index: number, correct: boolean) => void;
 }) {
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
@@ -80,6 +82,7 @@ export default function Quiz({
               onClick={() => {
                 setPicked(oi);
                 if (oi === q.answer) setCorrectCount((c) => c + 1);
+                onAnswer?.(i, oi === q.answer);
               }}
             >
               <span className="lms-quiz-letter">{String.fromCharCode(65 + oi)}</span>

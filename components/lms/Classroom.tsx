@@ -111,25 +111,27 @@ export default function Classroom({ children }: { children: React.ReactNode }) {
           )}
         </nav>
         <div className="classroom-user">
-          {lms.state.avatar.created ? (
-            <span className="classroom-avatar classroom-avatar--live" aria-hidden="true">
-              <Portrait avatar={lms.state.avatar} equipped={lms.state.equipped} size={40} />
+          <Link href="/learn/profile" className="classroom-user-id" title="Your Student File">
+            {lms.state.avatar.created ? (
+              <span className="classroom-avatar classroom-avatar--live" aria-hidden="true">
+                <Portrait avatar={lms.state.avatar} equipped={lms.state.equipped} size={40} />
+              </span>
+            ) : (
+              <span className="lms-avatar classroom-avatar" aria-hidden="true">
+                {(lms.auth.name || lms.auth.email).slice(0, 1).toUpperCase()}
+              </span>
+            )}
+            <span className="classroom-user-main">
+              <span className="classroom-user-name">{lms.auth.name || lms.auth.email}</span>
+              <span className="classroom-user-sub">
+                {lms.sync === "saving"
+                  ? "Saving…"
+                  : lms.sync === "error"
+                    ? "Offline — saved here"
+                    : level.name}
+              </span>
             </span>
-          ) : (
-            <span className="lms-avatar classroom-avatar" aria-hidden="true">
-              {(lms.auth.name || lms.auth.email).slice(0, 1).toUpperCase()}
-            </span>
-          )}
-          <span className="classroom-user-main">
-            <span className="classroom-user-name">{lms.auth.name || lms.auth.email}</span>
-            <span className="classroom-user-sub">
-              {lms.sync === "saving"
-                ? "Saving…"
-                : lms.sync === "error"
-                  ? "Offline — saved here"
-                  : level.name}
-            </span>
-          </span>
+          </Link>
           <button className="lms-signout classroom-signout" onClick={() => lms.logout()}>
             Sign Out
           </button>

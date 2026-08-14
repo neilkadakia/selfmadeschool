@@ -2,6 +2,7 @@
 // Pure data + math — no storage here (that lives in useLms).
 
 import { COURSES, type Course, type Part, type QuizQuestion } from "./lms";
+import { questionKey } from "./mastery";
 
 // ---------- Avatar ----------
 
@@ -293,9 +294,17 @@ export function partKey(courseSlug: string, partIndex: number): string {
   return `${courseSlug}/${partIndex}`;
 }
 
-// All quiz questions from a part's units that have lessons.
-export function partQuestions(course: Course, part: Part): QuizQuestion[] {
-  return part.units.flatMap((u) => course.lessons[u.slug]?.quiz ?? []);
+// All quiz questions from a part's units that have lessons, keyed so
+// battle answers can feed the mastery pile.
+export type ArenaQuestion = { key: string; question: QuizQuestion };
+
+export function partQuestions(course: Course, part: Part): ArenaQuestion[] {
+  return part.units.flatMap((u) =>
+    (course.lessons[u.slug]?.quiz ?? []).map((question, i) => ({
+      key: questionKey(course.slug, u.slug, i),
+      question,
+    }))
+  );
 }
 
 export type BossEntry = {

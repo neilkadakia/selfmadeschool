@@ -8,6 +8,8 @@ import { useState, type FormEvent } from "react";
 import { COURSES, BADGES, levelFor } from "@/lib/lms";
 import { apiUpdateProfile, apiChangePassword } from "@/lib/api";
 import { useLms, courseProgress } from "@/components/useLms";
+import AvatarStudio from "./AvatarStudio";
+import Portrait from "./Portrait";
 import RewardToast from "./RewardToast";
 import Ring from "./Ring";
 
@@ -19,6 +21,7 @@ export default function Profile() {
   const [pwNext, setPwNext] = useState("");
   const [msg, setMsg] = useState("");
   const [resetArmed, setResetArmed] = useState(false);
+  const [retaking, setRetaking] = useState(false);
 
   if (!loaded || !auth) return <div className="learn" />;
 
@@ -92,9 +95,15 @@ export default function Profile() {
         </Link>
 
         <div className="lms-profile-hero">
-          <span className="lms-avatar lms-avatar--big" aria-hidden="true">
-            {(auth.name || auth.email).slice(0, 1).toUpperCase()}
-          </span>
+          {state.avatar.created ? (
+            <span className="lms-portrait-big" aria-hidden="true">
+              <Portrait avatar={state.avatar} equipped={state.equipped} size={92} />
+            </span>
+          ) : (
+            <span className="lms-avatar lms-avatar--big" aria-hidden="true">
+              {(auth.name || auth.email).slice(0, 1).toUpperCase()}
+            </span>
+          )}
           <div>
             <p className="kicker kicker--acc">Student File</p>
             <h1 className="learn-h1 lms-profile-h1">{auth.name}</h1>
@@ -184,7 +193,27 @@ export default function Profile() {
 
         <section className="lms-section">
           <h2 className="lms-section-h">Appearance</h2>
-          <p className="lms-section-sub">How class looks on every device you sign into.</p>
+          <p className="lms-section-sub">
+            Your portrait, and how class looks on every device you sign into.
+          </p>
+          <div className="lms-portrait-edit">
+            <Portrait avatar={state.avatar} equipped={state.equipped} size={84} />
+            <div className="lms-portrait-actions">
+              <button className="lms-signout" onClick={() => setRetaking((r) => !r)}>
+                {retaking
+                  ? "Close Picture Day"
+                  : state.avatar.created
+                    ? "Retake Picture Day"
+                    : "Take Your Picture"}
+              </button>
+              <Link href="/learn/locker" className="lms-signout">
+                Gear &amp; Shop
+              </Link>
+            </div>
+          </div>
+          {retaking && (
+            <AvatarStudio firstRun={!state.avatar.created} onDone={() => setRetaking(false)} />
+          )}
           <div className="lms-themes">
             <button
               className={`lms-theme-swatch lms-theme-swatch--dark${state.theme === "dark" ? " is-active" : ""}`}

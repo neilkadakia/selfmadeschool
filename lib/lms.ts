@@ -141,6 +141,7 @@ export const BADGES: Badge[] = [
   { id: "honors", name: "With Honors", blurb: "Pass a course final with 10 of 12 or better.", icon: "H" },
   { id: "suited-up", name: "Suited Up", blurb: "Buy your first piece of gear from the Locker.", icon: "◈" },
   { id: "slayer", name: "Monster Slayer", blurb: "Win your first boss battle in the Arena.", icon: "⚔" },
+  { id: "comeback", name: "The Comeback", blurb: "Master a question you once missed.", icon: "↺" },
 ];
 
 export const XP_EXTRA = {

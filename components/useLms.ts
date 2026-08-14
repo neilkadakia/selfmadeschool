@@ -17,6 +17,7 @@ import {
   type Equipped,
   type GearSlot,
 } from "@/lib/game";
+import { MASTER_STREAK, XP_MASTERED, type MasteryMap } from "@/lib/mastery";
 import { apiGetProgress, apiLogin, apiLogout, apiPutProgress, type AuthUser } from "@/lib/api";
 
 const KEY = "sms-lms-v2";
@@ -44,6 +45,7 @@ export type LmsState = {
   gear: string[]; // owned gear ids
   equipped: Equipped;
   battles: Record<string, { won: boolean; attempts: number; date: string }>; // partKey -> record
+  mastery: MasteryMap; // questionKey -> miss/streak history (the make-up pile)
 };
 
 export type Reward = { xp: number; credits: number; badges: Badge[]; levelUp?: string };
@@ -77,6 +79,7 @@ const EMPTY: LmsState = {
   gear: [],
   equipped: {},
   battles: {},
+  mastery: {},
 };
 
 const SERVER_SNAPSHOT: Snapshot = {
@@ -418,6 +421,36 @@ const actions = {
       theme: s.theme,
       feedbackAt: s.feedbackAt,
     }));
+  },
+
+  // Per-question learning history. A miss puts the question in the
+  // make-up pile; MASTER_STREAK consecutive right answers retire it
+  // (with a little XP and, the first time, the Comeback badge).
+  questionResult(qkey: string, correct: boolean) {
+    apply((s) => {
+      const prev = s.mastery[qkey];
+      if (correct) {
+        if (!prev || prev.miss === 0 || prev.streak >= MASTER_STREAK) return s;
+        const streak = prev.streak + 1;
+        const mastered = streak >= MASTER_STREAK;
+        let next: LmsState = {
+          ...s,
+          mastery: { ...s.mastery, [qkey]: { ...prev, streak, last: localDay() } },
+          xp: s.xp + (mastered ? XP_MASTERED : 0),
+        };
+        if (mastered && !next.badges.includes("comeback")) {
+          next = { ...next, badges: [...next.badges, "comeback"] };
+        }
+        return next;
+      }
+      return {
+        ...s,
+        mastery: {
+          ...s.mastery,
+          [qkey]: { miss: (prev?.miss ?? 0) + 1, streak: 0, last: localDay() },
+        },
+      };
+    });
   },
 
   // Picture Day. First save also pays out back-pay Credits for work

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getCourse, courseUnits, type LessonBlock } from "@/lib/lms";
+import { questionKey } from "@/lib/mastery";
 import { useLms } from "@/components/useLms";
 import CommandK from "./CommandK";
 import RewardToast from "./RewardToast";
@@ -173,6 +174,7 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
                 questions={lesson.quiz}
                 best={state.quizBest[noteKey]}
                 onComplete={(correct, total) => lms.quizResult(courseSlug, unitSlug, correct, total)}
+                onAnswer={(qi, ok) => lms.questionResult(questionKey(courseSlug, unitSlug, qi), ok)}
               />
             </section>
 
