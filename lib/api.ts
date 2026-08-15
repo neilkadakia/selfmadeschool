@@ -35,6 +35,7 @@ export type AuthUser = {
   phone?: string;
   dob?: string; // yyyy-mm-dd
   role: Role;
+  nudges?: boolean; // mail preference — true unless opted out
   token: string;
 };
 
@@ -127,6 +128,18 @@ export async function apiUpdateProfile(
   profile: { first: string; last: string; phone: string; dob: string }
 ) {
   return call("auth.php", { method: "POST", token, body: { action: "update_profile", ...profile } });
+}
+
+export async function apiSetPrefs(token: string, prefs: { nudges: boolean }) {
+  return call("auth.php", { method: "POST", token, body: { action: "set_prefs", ...prefs } });
+}
+
+export async function apiNudgeInfo(token: string) {
+  return call("nudge.php", { token });
+}
+
+export async function apiNudgeRun(token: string, dry: boolean) {
+  return call("nudge.php", { method: "POST", token, body: { dry } });
 }
 
 export async function apiChangePassword(token: string, current: string, next: string) {

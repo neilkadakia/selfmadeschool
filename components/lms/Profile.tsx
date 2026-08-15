@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { COURSES, BADGES, levelFor } from "@/lib/lms";
 import { auraFor } from "@/lib/game";
-import { ROLE_LABEL, apiUpdateProfile, apiChangePassword, type AuthUser } from "@/lib/api";
+import { ROLE_LABEL, apiUpdateProfile, apiChangePassword, apiSetPrefs, type AuthUser } from "@/lib/api";
 import { formatPhone, formatPhoneInput, usDate } from "@/lib/format";
 import { useLms, courseProgress } from "@/components/useLms";
 import AvatarStudio from "./AvatarStudio";
@@ -391,6 +391,27 @@ export default function Profile() {
             <p className="lms-pcard-sub">
               It&apos;s yours. Take a copy anytime, or wipe the slate and run the course again.
             </p>
+            <div className="lms-pref-row">
+              <span className="lms-pref-text">
+                Nudge emails — a dying streak, a waiting Final, the occasional check-in.
+              </span>
+              <button
+                className={`lms-signout${(auth.nudges ?? true) ? " is-on" : ""}`}
+                aria-pressed={auth.nudges ?? true}
+                onClick={async () => {
+                  const next = !(auth.nudges ?? true);
+                  const res = await apiSetPrefs(auth.token, { nudges: next });
+                  if (res.ok) {
+                    lms.adoptAuthUser(res.data.user as Partial<Omit<AuthUser, "token">>);
+                    flash(next ? "Nudges on — we'll only write when it matters." : "Nudges off. The school goes quiet.");
+                  } else {
+                    flash((res.data.error as string) ?? "Could not save that.");
+                  }
+                }}
+              >
+                {(auth.nudges ?? true) ? "On" : "Off"}
+              </button>
+            </div>
             <div className="lms-pcard-actions">
             <button className="btn btn--outline lms-login-btn" onClick={exportData}>
               Download My Data

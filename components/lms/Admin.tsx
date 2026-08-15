@@ -27,6 +27,8 @@ import {
   apiBulletinDelete,
   apiBackupInfo,
   apiBackupRun,
+  apiNudgeInfo,
+  apiNudgeRun,
   type Role,
 } from "@/lib/api";
 import { COURSES, courseUnits } from "@/lib/lms";
@@ -87,6 +89,7 @@ export default function Admin() {
   const [notes, setNotes] = useState<Note[] | null>(null);
   const [noteText, setNoteText] = useState("");
   const [cronUrl, setCronUrl] = useState("");
+  const [nudgeCron, setNudgeCron] = useState("");
   const [msg, setMsg] = useState("");
 
   // Create-account form
@@ -124,6 +127,9 @@ export default function Admin() {
     if (myRank >= ROLE_RANK.global_admin) {
       void apiBackupInfo(token).then((r) => {
         if (r.ok) setCronUrl(r.data.cronUrl as string);
+      });
+      void apiNudgeInfo(token).then((r) => {
+        if (r.ok) setNudgeCron(r.data.cronUrl as string);
       });
     }
   }, [token, myRank]);
@@ -609,6 +615,65 @@ export default function Admin() {
             >
               Run Backup Now
             </button>
+
+            <h2 className="lms-section-h">Nudge desk</h2>
+            <p className="lms-section-sub">
+              One email max per student per run: a dying streak first, then a waiting Final, an
+              almost-finished course, or a quiet week — cooldowns keep it polite, and students can
+              switch them off in their Student File. Add this as a second daily cron job
+              (run it in the evening, when a streak can still be saved).
+            </p>
+            {nudgeCron && (
+              <div className="lms-ops-cron">
+                <code>curl -s &quot;{nudgeCron}&quot; &gt; /dev/null</code>
+                <button
+                  className="lms-signout"
+                  onClick={() => {
+                    void navigator.clipboard
+                      .writeText(`curl -s "${nudgeCron}" > /dev/null`)
+                      .then(() => flash("Nudge cron command copied."));
+                  }}
+                >
+                  Copy
+                </button>
+              </div>
+            )}
+            <div className="lms-pcard-actions">
+              <button
+                className="btn btn--outline lms-login-btn"
+                onClick={async () => {
+                  const r = await apiNudgeRun(token, true);
+                  if (r.ok) {
+                    const list = (r.data.nudges as { email: string; type: string }[]) ?? [];
+                    flash(
+                      list.length === 0
+                        ? "Dry run: nobody needs a nudge right now."
+                        : `Dry run: would email ${list.length} — ${list
+                            .map((n) => `${n.email} (${n.type})`)
+                            .join(", ")
+                            .slice(0, 200)}`
+                    );
+                  } else {
+                    flash((r.data.error as string) ?? "Dry run failed.");
+                  }
+                }}
+              >
+                Dry Run
+              </button>
+              <button
+                className="btn btn--outline lms-login-btn"
+                onClick={async () => {
+                  const r = await apiNudgeRun(token, false);
+                  if (r.ok) {
+                    flash(`Nudges sent: ${r.data.sent as number} (${r.data.optedOut as number} opted out).`);
+                  } else {
+                    flash((r.data.error as string) ?? "Nudge run failed.");
+                  }
+                }}
+              >
+                Send Nudges Now
+              </button>
+            </div>
           </section>
         )}
 

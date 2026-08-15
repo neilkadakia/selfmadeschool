@@ -3462,6 +3462,30 @@ kbd {
   border-color: rgba(242, 238, 227, 0.45);
 }
 
+.lms-signout.is-on {
+  border-color: var(--acc);
+  color: var(--acc);
+}
+
+html.lms-light .lms-signout.is-on {
+  border-color: #157a3e;
+  color: #157a3e;
+}
+
+/* A labeled preference with its switch: text left, control right. */
+.lms-pref-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 16px;
+}
+
+.lms-pref-text {
+  font-size: 14px;
+  color: var(--muted-on-ink);
+}
+
 /* Hero mantra — the school's loop, stated once, small */
 
 .hero-mantra {
