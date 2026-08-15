@@ -15,7 +15,7 @@ function week_key(): string {
 }
 
 if ($method === 'GET' && isset($_GET['leaderboard'])) {
-    // Honor Roll — any signed-in student: names and numbers only, no emails.
+    // Honor Roll, any signed-in student: names and numbers only, no emails.
     // Two races: all-time XP, and XP earned since Monday (fresh start weekly
     // so early joiners don't own the board forever).
     $users = read_store('users');
@@ -73,7 +73,7 @@ if ($method === 'GET' && isset($_GET['leaderboard'])) {
 }
 
 if ($method === 'GET' && isset($_GET['all'])) {
-    // Class overview — faculty (educator and up): one row per student.
+    // Class overview, faculty (educator and up): one row per student.
     require_rank($auth, ROLE_RANK['educator']);
     $users = read_users();
     $rows = [];
@@ -119,7 +119,7 @@ if ($method === 'PUT' || $method === 'POST') {
     if (!is_array($state)) respond(400, ['error' => 'state object required.']);
     if (strlen(json_encode($state)) > 256 * 1024) respond(413, ['error' => 'state too large.']);
     // Weekly race baseline: on the first sync of a new ISO week, the previous
-    // stored XP becomes the week's floor — so XP earned today still counts
+    // stored XP becomes the week's floor, so XP earned today still counts
     // even when it arrives in the same sync that rolls the week over.
     $saved = read_store($store);
     $wk = week_key();

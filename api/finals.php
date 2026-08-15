@@ -2,7 +2,7 @@
 // The Registrar: server-graded finals. The client runs the exam UI and
 // submits an answer sheet; grading happens here against api/final-keys.json
 // (generated from the course data at build time, never web-served), and the
-// passing record behind a certificate is one the school asserts — not a
+// passing record behind a certificate is one the school asserts, not a
 // value the browser wrote into its own storage.
 
 declare(strict_types=1);
@@ -22,7 +22,7 @@ $auth = require_auth();
 $method = $_SERVER['REQUEST_METHOD'] ?? '';
 
 if ($method === 'GET') {
-    // The caller's own server-verified finals — used by the certificate page
+    // The caller's own server-verified finals, used by the certificate page
     // for the "Verified by the Registrar" mark.
     $all = read_store('finals');
     respond(200, ['ok' => true, 'finals' => (object)($all[$auth['email']] ?? [])]);
@@ -43,7 +43,7 @@ $picks = $in['picks'] ?? null;
 $ck = $keys['courses'][$course] ?? null;
 if (!$ck) respond(400, ['error' => 'Unknown course.']);
 
-// Unlock check against the synced progress — same rule the client shows
+// Unlock check against the synced progress: same rule the client shows
 // (every unit complete), enforced with the school's copy of the record.
 $saved = read_store('progress_' . sha1($auth['email']));
 $done = $saved['state']['done'][$course] ?? [];

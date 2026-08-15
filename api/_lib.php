@@ -1,5 +1,5 @@
 <?php
-// Self Made School LMS API — shared helpers.
+// Self Made School LMS API: shared helpers.
 // Flat-file JSON storage, kept outside the web root so git deploys never touch it.
 
 declare(strict_types=1);
@@ -138,7 +138,7 @@ function require_auth(): array {
     $tokens = read_store('tokens');
     $entry = $tokens[$token] ?? null;
     if (!$entry || ($entry['exp'] ?? 0) < time()) {
-        respond(401, ['error' => 'Session expired — sign in again.']);
+        respond(401, ['error' => 'Session expired. Sign in again.']);
     }
     $users = read_users();
     $user = $users[$entry['email']] ?? null;

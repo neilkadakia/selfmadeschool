@@ -5,8 +5,8 @@
 // on Claude (structured outputs guarantee the lesson shape); without a key,
 // a built-in template produces a clearly-labeled skeleton so the Studio
 // works fully offline. Drafts live in the `drafts` store until faculty
-// export them as TypeScript for the course files — content still ships
-// through the build, the Studio is the writing room.
+// export them as TypeScript for the course files. Content still ships
+// through the build; the Studio is the writing room.
 
 declare(strict_types=1);
 require __DIR__ . '/_lib.php';
@@ -116,18 +116,18 @@ function clean_lesson($in): ?array {
     ];
 }
 
-// ---------- Engine 1: the template (no API key — a labeled skeleton) ----------
+// ---------- Engine 1: the template (no API key: a labeled skeleton) ----------
 
 function template_lesson(string $topic, string $notes): array {
     $t = mb_substr(trim($topic), 0, 60);
-    $todo = fn(string $what) => "[TODO — $what]";
+    $todo = fn(string $what) => "[TODO: $what]";
     return [
         'title' => mb_substr(ucwords($t), 0, 80),
         'hook' => $todo("one sentence that makes $t feel personal and urgent, no jargon"),
         'blocks' => [
             ['kind' => 'p', 'text' => $todo("open with the moment this topic actually shows up in someone's life")],
             ['kind' => 'h', 'text' => $todo('the core idea, said plainly')],
-            ['kind' => 'p', 'text' => $todo('explain the core idea in plain English — how it works, why school skipped it')],
+            ['kind' => 'p', 'text' => $todo('explain the core idea in plain English: how it works, why school skipped it')],
             ['kind' => 'callout', 'title' => $todo('the one-line rule'), 'text' => $todo('the takeaway someone should remember a year from now')],
             ['kind' => 'bigfact', 'stat' => $todo('a number'), 'caption' => $todo('why that number matters here')],
             ['kind' => 'list', 'title' => $todo('the practical steps'), 'items' => [$todo('step one'), $todo('step two'), $todo('step three')]],
@@ -135,16 +135,16 @@ function template_lesson(string $topic, string $notes): array {
             ['kind' => 'p', 'text' => $todo('close by connecting it back to becoming self made')],
         ],
         'quiz' => array_map(fn($i) => [
-            'q' => $todo("question $i — test the idea, not trivia"),
+            'q' => $todo("question $i: test the idea, not trivia"),
             'options' => [$todo('right answer'), $todo('plausible wrong'), $todo('plausible wrong'), $todo('plausible wrong')],
             'answer' => 0,
             'explain' => $todo('one sentence on why, teaching even in the explanation'),
         ], [1, 2, 3, 4]),
         'cards' => array_map(fn($i) => [
-            'front' => $todo("card $i front — a term or question"),
+            'front' => $todo("card $i front: a term or question"),
             'back' => $todo('the version that sticks after the tab closes'),
         ], [1, 2, 3, 4, 5, 6]),
-        'action' => $todo("one real-world action for $t someone can do this week — specific, small, start tonight"),
+        'action' => $todo("one real-world action for $t someone can do this week: specific, small, start tonight"),
     ];
 }
 
@@ -182,22 +182,26 @@ function lesson_schema(): array {
 
 function copilot_system(): string {
     return <<<'PROMPT'
-You write course units for Self Made School — an online school for adults 18-30
+You write course units for Self Made School, an online school for adults 18-30
 covering the life skills school never taught: mindset, money, and life's big calls.
 Courses: The 13th Grade (intro), The 14th Grade (money), The 15th Grade (big calls).
 
 The house voice: plain English, direct, warm, a little irreverent, never corporate
 and never preachy. Second person. Short sentences land harder than long ones.
-Deliberately non-academic — no grades, no jargon; when a technical term is
-unavoidable, define it in the same breath. Concrete numbers and named, realistic
-examples beat abstractions. The reader should finish feeling capable, not lectured.
-Never call students "kids" — they are adults. Say "unit" (never "module") and
-"video" (never "content"). Never use the word "rep" or "reps".
+Never use an em dash anywhere; use a colon, a period, or a comma instead. Avoid
+AI-flavored vocabulary: never write delve, leverage, seamless, robust, elevate,
+empower, unlock (metaphorically), game-changer, or journey (metaphorically), and
+never use the construction "it's not X, it's Y" or "not just X, but Y"; say the
+plain version. Deliberately non-academic: no grades, no jargon; when a technical
+term is unavoidable, define it in the same breath. Concrete numbers and named,
+realistic examples beat abstractions. The reader should finish feeling capable,
+not lectured. Never call students "kids"; they are adults. Say "unit" (never
+"module") and "video" (never "content"). Never use the word "rep" or "reps".
 
 A unit is one focused idea taught in about ten minutes of reading:
 - title: short and concrete, like a chapter name (e.g. "Credit Glow-Up", "Emergency Funds")
 - hook: one or two sentences that make the topic feel personal and urgent
-- blocks: 6-10 content blocks mixing kinds — p (paragraph), h (section heading),
+- blocks: 6-10 content blocks mixing these kinds: p (paragraph), h (section heading),
   callout (a titled rule worth remembering), bigfact (one striking stat + caption),
   list (titled practical steps), example (a named person walked through it with
   real numbers). Open with a p that grounds the topic in real life; use 2-3 h
@@ -206,9 +210,9 @@ A unit is one focused idea taught in about ten minutes of reading:
 - quiz: exactly 4 questions testing the idea (never trivia), each with exactly
   4 options, the correct option's zero-based index as answer, and an explain
   line that teaches even when the student got it right.
-- cards: exactly 6 flashcards — front is a term or question, back is the version
+- cards: exactly 6 flashcards. Front is a term or question, back is the version
   that stays with you after the tab closes.
-- action: the unit's Field Work — one specific real-world action a student can
+- action: the unit's Field Work, one specific real-world action a student can
   do this week. Small enough to start tonight, real enough to matter.
 PROMPT;
 }
@@ -229,9 +233,9 @@ function copilot_draft(string $course, string $topic, string $notes): array {
         'model' => getenv('SMS_COPILOT_MODEL') ?: COPILOT_MODEL_DEFAULT,
         'max_tokens' => 16000,
         // Content drafting in a fixed voice doesn't need maximum reasoning
-        // depth, and shared hosting can't sit through it — medium keeps
+        // depth, and shared hosting can't sit through it; medium keeps
         // latency inside proxy timeouts. (Thinking itself stays on: the
-        // model default. No sampling params — removed on this model line.)
+        // model default. No sampling params: removed on this model line.)
         'output_config' => ['effort' => 'medium', 'format' => lesson_schema()],
         // If a safety classifier declines, retry on Anthropic's recommended
         // fallback model server-side instead of failing the draft.
@@ -265,7 +269,7 @@ function copilot_draft(string $course, string $topic, string $notes): array {
         $msg = $res['error']['message'] ?? "HTTP {$status}";
         respond(502, ['error' => 'The Copilot hit an API error: ' . mb_substr($msg, 0, 200)]);
     }
-    // Check the stop reason before touching content — classifiers can decline.
+    // Check the stop reason before touching content: classifiers can decline.
     if (($res['stop_reason'] ?? '') === 'refusal') {
         respond(502, ['error' => 'The Copilot declined this topic. Rephrase it, or draft from the template.']);
     }
@@ -275,7 +279,7 @@ function copilot_draft(string $course, string $topic, string $notes): array {
     }
     $lesson = clean_lesson(json_decode($text, true));
     if ($lesson === null) {
-        respond(502, ['error' => 'The Copilot returned an unusable draft — try again.']);
+        respond(502, ['error' => 'The Copilot returned an unusable draft. Try again.']);
     }
     return ['engine' => 'claude', 'lesson' => $lesson];
 }
@@ -292,7 +296,7 @@ if ($action === 'draft') {
     if (mb_strlen($topic) < 3 || mb_strlen($topic) > 120) {
         respond(400, ['error' => 'Topic must be 3-120 characters.']);
     }
-    if (count($drafts) >= DRAFT_MAX) respond(400, ['error' => 'Draft shelf is full — export or delete some first.']);
+    if (count($drafts) >= DRAFT_MAX) respond(400, ['error' => 'Draft shelf is full. Export or delete some first.']);
     $result = copilot_draft($course !== '' ? $course : 'the-13th-grade', $topic, $notes);
     $id = bin2hex(random_bytes(8));
     $now = gmdate('c');
@@ -314,7 +318,7 @@ if ($action === 'save') {
     if (!isset($drafts[$id])) respond(404, ['error' => 'Draft not found.']);
     $lesson = clean_lesson($in['lesson'] ?? null);
     if ($lesson === null) {
-        respond(400, ['error' => 'That lesson does not validate — check blocks, exactly 4 quiz questions with 4 options each, and exactly 6 cards.']);
+        respond(400, ['error' => 'That lesson does not validate: check blocks, exactly 4 quiz questions with 4 options each, and exactly 6 cards.']);
     }
     $drafts[$id]['lesson'] = $lesson;
     $drafts[$id]['updated'] = gmdate('c');

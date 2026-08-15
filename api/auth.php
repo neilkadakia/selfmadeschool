@@ -83,7 +83,7 @@ if ($action === 'change_password') {
 }
 
 if ($action === 'request_reset') {
-    // Always answers ok — no account enumeration. Codes are six digits,
+    // Always answers ok: no account enumeration. Codes are six digits,
     // live 15 minutes, and re-requests inside 60s are silently ignored.
     $email = strtolower(trim($in['email'] ?? ''));
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) respond(200, ['ok' => true]);
@@ -100,10 +100,10 @@ if ($action === 'request_reset') {
                 'sent' => time(),
             ];
             write_store('resets', $resets);
-            $subject = 'Self Made School — your password reset code';
+            $subject = 'Self Made School: your password reset code';
             $body = "Your reset code is: $code\n\n"
                 . "It expires in 15 minutes. Enter it on the sign-in page along with your new password.\n\n"
-                . "If you didn't ask for this, you can ignore this email — your password hasn't changed.";
+                . "If you didn't ask for this, you can ignore this email. Your password hasn't changed.";
             $headers = "From: Self Made School <noreply@selfmadeschool.org>\r\n"
                 . "Content-Type: text/plain; charset=utf-8";
             @mail($email, $subject, $body, $headers);
@@ -120,18 +120,18 @@ if ($action === 'reset_password') {
     $resets = read_store('resets');
     $entry = $resets[$email] ?? null;
     if (!$entry || ($entry['exp'] ?? 0) < time()) {
-        respond(400, ['error' => 'Code expired or not found — request a new one.']);
+        respond(400, ['error' => 'Code expired or not found. Request a new one.']);
     }
     $entry['tries'] = ($entry['tries'] ?? 0) + 1;
     if ($entry['tries'] > 5) {
         unset($resets[$email]);
         write_store('resets', $resets);
-        respond(429, ['error' => 'Too many attempts — request a new code.']);
+        respond(429, ['error' => 'Too many attempts. Request a new code.']);
     }
     $resets[$email] = $entry;
     write_store('resets', $resets);
     if (!hash_equals($entry['code'], $code)) {
-        respond(400, ['error' => 'Wrong code — check the email and try again.']);
+        respond(400, ['error' => 'Wrong code. Check the email and try again.']);
     }
     $users = read_store('users');
     if (!isset($users[$email])) respond(400, ['error' => 'Account not found.']);
@@ -153,7 +153,7 @@ if ($action === 'impersonate') {
     // The issued session is short-lived and remembers who is really driving.
     $auth = require_auth();
     require_rank($auth, ROLE_RANK['admin']);
-    if ($auth['actor'] !== null) respond(400, ['error' => 'Already acting as someone — return first.']);
+    if ($auth['actor'] !== null) respond(400, ['error' => 'Already acting as someone. Return first.']);
     $target = strtolower(trim($in['email'] ?? ''));
     $users = read_users();
     if (!isset($users[$target])) respond(404, ['error' => 'No such account.']);
@@ -186,7 +186,7 @@ if ($email === '' || $password === '') respond(400, ['error' => 'Email and passw
 $fails = read_store('fails');
 $f = $fails[$email] ?? ['n' => 0, 'until' => 0];
 if ($f['until'] > time()) {
-    respond(429, ['error' => 'Too many attempts — try again in a few minutes.']);
+    respond(429, ['error' => 'Too many attempts. Try again in a few minutes.']);
 }
 
 usleep(250000); // flat cost on every attempt

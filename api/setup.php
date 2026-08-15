@@ -1,6 +1,6 @@
 <?php
-// One-time bootstrap: creates the first account — the Global
-// Administrator — then goes dead. Only works while zero users exist;
+// One-time bootstrap: creates the first account, the Global
+// Administrator, then goes dead. Only works while zero users exist;
 // after that, use users.php as an administrator.
 
 declare(strict_types=1);

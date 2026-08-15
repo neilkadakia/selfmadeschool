@@ -1,7 +1,7 @@
 <?php
 // Study Group: one discussion thread per unit. Students post and upvote,
 // faculty endorse the good answers ("Faculty answer") and can take posts
-// down. Names and text only — emails stay faculty-side. Signed-in only.
+// down. Names and text only; emails stay faculty-side. Signed-in only.
 
 declare(strict_types=1);
 require __DIR__ . '/_lib.php';
@@ -12,7 +12,7 @@ const POST_MAX = 500;
 const POSTS_PER_DAY = 15;
 
 // Known course/unit pairs come from the same build artifact the Registrar
-// grades with — nobody opens threads on units that don't exist.
+// grades with, so nobody opens threads on units that don't exist.
 function known_unit(string $course, string $unit): bool {
     $raw = @file_get_contents(__DIR__ . '/final-keys.json');
     $keys = json_decode($raw ?: '', true);
@@ -69,7 +69,7 @@ if ($action === 'post') {
     foreach ($all as $p) {
         if (($p['email'] ?? '') === $auth['email'] && str_starts_with($p['created'] ?? '', $today)) $mine++;
     }
-    if ($mine >= POSTS_PER_DAY) respond(429, ['error' => 'That\'s plenty for one day — let the class catch up.']);
+    if ($mine >= POSTS_PER_DAY) respond(429, ['error' => 'That\'s plenty for one day. Let the class catch up.']);
     $id = bin2hex(random_bytes(8));
     $all[$id] = [
         'course' => $course,
