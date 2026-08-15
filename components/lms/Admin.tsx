@@ -38,6 +38,7 @@ import {
 import { COURSES, courseUnits } from "@/lib/lms";
 import { formatPhone, formatPhoneInput, usDate } from "@/lib/format";
 import { useLms } from "@/components/useLms";
+import Studio from "./Studio";
 
 type Student = { email: string; name: string; phone?: string; dob?: string; role: Role };
 type Subscriber = { email: string; created: string; source: string };
@@ -74,6 +75,7 @@ const ROLE_PILL: Record<Role, string> = {
 
 const TABS = [
   { id: "classroom" as const, label: "Classroom", min: ROLE_RANK.educator },
+  { id: "studio" as const, label: "Studio", min: ROLE_RANK.educator },
   { id: "office" as const, label: "Front Office", min: ROLE_RANK.admin },
   { id: "ops" as const, label: "School Ops", min: ROLE_RANK.global_admin },
 ];
@@ -85,7 +87,7 @@ export default function Admin() {
   const myRank = rankOf(lms.auth?.role);
   const faculty = isFaculty(lms.auth?.role);
 
-  const [tab, setTab] = useState<"classroom" | "office" | "ops">("classroom");
+  const [tab, setTab] = useState<"classroom" | "studio" | "office" | "ops">("classroom");
   const [students, setStudents] = useState<Student[] | null>(null);
   const [subs, setSubs] = useState<Subscriber[] | null>(null);
   const [quotes, setQuotes] = useState<Quote[] | null>(null);
@@ -510,6 +512,8 @@ export default function Admin() {
             </section>
           </>
         )}
+
+        {tab === "studio" && myRank >= ROLE_RANK.educator && <Studio flash={flash} />}
 
         {tab === "office" && myRank >= ROLE_RANK.admin && (
           <>

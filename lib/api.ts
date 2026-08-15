@@ -174,6 +174,43 @@ export async function apiLeaderboard(token: string) {
   return call("progress.php?leaderboard=1", { token });
 }
 
+// The Studio: Copilot-drafted units, stored server-side until exported.
+export type DraftLesson = {
+  title: string;
+  hook: string;
+  blocks: unknown[];
+  quiz: { q: string; options: string[]; answer: number; explain: string }[];
+  cards: { front: string; back: string }[];
+  action: string;
+};
+
+export type Draft = {
+  id: string;
+  course: string;
+  topic: string;
+  engine: "claude" | "template";
+  lesson: DraftLesson;
+  createdBy: string;
+  created: string;
+  updated: string;
+};
+
+export async function apiDraftList(token: string) {
+  return call("copilot.php", { token });
+}
+
+export async function apiDraftCreate(token: string, course: string, topic: string, notes: string) {
+  return call("copilot.php", { method: "POST", token, body: { action: "draft", course, topic, notes } });
+}
+
+export async function apiDraftSave(token: string, id: string, lesson: unknown) {
+  return call("copilot.php", { method: "POST", token, body: { action: "save", id, lesson } });
+}
+
+export async function apiDraftDelete(token: string, id: string) {
+  return call("copilot.php", { method: "POST", token, body: { action: "delete", id } });
+}
+
 // Office Hours: live sessions with seats and a self-promoting waitlist.
 export type Session = {
   id: string;

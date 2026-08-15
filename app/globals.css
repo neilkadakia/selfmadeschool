@@ -2938,6 +2938,130 @@ html.lms-light .lms-do .lms-notes::placeholder {
   cursor: pointer;
 }
 
+/* The Studio — faculty drafting room. */
+.lms-draft {
+  border: 1px solid rgba(242, 238, 227, 0.16);
+  border-radius: 18px;
+  padding: 18px 20px;
+  margin: 0 0 14px;
+}
+
+.lms-draft-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.lms-draft-title {
+  display: block;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+}
+
+.lms-draft-meta {
+  font-size: 13px;
+  color: var(--muted-on-ink);
+}
+
+.lms-draft-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lms-draft-body {
+  margin-top: 18px;
+  border-top: 1px solid rgba(242, 238, 227, 0.12);
+  padding-top: 18px;
+}
+
+.lms-draft-body .lms-tabs {
+  margin-bottom: 18px;
+}
+
+.lms-draft-preview .lms-lesson {
+  margin-bottom: 8px;
+}
+
+.lms-draft-h {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 26px 0 10px;
+  color: var(--acc);
+}
+
+.lms-draft-q {
+  margin: 0 0 16px;
+}
+
+.lms-draft-qq {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.lms-draft-opts {
+  list-style: none;
+  margin: 0 0 6px;
+  padding: 0;
+  font-size: 14.5px;
+}
+
+.lms-draft-opts li {
+  padding: 3px 0;
+  color: var(--muted-on-ink);
+}
+
+.lms-draft-opts li.is-right {
+  color: var(--acc);
+  font-weight: 700;
+}
+
+.lms-draft-explain {
+  margin: 0;
+  font-size: 13.5px;
+  font-style: italic;
+  color: var(--muted-on-ink);
+}
+
+.lms-draft-card {
+  margin: 0 0 8px;
+  font-size: 14.5px;
+}
+
+.lms-draft-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.lms-draft-json {
+  width: 100%;
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+html.lms-light .lms-draft {
+  border-color: rgba(14, 14, 18, 0.18);
+}
+
+html.lms-light .lms-draft-body {
+  border-color: rgba(14, 14, 18, 0.12);
+}
+
+html.lms-light .lms-draft-h,
+html.lms-light .lms-draft-opts li.is-right {
+  color: #157a3e;
+}
+
 /* Office Hours — the desk's live-session card. */
 .lms-oh {
   margin-top: 28px;
@@ -7078,6 +7202,11 @@ html.lms-light .lms-matrix-cell:not(.is-done) {
   /* ~3.5 visible rows read as "that's all of them" — show more. */
   .lms-admin-table {
     max-height: min(60vh, 560px);
+  }
+
+  /* 16px floor on phones — anything smaller makes iOS zoom on focus. */
+  .lms-draft-json {
+    font-size: 16px;
   }
 }
 
