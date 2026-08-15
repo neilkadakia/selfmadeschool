@@ -11,7 +11,9 @@
   :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; --muted: rgba(242,238,227,0.68); }
   * { box-sizing: border-box; }
   body { margin: 0; padding: 40px 32px 56px; font-family: "Instrument Sans", sans-serif; background: var(--ink); color: var(--paper); }
-  .wrap { max-width: 760px; margin: 0 auto; }
+  /* Matches .lms-main: the lesson column runs to 1080 so the video, quiz and
+     deck use a wide screen. Body copy keeps its own 65ch measure. */
+  .wrap { max-width: 1080px; margin: 0 auto; }
   .kicker { font-size: 13px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--acc); margin: 0 0 14px; }
   .h1 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(36px, 5vw, 60px); line-height: 0.95; letter-spacing: -0.03em; text-transform: uppercase; margin: 0 0 12px; }
   .hook { font-size: 17px; line-height: 1.6; color: var(--muted); margin: 0 0 36px; max-width: 560px; }

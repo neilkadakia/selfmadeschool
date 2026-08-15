@@ -31,8 +31,12 @@
   .part-name { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(26px, 4vw, 40px); line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; margin: 0; }
   .part-count { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 28px; font-variant-numeric: tabular-nums; opacity: 0.7; }
 
-  /* Unit rows */
+  /* Unit rows. Inside the classroom shell above 1280px they run two columns
+     so the status pill stays beside the title it belongs to. */
   .rows { border-top: 1px solid rgba(242,238,227,0.12); margin-bottom: 48px; }
+  @media (min-width: 1280px) {
+    .rows { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); column-gap: 44px; }
+  }
   .row { display: grid; grid-template-columns: 56px 1fr auto; gap: 18px; align-items: center; padding: 18px 10px; border-bottom: 1px solid rgba(242,238,227,0.12); transition: background 0.2s ease; cursor: pointer; }
   .row:hover { background: rgba(242,238,227,0.05); }
   .num { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 20px; opacity: 0.5; font-variant-numeric: tabular-nums; }

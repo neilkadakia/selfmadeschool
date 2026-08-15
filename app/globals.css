@@ -37,6 +37,55 @@ body {
   overflow-x: hidden;
 }
 
+/* Scrollbars. The ground is near-black, so the platform default paints a
+   bright seam down the right edge of the page and another one beside every
+   inner panel. Both properties inherit, so setting them once on html themes
+   the page and every scroller inside it. */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(242, 238, 227, 0.24) transparent;
+  /* Reserve the track on every page. Without it, moving from a short
+     classroom page to a long one shifts the whole layout sideways. */
+  scrollbar-gutter: stable;
+}
+
+/* Safari and older WebKit ignore the two properties above. Chrome and
+   Firefox honor those and skip these, so the two never fight. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(242, 238, 227, 0.24);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(242, 238, 227, 0.42);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* The light classroom flips the ground, so the thumb flips with it. */
+html.lms-light {
+  scrollbar-color: rgba(14, 14, 18, 0.26) transparent;
+}
+
+html.lms-light ::-webkit-scrollbar-thumb {
+  background: rgba(14, 14, 18, 0.26);
+}
+
+html.lms-light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(14, 14, 18, 0.44);
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -2064,6 +2113,17 @@ p {
   border-top: 1px solid rgba(242, 238, 227, 0.12);
 }
 
+/* Wide classroom: run the syllabus in two columns. One column across the
+   full width strands the status pill a thousand pixels from the title it
+   belongs to, and doubles the scrolling. */
+@media (min-width: 1280px) {
+  .classroom-main .unit-rows {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 44px;
+  }
+}
+
 .unit-row {
   display: grid;
   grid-template-columns: 56px 1fr auto;
@@ -2664,14 +2724,16 @@ kbd {
 
 /* Player layout */
 
+/* The syllabus rail anchors to the left edge the way the classroom shell
+   does, and the lesson centers in what's left, so the player reads as a
+   full-width app instead of a narrow slab floating in the middle. */
 .lms-player {
   background: var(--ink);
   min-height: 100dvh;
-  padding: 64px 32px 110px;
+  padding: 64px 40px 110px;
   display: grid;
-  grid-template-columns: 290px minmax(0, 760px);
-  justify-content: center;
-  gap: 56px;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 60px;
 }
 
 .lms-side {
@@ -2750,8 +2812,13 @@ kbd {
   display: none;
 }
 
+/* Wide enough for the video, the quiz and the flashcard deck to use the
+   screen, centered in whatever the rail leaves. Body copy is not affected:
+   .lms-p carries its own 65ch measure. */
 .lms-main {
   min-width: 0;
+  max-width: 1080px;
+  margin: 0 auto;
 }
 
 /* Lesson typography */
@@ -5449,6 +5516,15 @@ html.lms-light input[type="date"].lms-cert-name {
   padding: 60px 48px 100px;
 }
 
+/* The shell is the frame, so the page fills the main column instead of
+   floating in a 1100px lane with dead gutters on both sides. The cap only
+   bites on very wide monitors; prose keeps its own measure (.learn-sub,
+   .lms-p) so nothing turns into a single unreadable line. Sign-in and
+   empty-state cards keep the narrow .lms-gate width. */
+.classroom-main .learn-wrap:not(.lms-gate) {
+  max-width: 1600px;
+}
+
 .classroom-main .learn-h1 {
   font-size: clamp(34px, 3.6vw, 54px);
 }
@@ -5586,6 +5662,15 @@ html.lms-light .classroom .lms-signout {
   align-items: start;
 }
 
+/* Wide monitors: give the vitals rail the extra room it earns rather than
+   spending all of it on the main column. */
+@media (min-width: 1600px) {
+  .learn-cols {
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: 52px;
+  }
+}
+
 .learn-colmain {
   min-width: 0;
 }
@@ -5598,8 +5683,11 @@ html.lms-light .classroom .lms-signout {
   top: 32px;
 }
 
+/* One card per row while the column is narrow; side by side once there is
+   room for it, so a wide desk fills out instead of stretching three cards
+   into three wide empty bands. */
 .learn-colmain .lms-courses {
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   gap: 16px;
   margin-top: 48px;
 }
@@ -5922,7 +6010,9 @@ html.lms-light .lms-gear-buy:disabled {
 
 .lms-boss-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  /* 340, not 300: a wide classroom would otherwise pack five columns in and
+     wrap every monster name onto two lines. */
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 16px;
   margin-top: 34px;
 }
