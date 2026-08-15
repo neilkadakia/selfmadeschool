@@ -55,6 +55,18 @@ if ($action === 'update_profile') {
     respond(200, ['ok' => true, 'user' => public_user($auth['email'], $u)]);
 }
 
+// Mail preferences: nudges on/off. Off means nudge.php skips you entirely.
+if ($action === 'set_prefs') {
+    $auth = require_auth();
+    $users = read_store('users');
+    if (!isset($users[$auth['email']])) respond(401, ['error' => 'Account not found.']);
+    if (array_key_exists('nudges', $in)) {
+        $users[$auth['email']]['nudgesOff'] = !$in['nudges'];
+    }
+    write_store('users', $users);
+    respond(200, ['ok' => true, 'user' => public_user($auth['email'], $users[$auth['email']])]);
+}
+
 if ($action === 'change_password') {
     $auth = require_auth();
     $current = (string)($in['current'] ?? '');
