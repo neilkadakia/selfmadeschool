@@ -174,6 +174,37 @@ export async function apiLeaderboard(token: string) {
   return call("progress.php?leaderboard=1", { token });
 }
 
+// Study Group: one discussion thread per unit.
+export type DiscussPost = {
+  id: string;
+  name: string;
+  text: string;
+  created: string;
+  ups: number;
+  youUp: boolean;
+  endorsed: boolean;
+  mine: boolean;
+  email?: string; // faculty only
+};
+
+export async function apiDiscussList(token: string, course: string, unit: string) {
+  return call(`discuss.php?course=${encodeURIComponent(course)}&unit=${encodeURIComponent(unit)}`, {
+    token,
+  });
+}
+
+export async function apiDiscussPost(token: string, course: string, unit: string, text: string) {
+  return call("discuss.php", { method: "POST", token, body: { action: "post", course, unit, text } });
+}
+
+export async function apiDiscussAct(
+  token: string,
+  action: "upvote" | "endorse" | "unendorse" | "delete",
+  id: string
+) {
+  return call("discuss.php", { method: "POST", token, body: { action, id } });
+}
+
 export async function apiBulletinList(token: string) {
   return call("bulletin.php", { token });
 }

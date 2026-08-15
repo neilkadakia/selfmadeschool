@@ -9,6 +9,7 @@ import { useLms } from "@/components/useLms";
 import CommandK from "./CommandK";
 import FieldWork from "./FieldWork";
 import RewardToast from "./RewardToast";
+import StudyGroup from "./StudyGroup";
 import Quiz from "./Quiz";
 import Deck from "./Deck";
 
@@ -242,6 +243,8 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
           />
           <p className="lms-notes-hint">{noteSaved ? "Saved ✓" : "Saves when you click away"}</p>
         </section>
+
+        <StudyGroup course={courseSlug} unit={unitSlug} />
 
         <div className="unit-actions">
           <button

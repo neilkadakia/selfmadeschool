@@ -2938,6 +2938,132 @@ html.lms-light .lms-do .lms-notes::placeholder {
   cursor: pointer;
 }
 
+/* Study Group — the unit's discussion thread. */
+.lms-sg {
+  border-top: 1px solid rgba(242, 238, 227, 0.12);
+  margin-bottom: 20px;
+}
+
+.lms-sg-post {
+  padding: 16px 0 12px;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.12);
+}
+
+.lms-sg-post.is-endorsed {
+  padding-left: 16px;
+  border-left: 3px solid var(--acc);
+}
+
+.lms-sg-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.lms-sg-name {
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.lms-sg-badge {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--acc);
+  color: var(--ink);
+}
+
+.lms-sg-date {
+  font-size: 13px;
+  color: var(--muted-on-ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.lms-sg-text {
+  margin: 6px 0 10px;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.lms-sg-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.lms-sg-up {
+  background: none;
+  border: 1px solid rgba(242, 238, 227, 0.25);
+  border-radius: 999px;
+  color: inherit;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.lms-sg-up:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.lms-sg-up.is-on {
+  border-color: var(--acc);
+  color: var(--acc);
+}
+
+.lms-sg-mod {
+  background: none;
+  border: none;
+  padding: 7px 0;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted-on-ink);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.lms-sg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.lms-sg-form .lms-notes {
+  width: 100%;
+}
+
+html.lms-light .lms-sg,
+html.lms-light .lms-sg-post {
+  border-color: rgba(14, 14, 18, 0.14);
+}
+
+html.lms-light .lms-sg-up {
+  border-color: rgba(14, 14, 18, 0.3);
+}
+
+html.lms-light .lms-sg-up.is-on {
+  border-color: #157a3e;
+  color: #157a3e;
+}
+
+html.lms-light .lms-sg-badge {
+  background: #1d9e50;
+  color: var(--paper);
+}
+
 /* Proof — filed reports on the Student File. */
 .lms-proof {
   max-height: 420px;
