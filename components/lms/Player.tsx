@@ -61,6 +61,14 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
   const [sideOpen, setSideOpen] = useState(false);
   const [noteSaved, setNoteSaved] = useState(false);
 
+  // On phones the syllabus is a full-screen sheet — lock the page behind it.
+  useEffect(() => {
+    document.body.style.overflow = sideOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [sideOpen]);
+
   const course = getCourse(courseSlug);
   const units = course ? courseUnits(course) : [];
   const unit = units.find((u) => u.slug === unitSlug);

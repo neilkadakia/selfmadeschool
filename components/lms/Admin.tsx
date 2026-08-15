@@ -293,11 +293,13 @@ export default function Admin() {
                         <span className="lms-admin-name" title={r.email}>
                           {r.name || r.email}
                         </span>
-                        <span>{r.units}</span>
-                        <span>{r.xp}</span>
-                        <span>{r.streak}d</span>
-                        <span>{r.badges}</span>
-                        <span className="lms-admin-meta">{r.lastActive ? usDate(r.lastActive) : "—"}</span>
+                        <span data-k="Units">{r.units}</span>
+                        <span data-k="XP">{r.xp}</span>
+                        <span data-k="Streak">{r.streak}d</span>
+                        <span data-k="Badges">{r.badges}</span>
+                        <span data-k="Last" className="lms-admin-meta">
+                          {r.lastActive ? usDate(r.lastActive) : "—"}
+                        </span>
                       </div>
                       <div className="lms-matrix">
                         {COURSES.map((c) => {
@@ -499,7 +501,7 @@ export default function Admin() {
               </p>
               {subs && subs.length > 0 && (
                 <>
-                  <div className="lms-admin-table">
+                  <div className="lms-admin-table lms-subs">
                     {subs.map((s) => (
                       <div key={s.email} className="lms-admin-row">
                         <span className="lms-admin-email">{s.email}</span>

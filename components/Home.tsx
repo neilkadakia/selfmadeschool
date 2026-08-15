@@ -143,6 +143,10 @@ export default function Home() {
         const track = trackRef.current;
         const hwrap = howRef.current;
         if (track && hwrap) {
+          // The CSS base state is a native swipe rail (reduced-motion / no-JS
+          // path); the pin drives the track itself, so take the scrollbar away.
+          // matchMedia's revert restores it.
+          gsap.set(hwrap, { overflow: "hidden" });
           const dist = () => track.scrollWidth - window.innerWidth + 64;
           gsap.to(track, {
             x: () => -dist(),
@@ -424,7 +428,7 @@ export default function Home() {
             <p className="kicker kicker--acc">Extra Credit</p>
             <h2 className="h2 nl-h2">
               One lesson in your
-              <br />
+              <br className="br-wide" />
               inbox, every month.
             </h2>
             <p className="nl-sub">
@@ -445,7 +449,7 @@ export default function Home() {
         </p>
         <h2 data-reveal className="h2 h2--enroll">
           Your first adult
-          <br />
+          <br className="br-wide" />
           decision? This one.
         </h2>
         <div data-reveal className="enroll-ctas">

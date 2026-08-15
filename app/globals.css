@@ -17,6 +17,9 @@
 html {
   background: var(--ink);
   scroll-behavior: smooth;
+  /* clip (not hidden): kills layout-viewport expansion on mobile without
+     creating a scroll container, so position: sticky/fixed stay correct. */
+  overflow-x: clip;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -104,6 +107,8 @@ p {
   align-items: center;
   justify-content: space-between;
   padding: 18px 32px;
+  padding-left: max(32px, env(safe-area-inset-left));
+  padding-right: max(32px, env(safe-area-inset-right));
   backdrop-filter: blur(12px);
   background: rgba(14, 14, 18, 0.55);
   border-bottom: 1px solid rgba(242, 238, 227, 0.08);
@@ -191,9 +196,9 @@ p {
   flex-direction: column;
   justify-content: center;
   gap: 6px;
-  width: 42px;
-  height: 42px;
-  padding: 0 8px;
+  width: 46px;
+  height: 46px;
+  padding: 0 10px;
   background: none;
   border: none;
   cursor: pointer;
@@ -231,6 +236,7 @@ p {
   justify-content: center;
   gap: 8px;
   padding: 110px 32px 60px;
+  overflow-y: auto;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.35s ease, visibility 0.35s;
@@ -301,100 +307,6 @@ p {
 
   .nav-burger {
     display: flex;
-  }
-}
-
-/* ---------- Small screens ---------- */
-
-@media (max-width: 640px) {
-  .nav {
-    padding: 14px 18px;
-  }
-
-  /* The menu carries the CTA on phones — the pill would crowd the wordmark. */
-  .nav-cta {
-    display: none;
-  }
-
-  .hero {
-    padding: 120px 20px 48px;
-  }
-
-  .marquee-track {
-    font-size: 18px;
-  }
-
-  .syllabus {
-    padding: 76px 20px 84px;
-  }
-
-  .grades {
-    padding: 0 20px 90px;
-  }
-
-  .h2 {
-    margin: 0 0 44px;
-  }
-
-  .grade-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .syl-arrows {
-    display: none;
-  }
-
-  .syl-card {
-    flex-basis: 78vw;
-  }
-
-  .how-head {
-    padding: 72px 20px 0;
-  }
-
-  .how-track {
-    padding: 44px 20px 72px;
-    gap: 18px;
-  }
-
-  .how-panel {
-    width: 84vw;
-    padding: 32px 28px;
-    min-height: 380px;
-  }
-
-  .how-num {
-    font-size: 84px;
-  }
-
-  .how-title {
-    font-size: 36px;
-  }
-
-  .receipts {
-    padding: 24px 20px 84px;
-  }
-
-  .book-section {
-    padding: 76px 20px 84px;
-  }
-
-  .faq {
-    padding: 76px 20px 84px;
-  }
-
-  .faq-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .enroll {
-    padding: 90px 20px;
-  }
-
-  .footer {
-    padding: 32px 20px;
-    justify-content: flex-start;
   }
 }
 
@@ -541,8 +453,9 @@ p {
     padding: 8px 16px;
   }
 
+  /* Above the headline's box — at ≤360 the old 21% sat on the "OL" of SCHOOL. */
   .sticker--quiz {
-    top: 21%;
+    top: 10%;
     right: 4%;
   }
 
@@ -605,6 +518,8 @@ p {
   display: flex;
   gap: 14px;
   align-items: center;
+  /* Pills keep their natural width on phones; the second drops a row. */
+  flex-wrap: wrap;
 }
 
 .btn {
@@ -1082,9 +997,13 @@ p {
 
 /* ---------- How It Works ---------- */
 
+/* Base state is a native swipe rail so the panels exist without JS and under
+   prefers-reduced-motion; the GSAP pin sets overflow: hidden when it takes over. */
 .how {
   background: var(--ink);
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
 }
 
 .how-head {
@@ -1101,6 +1020,7 @@ p {
 
 .how-panel {
   width: min(72vw, 760px);
+  scroll-snap-align: start;
   border-radius: 32px;
   padding: 48px;
   display: flex;
@@ -1440,7 +1360,7 @@ p {
 
 .faq-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
   gap: 44px 56px;
 }
 
@@ -1572,7 +1492,8 @@ p {
   border-radius: 999px;
   padding: 13px 20px;
   font-family: var(--font-instrument), sans-serif;
-  font-size: 15.5px;
+  /* 16px floor: anything smaller makes iOS Safari zoom the page on focus. */
+  font-size: 16px;
   color: var(--ink);
   transition: border-color 0.2s ease;
 }
@@ -1715,7 +1636,124 @@ p {
 
 .footer-links {
   display: flex;
-  gap: 24px;
+  /* Must be able to wrap: an unwrappable row here widens the mobile layout
+     viewport for the whole page and pushes the nav burger off-screen. */
+  flex-wrap: wrap;
+  gap: 4px 20px;
+}
+
+.footer-links a {
+  padding: 8px 0;
+  white-space: nowrap;
+}
+
+/* ---------- Small screens ----------
+   Lives BELOW every base rule it overrides — same-specificity rules that
+   appear later in the file win the cascade, so this block is dead weight
+   anywhere above the bases (that bug shipped once already; see .sticker). */
+
+@media (max-width: 640px) {
+  .nav {
+    padding: 14px 18px;
+    padding-left: max(18px, env(safe-area-inset-left));
+    padding-right: max(18px, env(safe-area-inset-right));
+  }
+
+  /* The menu carries the CTA on phones — the pill would crowd the wordmark. */
+  .nav-cta {
+    display: none;
+  }
+
+  .hero {
+    padding: 120px 20px 48px;
+  }
+
+  .marquee-track {
+    font-size: 18px;
+  }
+
+  .syllabus {
+    padding: 76px 20px 84px;
+  }
+
+  .grades {
+    padding: 0 20px 90px;
+  }
+
+  .h2 {
+    margin: 0 0 44px;
+  }
+
+  .grade-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .syl-arrows {
+    display: none;
+  }
+
+  .syl-card {
+    flex-basis: 78vw;
+  }
+
+  .how-head {
+    padding: 72px 20px 0;
+  }
+
+  .how {
+    scroll-padding-left: 20px;
+  }
+
+  .how-track {
+    padding: 44px 20px 72px;
+    gap: 18px;
+  }
+
+  .how-panel {
+    width: min(84vw, 340px);
+    padding: 32px 28px;
+    min-height: 380px;
+  }
+
+  .how-num {
+    font-size: 84px;
+  }
+
+  .how-title {
+    font-size: 36px;
+  }
+
+  .receipts {
+    padding: 24px 20px 84px;
+  }
+
+  .book-section {
+    padding: 76px 20px 84px;
+  }
+
+  .faq {
+    padding: 76px 20px 84px;
+  }
+
+  .faq-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .enroll {
+    padding: 90px 20px;
+  }
+
+  .footer {
+    padding: 32px 20px;
+    padding-bottom: max(32px, env(safe-area-inset-bottom));
+    justify-content: flex-start;
+  }
+
+  /* Desktop-only line breaks — phones get natural wrapping. */
+  .br-wide {
+    display: none;
+  }
 }
 
 /* ---------- About ---------- */
@@ -2609,6 +2647,13 @@ kbd {
   color: var(--muted-on-ink);
 }
 
+/* Keyboard shortcuts mean nothing to a thumb. */
+@media (pointer: coarse) {
+  .lms-hint {
+    display: none;
+  }
+}
+
 /* Player layout */
 
 .lms-player {
@@ -3091,7 +3136,8 @@ kbd {
   border-radius: 16px;
   padding: 16px 18px;
   font-family: var(--font-instrument), sans-serif;
-  font-size: 15.5px;
+  /* 16px floor: smaller makes iOS zoom the page when the textarea focuses. */
+  font-size: 16px;
   line-height: 1.6;
   color: var(--paper);
   resize: vertical;
@@ -3309,8 +3355,8 @@ kbd {
 
 .lms-login-link {
   display: block;
-  margin-top: 16px;
-  padding: 0;
+  margin-top: 4px;
+  padding: 12px 0;
   background: none;
   border: none;
   cursor: pointer;
@@ -3609,14 +3655,23 @@ kbd {
   line-height: 0.95;
   letter-spacing: -0.02em;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
   margin: 0 0 14px;
 }
 
 .lms-idcard-rows {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px 20px;
+  gap: 10px 14px;
   margin: 0;
+}
+
+/* Two 109px columns can't hold a phone number — go single-file. */
+@media (max-width: 380px) {
+  .lms-idcard-rows {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }
 
 .lms-idcard-rows dt {
@@ -4205,6 +4260,13 @@ html.lms-light .kicker--acc {
   line-height: 1.55;
 }
 
+/* The byline can be long (name · email · context · date) — nowrap here
+   widens the whole page on phones. */
+.lms-admin-quote .lms-admin-meta {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
 .lms-admin-quote-actions {
   display: flex;
   gap: 10px;
@@ -4335,6 +4397,11 @@ html.lms-light .kicker--acc {
   white-space: nowrap;
 }
 
+/* Subscriber rows: the email is the payload — give it the wide track. */
+.lms-subs .lms-admin-row {
+  grid-template-columns: minmax(0, 1.8fr) auto auto;
+}
+
 .lms-admin-form {
   max-width: 420px;
   display: flex;
@@ -4381,10 +4448,15 @@ html.lms-light .kicker--acc {
 
 .lms-role-select {
   appearance: none;
-  padding: 6px 12px;
+  padding: 6px 28px 6px 12px;
   border-radius: 999px;
   border: 1px solid rgba(242, 238, 227, 0.3);
   background: rgba(242, 238, 227, 0.04);
+  /* appearance: none removes the native caret — put one back so it
+     doesn't read as a static pill, especially on touch (no hover cue). */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23F2EEE3'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
   color: inherit;
   font-family: var(--font-instrument), sans-serif;
   font-size: 12.5px;
@@ -4394,8 +4466,18 @@ html.lms-light .kicker--acc {
 
 .lms-role-select--form {
   appearance: auto;
+  background-image: none;
+  padding: 6px 12px;
   border-radius: 14px;
   cursor: pointer;
+}
+
+html.lms-light .lms-role-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%230E0E12'/%3E%3C/svg%3E");
+}
+
+html.lms-light .lms-role-select--form {
+  background-image: none;
 }
 
 /* The Act As banner: impossible to miss, everywhere in the classroom. */
@@ -4565,10 +4647,11 @@ html.lms-light input[type="date"].lms-cert-name {
 .lms-cert-name-line {
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
-  font-size: clamp(34px, 6vw, 58px);
+  font-size: clamp(24px, 8.5vw, 58px);
   letter-spacing: -0.02em;
   line-height: 1;
   margin: 6px 0;
+  overflow-wrap: anywhere;
 }
 
 .lms-cert-text {
@@ -4917,13 +5000,20 @@ html.lms-light .classroom .lms-signout {
   .classroom-course-name,
   .classroom-course-pct,
   .classroom-avatar,
-  .classroom-user-main,
-  .classroom-exit {
+  .classroom-user-main {
     display: none;
   }
 
+  /* The brand links to /learn — without this a signed-in phone user has
+     no route back to the marketing site. Rides at the end of the strip. */
+  .classroom-exit {
+    margin: 0 0 0 6px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
   .classroom-link {
-    padding: 7px 10px;
+    padding: 13px 12px;
     white-space: nowrap;
   }
 
@@ -5029,6 +5119,8 @@ html.lms-light .classroom .lms-signout {
   .learn-cols {
     display: flex;
     flex-direction: column;
+    /* The base grid's align-items: start would shrink-to-fit the rail cards. */
+    align-items: stretch;
   }
 
   .learn-colmain,
@@ -6399,10 +6491,15 @@ html.lms-light .lms-matrix-cell:not(.is-done) {
   .lms-side {
     display: none;
     position: fixed;
-    inset: 76px 0 0;
+    inset: 0;
     z-index: 150;
+    /* The base rule's align-self: start un-stretches a fixed box and pins it
+       to the container origin (Box Alignment on abspos) — reset it or the
+       drawer becomes a content-height sheet at (0,0) covering the toggle. */
+    align-self: auto;
     background: var(--ink);
-    padding: 24px;
+    padding: 24px 24px 96px;
+    overscroll-behavior: contain;
     max-height: none;
   }
 
@@ -6410,18 +6507,33 @@ html.lms-light .lms-matrix-cell:not(.is-done) {
     display: block;
   }
 
+  /* Floating pill in the thumb zone — reachable mid-lesson and above the
+     open sheet (its label flips to "Hide Syllabus"). */
   .lms-side-toggle {
     display: inline-block;
-    margin-bottom: 26px;
-    background: rgba(242, 238, 227, 0.06);
-    border: 1px solid rgba(242, 238, 227, 0.18);
+    position: fixed;
+    bottom: max(18px, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 160;
+    margin: 0;
+    background: rgba(14, 14, 18, 0.92);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(242, 238, 227, 0.25);
     color: var(--paper);
     font-family: var(--font-instrument), sans-serif;
     font-weight: 700;
     font-size: 14px;
     border-radius: 999px;
-    padding: 10px 18px;
+    padding: 12px 20px;
+    white-space: nowrap;
     cursor: pointer;
+  }
+
+  html.lms-light .lms-side-toggle {
+    background: rgba(242, 238, 227, 0.92);
+    border-color: rgba(14, 14, 18, 0.3);
+    color: var(--ink);
   }
 }
 
@@ -6451,7 +6563,17 @@ html.lms-light .lms-matrix-cell:not(.is-done) {
   }
 
   .lms-deck-nav {
-    flex-direction: column;
+    /* Primary ("Next Card →") on top, the often-disabled Back beneath. */
+    flex-direction: column-reverse;
+  }
+
+  /* One 190px column of 16 mostly-locked badges is 2,100px of scrolling. */
+  .lms-badge-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lms-badge {
+    padding: 14px;
   }
 
   .lms-quiz,
@@ -6464,6 +6586,72 @@ html.lms-light .lms-matrix-cell:not(.is-done) {
     left: 16px;
     bottom: 16px;
     justify-content: center;
+  }
+
+  /* Faculty Lounge on a phone: the classbook stops being a table — name on
+     its own line, then labeled stat chips that wrap. */
+  .lms-classbook-head {
+    display: none;
+  }
+
+  .lms-classbook .lms-admin-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    padding: 12px 8px 10px;
+  }
+
+  .lms-classbook-row .lms-admin-name {
+    flex: 1 1 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .lms-classbook-row span[data-k]::before {
+    content: attr(data-k);
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-on-ink);
+  }
+
+  /* Bulletin: note full-width, date and Take Down on the row beneath. */
+  .lms-bulletin-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .lms-bulletin-row .lms-admin-name {
+    grid-column: 1 / -1;
+  }
+
+  /* Subscribers: drop the low-value source cell; the date survives. */
+  .lms-subs .lms-admin-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .lms-subs .lms-admin-row > .lms-admin-meta:nth-child(2) {
+    display: none;
+  }
+
+  /* Thumb-sized touch targets. */
+  .lms-signout {
+    padding: 11px 18px;
+  }
+
+  .lms-studio-swatch {
+    width: 40px;
+    height: 40px;
+  }
+
+  .lms-role-select {
+    padding: 9px 28px 9px 12px;
+    font-size: 16px;
+  }
+
+  /* ~3.5 visible rows read as "that's all of them" — show more. */
+  .lms-admin-table {
+    max-height: min(60vh, 560px);
   }
 }
 
