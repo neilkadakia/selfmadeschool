@@ -1313,6 +1313,12 @@ p {
   justify-content: center;
 }
 
+/* Brand rule: green reads as #2BB35C on paper surfaces that carry the mark. */
+.book-cover,
+.lms-cert {
+  --acc: #2bb35c;
+}
+
 .book-cover {
   width: min(320px, 70vw);
   aspect-ratio: 5 / 7;

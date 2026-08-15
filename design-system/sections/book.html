@@ -30,8 +30,9 @@
   .book::before { content: ""; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: rgba(14,14,18,0.15); }
   .book::after { content: ""; position: absolute; right: -8px; top: 10px; bottom: 6px; width: 8px; background: #fff; border-radius: 0 4px 4px 0; box-shadow: inset -2px 0 0 rgba(14,14,18,0.15); }
   .book-brand { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 15px; letter-spacing: -0.02em; }
-  .wordmark { position: relative; display: inline-block; white-space: nowrap; padding: 0 0 6px; }
-  .wordmark .dash { color: var(--acc); font-size: 0.68em; vertical-align: 0.1em; }
+  .wordmark { letter-spacing: -0.03em; position: relative; display: inline-block; white-space: nowrap; padding: 0 0 6px; }
+  .wordmark .school { color: var(--acc); }
+  .wordmark .dash { color: var(--acc); font-size: 0.62em; vertical-align: 0.1em; }
   .wordmark svg { position: absolute; left: 0; bottom: 0; width: 100%; height: 5px; overflow: visible; }
   .num { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 84px; line-height: 1; color: var(--ink); }
   .num .dot { color: var(--coral); }
@@ -53,13 +54,13 @@
     </div>
     <div class="stage">
       <div class="book">
-        <span class="book-brand"><span class="wordmark">SELF<span class="dash">-</span>MADE SCHOOL<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="dawn-cover-card" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><path d="M6,15.5 C90,12 190,8.5 268,4.5 L268,11.5 C190,14.5 90,17 6,19 Z" fill="url(#dawn-cover-card)"/><path d="M264,0.5 L298,8 L265,15.5 Z" fill="#43DE7B"/></svg></span></span>
+        <span class="book-brand"><span class="wordmark">SELF<span class="dash">-</span>MADE <span class="school">SCHOOL</span><svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="dawn-cover-card" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><path d="M6,15 C90,4 230,4 294,11" stroke="url(#dawn-cover-card)" stroke-width="8" fill="none" stroke-linecap="round"/></svg></span></span>
         <div>
           <span class="num">13<span class="dot">.</span></span>
           <h3 class="title">The 13th Grade</h3>
           <p class="sub">The missing textbook for your first decade of adulthood.</p>
         </div>
-        <div class="foot"><svg class="book-mark" viewBox="0 0 300 20" aria-hidden="true"><defs><linearGradient id="dawn-book-card" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><path d="M6,15.5 C90,12 190,8.5 268,4.5 L268,11.5 C190,14.5 90,17 6,19 Z" fill="url(#dawn-book-card)"/><path d="M264,0.5 L298,8 L265,15.5 Z" fill="#43DE7B"/></svg><span>First Edition · Class of '26</span></div>
+        <div class="foot"><svg class="book-mark" viewBox="0 0 300 20" aria-hidden="true"><defs><linearGradient id="dawn-book-card" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><path d="M6,15 C90,4 230,4 294,11" stroke="url(#dawn-book-card)" stroke-width="8" fill="none" stroke-linecap="round"/></svg><span>First Edition · Class of '26</span></div>
       </div>
       <div class="sticker">parent approved ✓</div>
     </div>

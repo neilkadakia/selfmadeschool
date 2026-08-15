@@ -8,49 +8,67 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
 <style>
-  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; }
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --acc-paper: #2BB35C; --vio: #5B7CFA; --coral: #FFB43A; }
   * { box-sizing: border-box; }
   body { margin: 0; padding: 28px; font-family: "Instrument Sans", sans-serif; background: var(--ink); color: var(--paper); }
   .spec { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; margin: 26px 0 14px; }
   .spec:first-child { margin-top: 0; }
-  .wordmark { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; letter-spacing: -0.02em; position: relative; display: inline-block; white-space: nowrap; padding: 0 0 6px; }
-  .wordmark .dash { color: var(--acc); font-size: 0.68em; vertical-align: 0.1em; }
+  .wordmark { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; letter-spacing: -0.03em; position: relative; display: inline-block; white-space: nowrap; padding: 0 0 6px; }
+  .wordmark .dash { color: var(--acc); font-size: 0.62em; vertical-align: 0.1em; }
+  .wordmark .school { color: var(--acc); }
   .wordmark svg { position: absolute; left: 0; bottom: 0; width: 100%; height: 5px; overflow: visible; }
   .wm-lg { font-size: 44px; }
   .wm-sm { font-size: 22px; }
+  .on-paper { background: var(--paper); color: var(--ink); border-radius: 14px; padding: 20px 24px; display: inline-block; }
+  .on-paper .dash, .on-paper .school { color: var(--acc-paper); }
   .row { display: flex; gap: 26px; align-items: center; flex-wrap: wrap; }
   .stops { display: flex; gap: 12px; margin-top: 10px; }
   .stop { border-radius: 10px; padding: 10px 14px; font-size: 12px; font-weight: 700; color: var(--ink); }
   .fav { border-radius: 12px; }
+  .avatar { border-radius: 999px; }
+  .rules { font-size: 13px; line-height: 1.7; opacity: 0.75; max-width: 560px; margin: 0; padding-left: 18px; }
 </style>
 </head>
 <body>
-  <p class="spec">Dawn Sweep wordmark — Bricolage 800, green hyphen, gradient sweep underline with green arrow tip</p>
-  <span class="wordmark wm-lg">SELF<span class="dash">-</span>MADE SCHOOL
+  <p class="spec">Dawn Sweep wordmark — Bricolage 800, -0.03em, green hyphen + SCHOOL, one round-cap sweep amber → green</p>
+  <span class="wordmark wm-lg">SELF<span class="dash">-</span>MADE <span class="school">SCHOOL</span>
     <svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true">
       <defs><linearGradient id="dawn-lg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs>
-      <path d="M6,15.5 C90,12 190,8.5 268,4.5 L268,11.5 C190,14.5 90,17 6,19 Z" fill="url(#dawn-lg)"/>
-      <path d="M264,0.5 L298,8 L265,15.5 Z" fill="#43DE7B"/>
+      <path d="M6,15 C90,4 230,4 294,11" stroke="url(#dawn-lg)" stroke-width="8" fill="none" stroke-linecap="round"/>
     </svg>
   </span>
-  <p class="spec">Nav scale (22px)</p>
-  <span class="wordmark wm-sm">SELF<span class="dash">-</span>MADE SCHOOL
+  <p class="spec">Nav scale (22px) · minimum width 140px — below that use the monogram alone</p>
+  <span class="wordmark wm-sm">SELF<span class="dash">-</span>MADE <span class="school">SCHOOL</span>
     <svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true">
       <defs><linearGradient id="dawn-sm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs>
-      <path d="M6,15.5 C90,12 190,8.5 268,4.5 L268,11.5 C190,14.5 90,17 6,19 Z" fill="url(#dawn-sm)"/>
-      <path d="M264,0.5 L298,8 L265,15.5 Z" fill="#43DE7B"/>
+      <path d="M6,15 C90,4 230,4 294,11" stroke="url(#dawn-sm)" stroke-width="8" fill="none" stroke-linecap="round"/>
     </svg>
   </span>
-  <p class="spec">Favicon — dawn sweep + arrow on ink, radius 14/64</p>
+  <p class="spec">On paper — type goes ink, green parts go #2BB35C, sweep never changes</p>
+  <span class="on-paper"><span class="wordmark wm-sm">SELF<span class="dash">-</span>MADE <span class="school">SCHOOL</span>
+    <svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="dawn-pp" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs>
+      <path d="M6,15 C90,4 230,4 294,11" stroke="url(#dawn-pp)" stroke-width="8" fill="none" stroke-linecap="round"/>
+    </svg>
+  </span></span>
+  <p class="spec">SMS monogram — the only compact mark: favicon (radius 12/64) and circle avatar</p>
   <div class="row">
-    <svg class="fav" width="64" height="64" viewBox="0 0 64 64"><defs><linearGradient id="dawn-fav" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#0E0E12"/><path d="M9,46 C24,42 37,34 47,24 L52,29 C42,40 26,47 10,51 Z" fill="url(#dawn-fav)"/><path d="M42,13 L61,23 L51,38 Z" fill="#43DE7B"/></svg>
-    <svg class="fav" width="32" height="32" viewBox="0 0 64 64"><defs><linearGradient id="dawn-fav2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#0E0E12"/><path d="M9,46 C24,42 37,34 47,24 L52,29 C42,40 26,47 10,51 Z" fill="url(#dawn-fav2)"/><path d="M42,13 L61,23 L51,38 Z" fill="#43DE7B"/></svg>
+    <svg class="fav" width="64" height="64" viewBox="0 0 100 100"><defs><linearGradient id="dawn-m1" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><rect width="100" height="100" fill="#0E0E12"/><text x="49" y="57" text-anchor="middle" font-family="'Bricolage Grotesque', sans-serif" font-weight="800" font-size="44" letter-spacing="-2" fill="#F2EEE3">SM<tspan fill="#43DE7B">S</tspan></text><path d="M15,73 C33,60 69,60 85,68" stroke="url(#dawn-m1)" stroke-width="9" fill="none" stroke-linecap="round"/></svg>
+    <svg class="fav" width="32" height="32" viewBox="0 0 100 100"><defs><linearGradient id="dawn-m2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><rect width="100" height="100" fill="#0E0E12"/><text x="49" y="57" text-anchor="middle" font-family="'Bricolage Grotesque', sans-serif" font-weight="800" font-size="44" letter-spacing="-2" fill="#F2EEE3">SM<tspan fill="#43DE7B">S</tspan></text><path d="M15,73 C33,60 69,60 85,68" stroke="url(#dawn-m2)" stroke-width="9" fill="none" stroke-linecap="round"/></svg>
+    <svg class="avatar" width="64" height="64" viewBox="0 0 100 100"><defs><linearGradient id="dawn-m3" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><rect width="100" height="100" fill="#0E0E12"/><text x="49" y="57" text-anchor="middle" font-family="'Bricolage Grotesque', sans-serif" font-weight="800" font-size="44" letter-spacing="-2" fill="#F2EEE3">SM<tspan fill="#43DE7B">S</tspan></text><path d="M15,73 C33,60 69,60 85,68" stroke="url(#dawn-m3)" stroke-width="9" fill="none" stroke-linecap="round"/></svg>
   </div>
-  <p class="spec">Dawn gradient stops (lime also serves as a UI card accent, --lime)</p>
+  <p class="spec">Dawn gradient stops (lime also serves as a UI card accent, --lime) · on-paper green #2BB35C</p>
   <div class="stops">
     <span class="stop" style="background:#F5A83C;">#F5A83C · 0%</span>
     <span class="stop" style="background:#B8C94F;">#B8C94F · 55%</span>
     <span class="stop" style="background:#43DE7B;">#43DE7B · 100%</span>
+    <span class="stop" style="background:#2BB35C;color:#F2EEE3;">#2BB35C · paper</span>
   </div>
+  <p class="spec">Rules</p>
+  <ul class="rules">
+    <li>Clear space: one cap-height of S on all sides. The wordmark never stacks.</li>
+    <li>Underline path (viewBox 0 0 300 20): M6,15 C90,4 230,4 294,11 — round caps, never straightened, never thickened, never redrawn.</li>
+    <li>One-color contexts: everything takes the type color — never a third color.</li>
+  </ul>
 </body>
 </html>

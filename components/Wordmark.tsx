@@ -7,6 +7,7 @@ export default function Wordmark({ gid }: Props) {
         position: "relative",
         display: "inline-block",
         whiteSpace: "nowrap",
+        letterSpacing: "-0.03em",
         padding: "0 0 6px",
       }}
     >

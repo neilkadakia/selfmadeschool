@@ -21,7 +21,7 @@ async function loadBricolage(): Promise<ArrayBuffer | null> {
 }
 
 const sweep = `data:image/svg+xml,${encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 20"><defs><linearGradient id="d" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><path d="M6,15.5 C90,12 190,8.5 268,4.5 L268,11.5 C190,14.5 90,17 6,19 Z" fill="url(#d)"/><path d="M264,0.5 L298,8 L265,15.5 Z" fill="#43DE7B"/></svg>'
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 20"><defs><linearGradient id="d" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><path d="M6,15 C90,4 230,4 294,11" stroke="url(#d)" stroke-width="5.5" fill="none" stroke-linecap="round"/></svg>'
 )}`;
 
 export default async function OpengraphImage() {
@@ -88,12 +88,12 @@ export default async function OpengraphImage() {
               alignItems: "center",
               fontSize: 34,
               fontWeight: 800,
-              letterSpacing: "-0.02em",
+              letterSpacing: "-0.03em",
             }}
           >
             SELF
             <span style={{ color: "#43DE7B", fontSize: 24, margin: "0 3px" }}>-</span>
-            MADE SCHOOL
+            MADE&nbsp;<span style={{ color: "#43DE7B" }}>SCHOOL</span>
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={sweep} width={420} height={28} alt="" style={{ marginTop: 4 }} />

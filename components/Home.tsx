@@ -381,8 +381,13 @@ export default function Home() {
                       <stop offset="1" stopColor="#43DE7B" />
                     </linearGradient>
                   </defs>
-                  <path d="M6,15.5 C90,12 190,8.5 268,4.5 L268,11.5 C190,14.5 90,17 6,19 Z" fill="url(#dawn-book)" />
-                  <path d="M264,0.5 L298,8 L265,15.5 Z" fill="#43DE7B" />
+                  <path
+                    d="M6,15 C90,4 230,4 294,11"
+                    stroke="url(#dawn-book)"
+                    strokeWidth="8"
+                    fill="none"
+                    strokeLinecap="round"
+                  />
                 </svg>
                 <span>First Edition · Class of &apos;26</span>
               </div>
