@@ -2887,6 +2887,99 @@ kbd {
   margin-top: 56px;
 }
 
+/* Field Work lives on the green Do panel — controls go ink-on-green. */
+.lms-fieldwork-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.lms-do .lms-notes,
+html.lms-light .lms-do .lms-notes {
+  background: rgba(14, 14, 18, 0.08);
+  border-color: rgba(14, 14, 18, 0.25);
+  color: var(--ink);
+}
+
+.lms-do .lms-notes::placeholder,
+html.lms-light .lms-do .lms-notes::placeholder {
+  color: rgba(14, 14, 18, 0.45);
+}
+
+.lms-fieldwork-btn {
+  align-self: flex-start;
+}
+
+.lms-fieldwork-filed {
+  margin-top: 18px;
+}
+
+.lms-fieldwork-stamp {
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+
+.lms-fieldwork-note {
+  font-style: italic;
+  margin: 0 0 4px;
+  opacity: 0.85;
+}
+
+.lms-fieldwork-edit {
+  background: none;
+  border: none;
+  padding: 10px 0;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: underline;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Proof — filed reports on the Student File. */
+.lms-proof {
+  max-height: 420px;
+  overflow-y: auto;
+  border-top: 1px solid rgba(242, 238, 227, 0.12);
+}
+
+.lms-proof-row {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.12);
+}
+
+.lms-proof-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.lms-proof-unit {
+  font-weight: 700;
+}
+
+.lms-proof-date {
+  font-size: 13px;
+  color: var(--muted-on-ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.lms-proof-note {
+  margin: 6px 0 0;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--muted-on-ink);
+}
+
+html.lms-light .lms-proof,
+html.lms-light .lms-proof-row {
+  border-color: rgba(14, 14, 18, 0.14);
+}
+
 /* Quiz */
 
 .lms-quiz {

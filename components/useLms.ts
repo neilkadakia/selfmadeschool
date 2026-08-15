@@ -56,6 +56,7 @@ export type LmsState = {
   equipped: Equipped;
   battles: Record<string, { won: boolean; attempts: number; date: string }>; // partKey -> record
   mastery: MasteryMap; // questionKey -> miss/streak history (the make-up pile)
+  fieldwork: Record<string, { date: string; note: string }>; // "course/unit" -> filed report
 };
 
 export type Reward = { xp: number; credits: number; badges: Badge[]; levelUp?: string };
@@ -91,6 +92,7 @@ const EMPTY: LmsState = {
   equipped: {},
   battles: {},
   mastery: {},
+  fieldwork: {},
 };
 
 const SERVER_SNAPSHOT: Snapshot = {
@@ -445,6 +447,32 @@ const actions = {
       };
       if (!next.badges.includes("deck-done")) {
         next = { ...next, badges: [...next.badges, "deck-done"] };
+      }
+      return touchStreak(next);
+    });
+  },
+
+  // Field Work: the unit's real-world action, self-reported once. First
+  // filing pays; later calls only update the note — no farming the world.
+  fieldworkDone(course: string, unit: string, note: string) {
+    const key = `${course}/${unit}`;
+    apply((s) => {
+      const prev = s.fieldwork[key];
+      if (prev) {
+        if (prev.note === note.trim()) return s;
+        return { ...s, fieldwork: { ...s.fieldwork, [key]: { ...prev, note: note.trim() } } };
+      }
+      let next: LmsState = {
+        ...s,
+        fieldwork: { ...s.fieldwork, [key]: { date: localDay(), note: note.trim() } },
+        xp: s.xp + XP_EXTRA.fieldwork,
+        credits: s.credits + CREDITS.fieldwork,
+      };
+      if (!next.badges.includes("hands-dirty")) {
+        next = { ...next, badges: [...next.badges, "hands-dirty"] };
+      }
+      if (Object.keys(next.fieldwork).length >= 10 && !next.badges.includes("field-tested")) {
+        next = { ...next, badges: [...next.badges, "field-tested"] };
       }
       return touchStreak(next);
     });

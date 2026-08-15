@@ -7,6 +7,7 @@ import { getCourse, courseUnits, type LessonBlock } from "@/lib/lms";
 import { questionKey } from "@/lib/mastery";
 import { useLms } from "@/components/useLms";
 import CommandK from "./CommandK";
+import FieldWork from "./FieldWork";
 import RewardToast from "./RewardToast";
 import Quiz from "./Quiz";
 import Deck from "./Deck";
@@ -198,11 +199,7 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
               />
             </section>
 
-            <section className="panel panel--do lms-do">
-              <p className="panel-kicker">Do</p>
-              <p className="panel-title">Homework: your life</p>
-              <p className="panel-body">{lesson.action}</p>
-            </section>
+            <FieldWork course={courseSlug} unit={unitSlug} action={lesson.action} />
           </>
         ) : (
           <div className="unit-panels">

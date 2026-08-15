@@ -6,7 +6,7 @@
 
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
-import { COURSES, BADGES, levelFor } from "@/lib/lms";
+import { COURSES, BADGES, levelFor, getCourseUnit } from "@/lib/lms";
 import { auraFor } from "@/lib/game";
 import { ROLE_LABEL, apiUpdateProfile, apiChangePassword, apiSetPrefs, type AuthUser } from "@/lib/api";
 import { formatPhone, formatPhoneInput, usDate } from "@/lib/format";
@@ -436,6 +436,34 @@ export default function Profile() {
             </button>
             </div>
           </section>
+
+          {Object.keys(state.fieldwork).length > 0 && (
+            <section className="lms-pcard lms-pcard--wide">
+              <h2 className="lms-pcard-h">Proof</h2>
+              <p className="lms-pcard-sub">
+                Field Work you filed from the real world — {Object.keys(state.fieldwork).length}{" "}
+                report{Object.keys(state.fieldwork).length === 1 ? "" : "s"} and counting. This is
+                the part no quiz can measure.
+              </p>
+              <div className="lms-proof">
+                {Object.entries(state.fieldwork)
+                  .sort(([, a], [, b]) => b.date.localeCompare(a.date))
+                  .map(([key, r]) => {
+                    const [c, u] = key.split("/");
+                    const unit = getCourseUnit(c, u);
+                    return (
+                      <div key={key} className="lms-proof-row">
+                        <div className="lms-proof-head">
+                          <span className="lms-proof-unit">{unit?.title ?? u}</span>
+                          <span className="lms-proof-date">{usDate(r.date)}</span>
+                        </div>
+                        {r.note && <p className="lms-proof-note">&quot;{r.note}&quot;</p>}
+                      </div>
+                    );
+                  })}
+              </div>
+            </section>
+          )}
         </div>
       </div>
     </div>

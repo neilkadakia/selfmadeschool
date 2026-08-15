@@ -142,11 +142,14 @@ export const BADGES: Badge[] = [
   { id: "suited-up", name: "Suited Up", blurb: "Buy your first piece of gear from the Locker.", icon: "◈" },
   { id: "slayer", name: "Monster Slayer", blurb: "Win your first boss battle in the Arena.", icon: "⚔" },
   { id: "comeback", name: "The Comeback", blurb: "Master a question you once missed.", icon: "↺" },
+  { id: "hands-dirty", name: "Hands Dirty", blurb: "File your first Field Work report.", icon: "⚒" },
+  { id: "field-tested", name: "Field Tested", blurb: "File ten Field Work reports.", icon: "10" },
 ];
 
 export const XP_EXTRA = {
   review: 25, // once per day
   final: 200, // first pass per course
+  fieldwork: 50, // per unit, first filing only — the real world pays best
 } as const;
 
 export const FINAL_QUESTIONS = 12;

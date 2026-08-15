@@ -72,6 +72,7 @@ export const CREDITS = {
   quizPerfect: 10,
   deck: 5,
   battleFirstWin: 60,
+  fieldwork: 15,
 } as const;
 
 // ---------- Gear ----------
