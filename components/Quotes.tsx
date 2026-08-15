@@ -6,7 +6,7 @@
 import { useEffect, useState } from "react";
 import { apiQuotesPublic } from "@/lib/api";
 
-type Quote = { id: string; text: string; name: string; context: string };
+type Quote = { id: string; text: string; name: string; context: string; rating?: number };
 
 export default function Quotes() {
   const [quotes, setQuotes] = useState<Quote[]>([]);
@@ -29,6 +29,11 @@ export default function Quotes() {
     <div className="quotes">
       {quotes.map((q) => (
         <blockquote key={q.id} className="quote">
+          {(q.rating ?? 0) > 0 && (
+            <span className="quote-stars" aria-label={`${q.rating} out of 5 stars`}>
+              {"★".repeat(q.rating!)}
+            </span>
+          )}
           <p>&quot;{q.text}&quot;</p>
           <cite>
             — {q.name.split(" ")[0]}

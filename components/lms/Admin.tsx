@@ -41,6 +41,7 @@ type Quote = {
   name: string;
   email?: string;
   context: string;
+  rating?: number;
   created: string;
   approved: boolean;
 };
@@ -529,6 +530,7 @@ export default function Admin() {
                     <div key={q.id} className={`lms-admin-quote${q.approved ? " is-live" : ""}`}>
                       <p className="lms-admin-quote-text">&quot;{q.text}&quot;</p>
                       <p className="lms-admin-meta">
+                        {(q.rating ?? 0) > 0 && <>{"★".repeat(q.rating!)} · </>}
                         {q.name} ({q.email}) · {q.context} · {usDate(q.created)}
                         {q.approved && " · LIVE ON HOMEPAGE"}
                       </p>

@@ -273,7 +273,7 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
             </Link>
           )}
         </nav>
-        <p className="lms-hint">
+        <p className="lms-hint lms-hint--keys">
           <kbd>←</kbd> <kbd>→</kbd> move between units · <kbd>Ctrl</kbd>+<kbd>K</kbd> jump anywhere
         </p>
       </main>

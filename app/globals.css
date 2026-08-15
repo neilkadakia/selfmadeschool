@@ -1155,6 +1155,14 @@ p {
   text-align: center;
 }
 
+.quote-stars {
+  display: block;
+  color: var(--coral);
+  font-size: 18px;
+  letter-spacing: 0.2em;
+  margin-bottom: 10px;
+}
+
 .quote p {
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 700;
@@ -2649,7 +2657,7 @@ kbd {
 
 /* Keyboard shortcuts mean nothing to a thumb. */
 @media (pointer: coarse) {
-  .lms-hint {
+  .lms-hint--keys {
     display: none;
   }
 }
@@ -4219,6 +4227,40 @@ html.lms-light .kicker--acc {
   padding: 28px;
 }
 
+/* Optional star rating on the feedback card — thumb-sized targets. */
+.lms-stars {
+  display: flex;
+  gap: 2px;
+  margin: 0 0 4px;
+}
+
+.lms-star {
+  background: none;
+  border: none;
+  padding: 8px;
+  font-size: 24px;
+  line-height: 1;
+  color: rgba(242, 238, 227, 0.25);
+  cursor: pointer;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.lms-star:hover {
+  transform: translateY(-2px);
+}
+
+.lms-star.is-on {
+  color: var(--coral);
+}
+
+html.lms-light .lms-star {
+  color: rgba(14, 14, 18, 0.2);
+}
+
+html.lms-light .lms-star.is-on {
+  color: #d98a17;
+}
+
 .lms-feedback-form {
   max-width: 560px;
   display: flex;
@@ -4353,6 +4395,33 @@ html.lms-light .kicker--acc {
   color: #1d9e50;
 }
 
+/* The Registrar's mark — only rendered when the server confirms the record. */
+.lms-cert-verified {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 4px 0 0;
+  color: #1d9e50;
+}
+
+/* The Diploma: same paper, heavier frame. */
+.lms-cert--diploma .lms-cert-inner {
+  border-width: 6px;
+  border-style: double;
+}
+
+.lms-cert-switch {
+  display: inline-block;
+  margin-top: 14px;
+  font-weight: 700;
+  color: var(--acc);
+}
+
+.lms-cert-switch:hover {
+  text-decoration: underline;
+}
+
 .lms-admin-flash {
   display: inline-block;
   margin: 0 0 8px;
@@ -4444,6 +4513,16 @@ html.lms-light .kicker--acc {
   border-color: var(--coral);
   background: rgba(255, 180, 58, 0.14);
   color: var(--coral);
+}
+
+.lms-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lms-honor-tabs {
+  margin: 0 0 18px;
 }
 
 .lms-role-select {

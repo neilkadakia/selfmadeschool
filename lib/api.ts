@@ -137,8 +137,12 @@ export async function apiChangePassword(token: string, current: string, next: st
   });
 }
 
-export async function apiFeedbackSubmit(token: string, text: string, context: string) {
-  return call("feedback.php", { method: "POST", token, body: { action: "submit", text, context } });
+export async function apiFeedbackSubmit(token: string, text: string, context: string, rating = 0) {
+  return call("feedback.php", {
+    method: "POST",
+    token,
+    body: { action: "submit", text, context, rating },
+  });
 }
 
 export async function apiFeedbackList(token: string) {
@@ -175,6 +179,28 @@ export async function apiRequestReset(email: string) {
 
 export async function apiResetPassword(email: string, code: string, next: string) {
   return call("auth.php", { method: "POST", body: { action: "reset_password", email, code, next } });
+}
+
+// The Registrar: server-graded finals.
+export type FinalRecord = {
+  score: number;
+  total: number;
+  passed: boolean;
+  attempts: number;
+  first: string;
+  last: string;
+};
+
+export async function apiFinalSubmit(
+  token: string,
+  course: string,
+  picks: { k: string; a: number }[]
+) {
+  return call("finals.php", { method: "POST", token, body: { course, picks } });
+}
+
+export async function apiFinalStatus(token: string) {
+  return call("finals.php", { token });
 }
 
 export async function apiBackupInfo(token: string) {

@@ -326,7 +326,7 @@ export default function LearnHome() {
           </div>
         </section>
 
-        <p className="lms-hint">
+        <p className="lms-hint lms-hint--keys">
           Tip: press <kbd>Ctrl</kbd>+<kbd>K</kbd> to jump to any unit.
         </p>
       </div>

@@ -28,6 +28,7 @@ if ($method === 'GET') {
             'text' => $q['text'] ?? '',
             'name' => $q['name'] ?? '',
             'context' => $q['context'] ?? '',
+            'rating' => (int)($q['rating'] ?? 0),
             'created' => $q['created'] ?? '',
             'approved' => (bool)($q['approved'] ?? false),
         ];
@@ -51,12 +52,18 @@ if ($action === 'submit') {
     if (mb_strlen($text) < 10 || mb_strlen($text) > 300) {
         respond(400, ['error' => 'Keep it between 10 and 300 characters.']);
     }
+    // Optional star rating (1–5); 0 means "not given".
+    $rating = $in['rating'] ?? 0;
+    if (!is_int($rating) || $rating < 0 || $rating > 5) {
+        respond(400, ['error' => 'Rating must be 1 to 5.']);
+    }
     $id = bin2hex(random_bytes(8));
     $all[$id] = [
         'email' => $auth['email'],
         'name' => $auth['user']['name'] ?? '',
         'text' => $text,
         'context' => substr(trim($in['context'] ?? ''), 0, 80),
+        'rating' => $rating,
         'created' => gmdate('c'),
         'approved' => false,
     ];

@@ -62,7 +62,10 @@
   .bulletin-text { margin: 0; font-size: 14.5px; line-height: 1.55; }
   .bulletin-meta { font-size: 13px; color: var(--muted); }
 
-  /* Honor Roll — class leaderboard */
+  /* Honor Roll — class leaderboard, two races */
+  .honor-tabs { display: flex; gap: 8px; margin: 0 0 16px; }
+  .tab { padding: 9px 18px; border-radius: 999px; border: 1px solid rgba(242,238,227,0.25); background: none; color: inherit; font-size: 14px; font-weight: 700; }
+  .tab.on { border-color: var(--coral); background: rgba(255,180,58,0.14); color: var(--coral); }
   .honor { border-top: 1px solid rgba(242,238,227,0.12); }
   .honor-row { display: grid; grid-template-columns: 44px minmax(0,1.6fr) minmax(0,1fr) auto auto 72px; gap: 14px; align-items: center; padding: 12px 10px; border-bottom: 1px solid rgba(242,238,227,0.12); font-size: 14.5px; }
   .honor-row.you { background: rgba(67,222,123,0.07); }
@@ -139,7 +142,8 @@
     </div>
   </div>
 
-  <p class="label">Honor Roll — class leaderboard, medals top 3, green wash on your row</p>
+  <p class="label">Honor Roll — two races: This Week (XP since Monday, default) and All Time; medals top 3, green wash on your row; weekly rows read +N XP and drop the level column</p>
+  <div class="honor-tabs"><span class="tab on">This Week</span><span class="tab">All Time</span></div>
   <div class="honor">
     <div class="honor-row"><span class="honor-rank">🥇</span><span class="honor-name">Priya S.</span><span class="honor-dim">Senior</span><span class="honor-dim">18 units</span><span class="honor-dim">12d 🔥</span><span class="honor-xp">2450 XP</span></div>
     <div class="honor-row you"><span class="honor-rank">🥈</span><span class="honor-name">Dev K. <span class="pill">You</span></span><span class="honor-dim">Junior</span><span class="honor-dim">11 units</span><span class="honor-dim">5d 🔥</span><span class="honor-xp">1520 XP</span></div>
