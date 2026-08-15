@@ -9,11 +9,13 @@ import { useState, type FormEvent } from "react";
 import { COURSES, BADGES, levelFor } from "@/lib/lms";
 import { auraFor } from "@/lib/game";
 import { ROLE_LABEL, apiUpdateProfile, apiChangePassword, type AuthUser } from "@/lib/api";
+import { formatPhone, formatPhoneInput, usDate } from "@/lib/format";
 import { useLms, courseProgress } from "@/components/useLms";
 import AvatarStudio from "./AvatarStudio";
 import Portrait from "./Portrait";
 import RewardToast from "./RewardToast";
 import Ring from "./Ring";
+import Wordmark from "@/components/Wordmark";
 
 // Static barcode for the ID card foot — pure decoration, fixed pattern.
 const ID_BARS = (() => {
@@ -122,7 +124,9 @@ export default function Profile() {
 
         <div className="lms-idcard">
           <div className="lms-idcard-top">
-            <span className="lms-idcard-brand">Self-Made School</span>
+            <span className="lms-idcard-brand">
+              <Wordmark gid="dawn-idcard" />
+            </span>
             <span className="lms-idcard-type">Student ID</span>
           </div>
           <div className="lms-idcard-body">
@@ -149,11 +153,11 @@ export default function Profile() {
                 </div>
                 <div>
                   <dt>Telephone</dt>
-                  <dd>{auth.phone || "—"}</dd>
+                  <dd>{formatPhone(auth.phone ?? "") || "—"}</dd>
                 </div>
                 <div>
                   <dt>Birthday</dt>
-                  <dd>{auth.dob || "—"}</dd>
+                  <dd>{usDate(auth.dob) || "—"}</dd>
                 </div>
                 <div>
                   <dt>Level</dt>
@@ -284,8 +288,8 @@ export default function Profile() {
                   maxLength={24}
                   required
                   autoComplete="tel"
-                  placeholder="+1 555 010 2030"
-                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="+1 (949) 201-9160"
+                  onChange={(e) => setPhone(formatPhoneInput(e.target.value))}
                 />
               </div>
               <div>

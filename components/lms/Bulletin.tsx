@@ -5,6 +5,7 @@
 
 import { useEffect, useState } from "react";
 import { apiBulletinList } from "@/lib/api";
+import { usDate } from "@/lib/format";
 import { useLms } from "@/components/useLms";
 
 type Note = { id: string; text: string; author: string; created: string };
@@ -41,7 +42,7 @@ export default function Bulletin() {
             {n.text}
             <span className="lms-bulletin-meta">
               {" "}
-              — {n.author || "Faculty"} · {n.created.slice(0, 10)}
+              — {n.author || "Faculty"} · {usDate(n.created)}
             </span>
           </p>
         ))}

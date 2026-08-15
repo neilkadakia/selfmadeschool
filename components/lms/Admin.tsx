@@ -30,6 +30,7 @@ import {
   type Role,
 } from "@/lib/api";
 import { COURSES, courseUnits } from "@/lib/lms";
+import { formatPhone, formatPhoneInput, usDate } from "@/lib/format";
 import { useLms } from "@/components/useLms";
 
 type Student = { email: string; name: string; phone?: string; dob?: string; role: Role };
@@ -296,7 +297,7 @@ export default function Admin() {
                         <span>{r.xp}</span>
                         <span>{r.streak}d</span>
                         <span>{r.badges}</span>
-                        <span className="lms-admin-meta">{r.lastActive ? r.lastActive.slice(0, 10) : "—"}</span>
+                        <span className="lms-admin-meta">{r.lastActive ? usDate(r.lastActive) : "—"}</span>
                       </div>
                       <div className="lms-matrix">
                         {COURSES.map((c) => {
@@ -333,7 +334,7 @@ export default function Admin() {
                   {notes.map((n) => (
                     <div key={n.id} className="lms-admin-row lms-bulletin-row">
                       <span className="lms-admin-name">{n.text}</span>
-                      <span className="lms-admin-meta">{n.created.slice(0, 10)}</span>
+                      <span className="lms-admin-meta">{usDate(n.created)}</span>
                       <button
                         className="lms-signout"
                         onClick={async () => {
@@ -386,7 +387,7 @@ export default function Admin() {
                       <span className="lms-admin-name">{s.name}</span>
                       <span className="lms-admin-email">{s.email}</span>
                       <span className="lms-admin-meta">
-                        {s.phone || "—"} · {s.dob || "—"}
+                        {formatPhone(s.phone ?? "") || "—"} · {usDate(s.dob) || "—"}
                       </span>
                       {myRank >= ROLE_RANK.global_admin &&
                       s.role !== "global_admin" &&
@@ -451,7 +452,7 @@ export default function Admin() {
                     placeholder="Telephone (optional)"
                     maxLength={24}
                     value={nPhone}
-                    onChange={(e) => setNPhone(e.target.value)}
+                    onChange={(e) => setNPhone(formatPhoneInput(e.target.value))}
                   />
                   <input
                     className="lms-cert-name"
@@ -503,7 +504,7 @@ export default function Admin() {
                       <div key={s.email} className="lms-admin-row">
                         <span className="lms-admin-email">{s.email}</span>
                         <span className="lms-admin-meta">{s.source}</span>
-                        <span className="lms-admin-meta">{s.created.slice(0, 10)}</span>
+                        <span className="lms-admin-meta">{usDate(s.created)}</span>
                       </div>
                     ))}
                   </div>
@@ -526,7 +527,7 @@ export default function Admin() {
                     <div key={q.id} className={`lms-admin-quote${q.approved ? " is-live" : ""}`}>
                       <p className="lms-admin-quote-text">&quot;{q.text}&quot;</p>
                       <p className="lms-admin-meta">
-                        {q.name} ({q.email}) · {q.context} · {q.created.slice(0, 10)}
+                        {q.name} ({q.email}) · {q.context} · {usDate(q.created)}
                         {q.approved && " · LIVE ON HOMEPAGE"}
                       </p>
                       <div className="lms-admin-quote-actions">

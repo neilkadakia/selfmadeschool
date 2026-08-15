@@ -162,7 +162,9 @@ function issue_token(string $email, ?string $actor = null, ?int $ttl = null): st
 }
 
 // Loose phone check: common punctuation allowed, 7–15 digits underneath.
-// Returns the trimmed value, '' when blank, or null when it can't be a phone.
+// US numbers (10 digits, or 11 with a leading 1) are canonicalized to
+// the house format: +1 (949) 201-9160. Others are stored as typed.
+// Returns the value, '' when blank, or null when it can't be a phone.
 function clean_phone(string $raw): ?string {
     $phone = trim(preg_replace('/\s+/', ' ', $raw));
     if ($phone === '') return '';
@@ -170,7 +172,13 @@ function clean_phone(string $raw): ?string {
     if (!preg_match('/^\+?[0-9 ().\-]+$/', $phone)) return null;
     $digits = preg_replace('/\D/', '', $phone);
     $n = strlen($digits);
-    return ($n >= 7 && $n <= 15) ? $phone : null;
+    if ($n < 7 || $n > 15) return null;
+    $isUs = ($n === 10 && $phone[0] !== '+') || ($n === 11 && $digits[0] === '1');
+    if ($isUs) {
+        $d = substr($digits, -10);
+        return '+1 (' . substr($d, 0, 3) . ') ' . substr($d, 3, 3) . '-' . substr($d, 6);
+    }
+    return $phone;
 }
 
 // Birthday check: YYYY-MM-DD (what <input type=date> sends), a real

@@ -6,6 +6,7 @@
 
 import { useState, type FormEvent } from "react";
 import { apiUpdateProfile, type AuthUser } from "@/lib/api";
+import { formatPhoneInput } from "@/lib/format";
 import { useLms } from "@/components/useLms";
 
 export default function StudentId() {
@@ -95,9 +96,9 @@ export default function StudentId() {
             autoComplete="tel"
             required
             maxLength={24}
-            placeholder="+1 555 010 2030"
+            placeholder="+1 (949) 201-9160"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => setPhone(formatPhoneInput(e.target.value))}
           />
         </div>
         <div>
