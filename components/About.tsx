@@ -20,7 +20,7 @@ const RULES = [
   {
     num: "03",
     title: "No shame in the syllabus",
-    body: "Not knowing was never your fault — nobody taught you. Every question here is a fair one, asked by thousands before you.",
+    body: "Not knowing was never your fault. Nobody taught you. Every question here is a fair one, asked by thousands before you.",
     card: "card--coral",
   },
 ];
@@ -96,7 +96,7 @@ export default function About() {
         </h1>
         <p data-hero-sub className="about-sub">
           School taught you trigonometry, then handed you a lease, a W-4, and a 401(k) form and wished you luck. Self
-          Made School is the school for everything after the diploma — built for 18-to-30-year-olds who&apos;d rather
+          Made School is the school for everything after the diploma, built for 18-to-30-year-olds who&apos;d rather
           learn it now than regret it at 40.
         </p>
       </header>
@@ -110,8 +110,8 @@ export default function About() {
             Adulthood is a curriculum. Someone should teach it.
           </h2>
           <p data-reveal className="mission-copy">
-            Every year, millions of people graduate into the most consequential decade of their lives — first
-            paychecks, first leases, first big calls — with zero formal preparation. We think that&apos;s absurd. So we
+            Every year, millions of people graduate into the most consequential decade of their lives (first
+            paychecks, first leases, first big calls) with zero formal preparation. We think that&apos;s absurd. So we
             built the missing grades: the 13th for foundations, the 14th for money, the 15th for the decisions that
             shape everything else.
           </p>
@@ -127,7 +127,7 @@ export default function About() {
             Academics are overrated.
           </h2>
           <p data-reveal className="beliefs-lede">
-            There — we said it. Life doesn&apos;t grade essays; it hands you decisions. What adults
+            There. We said it. Life doesn&apos;t grade essays; it hands you decisions. What adults
             actually need are real-life skills, and the most successful, most effective adults all
             share one habit: they learned how to learn, and they never stopped. That&apos;s the whole
             school, and it runs on three house rules.
@@ -149,7 +149,7 @@ export default function About() {
       <section className="note-section">
         <blockquote data-reveal className="quote">
           <p>&quot;We&apos;re not here to make you feel behind. We&apos;re here to make catching up feel easy.&quot;</p>
-          <cite>— The Self Made School Team</cite>
+          <cite>The Self Made School Team</cite>
         </blockquote>
       </section>
 

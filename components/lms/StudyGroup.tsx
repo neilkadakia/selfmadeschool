@@ -1,6 +1,6 @@
 "use client";
 
-// Study Group — the unit's discussion thread. Students ask, answer, and
+// Study Group: the unit's discussion thread. Students ask, answer, and
 // upvote; faculty pin the good answers with an "endorsed" mark. Lives at
 // the bottom of every unit so the class is in the room with you.
 
@@ -51,7 +51,7 @@ export default function StudyGroup({ course, unit }: Props) {
       setText("");
       load();
     } else {
-      setError((r.data.error as string) ?? "Could not post that — try again.");
+      setError((r.data.error as string) ?? "Could not post that. Try again.");
     }
   };
 
@@ -64,14 +64,14 @@ export default function StudyGroup({ course, unit }: Props) {
     <section className="lms-section" aria-label="Study Group">
       <h2 className="lms-section-h">Study Group</h2>
       <p className="lms-section-sub">
-        Ask, answer, compare notes — the class is in here with you. Faculty mark the answers worth
+        Ask, answer, compare notes. The class is in here with you. Faculty mark the answers worth
         keeping.
       </p>
 
-      {offline && <p className="lms-muted">The Study Group needs a connection — it&apos;ll be here when you&apos;re back.</p>}
+      {offline && <p className="lms-muted">The Study Group needs a connection. It&apos;ll be here when you&apos;re back.</p>}
 
       {posts && posts.length === 0 && (
-        <p className="lms-muted">Nobody&apos;s said anything yet. Be the first — someone&apos;s stuck on exactly what you just figured out.</p>
+        <p className="lms-muted">Nobody&apos;s said anything yet. Be the first. Someone&apos;s stuck on exactly what you just figured out.</p>
       )}
 
       {posts && posts.length > 0 && (

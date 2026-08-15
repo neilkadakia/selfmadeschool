@@ -4,7 +4,7 @@ import AuthGate from "@/components/lms/AuthGate";
 import Certificate from "@/components/lms/Certificate";
 
 export const metadata: Metadata = {
-  title: "Your Certificate — Self Made School",
+  title: "Your Certificate · Self Made School",
   description: "Print-ready proof you finished the course. Earned, not given.",
   robots: { index: false },
 };

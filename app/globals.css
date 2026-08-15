@@ -445,7 +445,7 @@ p {
   transform: rotate(5deg);
 }
 
-/* After the base rules so they actually win — an earlier copy of these
+/* After the base rules so they actually win: an earlier copy of these
    overrides sat above the bases and silently lost the cascade. */
 @media (max-width: 640px) {
   .sticker {
@@ -453,7 +453,7 @@ p {
     padding: 8px 16px;
   }
 
-  /* Above the headline's box — at ≤360 the old 21% sat on the "OL" of SCHOOL. */
+  /* Above the headline's box: at ≤360 the old 21% sat on the "OL" of SCHOOL. */
   .sticker--quiz {
     top: 10%;
     right: 4%;
@@ -616,7 +616,7 @@ p {
   padding: 110px 32px 120px;
 }
 
-/* Syllabus explorer — part tabs + swipeable unit rail */
+/* Syllabus explorer: part tabs + swipeable unit rail */
 
 .syl-tabs {
   display: flex;
@@ -711,7 +711,7 @@ p {
   animation-delay: calc(var(--i) * 45ms);
 }
 
-/* The rail cards are links — keep each colorway's own text color on hover
+/* The rail cards are links, so keep each colorway's own text color on hover
    instead of the global green link hover (unreadable on pink/lime/green). */
 .syl-card:hover {
   color: var(--ink);
@@ -1656,7 +1656,7 @@ p {
 }
 
 /* ---------- Small screens ----------
-   Lives BELOW every base rule it overrides — same-specificity rules that
+   Lives BELOW every base rule it overrides. Same-specificity rules that
    appear later in the file win the cascade, so this block is dead weight
    anywhere above the bases (that bug shipped once already; see .sticker). */
 
@@ -1667,7 +1667,7 @@ p {
     padding-right: max(18px, env(safe-area-inset-right));
   }
 
-  /* The menu carries the CTA on phones — the pill would crowd the wordmark. */
+  /* The menu carries the CTA on phones. The pill would crowd the wordmark. */
   .nav-cta {
     display: none;
   }
@@ -1758,7 +1758,7 @@ p {
     justify-content: flex-start;
   }
 
-  /* Desktop-only line breaks — phones get natural wrapping. */
+  /* Desktop-only line breaks. Phones get natural wrapping. */
   .br-wide {
     display: none;
   }
@@ -2887,7 +2887,7 @@ kbd {
   margin-top: 56px;
 }
 
-/* Field Work lives on the green Do panel — controls go ink-on-green. */
+/* Field Work lives on the green Do panel, so controls go ink-on-green. */
 .lms-fieldwork-form {
   display: flex;
   flex-direction: column;
@@ -2938,7 +2938,7 @@ html.lms-light .lms-do .lms-notes::placeholder {
   cursor: pointer;
 }
 
-/* The Studio — faculty drafting room. */
+/* The Studio: faculty drafting room. */
 .lms-draft {
   border: 1px solid rgba(242, 238, 227, 0.16);
   border-radius: 18px;
@@ -3062,7 +3062,7 @@ html.lms-light .lms-draft-opts li.is-right {
   color: #157a3e;
 }
 
-/* Office Hours — the desk's live-session card. */
+/* Office Hours: the desk's live-session card. */
 .lms-oh {
   margin-top: 28px;
   border: 1px solid rgba(242, 238, 227, 0.16);
@@ -3164,7 +3164,7 @@ html.lms-light .lms-oh-state {
   }
 }
 
-/* Study Group — the unit's discussion thread. */
+/* Study Group: the unit's discussion thread. */
 .lms-sg {
   border-top: 1px solid rgba(242, 238, 227, 0.12);
   margin-bottom: 20px;
@@ -3290,7 +3290,7 @@ html.lms-light .lms-sg-badge {
   color: var(--paper);
 }
 
-/* Proof — filed reports on the Student File. */
+/* Proof: filed reports on the Student File. */
 .lms-proof {
   max-height: 420px;
   overflow-y: auto;
@@ -3931,7 +3931,7 @@ html.lms-light .lms-signout.is-on {
   color: var(--muted-on-ink);
 }
 
-/* Hero mantra — the school's loop, stated once, small */
+/* Hero mantra: the school's loop, stated once, small */
 
 .hero-mantra {
   margin: 26px 0 0;
@@ -4143,7 +4143,7 @@ html.lms-light .lms-signout.is-on {
   margin: 0;
 }
 
-/* Two 109px columns can't hold a phone number — go single-file. */
+/* Two 109px columns can't hold a phone number, so go single-file. */
 @media (max-width: 380px) {
   .lms-idcard-rows {
     grid-template-columns: 1fr;
@@ -4696,7 +4696,7 @@ html.lms-light .kicker--acc {
   padding: 28px;
 }
 
-/* Optional star rating on the feedback card — thumb-sized targets. */
+/* Optional star rating on the feedback card: thumb-sized targets. */
 .lms-stars {
   display: flex;
   gap: 2px;
@@ -4771,7 +4771,7 @@ html.lms-light .lms-star.is-on {
   line-height: 1.55;
 }
 
-/* The byline can be long (name · email · context · date) — nowrap here
+/* The byline can be long (name · email · context · date), so nowrap here
    widens the whole page on phones. */
 .lms-admin-quote .lms-admin-meta {
   white-space: normal;
@@ -4864,7 +4864,7 @@ html.lms-light .lms-star.is-on {
   color: #1d9e50;
 }
 
-/* The Registrar's mark — only rendered when the server confirms the record. */
+/* The Registrar's mark, only rendered when the server confirms the record. */
 .lms-cert-verified {
   font-size: 12px;
   font-weight: 700;
@@ -4935,7 +4935,7 @@ html.lms-light .lms-star.is-on {
   white-space: nowrap;
 }
 
-/* Subscriber rows: the email is the payload — give it the wide track. */
+/* Subscriber rows: the email is the payload, so give it the wide track. */
 .lms-subs .lms-admin-row {
   grid-template-columns: minmax(0, 1.8fr) auto auto;
 }
@@ -5000,7 +5000,7 @@ html.lms-light .lms-star.is-on {
   border-radius: 999px;
   border: 1px solid rgba(242, 238, 227, 0.3);
   background: rgba(242, 238, 227, 0.04);
-  /* appearance: none removes the native caret — put one back so it
+  /* appearance: none removes the native caret. Put one back so it
      doesn't read as a static pill, especially on touch (no hover cue). */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23F2EEE3'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -5552,7 +5552,7 @@ html.lms-light .classroom .lms-signout {
     display: none;
   }
 
-  /* The brand links to /learn — without this a signed-in phone user has
+  /* The brand links to /learn. Without this a signed-in phone user has
      no route back to the marketing site. Rides at the end of the strip. */
   .classroom-exit {
     margin: 0 0 0 6px;
@@ -5661,7 +5661,7 @@ html.lms-light .classroom .lms-signout {
 }
 
 /* Single column: dissolve both column wrappers so every card takes part
-   in one flex order — vitals (plan, stats) land right under the continue
+   in one flex order, so vitals (plan, stats) land right under the continue
    card instead of below the whole page. */
 @media (max-width: 1200px) {
   .learn-cols {
@@ -5904,7 +5904,7 @@ html.lms-light .classroom .lms-signout {
 }
 
 /* Can't afford it yet: stays fully readable, just clearly not a live
-   button — muted border, bright price. */
+   button: muted border, bright price. */
 .lms-gear-buy:disabled {
   cursor: not-allowed;
   color: var(--paper);
@@ -6239,7 +6239,7 @@ html.lms-light .lms-gear-buy:disabled {
   overflow: hidden;
 }
 
-/* Segment ticks — reads like a fighting-game health bar. */
+/* Segment ticks, so it reads like a fighting-game health bar. */
 .lms-hp-track::after {
   content: "";
   position: absolute;
@@ -7044,7 +7044,7 @@ html.lms-light .lms-matrix-cell:not(.is-done) {
     inset: 0;
     z-index: 150;
     /* The base rule's align-self: start un-stretches a fixed box and pins it
-       to the container origin (Box Alignment on abspos) — reset it or the
+       to the container origin (Box Alignment on abspos). Reset it or the
        drawer becomes a content-height sheet at (0,0) covering the toggle. */
     align-self: auto;
     background: var(--ink);
@@ -7057,7 +7057,7 @@ html.lms-light .lms-matrix-cell:not(.is-done) {
     display: block;
   }
 
-  /* Floating pill in the thumb zone — reachable mid-lesson and above the
+  /* Floating pill in the thumb zone, reachable mid-lesson and above the
      open sheet (its label flips to "Hide Syllabus"). */
   .lms-side-toggle {
     display: inline-block;
@@ -7138,7 +7138,7 @@ html.lms-light .lms-matrix-cell:not(.is-done) {
     justify-content: center;
   }
 
-  /* Faculty Lounge on a phone: the classbook stops being a table — name on
+  /* Faculty Lounge on a phone: the classbook stops being a table. Name on
      its own line, then labeled stat chips that wrap. */
   .lms-classbook-head {
     display: none;
@@ -7199,12 +7199,12 @@ html.lms-light .lms-matrix-cell:not(.is-done) {
     font-size: 16px;
   }
 
-  /* ~3.5 visible rows read as "that's all of them" — show more. */
+  /* ~3.5 visible rows read as "that's all of them", so show more. */
   .lms-admin-table {
     max-height: min(60vh, 560px);
   }
 
-  /* 16px floor on phones — anything smaller makes iOS zoom on focus. */
+  /* 16px floor on phones: anything smaller makes iOS zoom on focus. */
   .lms-draft-json {
     font-size: 16px;
   }

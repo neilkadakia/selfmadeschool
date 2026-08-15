@@ -1,5 +1,5 @@
-// Learning logic: every quiz question you miss — in a unit check or an
-// Arena fight — lands in the make-up pile. It leaves only after you
+// Learning logic: every quiz question you miss (in a unit check or an
+// Arena fight) lands in the make-up pile. It leaves only after you
 // answer it right MASTER_STREAK times in a row (across visits). Study
 // Hall drills the pile before the flashcards.
 
@@ -46,7 +46,7 @@ export function dueQuestions(mastery: MasteryMap): DueQuestion[] {
     const unit = course.parts.flatMap((p) => p.units).find((u) => u.slug === unitSlug);
     out.push({ key, question, source: unit?.title ?? unitSlug, streak: entry.streak, miss: entry.miss });
   }
-  // Most-missed first — the ones that need the work lead the session.
+  // Most-missed first: the ones that need the work lead the session.
   out.sort((a, b) => b.miss - a.miss || a.streak - b.streak);
   return out;
 }

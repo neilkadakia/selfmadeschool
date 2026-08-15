@@ -1,7 +1,7 @@
 "use client";
 
 // The Student ID: the school asks every student for a real contact
-// record — first name, last name, phone — before class starts.
+// record (first name, last name, phone) before class starts.
 // Email is the sign-in and stays fixed. Nothing here is ever public.
 
 import { useState, type FormEvent } from "react";
@@ -12,7 +12,7 @@ import { useLms } from "@/components/useLms";
 export default function StudentId() {
   const lms = useLms();
   const auth = lms.auth;
-  // Long-time students already gave us a display name — split it so the
+  // Long-time students already gave us a display name. Split it so the
   // card arrives mostly filled and takes one tap to file.
   const guessed = (auth?.name ?? "").trim().split(/\s+/).filter(Boolean);
   const [first, setFirst] = useState(auth?.first || guessed[0] || "");
@@ -38,7 +38,7 @@ export default function StudentId() {
     if (res.ok) {
       lms.adoptAuthUser(res.data.user as Partial<Omit<AuthUser, "token">>);
     } else {
-      setError((res.data.error as string) ?? "Could not save the card — try again.");
+      setError((res.data.error as string) ?? "Could not save the card. Try again.");
     }
   };
 
@@ -75,7 +75,7 @@ export default function StudentId() {
         </div>
       </div>
       <label className="lms-login-label" htmlFor="enroll-email">
-        Email — Your Sign-In
+        Email · Your Sign-In
       </label>
       <input
         id="enroll-email"
@@ -126,7 +126,7 @@ export default function StudentId() {
         {busy ? "Printing…" : "Issue My Student ID"}
       </button>
       <p className="lms-enroll-note">
-        Only the front office sees this — it never appears on the Honor Roll, your
+        Only the front office sees this. It never appears on the Honor Roll, your
         certificate shows your full name, and you can update it anytime in your Student File.
       </p>
     </form>

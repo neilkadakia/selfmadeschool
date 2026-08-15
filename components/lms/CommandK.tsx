@@ -1,6 +1,6 @@
 "use client";
 
-// Ctrl/Cmd+K palette — jump to any unit in any course.
+// Ctrl/Cmd+K palette: jump to any unit in any course.
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -107,7 +107,7 @@ export default function CommandK() {
           }}
         />
         <div className="lms-palette-results">
-          {results.length === 0 && <p className="lms-palette-empty">Nothing found — try a shorter word.</p>}
+          {results.length === 0 && <p className="lms-palette-empty">Nothing found. Try a shorter word.</p>}
           {results.map((r, i) => (
             <button
               key={`${r.course}/${r.slug}`}

@@ -7,7 +7,7 @@ import { COURSES, getCourse, LEGACY_UNIT_REDIRECTS } from "@/lib/lms";
 export function generateStaticParams() {
   return [
     ...COURSES.map((c) => ({ course: c.slug })),
-    // v1 unit URLs lived at /learn/<unit>/ — keep them alive as redirects.
+    // v1 unit URLs lived at /learn/<unit>/. Keep them alive as redirects.
     ...Object.keys(LEGACY_UNIT_REDIRECTS).map((slug) => ({ course: slug })),
   ];
 }
@@ -21,7 +21,7 @@ export async function generateMetadata({
   const c = getCourse(course);
   if (!c) return { title: "The 13th Grade", robots: { index: false } };
   return {
-    title: `${c.title} — Self Made School`,
+    title: `${c.title} · Self Made School`,
     description: c.description,
     robots: { index: false }, // private while the LMS is in closed session
   };

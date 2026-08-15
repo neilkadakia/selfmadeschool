@@ -1,6 +1,6 @@
 "use client";
 
-// One honest line — appears once a student has real experience (2+ units),
+// One honest line: appears once a student has real experience (2+ units),
 // disappears after they've submitted. Quotes go to the admin for approval
 // before anything reaches the homepage. No XP on purpose.
 //
@@ -54,7 +54,7 @@ export default function FeedbackCard({ totalDone, context, prompt }: Props) {
       lms.feedbackDone();
     } else {
       setStatus("error");
-      setError((res.data.error as string) ?? "Could not send that — try again.");
+      setError((res.data.error as string) ?? "Could not send that. Try again.");
     }
   };
 
@@ -62,7 +62,7 @@ export default function FeedbackCard({ totalDone, context, prompt }: Props) {
     <section className="lms-feedback" aria-label="Feedback">
       <h2 className="lms-section-h">One honest line</h2>
       <p className="lms-section-sub">
-        {prompt ?? `${totalDone} units in — what would you tell a friend about this course?`} The
+        {prompt ?? `${totalDone} units in. What would you tell a friend about this course?`} The
         best lines go on the homepage (with your first name, after review). Honest beats
         flattering.
       </p>

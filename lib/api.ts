@@ -22,7 +22,7 @@ export function rankOf(role: string | undefined): number {
   return ROLE_RANK[(role ?? "student") as Role] ?? 0;
 }
 
-// Educator and up — the people who see the Faculty Lounge.
+// Educator and up: the people who see the Faculty Lounge.
 export function isFaculty(role: string | undefined): boolean {
   return rankOf(role) >= ROLE_RANK.educator;
 }
@@ -35,7 +35,7 @@ export type AuthUser = {
   phone?: string;
   dob?: string; // yyyy-mm-dd
   role: Role;
-  nudges?: boolean; // mail preference — true unless opted out
+  nudges?: boolean; // mail preference: true unless opted out
   token: string;
 };
 

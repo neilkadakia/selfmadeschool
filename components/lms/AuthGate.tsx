@@ -66,7 +66,7 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
     if (res.ok) {
       setPassword("");
       setCode("");
-      setNotice("Password changed — sign in with the new one.");
+      setNotice("Password changed. Sign in with the new one.");
       switchMode("signin", true);
     } else {
       setError((res.data.error as string) ?? "Could not reset the password.");
@@ -79,14 +79,14 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
         <Link href="/" className="lms-gate-brand">
           <Wordmark gid="dawn-gate" />
         </Link>
-        <p className="kicker kicker--acc">Students Only — Pre-Launch</p>
+        <p className="kicker kicker--acc">Students Only · Pre-Launch</p>
         <h1 className="learn-h1">Class is invite-only.</h1>
         <p className="learn-sub">
           We&apos;re pre-launch: the founding class is in session while we finish building, and
-          enrollment isn&apos;t open to the public yet. Have an account? Sign in — your progress
+          enrollment isn&apos;t open to the public yet. Have an account? Sign in. Your progress
           follows you to any device. No account? Try the{" "}
           <Link href="/demo">demo lesson</Link> and join the{" "}
-          <Link href="/#newsletter">waitlist</Link> — those inboxes hear first when doors open.
+          <Link href="/#newsletter">waitlist</Link>. Those inboxes hear first when doors open.
         </p>
 
         {mode === "signin" && (

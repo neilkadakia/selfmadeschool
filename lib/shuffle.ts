@@ -1,4 +1,4 @@
-// Pure, seedable shuffle — safe to call during render (no Math.random).
+// Pure, seedable shuffle, safe to call during render (no Math.random).
 
 export function seedFrom(str: string): number {
   let h = 2166136261;

@@ -1,9 +1,9 @@
 "use client";
 
-// The Final — 12 questions drawn from across the course, unlocked at 100%
+// The Final: 12 questions drawn from across the course, unlocked at 100%
 // units complete. The exam runs in the browser, but the answer sheet is
 // graded by the Registrar (finals.php) and the passing record lives
-// server-side — that record is what "With Honors" and the Diploma rest on.
+// server-side. That record is what "With Honors" and the Diploma rest on.
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -70,7 +70,7 @@ export default function FinalExam() {
     } else {
       setGradeError(
         (res.data.error as string) ??
-          "The Registrar can't be reached — your answers are safe. Check your connection and submit again."
+          "The Registrar can't be reached. Your answers are safe. Check your connection and submit again."
       );
     }
   };
@@ -91,7 +91,7 @@ export default function FinalExam() {
           <p className={`kicker kicker--${course.tone}`}>The Final</p>
           <h1 className="learn-h1">Not yet.</h1>
           <p className="learn-sub">
-            The Final unlocks when all {progress.total} units are complete — you&apos;re at{" "}
+            The Final unlocks when all {progress.total} units are complete. You&apos;re at{" "}
             {progress.done}. No cramming shortcuts here; that&apos;s the point.
           </p>
           <Link href={`/learn/${course.slug}`} className="btn btn--solid">
@@ -113,17 +113,17 @@ export default function FinalExam() {
     setGradeError("");
   };
 
-  // The sheet is in — waiting on the Registrar, or holding it after a miss.
+  // The sheet is in: waiting on the Registrar, or holding it after a miss.
   if (started && handedIn && !result) {
     return (
       <div className="learn">
         <div className="learn-wrap lms-gate">
-          <p className={`kicker kicker--${course.tone}`}>The Final — {course.title}</p>
+          <p className={`kicker kicker--${course.tone}`}>The Final · {course.title}</p>
           <h1 className="learn-h1">{grading ? "Grading…" : "Held at the desk."}</h1>
           <p className="learn-sub">
             {grading
               ? "Your answer sheet is with the Registrar."
-              : gradeError || "Your answers are safe — submit when you're back online."}
+              : gradeError || "Your answers are safe. Submit when you're back online."}
           </p>
           {!grading && (
             <button className="btn btn--solid lms-login-btn" onClick={() => void submitSheet(sheet)}>
@@ -147,15 +147,15 @@ export default function FinalExam() {
           <Link href={`/learn/${course.slug}`} className="crumb">
             ← {course.title}
           </Link>
-          <p className={`kicker kicker--${course.tone}`}>The Final — {course.title}</p>
+          <p className={`kicker kicker--${course.tone}`}>The Final · {course.title}</p>
           <h1 className="learn-h1">{passed ? "With Honors." : "Close."}</h1>
           <p className="lms-quiz-score lms-final-score">
             {score}/{total}
           </p>
           <p className="learn-sub">
             {passed
-              ? "Ten or better, graded and recorded by the Registrar. Your certificate carries it — permanently."
-              : `${FINAL_PASS} of ${total} passes. The questions rotate every attempt, and there's no limit — that's how real learning works.`}
+              ? "Ten or better, graded and recorded by the Registrar. Your certificate carries it. Permanently."
+              : `${FINAL_PASS} of ${total} passes. The questions rotate every attempt, and there's no limit. That's how real learning works.`}
           </p>
           <div className="learn-ctas">
             {passed ? (
@@ -187,7 +187,7 @@ export default function FinalExam() {
             <FeedbackCard
               totalDone={progress.done}
               context={`Graduated · ${course.title}`}
-              prompt="You just passed the Final — what would you tell a friend about this course?"
+              prompt="You just passed the Final. What would you tell a friend about this course?"
             />
           )}
         </div>
@@ -202,11 +202,11 @@ export default function FinalExam() {
           <Link href={`/learn/${course.slug}`} className="crumb">
             ← {course.title}
           </Link>
-          <p className={`kicker kicker--${course.tone}`}>The Final — {course.title}</p>
+          <p className={`kicker kicker--${course.tone}`}>The Final · {course.title}</p>
           <h1 className="learn-h1">Twelve questions. One course.</h1>
           <p className="learn-sub">
             Drawn from every unit you just finished, shuffled fresh each attempt. Score{" "}
-            {FINAL_PASS} or better and your certificate reads <strong>With Honors</strong> — no
+            {FINAL_PASS} or better and your certificate reads <strong>With Honors</strong>. No
             time limit, no trick questions, retakes forever. Graded and recorded by the school,
             so you&apos;ll need a connection when you hand it in.
           </p>
@@ -224,7 +224,7 @@ export default function FinalExam() {
     <div className="learn">
       <RewardToast reward={lms.reward} onDone={lms.clearReward} />
       <div className="learn-wrap lms-gate">
-        <p className={`kicker kicker--${course.tone}`}>The Final — {course.title}</p>
+        <p className={`kicker kicker--${course.tone}`}>The Final · {course.title}</p>
         <div className="lms-quiz lms-final">
           <div className="lms-quiz-head">
             <span className="lms-quiz-progress">

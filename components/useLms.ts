@@ -121,7 +121,7 @@ function persistLocal(state: LmsState, auth: AuthUser | null) {
   try {
     localStorage.setItem(storageKey(auth), JSON.stringify(state));
   } catch {
-    // Private mode or blocked storage — progress just won't persist locally.
+    // Private mode or blocked storage: progress just won't persist locally.
   }
 }
 
@@ -355,7 +355,7 @@ const actions = {
   logout() {
     const { auth, actor } = snapshot;
     if (auth) apiLogout(auth.token);
-    // Signing out while Acting As ends BOTH sessions — no ghost admin.
+    // Signing out while Acting As ends BOTH sessions. No ghost admin.
     if (actor) apiLogout(actor.token);
     if (pushTimer) clearTimeout(pushTimer);
     persistAuth(null);
@@ -366,7 +366,7 @@ const actions = {
 
   // Act As: swap the session for a lower-ranked account; the real one
   // waits in the actor slot. Their progress loads exactly as if they
-  // signed in — because as far as the store cares, they did.
+  // signed in, because as far as the store cares, they did.
   async actAs(email: string): Promise<{ ok: boolean; error?: string }> {
     const { auth } = snapshot;
     if (!auth) return { ok: false, error: "Not signed in." };
@@ -453,7 +453,7 @@ const actions = {
   },
 
   // Field Work: the unit's real-world action, self-reported once. First
-  // filing pays; later calls only update the note — no farming the world.
+  // filing pays; later calls only update the note. No farming the world.
   fieldworkDone(course: string, unit: string, note: string) {
     const key = `${course}/${unit}`;
     apply((s) => {
@@ -513,7 +513,7 @@ const actions = {
     });
   },
 
-  // No XP for feedback on purpose — quotes stay unbought.
+  // No XP for feedback on purpose: quotes stay unbought.
   feedbackDone() {
     apply((s) => (s.feedbackAt ? s : { ...s, feedbackAt: localDay() }));
   },
@@ -523,7 +523,7 @@ const actions = {
   },
 
   // After the server accepts new profile details (Student ID, rename),
-  // keep the session — and the certificate name — in step.
+  // keep the session (and the certificate name) in step.
   adoptAuthUser(user: Partial<Omit<AuthUser, "token">>) {
     if (!snapshot.auth) return;
     const auth = { ...snapshot.auth, ...user };

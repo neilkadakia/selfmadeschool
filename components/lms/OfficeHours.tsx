@@ -1,6 +1,6 @@
 "use client";
 
-// Office Hours — upcoming live sessions on the desk. Save a seat while
+// Office Hours: upcoming live sessions on the desk. Save a seat while
 // there are seats; after that the waitlist keeps your place and the
 // server emails you the moment one opens. Renders nothing when the
 // calendar is empty, exactly like the Honor Roll.
@@ -39,7 +39,7 @@ export default function OfficeHours() {
     <section className="lms-oh" aria-label="Office Hours">
       <h2 className="lms-section-h">Office Hours</h2>
       <p className="lms-section-sub">
-        Live, small, and honest — bring the question you&apos;d never post publicly.
+        Live, small, and honest. Bring the question you&apos;d never post publicly.
       </p>
       {sessions.map((s) => {
         const full = s.seats >= s.capacity;

@@ -13,7 +13,7 @@ export default function NotFound() {
       <h1 className="about-h1">This page skipped class.</h1>
       <p className="page-copy">
         Whatever you were looking for didn&apos;t show up today. The rest of the school is still in
-        session — head back and pick up where you left off.
+        session. Head back and pick up where you left off.
       </p>
       <div className="hero-ctas">
         <Link href="/" className="btn btn--solid">

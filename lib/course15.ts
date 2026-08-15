@@ -1,4 +1,4 @@
-// The 15th Grade — life's big calls, advanced. Demo course for review:
+// The 15th Grade: life's big calls, advanced. Demo course for review:
 // full structure, three units carry complete lessons.
 
 import type { Course } from "./lms";
@@ -11,7 +11,7 @@ export const COURSE_15: Course = {
   status: "preview",
   headline: "The big calls: career, home, and the people you build a life with.",
   description:
-    "Frameworks for the decisions that shape your decade — quitting, moving, buying, marrying, caring for parents — 12 units, no easy answers pretended, real ones worked through.",
+    "Frameworks for the decisions that shape your decade: quitting, moving, buying, marrying, caring for parents. 12 units, no easy answers pretended, real ones worked through.",
   parts: [
     {
       id: "work",
@@ -21,9 +21,9 @@ export const COURSE_15: Course = {
       action: "Apply this chapter's framework to your actual job situation on paper.",
       units: [
         { slug: "quit-or-stay", title: "Quit or Stay", blurb: "The four signals that say go, the two that say wait, and the exit done right.", live: true },
-        { slug: "career-pivots", title: "Career Pivots", blurb: "Changing lanes without starting from zero — what transfers and what doesn't.", live: false },
+        { slug: "career-pivots", title: "Career Pivots", blurb: "Changing lanes without starting from zero: what transfers and what doesn't.", live: false },
         { slug: "grad-school-math", title: "Grad School Math", blurb: "When the degree pays for itself, and when it's an expensive pause button.", live: false },
-        { slug: "starting-something", title: "Starting Something", blurb: "Side project to real business — the checkpoints that tell you to keep going.", live: false },
+        { slug: "starting-something", title: "Starting Something", blurb: "Side project to real business: the checkpoints that tell you to keep going.", live: false },
       ],
     },
     {
@@ -34,9 +34,9 @@ export const COURSE_15: Course = {
       action: "Run this chapter's numbers on your real city, rent, and timeline.",
       units: [
         { slug: "rent-vs-buy", title: "Rent vs Buy", blurb: "The five-year rule, the hidden costs, and why renting is often the smart move.", live: true },
-        { slug: "moving-math", title: "Moving Math", blurb: "New city, new country, new cost of living — the full comparison, not just salary.", live: false },
-        { slug: "living-with-parents", title: "Living With Parents", blurb: "Moving back home with a plan — saving aggressively without losing momentum.", live: false },
-        { slug: "first-home-playbook", title: "First Home Playbook", blurb: "Down payments, mortgages, inspections — the process from search to keys.", live: false },
+        { slug: "moving-math", title: "Moving Math", blurb: "New city, new country, new cost of living: the full comparison, not just salary.", live: false },
+        { slug: "living-with-parents", title: "Living With Parents", blurb: "Moving back home with a plan: saving aggressively without losing momentum.", live: false },
+        { slug: "first-home-playbook", title: "First Home Playbook", blurb: "Down payments, mortgages, inspections: the process from search to keys.", live: false },
       ],
     },
     {
@@ -47,9 +47,9 @@ export const COURSE_15: Course = {
       action: "Have (or schedule) one conversation this chapter says you're overdue for.",
       units: [
         { slug: "partner-money-talks", title: "Partner Money Talks", blurb: "The five conversations to have before you combine anything.", live: true },
-        { slug: "wedding-math", title: "Wedding Math", blurb: "Celebrating big without starting married life in debt — and handling family expectations.", live: false },
+        { slug: "wedding-math", title: "Wedding Math", blurb: "Celebrating big without starting married life in debt, and handling family expectations.", live: false },
         { slug: "the-kids-question", title: "The Kids Question", blurb: "The real costs, the real timelines, and deciding on purpose instead of by default.", live: false },
-        { slug: "aging-parents", title: "Aging Parents", blurb: "Supporting the people who raised you — money, care, and boundaries that keep love intact.", live: false },
+        { slug: "aging-parents", title: "Aging Parents", blurb: "Supporting the people who raised you: money, care, and boundaries that keep love intact.", live: false },
       ],
     },
   ],
@@ -57,31 +57,31 @@ export const COURSE_15: Course = {
     "quit-or-stay": {
       hook: "\"Should I quit?\" is the wrong question. \"What would need to be true for me to stay?\" is the right one.",
       blocks: [
-        { kind: "p", text: "Asked directly, \"should I quit?\" invites mood-based answers — great after a good meeting, desperate after a bad week. Flip it: write down what would need to be true in six months for staying to be the right call. If you can't write anything believable, you have your answer. If you can, you have a plan to test." },
+        { kind: "p", text: "Asked directly, \"should I quit?\" invites mood-based answers: great after a good meeting, desperate after a bad week. Flip it: write down what would need to be true in six months for staying to be the right call. If you can't write anything believable, you have your answer. If you can, you have a plan to test." },
         { kind: "h", text: "Four signals that say go" },
         { kind: "list", items: [
-          "You've stopped learning — the last six months taught you less than any month of your first year.",
-          "The ceiling is visible and occupied — the people above you aren't going anywhere, and you don't want their jobs anyway.",
-          "Compensation drift — you're paid for who you were when hired, and the market has moved. New hires in your role earn more than you.",
-          "Sunday dread as a pattern — not a bad week, but months of it. Your body votes before your resume does.",
+          "You've stopped learning: the last six months taught you less than any month of your first year.",
+          "The ceiling is visible and occupied: the people above you aren't going anywhere, and you don't want their jobs anyway.",
+          "Compensation drift: you're paid for who you were when hired, and the market has moved. New hires in your role earn more than you.",
+          "Sunday dread as a pattern: not a bad week, but months of it. Your body votes before your resume does.",
         ] },
         { kind: "h", text: "Two signals that say wait" },
         { kind: "list", items: [
-          "You're running from one bad variable — a manager, a project — that is itself likely to change. Managers move constantly; don't trade a whole good job to escape one person.",
-          "You haven't asked yet — for the raise, the transfer, the scope. Quitting before asking is folding a hand you never played.",
+          "You're running from one bad variable (a manager, a project) that is itself likely to change. Managers move constantly; don't trade a whole good job to escape one person.",
+          "You haven't asked yet for the raise, the transfer, the scope. Quitting before asking is folding a hand you never played.",
         ] },
-        { kind: "callout", title: "Real talk", text: "For families where a stable job is the whole point — where your parents' sacrifices bought you this security — quitting can feel like betrayal. Separate the decision from the announcement. Decide with the framework; then bring your family a plan, not a panic." },
-        { kind: "example", title: "Worked example", text: "Wei has been flat for a year: nothing new learned, a raise request answered with \"next cycle\" twice. Signals: learning stopped, comp drift, and the asking box is checked — he asked, twice. He interviews while employed, lands an offer 22% up, gives a clean three weeks and a handover doc. His manager's counteroffer arrives on his last Friday — the raise was always possible; it just needed a deadline." },
+        { kind: "callout", title: "Real talk", text: "For families where a stable job is the whole point, where your parents' sacrifices bought you this security, quitting can feel like betrayal. Separate the decision from the announcement. Decide with the framework; then bring your family a plan, not a panic." },
+        { kind: "example", title: "Worked example", text: "Wei has been flat for a year: nothing new learned, a raise request answered with \"next cycle\" twice. Signals: learning stopped, comp drift, and the asking box is checked: he asked, twice. He interviews while employed, lands an offer 22% up, gives a clean three weeks and a handover doc. His manager's counteroffer arrives on his last Friday. The raise was always possible; it just needed a deadline." },
         { kind: "h", text: "The exit itself" },
-        { kind: "p", text: "Interview while employed — desperation negotiates badly. Never quit on emotion in the room; even a resignation gets the 24-hour rule. Give clean notice with a handover document, thank people specifically, and keep every bridge intact. Industries are villages. The manager you leave well today is the reference, the referral, or the client in five years." },
-        { kind: "bigfact", stat: "2 asked, 0 answered", caption: "the cleanest quit signal there is: you asked clearly for what would make you stay — twice — and the answer was silence. After that, leaving isn't impulsive. It's the response." },
+        { kind: "p", text: "Interview while employed: desperation negotiates badly. Never quit on emotion in the room; even a resignation gets the 24-hour rule. Give clean notice with a handover document, thank people specifically, and keep every bridge intact. Industries are villages. The manager you leave well today is the reference, the referral, or the client in five years." },
+        { kind: "bigfact", stat: "2 asked, 0 answered", caption: "the cleanest quit signal there is: you asked clearly for what would make you stay, twice, and the answer was silence. After that, leaving isn't impulsive. It's the response." },
       ],
       quiz: [
         {
           q: "Better than asking \"should I quit?\" is asking…",
           options: [
             "\"Is everyone else quitting?\"",
-            "\"What would need to be true in six months for staying to be right?\" — then test whether it's achievable",
+            "\"What would need to be true in six months for staying to be right?\" and then testing whether it's achievable",
             "\"Can I survive two weeks of no income?\"",
             "\"Does my manager like me?\"",
           ],
@@ -91,19 +91,19 @@ export const COURSE_15: Course = {
         {
           q: "Your manager is the only bad part of an otherwise good job. The framework says…",
           options: [
-            "Quit — a bad manager poisons everything",
-            "Wait — you're running from one variable that itself changes often; managers move constantly",
+            "Quit: a bad manager poisons everything",
+            "Wait: you're running from one variable that itself changes often; managers move constantly",
             "Transfer to any other company immediately",
             "Complain to their manager first",
           ],
           answer: 1,
-          explain: "Trading a whole good job to escape one person is usually a bad trade — that person is one org change away from leaving anyway. Different if the whole culture is the problem.",
+          explain: "Trading a whole good job to escape one person is usually a bad trade: that person is one org change away from leaving anyway. Different if the whole culture is the problem.",
         },
         {
           q: "Why interview while still employed?",
           options: [
             "It's the only legal way",
-            "Desperation negotiates badly — employed candidates have options, and options are the negotiation",
+            "Desperation negotiates badly. Employed candidates have options, and options are the negotiation",
             "Companies only hire employed people",
             "To use work hours for interviews",
           ],
@@ -113,51 +113,51 @@ export const COURSE_15: Course = {
         {
           q: "You've asked twice for a raise with clear reasoning; silence both times. Leaving now is…",
           options: [
-            "Impulsive — give it a third year",
-            "The response — you played the hand, the answer was the silence",
+            "Impulsive. Give it a third year",
+            "The response: you played the hand, the answer was the silence",
             "Only okay if you have no other option",
             "Disloyal after what the company gave you",
           ],
           answer: 1,
-          explain: "Quitting before asking is folding an unplayed hand. Asking clearly, twice, and hearing silence IS the answer — leaving after that is a decision, not a mood.",
+          explain: "Quitting before asking is folding an unplayed hand. Asking clearly, twice, and hearing silence IS the answer. Leaving after that is a decision, not a mood.",
         },
       ],
       cards: [
         { front: "The reframe", back: "Not \"should I quit?\" but \"what would need to be true for staying to be right?\" No believable list = your answer. A list = your asks." },
         { front: "Four go signals", back: "Learning stopped · visible occupied ceiling · comp drift vs the market · months of Sunday dread." },
         { front: "Two wait signals", back: "You're fleeing one changeable variable (usually a manager) · you haven't actually asked yet." },
-        { front: "Ask before you quit", back: "Raise, transfer, scope — quitting before asking is folding a hand you never played. Silence after two clear asks is also an answer." },
+        { front: "Ask before you quit", back: "Raise, transfer, scope. Quitting before asking is folding a hand you never played. Silence after two clear asks is also an answer." },
         { front: "Interview while employed", back: "Options are the negotiation. Desperation shows, and it's expensive." },
-        { front: "Leave like a professional", back: "24-hour rule on the resignation, clean notice, a handover doc, specific thank-yous. Industries are villages — bridges are assets." },
+        { front: "Leave like a professional", back: "24-hour rule on the resignation, clean notice, a handover doc, specific thank-yous. Industries are villages. Bridges are assets." },
       ],
       action: "Write the six-month list: what would need to be true for staying to be right. For each item, note whether you've actually asked for it. That page is your next move.",
     },
     "rent-vs-buy": {
       hook: "\"Rent is throwing money away\" is the most expensive sentence in family group chats.",
       blocks: [
-        { kind: "p", text: "Renting buys you something real: flexibility, zero repair risk, and the ability to leave for a better job or a cheaper city in thirty days. Owning can be a great deal too — but not automatically, not everywhere, and almost never on a short timeline. This unit is the actual math." },
+        { kind: "p", text: "Renting buys you something real: flexibility, zero repair risk, and the ability to leave for a better job or a cheaper city in thirty days. Owning can be a great deal too, but not automatically, not everywhere, and almost never on a short timeline. This unit is the actual math." },
         { kind: "h", text: "What owning really costs" },
         { kind: "list", title: "Beyond the mortgage payment", items: [
-          "Closing costs — 2–5% of the price on the way in, larger agent fees on the way out",
-          "Property taxes and homeowner's insurance — forever, and they rise",
-          "Maintenance — plan on ~1% of the home's value per year; roofs and water heaters don't care about your budget",
-          "The down payment's ghost — that $60,000 could have been compounding in index funds the whole time",
+          "Closing costs: 2–5% of the price on the way in, larger agent fees on the way out",
+          "Property taxes and homeowner's insurance: forever, and they rise",
+          "Maintenance: plan on ~1% of the home's value per year; roofs and water heaters don't care about your budget",
+          "The down payment's ghost: that $60,000 could have been compounding in index funds the whole time",
         ] },
-        { kind: "callout", title: "Real talk", text: "A mortgage payment that equals your rent is not \"the same cost.\" Add taxes, insurance, maintenance, and the transaction fees you'll pay coming and going — the honest comparison is usually rent vs. mortgage + 30–50%." },
+        { kind: "callout", title: "Real talk", text: "A mortgage payment that equals your rent is not \"the same cost.\" Add taxes, insurance, maintenance, and the transaction fees you'll pay coming and going. The honest comparison is usually rent vs. mortgage + 30–50%." },
         { kind: "h", text: "The five-year rule" },
         { kind: "p", text: "Buying costs so much on the way in and out that you need years of ownership just to break even on the fees. Reasonably sure you'll stay put five-plus years? Buying starts making sense. Might you chase a job, a person, or a life change within five? Renting is probably the financially aggressive choice, not the wasteful one." },
-        { kind: "example", title: "Worked example", text: "Zara, 27, has $70k saved and rents for $2,100 in a city she's lukewarm on. The condo she's eyeing: $400k, and the true monthly cost (mortgage + taxes + insurance + maintenance) is about $3,200. Renting and investing the $70k plus the $1,100 monthly difference likely beats owning — unless she's certain she's staying seven years. She isn't. She renews the lease and keeps the optionality." },
+        { kind: "example", title: "Worked example", text: "Zara, 27, has $70k saved and rents for $2,100 in a city she's lukewarm on. The condo she's eyeing: $400k, and the true monthly cost (mortgage + taxes + insurance + maintenance) is about $3,200. Renting and investing the $70k plus the $1,100 monthly difference likely beats owning, unless she's certain she's staying seven years. She isn't. She renews the lease and keeps the optionality." },
         { kind: "h", text: "When buying wins" },
-        { kind: "p", text: "Long timeline, stable income, a payment comfortable at the FULL cost, and a market where price-to-rent isn't absurd — then owning builds equity, locks your housing cost against rent inflation, and pays a real dividend in stability, schools, and roots. Those are big wins. The point was never \"don't buy.\" It's \"buy on math and timeline, not on a proverb.\"" },
+        { kind: "p", text: "Long timeline, stable income, a payment comfortable at the FULL cost, and a market where price-to-rent isn't absurd. Then owning builds equity, locks your housing cost against rent inflation, and pays a real dividend in stability, schools, and roots. Those are big wins. The point was never \"don't buy.\" It's \"buy on math and timeline, not on a proverb.\"" },
         { kind: "bigfact", stat: "5+ years", caption: "the usual break-even horizon on buying, once you count the way-in and way-out costs. Under that, renting usually wins the math." },
       ],
       quiz: [
         {
           q: "The mortgage would equal your current rent. The honest cost comparison is…",
           options: [
-            "Equal — same monthly number, same cost",
+            "Equal: same monthly number, same cost",
             "Owning is cheaper because you build equity",
-            "Rent vs. mortgage + 30–50% — taxes, insurance, maintenance, and transaction fees are part of owning",
+            "Rent vs. mortgage + 30–50%: taxes, insurance, maintenance, and transaction fees are part of owning",
             "Impossible to compare",
           ],
           answer: 2,
@@ -172,13 +172,13 @@ export const COURSE_15: Course = {
             "Banks require five years of history",
           ],
           answer: 1,
-          explain: "2–5% in on closing costs, more out in agent fees — a short stay means selling before the fees are recovered. Time is what makes buying work.",
+          explain: "2–5% in on closing costs, more out in agent fees. A short stay means selling before the fees are recovered. Time is what makes buying work.",
         },
         {
           q: "\"Rent is throwing money away.\" What's rent actually buying?",
           options: [
-            "Nothing — the saying is right",
-            "Flexibility, zero repair risk, and the freedom to leave in 30 days — plus your down payment stays invested and compounding",
+            "Nothing: the saying is right",
+            "Flexibility, zero repair risk, and the freedom to leave in 30 days, plus your down payment stays invested and compounding",
             "Only a place to sleep",
             "The landlord's goodwill",
           ],
@@ -210,39 +210,39 @@ export const COURSE_15: Course = {
     "partner-money-talks": {
       hook: "You'll learn your partner's Netflix password before their credit score. That ordering is backwards.",
       blocks: [
-        { kind: "p", text: "Money is a leading cause of relationship conflict — not because people are greedy, but because two invisible money worldviews eventually collide over something dumb like a $19 subscription. The fix isn't a spreadsheet. It's five conversations, had early, out loud." },
+        { kind: "p", text: "Money is a leading cause of relationship conflict, not because people are greedy, but because two invisible money worldviews eventually collide over something dumb like a $19 subscription. The fix isn't a spreadsheet. It's five conversations, had early, out loud." },
         { kind: "h", text: "The five conversations" },
         { kind: "list", items: [
-          "History — what did money feel like growing up? Scarce? Never discussed? Whoever raised you wrote your defaults; say them out loud.",
-          "Facts — income, debts, credit scores, obligations to family. Full disclosure before deep commitment, full stop.",
-          "Style — saver or spender? Security or experiences? Neither is wrong; unnamed, they turn every purchase into a referendum.",
-          "System — yours/mine/ours accounts? Who pays what, proportional or equal? What purchase size needs a check-in?",
-          "Future — support parents? Kids? A house? Whose career takes the front seat when they conflict, and when does it rotate?",
+          "History: what did money feel like growing up? Scarce? Never discussed? Whoever raised you wrote your defaults; say them out loud.",
+          "Facts: income, debts, credit scores, obligations to family. Full disclosure before deep commitment, full stop.",
+          "Style: saver or spender? Security or experiences? Neither is wrong; unnamed, they turn every purchase into a referendum.",
+          "System: yours/mine/ours accounts? Who pays what, proportional or equal? What purchase size needs a check-in?",
+          "Future: support parents? Kids? A house? Whose career takes the front seat when they conflict, and when does it rotate?",
         ] },
-        { kind: "callout", title: "Real talk", text: "In many families — especially immigrant families — supporting parents isn't optional, and a partner who didn't grow up with that can be blindsided by it. \"I send my parents $500 a month and always will\" is a conversation-three sentence. Say it early. The partner who hears it at year five doesn't resent the $500 — they resent the five years." },
+        { kind: "callout", title: "Real talk", text: "In many families, especially immigrant families, supporting parents isn't optional, and a partner who didn't grow up with that can be blindsided by it. \"I send my parents $500 a month and always will\" is a conversation-three sentence. Say it early. The partner who hears it at year five doesn't resent the $500. They resent the five years." },
         { kind: "h", text: "The system that survives contact" },
-        { kind: "p", text: "The most durable setup for most couples: shared account for shared life (rent, groceries, utilities), personal no-questions accounts for each person, contributions proportional to income. Proportional matters — a 50/50 split when one earns double quietly makes the shared life a luxury one partner subsidizes with their entire margin. And agree on a check-in number: any purchase over $X gets a mention. The number matters less than the habit." },
-        { kind: "example", title: "Worked example", text: "Maya earns $90k, Daniel earns $45k. Rent and shared costs are $3,600. Fifty-fifty leaves Daniel with almost nothing personal. Proportional (she covers two-thirds) leaves both with real spending money and zero scorekeeping. Same couple, same rent — one arrangement breeds quiet resentment, the other doesn't. They also set $200 as the mention-it threshold, and honor it both ways." },
+        { kind: "p", text: "The most durable setup for most couples: shared account for shared life (rent, groceries, utilities), personal no-questions accounts for each person, contributions proportional to income. Proportional matters: a 50/50 split when one earns double quietly makes the shared life a luxury one partner subsidizes with their entire margin. And agree on a check-in number: any purchase over $X gets a mention. The number matters less than the habit." },
+        { kind: "example", title: "Worked example", text: "Maya earns $90k, Daniel earns $45k. Rent and shared costs are $3,600. Fifty-fifty leaves Daniel with almost nothing personal. Proportional (she covers two-thirds) leaves both with real spending money and zero scorekeeping. Same couple, same rent: one arrangement breeds quiet resentment, the other doesn't. They also set $200 as the mention-it threshold, and honor it both ways." },
         { kind: "h", text: "Red flags vs differences" },
-        { kind: "p", text: "Different styles are workable — most happy couples contain a saver and a spender. The red flags are structural: refusing to share basic facts, secret debts discovered instead of disclosed, control (allowances imposed, spending policed, money used to limit your options). Differences get systems. Deception and control are answers to a different question." },
+        { kind: "p", text: "Different styles are workable: most happy couples contain a saver and a spender. The red flags are structural: refusing to share basic facts, secret debts discovered instead of disclosed, control (allowances imposed, spending policed, money used to limit your options). Differences get systems. Deception and control are answers to a different question." },
         { kind: "bigfact", stat: "5", caption: "conversations, roughly one hour each, most of them pleasant. The cheapest insurance either of you will ever buy." },
       ],
       quiz: [
         {
-          q: "When should you learn each other's real financial facts — income, debts, scores?",
+          q: "When should you learn each other's real financial facts (income, debts, scores)?",
           options: [
-            "After marriage — it's rude before",
+            "After marriage. It's rude before",
             "Before deep commitment; combining lives on hidden facts is building on sand",
             "Only if buying property together",
-            "Never — separate money means separate information",
+            "Never: separate money means separate information",
           ],
           answer: 1,
-          explain: "You're not entitled to a stranger's finances — but you are each entitled to full facts before merging lives. Discovered debt damages trust far beyond the dollars.",
+          explain: "You're not entitled to a stranger's finances, but you are each entitled to full facts before merging lives. Discovered debt damages trust far beyond the dollars.",
         },
         {
           q: "One partner earns double. Why do proportional contributions usually beat 50/50?",
           options: [
-            "They don't — equal split is equal respect",
+            "They don't. Equal split is equal respect",
             "50/50 quietly consumes the lower earner's entire margin, turning shared life into subsidized resentment",
             "The higher earner should pay everything",
             "Proportional is only for married couples",
@@ -253,13 +253,13 @@ export const COURSE_15: Course = {
         {
           q: "\"I send my parents money monthly and always will.\" This belongs…",
           options: [
-            "Nowhere — it's private",
-            "Early, in the facts-and-future conversations — surprising a partner with it years in breeds resentment about the silence, not the money",
+            "Nowhere. It's private",
+            "Early, in the facts-and-future conversations: surprising a partner with it years in breeds resentment about the silence, not the money",
             "Only in a prenup",
             "After the wedding, once it's harder to object",
           ],
           answer: 1,
-          explain: "Family support is a lifelong financial fact in many households. Partners handle the number fine — what they don't forgive easily is learning it late.",
+          explain: "Family support is a lifelong financial fact in many households. Partners handle the number fine. What they don't forgive easily is learning it late.",
         },
         {
           q: "Which is a red flag rather than a workable difference?",
@@ -270,7 +270,7 @@ export const COURSE_15: Course = {
             "Preferring separate personal accounts",
           ],
           answer: 2,
-          explain: "Style differences get systems. Control — policing, imposed allowances, using money to limit options — is a power problem wearing a money costume.",
+          explain: "Style differences get systems. Control (policing, imposed allowances, using money to limit options) is a power problem wearing a money costume.",
         },
       ],
       cards: [
@@ -279,9 +279,9 @@ export const COURSE_15: Course = {
         { front: "Why proportional beats 50/50", back: "Equal dollars at unequal incomes erase the lower earner's whole margin. Proportional keeps both humans funded and nobody keeping score." },
         { front: "Family support disclosure", back: "\"I send my parents $X monthly, always will\" is an early conversation. The late version costs trust the early version never does." },
         { front: "Difference vs red flag", back: "Saver + spender = workable with a system. Hidden debts, policed spending, imposed allowances = control problem, not a money problem." },
-        { front: "The check-in threshold", back: "Any purchase over $X gets a mention — both directions. The number matters less than the habit of saying it out loud." },
+        { front: "The check-in threshold", back: "Any purchase over $X gets a mention, both directions. The number matters less than the habit of saying it out loud." },
       ],
-      action: "Pick conversation one — \"what did money feel like growing up?\" — and have it this week. It's the gentlest of the five and it unlocks the other four.",
+      action: "Pick conversation one (\"what did money feel like growing up?\") and have it this week. It's the gentlest of the five and it makes the other four easier.",
     },
   },
 };

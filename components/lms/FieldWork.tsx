@@ -1,6 +1,6 @@
 "use client";
 
-// Field Work — the unit's homework is your actual life. Self-reported,
+// Field Work: the unit's homework is your actual life. Self-reported,
 // one filing per unit (pays XP + credits once), with an optional line
 // about what happened. Filed reports stack up as Proof on the Student File.
 
@@ -56,7 +56,7 @@ export default function FieldWork({ course, unit, action }: Props) {
               setEditing(false);
             }}
           >
-            {record ? "Save the Note" : "I Did It — File the Report"}
+            {record ? "Save the Note" : "I Did It · File the Report"}
           </button>
         </div>
       )}

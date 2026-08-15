@@ -1,10 +1,10 @@
 "use client";
 
-// The Studio — the faculty writing room. Draft a complete unit from a topic
+// The Studio: the faculty writing room. Draft a complete unit from a topic
 // with the Copilot (Claude server-side when the school has an API key, a
 // labeled template skeleton otherwise), preview it exactly as students would
 // see it, edit the JSON, and export it as TypeScript for the course files.
-// Content still ships through the build — the Studio is where it gets written.
+// Content still ships through the build. The Studio is where it gets written.
 
 import { useEffect, useState, type FormEvent } from "react";
 import { COURSES, type LessonBlock } from "@/lib/lms";
@@ -30,12 +30,12 @@ function slugFor(title: string): string {
   );
 }
 
-// A draft as a TypeScript lessons-record entry — JSON is valid TS.
+// A draft as a TypeScript lessons-record entry: JSON is valid TS.
 function asTypeScript(d: Draft): string {
   const l = d.lesson;
   const field = (v: unknown) => JSON.stringify(v, null, 2).replace(/\n/g, "\n  ");
   return [
-    `// ${l.title} — drafted in the Studio (${d.engine}), ${usDate(d.updated)}`,
+    `// ${l.title}, drafted in the Studio (${d.engine}), ${usDate(d.updated)}`,
     `// Paste into the course's lessons record (lib/lessons13.ts etc.),`,
     `// add the unit to lib/curriculum.ts if it's new, then npm run build`,
     `// (the build regenerates the Registrar's answer key).`,
@@ -88,8 +88,8 @@ export default function Studio({ flash }: Props) {
       if (r.ok) setDrafts(r.data.drafts as Draft[]);
       flash(
         res.data.engine === "claude"
-          ? "Drafted. Read it like an editor — the Copilot writes fast, you decide what ships."
-          : "Template draft ready — the TODOs are your outline. (Set ANTHROPIC_API_KEY server-side for Claude drafts.)"
+          ? "Drafted. Read it like an editor. The Copilot writes fast, you decide what ships."
+          : "Template draft ready. The TODOs are your outline. (Set ANTHROPIC_API_KEY server-side for Claude drafts.)"
       );
     } else {
       flash((res.data.error as string) ?? "The Copilot could not draft that.");
@@ -101,7 +101,7 @@ export default function Studio({ flash }: Props) {
     try {
       parsed = JSON.parse(editText);
     } catch {
-      setEditError("That's not valid JSON yet — check for a missing comma or quote.");
+      setEditError("That's not valid JSON yet. Check for a missing comma or quote.");
       return;
     }
     const res = await apiDraftSave(token, id, parsed);
@@ -127,7 +127,7 @@ export default function Studio({ flash }: Props) {
 
   const copyTs = (d: Draft) => {
     void navigator.clipboard.writeText(asTypeScript(d)).then(() => {
-      flash("TypeScript copied — paste it into the course's lessons record.");
+      flash("TypeScript copied. Paste it into the course's lessons record.");
     });
   };
 
@@ -136,11 +136,11 @@ export default function Studio({ flash }: Props) {
       <section className="lms-section">
         <h2 className="lms-section-h">The Studio</h2>
         <p className="lms-section-sub">
-          Give the Copilot a topic and it drafts the whole unit — lesson, knowledge check,
-          flashcards, Field Work — in the house voice.{" "}
+          Give the Copilot a topic and it drafts the whole unit in the house voice: lesson,
+          knowledge check, flashcards, Field Work.{" "}
           {copilotOn
             ? "Drafts are starting points: read like an editor, cut what doesn't sound like us."
-            : "The Copilot is offline (no API key on the server), so drafts come out as labeled skeletons — still the fastest way to outline a unit."}
+            : "The Copilot is offline (no API key on the server), so drafts come out as labeled skeletons, still the fastest way to outline a unit."}
         </p>
         <form className="lms-admin-form" onSubmit={draft}>
           <select
@@ -157,7 +157,7 @@ export default function Studio({ flash }: Props) {
           </select>
           <input
             className="lms-cert-name"
-            placeholder="Unit topic — e.g. Renters insurance, actually explained"
+            placeholder="Unit topic (e.g. Renters insurance, actually explained)"
             required
             minLength={3}
             maxLength={120}
@@ -166,14 +166,14 @@ export default function Studio({ flash }: Props) {
           />
           <textarea
             className="lms-cert-name lms-bulletin-input"
-            placeholder="Notes for the Copilot (optional) — angles to hit, numbers to use, what to avoid"
+            placeholder="Notes for the Copilot (optional): angles to hit, numbers to use, what to avoid"
             rows={2}
             maxLength={2000}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
           />
           <button className="btn btn--solid lms-login-btn" type="submit" disabled={busy}>
-            {busy ? "The Copilot is writing — give it a minute…" : "Draft With the Copilot"}
+            {busy ? "The Copilot is writing. Give it a minute…" : "Draft With the Copilot"}
           </button>
         </form>
       </section>
@@ -183,7 +183,7 @@ export default function Studio({ flash }: Props) {
           <h2 className="lms-section-h">Draft shelf</h2>
           <p className="lms-section-sub">
             {drafts.length} draft{drafts.length === 1 ? "" : "s"}. Export copies the unit as
-            TypeScript for the course files — nothing reaches students until it ships in a build.
+            TypeScript for the course files. Nothing reaches students until it ships in a build.
           </p>
           {drafts.map((d) => (
             <div key={d.id} className="lms-draft">
@@ -268,7 +268,7 @@ export default function Studio({ flash }: Props) {
                       <h3 className="lms-draft-h">Flashcards</h3>
                       {d.lesson.cards.map((c, i) => (
                         <p key={i} className="lms-draft-card">
-                          <strong>{c.front}</strong> — {c.back}
+                          <strong>{c.front}</strong>: {c.back}
                         </p>
                       ))}
                       <h3 className="lms-draft-h">Field Work</h3>

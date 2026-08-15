@@ -1,6 +1,6 @@
 "use client";
 
-// v1 had 13th Grade units at /learn/<unit>/ — forward those URLs to the course player.
+// v1 had 13th Grade units at /learn/<unit>/. Forward those URLs to the course player.
 
 import Link from "next/link";
 import { useEffect } from "react";

@@ -1,6 +1,6 @@
 "use client";
 
-// Extra Credit — the monthly newsletter signup, styled as a paper
+// Extra Credit: the monthly newsletter signup, styled as a paper
 // enrollment slip. Doubles as the waitlist for the 14th and 15th Grades.
 
 import { useState, type FormEvent } from "react";
@@ -28,11 +28,11 @@ export default function Newsletter() {
         setStatus(data.already ? "already" : "done");
       } else {
         setStatus("error");
-        setError(data.error ?? "Something went wrong — try again.");
+        setError(data.error ?? "Something went wrong. Try again.");
       }
     } catch {
       setStatus("error");
-      setError("Can't reach the school server — try again in a minute.");
+      setError("Can't reach the school server. Try again in a minute.");
     }
   };
 
@@ -44,7 +44,7 @@ export default function Newsletter() {
         <span className="nl-sweep" aria-hidden="true" />
         <p className="nl-done-sub">
           {status === "already"
-            ? "This email is on the list — the next lesson is on its way."
+            ? "This email is on the list. The next lesson is on its way."
             : "One lesson lands in your inbox each week. First one soon."}
         </p>
       </div>
@@ -57,7 +57,7 @@ export default function Newsletter() {
       <h3 className="nl-slip-title">Get on the list.</h3>
       <span className="nl-sweep" aria-hidden="true" />
       <form className="nl-form" onSubmit={submit}>
-        {/* Honeypot — humans never see or fill this. */}
+        {/* Honeypot: humans never see or fill this. */}
         <input
           type="text"
           name="school"

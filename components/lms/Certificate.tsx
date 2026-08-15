@@ -1,6 +1,6 @@
 "use client";
 
-// Print-ready certificate for any 100% completed course — and the Diploma,
+// Print-ready certificate for any 100% completed course, and the Diploma,
 // which unlocks when every unit is complete and every Final is passed.
 // The page is the certificate; the print button just calls window.print().
 // When the Registrar (finals.php) confirms a passing record server-side,
@@ -23,7 +23,7 @@ export default function Certificate() {
   const [edited, setEdited] = useState<string | null>(null);
   const name = edited ?? state.name;
 
-  // The Registrar's copy of the finals record — absent while offline.
+  // The Registrar's copy of the finals record, absent while offline.
   const [verified, setVerified] = useState<Record<string, FinalRecord>>({});
   useEffect(() => {
     if (!token) return;
@@ -70,7 +70,7 @@ export default function Certificate() {
           <p className="kicker kicker--acc">Certificate</p>
           <h1 className="learn-h1">Not yet.</h1>
           <p className="learn-sub">
-            The certificate unlocks when you finish every unit in a course. No shortcuts — that&apos;s
+            The certificate unlocks when you finish every unit in a course. No shortcuts. That&apos;s
             what makes it worth printing.
           </p>
           <Link href="/learn" className="btn btn--solid">
@@ -93,7 +93,7 @@ export default function Certificate() {
           <h1 className="lms-section-h">{wantDiploma ? "Your diploma" : "Your certificate"}</h1>
           <p className="lms-section-sub">
             Put your name on it, then print it or save it as a PDF. It&apos;s tied to your account,
-            earned the only way possible — by finishing.
+            earned the only way possible: by finishing.
           </p>
           <input
             className="lms-cert-name"
@@ -131,7 +131,7 @@ export default function Certificate() {
                 completed all {totalUnits} units and passed every Final of
               </p>
               <p className="lms-cert-course">The 13th, 14th &amp; 15th Grades</p>
-              <p className="lms-cert-honors">— With Honors —</p>
+              <p className="lms-cert-honors">With Honors</p>
               <p className="lms-cert-text lms-cert-sub">High school, finished properly.</p>
               {diplomaVerified && (
                 <p className="lms-cert-verified">✓ Verified by the Registrar</p>
@@ -156,7 +156,7 @@ export default function Certificate() {
               </p>
               <p className="lms-cert-course">{course!.title}</p>
               {state.finals[course!.slug]?.passed && (
-                <p className="lms-cert-honors">— With Honors —</p>
+                <p className="lms-cert-honors">With Honors</p>
               )}
               {verified[course!.slug]?.passed && (
                 <p className="lms-cert-verified">✓ Verified by the Registrar</p>

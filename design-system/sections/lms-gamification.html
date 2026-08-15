@@ -47,7 +47,7 @@
   .toast-badge { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; }
   .toast-badge .b-icon { width: 28px; height: 28px; font-size: 12px; border-radius: 8px; }
 
-  /* Today's Plan — daily attendance sheet */
+  /* Today's Plan: daily attendance sheet */
   .plan { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding: 14px 20px; border-radius: 18px; border: 1px dashed rgba(242,238,227,0.28); font-size: 14px; }
   .plan-h { font-size: 11.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
   .plan-item { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
@@ -56,13 +56,13 @@
   .plan-item.done .plan-box { border-color: var(--acc); background: rgba(67,222,123,0.12); }
   .plan-dismissed { font-weight: 700; color: var(--acc); }
 
-  /* Homeroom Bulletin — pinned note */
+  /* Homeroom Bulletin: pinned note */
   .bulletin { display: flex; gap: 14px; padding: 16px 22px; border-radius: 18px; border: 1px solid rgba(255,180,58,0.5); background: rgba(255,180,58,0.08); }
   .bulletin-h { display: block; margin-bottom: 4px; font-size: 11.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--coral); }
   .bulletin-text { margin: 0; font-size: 14.5px; line-height: 1.55; }
   .bulletin-meta { font-size: 13px; color: var(--muted); }
 
-  /* Honor Roll — class leaderboard, two races */
+  /* Honor Roll: class leaderboard, two races */
   .honor-tabs { display: flex; gap: 8px; margin: 0 0 16px; }
   .tab { padding: 9px 18px; border-radius: 999px; border: 1px solid rgba(242,238,227,0.25); background: none; color: inherit; font-size: 14px; font-weight: 700; }
   .tab.on { border-color: var(--coral); background: rgba(255,180,58,0.14); color: var(--coral); }
@@ -75,7 +75,7 @@
   .honor-xp { font-weight: 800; text-align: right; }
   .pill { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: var(--acc); color: var(--ink); }
 
-  /* Training matrix — one dot per unit, per student (admin gradebook) */
+  /* Training matrix: one dot per unit, per student (admin gradebook) */
   .matrix { display: inline-flex; flex-wrap: wrap; gap: 3px; }
   .cell { width: 9px; height: 9px; border-radius: 3px; background: rgba(242,238,227,0.14); }
   .cell.on { background: var(--acc); }
@@ -84,7 +84,7 @@
 </head>
 <body>
 <div class="wrap">
-  <p class="label">Stats strip — streak, XP, level, weekly activity</p>
+  <p class="label">Stats strip: streak, XP, level, weekly activity</p>
   <div class="stats">
     <div class="stat"><span class="stat-num"><svg class="flame" viewBox="0 0 24 24"><path d="M12 2c.5 3.5-1.8 5.2-3.2 7C7.3 10.9 6 12.7 6 15a6 6 0 0 0 12 0c0-2.6-1.3-4.3-2.4-5.8C14.3 7.4 13.4 5.6 14 3c-1 .4-1.8 1.4-2 2.5C11.8 4.3 11.7 3 12 2z" fill="currentColor"/></svg>5</span><span class="stat-label">day streak</span></div>
     <div class="stat"><span class="stat-num">850</span><span class="stat-label">XP</span></div>
@@ -101,7 +101,7 @@
     </div>
   </div>
 
-  <p class="label">Badges — earned vs locked</p>
+  <p class="label">Badges: earned vs locked</p>
   <div class="badges">
     <div class="badge earned"><span class="b-icon">01</span><span class="b-name">First Day</span><span class="b-blurb">Complete your first unit.</span></div>
     <div class="badge earned"><span class="b-icon">A+</span><span class="b-name">Straight A</span><span class="b-blurb">Get every question right on a knowledge check.</span></div>
@@ -118,7 +118,7 @@
     <span class="toast"><span class="toast-xp">+150 XP</span><span class="toast-badge"><span class="b-icon">A+</span> Straight A</span></span>
   </p>
 
-  <p class="label">Today's Plan — daily attendance sheet, dashed border, strike when done</p>
+  <p class="label">Today's Plan: daily attendance sheet, dashed border, strike when done</p>
   <div class="plan">
     <span class="plan-h">Today's Plan</span>
     <span class="plan-item done"><span class="plan-box">✓</span>Show Up</span>
@@ -133,25 +133,25 @@
     <span class="plan-dismissed">Class dismissed 🎓</span>
   </p>
 
-  <p class="label">Homeroom Bulletin — amber pinned note from the teacher</p>
+  <p class="label">Homeroom Bulletin: amber pinned note from the teacher</p>
   <div class="bulletin">
     <span style="font-size:18px" aria-hidden="true">📌</span>
     <div>
       <span class="bulletin-h">Homeroom Bulletin</span>
-      <p class="bulletin-text">New unit drops Friday: The Salary Talk. Finish Rejection Practice first — it sets it up.<span class="bulletin-meta"> — Neil · 2026-08-13</span></p>
+      <p class="bulletin-text">New unit drops Friday: The Salary Talk. Finish Rejection Practice first. It sets it up.<span class="bulletin-meta"> · Neil · 2026-08-13</span></p>
     </div>
   </div>
 
-  <p class="label">Honor Roll — two races: This Week (XP since Monday, default) and All Time; medals top 3, green wash on your row; weekly rows read +N XP and drop the level column</p>
+  <p class="label">Honor Roll, two races: This Week (XP since Monday, default) and All Time; medals top 3, green wash on your row; weekly rows read +N XP and drop the level column</p>
   <div class="honor-tabs"><span class="tab on">This Week</span><span class="tab">All Time</span></div>
   <div class="honor">
     <div class="honor-row"><span class="honor-rank">🥇</span><span class="honor-name">Priya S.</span><span class="honor-dim">Senior</span><span class="honor-dim">18 units</span><span class="honor-dim">12d 🔥</span><span class="honor-xp">2450 XP</span></div>
     <div class="honor-row you"><span class="honor-rank">🥈</span><span class="honor-name">Dev K. <span class="pill">You</span></span><span class="honor-dim">Junior</span><span class="honor-dim">11 units</span><span class="honor-dim">5d 🔥</span><span class="honor-xp">1520 XP</span></div>
-    <div class="honor-row"><span class="honor-rank">🥉</span><span class="honor-name">Marcus T.</span><span class="honor-dim">Sophomore</span><span class="honor-dim">7 units</span><span class="honor-dim">—</span><span class="honor-xp">890 XP</span></div>
+    <div class="honor-row"><span class="honor-rank">🥉</span><span class="honor-name">Marcus T.</span><span class="honor-dim">Sophomore</span><span class="honor-dim">7 units</span><span class="honor-dim">·</span><span class="honor-xp">890 XP</span></div>
     <div class="honor-row"><span class="honor-rank">#4</span><span class="honor-name">Ana R.</span><span class="honor-dim">Freshman</span><span class="honor-dim">3 units</span><span class="honor-dim">2d 🔥</span><span class="honor-xp">380 XP</span></div>
   </div>
 
-  <p class="label">Training matrix — admin gradebook, one dot per unit, tone per course</p>
+  <p class="label">Training matrix: admin gradebook, one dot per unit, tone per course</p>
   <p class="matrix">
     <span class="cell on"></span><span class="cell on"></span><span class="cell on"></span><span class="cell on"></span><span class="cell on"></span><span class="cell on"></span><span class="cell on"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span>
     <span style="width:10px"></span>

@@ -42,7 +42,7 @@ export default function Bulletin() {
             {n.text}
             <span className="lms-bulletin-meta">
               {" "}
-              — {n.author || "Faculty"} · {usDate(n.created)}
+              {n.author || "Faculty"} · {usDate(n.created)}
             </span>
           </p>
         ))}

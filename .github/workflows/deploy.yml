@@ -2,7 +2,7 @@ name: Build and publish deploy branch
 
 # Builds the static site and publishes out/ to the `deploy` branch.
 # Hostinger's Git integration watches `deploy` and pulls it into
-# public_html via webhook — no FTP credentials or secrets needed.
+# public_html via webhook; no FTP credentials or secrets needed.
 
 on:
   push:

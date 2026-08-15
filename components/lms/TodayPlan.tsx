@@ -1,6 +1,6 @@
 "use client";
 
-// Today's Plan: a tiny daily attendance sheet — show up, learn one new
+// Today's Plan: a tiny daily attendance sheet. Show up, learn one new
 // thing, hit Study Hall. Tick all three and class is dismissed for the
 // day. Purely derived from state; nothing to configure.
 

@@ -2,7 +2,7 @@
 
 // The Locker: your build, your gear, and the school store. Credits come
 // from doing the work; gear raises your Power; Power draws itself on the
-// portrait as an aura. You're not dressing a character — you're building
+// portrait as an aura. You're not dressing a character. You're building
 // yourself, and the build should LOOK like something.
 
 import Link from "next/link";
@@ -43,7 +43,7 @@ function GearCard({ item }: { item: Gear }) {
             className="lms-signout"
             onClick={() => lms.setEquipped(item.slot, equipped ? null : item.id)}
           >
-            {equipped ? "Equipped ✓ — Take Off" : "Equip"}
+            {equipped ? "Equipped ✓ · Take Off" : "Equip"}
           </button>
         ) : (
           <button
@@ -51,7 +51,7 @@ function GearCard({ item }: { item: Gear }) {
             disabled={!affordable}
             onClick={() => lms.buyGear(item.id)}
           >
-            {affordable ? `Buy — ${item.price} Cr` : `Need ${item.price} Cr`}
+            {affordable ? `Buy · ${item.price} Cr` : `Need ${item.price} Cr`}
           </button>
         )}
       </div>
@@ -78,7 +78,7 @@ export default function Locker() {
         <p className="kicker kicker--acc">The Locker</p>
         <h1 className="learn-h1">Build yourself.</h1>
         <p className="learn-sub">
-          Credits come from doing the work — units, perfect knowledge checks, decks, boss
+          Credits come from doing the work: units, perfect knowledge checks, decks, boss
           battles. Spend them on gear, and watch the portrait change: your Power grows with
           what you carry <em>and</em> what you&apos;ve learned, and past a point it starts to
           show. Everything you equip counts in <Link href="/learn/arena">the Arena</Link>.
@@ -128,7 +128,7 @@ export default function Locker() {
               </span>
               <p className="lms-power-foot">
                 {aura.next
-                  ? `${aura.next.needs} more Power to go ${aura.next.name} — gear up, level up, or both.`
+                  ? `${aura.next.needs} more Power to go ${aura.next.name}. Gear up, level up, or both.`
                   : "Maximum aura. The portrait can't get any louder."}
               </p>
             </div>
@@ -149,7 +149,7 @@ export default function Locker() {
 
         <p className="lms-hint">
           Short on Credits? Every finished unit pays 20, a perfect check pays 10, and a first boss
-          win pays 60. Grade levels add attack all by themselves — wisdom is a weapon here.
+          win pays 60. Grade levels add attack all by themselves. Wisdom is a weapon here.
         </p>
       </div>
     </div>

@@ -17,7 +17,7 @@ export async function generateMetadata({
   const { course, unit } = await params;
   const u = getCourseUnit(course, unit);
   return {
-    title: u ? `${u.title} — ${u.course.title}` : "Self Made School",
+    title: u ? `${u.title} · ${u.course.title}` : "Self Made School",
     description: u?.blurb,
     robots: { index: false }, // private while the LMS is in closed session
   };

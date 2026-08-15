@@ -47,11 +47,11 @@ function promote_next(string $id, array &$s): void {
     $s['waitlist'] = array_values($wait);
     $s['rsvps'][] = $lucky;
     $when = date('m-d-Y \a\t g:i A T', strtotime($s['startsAt'] ?? 'now'));
-    $body = "Good news — a seat opened up in \"{$s['title']}\" and it's yours.\n\n"
+    $body = "Good news: a seat opened up in \"{$s['title']}\" and it's yours.\n\n"
         . "When: {$when}\n"
         . (!empty($s['link']) ? "Join link: {$s['link']}\n" : '')
         . "\nSee it in the classroom: https://selfmadeschool.org/learn\n"
-        . "\n—\nSelf Made School · selfmadeschool.org\n";
+        . "\n-- \nSelf Made School · selfmadeschool.org\n";
     $headers = "From: Self Made School <noreply@selfmadeschool.org>\r\n"
         . "Content-Type: text/plain; charset=utf-8";
     @mail($lucky, "You're in: {$s['title']}", $body, $headers);

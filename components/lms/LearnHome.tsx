@@ -44,7 +44,7 @@ export default function LearnHome() {
           <p className="kicker kicker--acc">Front Office</p>
           <h1 className="learn-h1">First, your Student ID.</h1>
           <p className="learn-sub">
-            Every student carries one — your name as it should read on your certificate,
+            Every student carries one: your name as it should read on your certificate,
             a phone number so the school can reach you, and your birthday. Thirty
             seconds, once.
           </p>
@@ -63,7 +63,7 @@ export default function LearnHome() {
           <p className="kicker kicker--acc">Picture Day</p>
           <h1 className="learn-h1">First, the portrait.</h1>
           <p className="learn-sub">
-            Every student gets one. Build yours — it fights beside you in the Arena, wears
+            Every student gets one. Build yours. It fights beside you in the Arena, wears
             whatever you buy in the Locker, and can be retaken anytime.
           </p>
           <AvatarStudio firstRun />
@@ -141,7 +141,7 @@ export default function LearnHome() {
             <Link href={`/learn/${nextCourse.slug}/${nextUnit.slug}`} className="lms-continue">
               <span className="lms-continue-main">
                 <span className={`lms-continue-kicker tone-${nextCourse.tone}`}>
-                  {totalDone === 0 ? "Start here" : "Continue"} — {nextCourse.title}
+                  {totalDone === 0 ? "Start here" : "Continue"} · {nextCourse.title}
                 </span>
                 <span className="lms-continue-title">
                   Unit {String(nextUnit.number).padStart(2, "0")} · {nextUnit.title}
@@ -166,10 +166,10 @@ export default function LearnHome() {
                       {(() => {
                         const makeup = dueQuestions(state.mastery).length;
                         if (makeup > 0)
-                          return `${makeup} make-up question${makeup === 1 ? "" : "s"} in the pile — clear it, then flashcards`;
+                          return `${makeup} make-up question${makeup === 1 ? "" : "s"} in the pile. Clear it, then flashcards`;
                         return state.reviewLast === days[6].key
-                          ? "Reviewed today ✓ — more never hurts"
-                          : "Weak spots first — flashcards from your completed units";
+                          ? "Reviewed today ✓ · more never hurts"
+                          : "Weak spots first: flashcards from your completed units";
                       })()}
                     </span>
                   </span>
@@ -185,7 +185,7 @@ export default function LearnHome() {
                     <span className="lms-studyhall-main">
                       <span className="lms-studyhall-title">Boss Ready</span>
                       <span className="lms-studyhall-sub">
-                        {bossReady.monster.name} guards {bossReady.part.name} — settle it in the
+                        {bossReady.monster.name} guards {bossReady.part.name}. Settle it in the
                         Arena
                       </span>
                     </span>
@@ -204,7 +204,7 @@ export default function LearnHome() {
                       <span className="lms-studyhall-sub">
                         {sharpen.best < 0
                           ? `You skipped the knowledge check on ${sharpen.title}`
-                          : `${sharpen.title}: best score ${sharpen.best}/4 — run it back`}
+                          : `${sharpen.title}: best score ${sharpen.best}/4. Run it back`}
                       </span>
                     </span>
                     <span className="lms-continue-arrow" aria-hidden="true">
@@ -312,7 +312,7 @@ export default function LearnHome() {
         <section className="lms-badges" aria-label="Badges">
           <h2 className="lms-section-h">Report card</h2>
           <p className="lms-section-sub">
-            Badges you earn by showing up. No participation trophies — every one of these means
+            Badges you earn by showing up. No participation trophies. Every one of these means
             something happened.
           </p>
           <div className="lms-badge-grid">

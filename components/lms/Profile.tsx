@@ -17,7 +17,7 @@ import RewardToast from "./RewardToast";
 import Ring from "./Ring";
 import Wordmark from "@/components/Wordmark";
 
-// Static barcode for the ID card foot — pure decoration, fixed pattern.
+// Static barcode for the ID card foot: pure decoration, fixed pattern.
 const ID_BARS = (() => {
   const widths = [2, 1, 3, 1, 2, 4, 1, 2, 1, 3, 2, 1, 4, 2, 1, 3, 1, 2, 3, 1, 2, 4, 1, 2];
   let x = 0;
@@ -43,7 +43,7 @@ export default function Profile() {
 
   if (!loaded || !auth) return <div className="learn" />;
 
-  // Older accounts predate the split card — offer the display name halved.
+  // Older accounts predate the split card, so offer the display name halved.
   const guessed = (auth.name ?? "").trim().split(/\s+/).filter(Boolean);
   const firstVal = first ?? (auth.first || guessed[0] || "");
   const lastVal = last ?? (auth.last || guessed.slice(1).join(" "));
@@ -67,7 +67,7 @@ export default function Profile() {
     });
     if (res.ok) {
       lms.adoptAuthUser(res.data.user as Partial<Omit<AuthUser, "token">>);
-      flash("Student ID updated — your certificate uses your full name.");
+      flash("Student ID updated. Your certificate uses your full name.");
     } else {
       flash((res.data.error as string) ?? "Could not update the card.");
     }
@@ -153,11 +153,11 @@ export default function Profile() {
                 </div>
                 <div>
                   <dt>Telephone</dt>
-                  <dd>{formatPhone(auth.phone ?? "") || "—"}</dd>
+                  <dd>{formatPhone(auth.phone ?? "") || "·"}</dd>
                 </div>
                 <div>
                   <dt>Birthday</dt>
-                  <dd>{usDate(auth.dob) || "—"}</dd>
+                  <dd>{usDate(auth.dob) || "·"}</dd>
                 </div>
                 <div>
                   <dt>Level</dt>
@@ -191,7 +191,7 @@ export default function Profile() {
           <p className="lms-section-sub">Your last 30 days, and how each part of the course is holding.</p>
           <div className="lms-insights">
             <div className="lms-insight-card">
-              <p className="lms-insight-label">Activity — last 30 days</p>
+              <p className="lms-insight-label">Activity · last 30 days</p>
               <div className="lms-bars" role="img" aria-label={`Active ${bars.filter(Boolean).length} of the last 30 days`}>
                 {bars.map((on, i) => (
                   <span key={i} className={`lms-bar${on ? " is-on" : ""}`} />
@@ -203,7 +203,7 @@ export default function Profile() {
             </div>
             <div className="lms-insight-card">
               <p className="lms-insight-label">Knowledge checks</p>
-              <p className="lms-insight-big">{quizAvg === null ? "—" : `${quizAvg}%`}</p>
+              <p className="lms-insight-big">{quizAvg === null ? "·" : `${quizAvg}%`}</p>
               <p className="lms-insight-foot">
                 {quizEntries.length === 0
                   ? "No checks taken yet"
@@ -240,7 +240,7 @@ export default function Profile() {
             <h2 className="lms-pcard-h">Identity</h2>
             <p className="lms-pcard-sub">
               Your Student ID. The full name appears on your certificate; the phone
-              number is for the front office only — never public.
+              number is for the front office only. Never public.
             </p>
             <form className="lms-admin-form" onSubmit={saveIdentity}>
             <div className="lms-form-row">
@@ -358,7 +358,7 @@ export default function Profile() {
           <section className="lms-pcard">
             <h2 className="lms-pcard-h">Security</h2>
             <p className="lms-pcard-sub">
-              Ten characters minimum. Changing it here signs out no one — sessions stay put.
+              Ten characters minimum. Changing it here signs out no one. Sessions stay put.
             </p>
             <form className="lms-admin-form" onSubmit={changePassword}>
             <input
@@ -393,7 +393,7 @@ export default function Profile() {
             </p>
             <div className="lms-pref-row">
               <span className="lms-pref-text">
-                Nudge emails — a dying streak, a waiting Final, the occasional check-in.
+                Nudge emails: a dying streak, a waiting Final, the occasional check-in.
               </span>
               <button
                 className={`lms-signout${(auth.nudges ?? true) ? " is-on" : ""}`}
@@ -403,7 +403,7 @@ export default function Profile() {
                   const res = await apiSetPrefs(auth.token, { nudges: next });
                   if (res.ok) {
                     lms.adoptAuthUser(res.data.user as Partial<Omit<AuthUser, "token">>);
-                    flash(next ? "Nudges on — we'll only write when it matters." : "Nudges off. The school goes quiet.");
+                    flash(next ? "Nudges on. We'll only write when it matters." : "Nudges off. The school goes quiet.");
                   } else {
                     flash((res.data.error as string) ?? "Could not save that.");
                   }
@@ -425,7 +425,7 @@ export default function Profile() {
                 } else {
                   lms.resetProgress();
                   setResetArmed(false);
-                  flash("Progress reset. The 13th Grade is waiting — again.");
+                  flash("Progress reset. The 13th Grade is waiting. Again.");
                 }
               }}
             >
@@ -441,7 +441,7 @@ export default function Profile() {
             <section className="lms-pcard lms-pcard--wide">
               <h2 className="lms-pcard-h">Proof</h2>
               <p className="lms-pcard-sub">
-                Field Work you filed from the real world — {Object.keys(state.fieldwork).length}{" "}
+                Field Work you filed from the real world: {Object.keys(state.fieldwork).length}{" "}
                 report{Object.keys(state.fieldwork).length === 1 ? "" : "s"} and counting. This is
                 the part no quiz can measure.
               </p>

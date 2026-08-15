@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Wordmark from "./Wordmark";
 
 export default function Footer() {
-  // The classroom has its own shell — the marketing footer stays out of it.
+  // The classroom has its own shell. The marketing footer stays out of it.
   if (usePathname().startsWith("/learn")) return null;
 
   return (
@@ -22,7 +22,7 @@ export default function Footer() {
         <Link href="/#newsletter">Waitlist</Link>
         <Link href="/privacy">Privacy</Link>
       </div>
-      <span>© 2026 Self Made School. Not actual financial advice — actual life advice.</span>
+      <span>© 2026 Self Made School. Not actual financial advice. Actual life advice.</span>
     </footer>
   );
 }

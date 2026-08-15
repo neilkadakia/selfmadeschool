@@ -1,9 +1,9 @@
 "use client";
 
 // The Faculty Lounge, organized by role instead of stacked:
-//   Classroom    (educator+)      — class progress, homeroom bulletin
-//   Front Office (administrator+) — accounts, Act As, newsletter, quotes
-//   School Ops   (global admin)   — backups, cron, role changes
+//   Classroom    (educator+)      : class progress, homeroom bulletin
+//   Front Office (administrator+) : accounts, Act As, newsletter, quotes
+//   School Ops   (global admin)   : backups, cron, role changes
 // The server enforces every rank; the tabs just keep the room tidy.
 
 import Link from "next/link";
@@ -323,7 +323,7 @@ export default function Admin() {
             <section className="lms-section">
               <h2 className="lms-section-h">Class progress</h2>
               <p className="lms-section-sub">
-                Every student&apos;s synced state, ranked by XP. The dot strip is the training matrix —
+                Every student&apos;s synced state, ranked by XP. The dot strip is the training matrix:
                 one dot per unit in the catalog, filled when it&apos;s done.
               </p>
               {classRows && classRows.length > 0 && (
@@ -347,7 +347,7 @@ export default function Admin() {
                         <span data-k="Streak">{r.streak}d</span>
                         <span data-k="Badges">{r.badges}</span>
                         <span data-k="Last" className="lms-admin-meta">
-                          {r.lastActive ? usDate(r.lastActive) : "—"}
+                          {r.lastActive ? usDate(r.lastActive) : "·"}
                         </span>
                       </div>
                       <div className="lms-matrix">
@@ -377,8 +377,8 @@ export default function Admin() {
             <section className="lms-section">
               <h2 className="lms-section-h">Homeroom Bulletin</h2>
               <p className="lms-section-sub">
-                Pin a note and every student sees it at the top of their dashboard. Keep it short —
-                it reads like a note on the classroom door.
+                Pin a note and every student sees it at the top of their dashboard. Keep it short.
+                It reads like a note on the classroom door.
               </p>
               {notes && notes.length > 0 && (
                 <div className="lms-admin-table">
@@ -423,7 +423,7 @@ export default function Admin() {
               <h2 className="lms-section-h">Office Hours</h2>
               <p className="lms-section-sub">
                 Schedule a live session with real seats. Students RSVP until it&apos;s full, then a
-                waitlist takes over — the server emails whoever gets promoted when a seat opens.
+                waitlist takes over. The server emails whoever gets promoted when a seat opens.
                 The join link only ever goes to seat holders.
               </p>
               {sessions && sessions.length > 0 && (
@@ -431,7 +431,7 @@ export default function Admin() {
                   {sessions.map((s) => (
                     <div key={s.id} className="lms-admin-row lms-bulletin-row">
                       <span className="lms-admin-name">
-                        {s.title} — {usDate(s.startsAt)}{" "}
+                        {s.title} · {usDate(s.startsAt)}{" "}
                         {new Date(s.startsAt).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}
                       </span>
                       <span className="lms-admin-meta">
@@ -443,7 +443,7 @@ export default function Admin() {
                           const r = await apiSessionAct(token, "delete", s.id);
                           if (r.ok) {
                             setSessions((prev) => prev!.filter((x) => x.id !== s.id));
-                            flash("Session cancelled — seat holders were told.");
+                            flash("Session cancelled. Seat holders were told.");
                           }
                         }}
                       >
@@ -456,7 +456,7 @@ export default function Admin() {
               <form className="lms-admin-form" onSubmit={createSession}>
                 <input
                   className="lms-cert-name"
-                  placeholder="Title — e.g. Office Hours: Money Questions"
+                  placeholder="Title, e.g. Office Hours: Money Questions"
                   required
                   minLength={3}
                   maxLength={80}
@@ -494,7 +494,7 @@ export default function Admin() {
                 <input
                   className="lms-cert-name"
                   type="url"
-                  placeholder="Join link (optional — Meet, Zoom, wherever class happens)"
+                  placeholder="Join link (optional: Meet, Zoom, wherever class happens)"
                   value={sLink}
                   onChange={(e) => setSLink(e.target.value)}
                 />
@@ -522,7 +522,7 @@ export default function Admin() {
               <p className="lms-section-sub">
                 {students ? `${students.length} account${students.length === 1 ? "" : "s"}.` : "Loading…"}{" "}
                 Invites are manual while the school is in closed session. Act As opens someone
-                else&apos;s classroom — a banner keeps you honest, and everything you do lands on
+                else&apos;s classroom. A banner keeps you honest, and everything you do lands on
                 their account.
               </p>
               {students && (
@@ -532,7 +532,7 @@ export default function Admin() {
                       <span className="lms-admin-name">{s.name}</span>
                       <span className="lms-admin-email">{s.email}</span>
                       <span className="lms-admin-meta">
-                        {formatPhone(s.phone ?? "") || "—"} · {usDate(s.dob) || "—"}
+                        {formatPhone(s.phone ?? "") || "·"} · {usDate(s.dob) || "·"}
                       </span>
                       {myRank >= ROLE_RANK.global_admin &&
                       s.role !== "global_admin" &&
@@ -602,7 +602,7 @@ export default function Admin() {
                   <input
                     className="lms-cert-name"
                     type="date"
-                    aria-label="Birthday (optional — they can add it)"
+                    aria-label="Birthday (optional, they can add it)"
                     min="1900-01-01"
                     value={nDob}
                     onChange={(e) => setNDob(e.target.value)}
@@ -718,10 +718,10 @@ export default function Admin() {
             <h2 className="lms-section-h">School ops</h2>
             <p className="lms-section-sub">
               Backups zip every data store into <code>sms-lms-backups/</code> next to the data
-              folder — newest 14 kept. For a nightly run, add a cron job in Hostinger&apos;s hPanel
+              folder, newest 14 kept. For a nightly run, add a cron job in Hostinger&apos;s hPanel
               (Advanced → Cron Jobs) with the command below. For uptime, point a free monitor
               (e.g. UptimeRobot) at <code>/api/health.php</code>. Role changes live on the
-              Front Office roster — the dropdowns there are yours alone.
+              Front Office roster. The dropdowns there are yours alone.
             </p>
             {cronUrl && (
               <div className="lms-ops-cron">
@@ -755,7 +755,7 @@ export default function Admin() {
             <h2 className="lms-section-h">Nudge desk</h2>
             <p className="lms-section-sub">
               One email max per student per run: a dying streak first, then a waiting Final, an
-              almost-finished course, or a quiet week — cooldowns keep it polite, and students can
+              almost-finished course, or a quiet week. Cooldowns keep it polite, and students can
               switch them off in their Student File. Add this as a second daily cron job
               (run it in the evening, when a streak can still be saved).
             </p>
@@ -784,7 +784,7 @@ export default function Admin() {
                     flash(
                       list.length === 0
                         ? "Dry run: nobody needs a nudge right now."
-                        : `Dry run: would email ${list.length} — ${list
+                        : `Dry run: would email ${list.length}: ${list
                             .map((n) => `${n.email} (${n.type})`)
                             .join(", ")
                             .slice(0, 200)}`

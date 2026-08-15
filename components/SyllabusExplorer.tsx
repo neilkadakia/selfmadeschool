@@ -94,7 +94,7 @@ export default function SyllabusExplorer() {
       </div>
 
       <p className="syl-note">
-        Every part is 8 units — one a week, about 20 minutes apiece, each paired with a chapter of the book.{" "}
+        Every part is 8 units: one a week, about 20 minutes apiece, each paired with a chapter of the book.{" "}
         <Link href="/learn/the-13th-grade" className="syl-note-link">
           See the Full Course →
         </Link>

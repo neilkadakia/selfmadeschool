@@ -1,5 +1,5 @@
 // The game layer: avatars, Credits, gear, and Arena boss battles.
-// Pure data + math — no storage here (that lives in useLms).
+// Pure data + math. No storage here (that lives in useLms).
 
 import { COURSES, levelFor, type Course, type Part, type QuizQuestion } from "./lms";
 import { questionKey } from "./mastery";
@@ -222,8 +222,8 @@ export function defenseFor(equipped: Equipped): number {
 
 // ---------- Power + aura ----------
 // Power is the one number that says how built you are: attack + defense +
-// grade level. It maps to an aura tier that literally draws on the portrait
-// — the whole point of the game layer is watching yourself get stronger.
+// grade level. It maps to an aura tier that literally draws on the portrait.
+// The whole point of the game layer is watching yourself get stronger.
 
 export const AURA_TIERS = [
   { at: 0, name: "Finding Your Feet", color: null as string | null },
@@ -259,7 +259,7 @@ export type Monster = {
   kind: MonsterKind;
   name: string;
   taunt: string;
-  weakness: string; // shown as a hint — flavor, not mechanics
+  weakness: string; // shown as a hint: flavor, not mechanics
   color: string;
 };
 
@@ -275,7 +275,7 @@ const MONSTERS_13: Monster[] = [
     kind: "kraken",
     name: "The Debt Kraken",
     taunt: "\"Minimum payments only, please.\"",
-    weakness: "Compound interest — pointed the right way.",
+    weakness: "Compound interest, pointed the right way.",
     color: "#e0645c",
   },
   {

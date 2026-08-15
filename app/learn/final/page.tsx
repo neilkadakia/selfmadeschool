@@ -4,7 +4,7 @@ import AuthGate from "@/components/lms/AuthGate";
 import FinalExam from "@/components/lms/FinalExam";
 
 export const metadata: Metadata = {
-  title: "The Final — Self Made School",
+  title: "The Final · Self Made School",
   description: "Twelve questions. One course. Pass with honors.",
   robots: { index: false },
 };

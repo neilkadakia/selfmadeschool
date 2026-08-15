@@ -1,6 +1,6 @@
 "use client";
 
-// Study Hall — two phases now.
+// Study Hall: two phases now.
 // 1) The Make-Up Test: questions you've missed anywhere (unit checks,
 //    Arena fights) come back until you answer each right twice in a
 //    row. Mastery logic lives in lib/mastery + useLms.questionResult.
@@ -65,9 +65,9 @@ function MakeupTest({ due, onDone }: { due: DueQuestion[]; onDone: () => void })
           <strong>
             {picked === q.answer
               ? item.streak + 1 >= MASTER_STREAK
-                ? "Mastered — retired from the pile."
+                ? "Mastered. Retired from the pile."
                 : "Right. One more clean answer retires it."
-              : "Still loose — it stays in the pile."}
+              : "Still loose. It stays in the pile."}
           </strong>{" "}
           {q.explain}
         </div>
@@ -98,18 +98,18 @@ export default function StudyHall() {
   const [i, setI] = useState(0);
   const [flipped, setFlipped] = useState(false);
 
-  // Session snapshot of the make-up pile — answers during the session
+  // Session snapshot of the make-up pile: answers during the session
   // update the store, but the list itself stays put until next visit.
   const due = useMemo<DueQuestion[]>(() => {
     // Keep the most-missed first (dueQuestions sorts), THEN shuffle the
-    // session for presentation — slicing after a shuffle could drop the
+    // session for presentation. Slicing after a shuffle could drop the
     // questions that need the most work.
     const worst = dueQuestions(state.mastery).slice(0, MAKEUP_SESSION_SIZE);
     return shuffled(worst, seedFrom(`${state.reviewLast}|${worst.length}`));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded]);
 
-  // Flashcards from completed units — weakest knowledge checks first
+  // Flashcards from completed units, weakest knowledge checks first
   // (adaptive review: what you missed comes back sooner).
   const pool = useMemo<ReviewCard[]>(() => {
     const seed = seedFrom(`${state.reviewLast}|${state.xp}`);
@@ -181,12 +181,12 @@ export default function StudyHall() {
         </h1>
         <p className="learn-sub">
           {activePhase === "done"
-            ? "That's how knowledge sticks — short visits, repeated. Come back tomorrow for fresh XP."
+            ? "That's how knowledge sticks: short visits, repeated. Come back tomorrow for fresh XP."
             : activePhase === "makeup"
-              ? `${due.length} question${due.length === 1 ? "" : "s"} you've missed before. Answer each one right ${MASTER_STREAK} times in a row — across visits — and it retires for good.`
+              ? `${due.length} question${due.length === 1 ? "" : "s"} you've missed before. Answer each one right ${MASTER_STREAK} times in a row (across visits) and it retires for good.`
               : pool.length > 0
                 ? `${pool.length} cards from the units you've completed, shuffled. Tap to flip.`
-                : "No flashcards yet — finish a unit to start the stack."}
+                : "No flashcards yet. Finish a unit to start the stack."}
         </p>
 
         {activePhase === "makeup" && (

@@ -16,7 +16,7 @@ const GRADES = [
     pill: "pill--acc",
     status: "Start Here",
     title: "The 13th Grade",
-    body: "The intro course. Working on your mindset, your money, and dealing with life's big calls — the foundations of running your own life, in 24 units.",
+    body: "The intro course. Working on your mindset, your money, and dealing with life's big calls: the foundations of running your own life, in 24 units.",
     link: "Enroll Free →",
   },
   {
@@ -25,7 +25,7 @@ const GRADES = [
     pill: "pill--vio",
     status: "Next Up",
     title: "The 14th Grade",
-    body: "All money, all year. How to handle it, understand it, and make the right financial decisions — personal finance, mastered.",
+    body: "All money, all year. How to handle it, understand it, and make the right financial decisions. Personal finance, mastered.",
     link: "Join the Waitlist →",
   },
   {
@@ -34,7 +34,7 @@ const GRADES = [
     pill: "pill--coral",
     status: "Final Year",
     title: "The 15th Grade",
-    body: "The big calls in life — career, place, people — and how to actually think them through instead of flipping a coin.",
+    body: "The big calls in life (career, place, people) and how to actually think them through instead of flipping a coin.",
     link: "Join the Waitlist →",
   },
 ];
@@ -43,7 +43,7 @@ const STEPS = [
   {
     num: "01",
     title: "Read",
-    body: "Start with the book. Every unit begins as a chapter — read it on your own time, at your own pace.",
+    body: "Start with the book. Every unit begins as a chapter. Read it on your own time, at your own pace.",
     tone: "how-panel--acc",
     icon: "M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z",
   },
@@ -71,7 +71,7 @@ const STEPS = [
   {
     num: "05",
     title: "Repeat",
-    body: "Build, break, rebuild. Self-made isn't a one-time project — you run the loop again every time life changes. New units drop monthly to keep up.",
+    body: "Build, break, rebuild. Self-made isn't a one-time project. You run the loop again every time life changes. New units drop monthly to keep up.",
     tone: "how-panel--ink",
     icon: "M18.6 6.62c-1.44 0-2.8.56-3.77 1.53L12 10.66 10.48 12h.01L7.8 14.39c-.64.64-1.49.99-2.4.99-1.87 0-3.39-1.51-3.39-3.38S3.53 8.62 5.4 8.62c.91 0 1.76.35 2.44 1.03l1.13 1 1.51-1.34L9.22 8.2C8.2 7.18 6.84 6.62 5.4 6.62 2.42 6.62 0 9.04 0 12s2.42 5.38 5.4 5.38c1.44 0 2.8-.56 3.77-1.53l2.83-2.5.01.01L13.52 12h-.01l2.69-2.39c.64-.64 1.49-.99 2.4-.99 1.87 0 3.39 1.51 3.39 3.38s-1.52 3.38-3.39 3.38c-.9 0-1.76-.35-2.44-1.03l-1.14-1.01-1.51 1.34 1.27 1.12c1.02 1.01 2.37 1.57 3.82 1.57 2.98 0 5.4-2.41 5.4-5.38s-2.42-5.37-5.4-5.37z",
   },
@@ -112,7 +112,7 @@ export default function Home() {
           scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
         });
 
-        // Marquee: shift exactly one of the three copies per cycle (seamless).
+        // Marquee: shift exactly one of the three copies per cycle (no visible seam).
         // Duration scaled with the longer topic list to keep the original speed.
         gsap.to("[data-mq]", { xPercent: -100 / 3, duration: 40, repeat: -1, ease: "none" });
 
@@ -202,7 +202,7 @@ export default function Home() {
           0% academic
         </div>
         <p data-hero-kicker className="kicker kicker--acc kicker--hero">
-          ★ Pre-launch — founding class forming
+          ★ Pre-launch · founding class forming
         </p>
         <h1 className="hero-h1">
           <span className="hline-mask">
@@ -223,8 +223,8 @@ export default function Home() {
         </h1>
         <div data-hero-sub className="hero-sub">
           <p className="hero-copy">
-            We&apos;re here to help you with your mindset, your money, and life&apos;s big calls — all the adult stuff you were supposed to just{" "}
-            <em>know</em>. Deliberately non-academic: no grades, no degrees, no lecture halls — plain English and skills you use the same week. Time to
+            We&apos;re here to help you with your mindset, your money, and life&apos;s big calls: all the adult stuff you were supposed to just{" "}
+            <em>know</em>. Deliberately non-academic: no grades, no degrees, no lecture halls. Plain English and skills you use the same week. Time to
             start making yourself.
           </p>
           <div className="hero-ctas">
@@ -252,7 +252,7 @@ export default function Home() {
       <section id="syllabus" className="section-paper syllabus">
         <div className="container">
           <p data-reveal className="kicker kicker--vio">
-            The 13th Grade — Intro Course Syllabus
+            The 13th Grade · Intro Course Syllabus
           </p>
           <h2 data-reveal className="h2">
             24 units. Zero lectures about trigonometry.
@@ -347,7 +347,7 @@ export default function Home() {
               The textbook adulthood never gave you.
             </h2>
             <p data-reveal className="book-blurb">
-              Every unit of The 13th Grade — working on your mindset, your money, and dealing with life&apos;s big calls — rewritten as a book you can
+              Every unit of The 13th Grade (your mindset, your money, and dealing with life&apos;s big calls) rewritten as a book you can
               highlight, gift, and re-read the night before a big decision. Plain English, cover to cover.
             </p>
             <div data-reveal className="book-meta">
@@ -432,7 +432,7 @@ export default function Home() {
               inbox, every month.
             </h2>
             <p className="nl-sub">
-              Mindset, money, and the big calls — one real lesson a month while we finish building.
+              Mindset, money, and the big calls. One real lesson a month while we finish building.
               This list is also the waitlist: when the founding class opens, these inboxes hear
               first. No spam, unsubscribe anytime.
             </p>
@@ -445,7 +445,7 @@ export default function Home() {
 
       <section id="enroll" className="enroll">
         <p data-reveal className="kicker kicker--enroll">
-          Pre-launch — doors open soon
+          Pre-launch · doors open soon
         </p>
         <h2 data-reveal className="h2 h2--enroll">
           Your first adult
@@ -461,7 +461,7 @@ export default function Home() {
           </Link>
         </div>
         <p data-reveal className="enroll-note">
-          The founding class is invite-only while we finish building — the waitlist is the line.
+          The founding class is invite-only while we finish building. The waitlist is the line.
           Free when it opens. No credit card. Ironically. Already enrolled?{" "}
           <Link href="/learn" className="enroll-signin">
             Sign In

@@ -40,7 +40,7 @@ type Hit = { target: "you" | "boss"; amount: number; crit: boolean };
 function ArenaIndex() {
   const lms = useLms();
   const { state } = lms;
-  // Faculty carry a hall pass to every fight — for demos and quality checks.
+  // Faculty carry a hall pass to every fight, for demos and quality checks.
   const isAdmin = isFaculty(lms.auth?.role);
 
   return (
@@ -55,7 +55,7 @@ function ArenaIndex() {
         <h1 className="learn-h1">Something guards every section.</h1>
         <p className="learn-sub">
           Finish all the units in a part and its boss steps out. The fight runs on that part&apos;s
-          knowledge checks — right answers land hits, three in a row goes critical, wrong ones
+          knowledge checks: right answers land hits, three in a row goes critical, wrong ones
           hurt. Gear up in <Link href="/learn/locker">the Locker</Link> first.
         </p>
 
@@ -94,12 +94,12 @@ function ArenaIndex() {
                     }
                   >
                     {won
-                      ? "Defeated ✓ — Rematch"
+                      ? "Defeated ✓ · Rematch"
                       : unlocked
                         ? "Ready to Fight"
                         : canFight
-                          ? `Faculty Pass — ${partDone}/${total} units`
-                          : `Locked — ${partDone}/${total} units`}
+                          ? `Faculty Pass · ${partDone}/${total} units`
+                          : `Locked · ${partDone}/${total} units`}
                   </span>
                 </div>
               </>
@@ -190,7 +190,7 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
   const answer = (oi: number) => {
     if (picked !== null || !q || !round) return;
     setPicked(oi);
-    // Battle misses feed the make-up pile too — Study Hall picks them up.
+    // Battle misses feed the make-up pile too. Study Hall picks them up.
     lms.questionResult(round.key, oi === q.answer);
     if (oi === q.answer) {
       const dmg = myAtk + comboBonus(combo);
@@ -296,7 +296,7 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
               </div>
             ) : (
               <p className="lms-section-sub">
-                This section&apos;s knowledge checks aren&apos;t written yet — the boss is on a
+                This section&apos;s knowledge checks aren&apos;t written yet. The boss is on a
                 lunch break.
               </p>
             )}
@@ -404,7 +404,7 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
                 <span className="lms-quiz-progress">Round {qi + 1}</span>
                 <span className="lms-quiz-best">
                   Hit for {myAtk + comboBonus(combo)}
-                  {isCrit(combo) ? " — CRITICAL up" : combo > 0 ? ` (combo +${comboBonus(combo)})` : ""} ·
+                  {isCrit(combo) ? ", CRITICAL up" : combo > 0 ? ` (combo +${comboBonus(combo)})` : ""} ·
                   it hits for {hitTaken}
                 </span>
               </div>
@@ -429,8 +429,8 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
                   <strong>
                     {picked === q.answer
                       ? lastHit.crit
-                        ? `CRITICAL — ${lastHit.amount} damage!`
-                        : `Clean hit — ${lastHit.amount} damage.`
+                        ? `CRITICAL: ${lastHit.amount} damage!`
+                        : `Clean hit: ${lastHit.amount} damage.`
                       : `It got you for ${lastHit.amount}.`}
                   </strong>{" "}
                   {q.explain}
@@ -464,7 +464,7 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
             <p className="learn-sub">
               {firstWin
                 ? `+${BATTLE.xpFirstWin} XP, +${CREDITS.battleFirstWin} Credits. The section is officially yours.`
-                : `Rematch won — +${BATTLE.xpRematchWin} XP for keeping sharp.`}
+                : `Rematch won. +${BATTLE.xpRematchWin} XP for keeping sharp.`}
             </p>
             <div className="demo-close-ctas">
               <Link href="/learn/arena" className="btn btn--solid">
@@ -490,7 +490,7 @@ function Battle({ courseSlug, partIndex }: { courseSlug: string; partIndex: numb
             <p className="kicker kicker--coral">Knocked Out</p>
             <h2 className="learn-h1 lms-arena-end-h">Walk it off.</h2>
             <p className="learn-sub">
-              No XP lost, nothing broken — the questions are the same material, so a quick reread
+              No XP lost, nothing broken. The questions are the same material, so a quick reread
               of the weak spots is the real power-up. Better gear from the Locker doesn&apos;t hurt
               either.
             </p>

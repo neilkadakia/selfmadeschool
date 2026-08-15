@@ -1,4 +1,4 @@
-// Boss art for the Arena — four flat-sticker beasts, tinted per boss.
+// Boss art for the Arena: four flat-sticker beasts, tinted per boss.
 
 import type { Monster } from "@/lib/game";
 

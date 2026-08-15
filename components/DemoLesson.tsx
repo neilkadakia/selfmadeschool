@@ -2,7 +2,7 @@
 
 // The open-house lesson: Unit 01 (Mindset Hacks), full strength, no
 // account needed. Same blocks, knowledge check, and flashcards the
-// enrolled course uses — progress just isn't saved. Closes with the
+// enrolled course uses. Progress just isn't saved. Closes with the
 // waitlist, because the other 23 units are behind the pre-launch gate.
 
 import Link from "next/link";
@@ -23,12 +23,12 @@ export default function DemoLesson() {
   return (
     <div className="unit-page demo">
       <div className="learn-wrap demo-wrap">
-        <p className="kicker kicker--acc">Demo Lesson — Open to Everyone</p>
+        <p className="kicker kicker--acc">Demo Lesson · Open to Everyone</p>
         <h1 className="learn-h1">{unit.title}</h1>
         <p className="learn-sub demo-hook">{lesson.hook}</p>
         <p className="demo-note">
           This is Unit 01 of {course.title}, exactly as students get it. We&apos;re pre-launch and
-          class is invite-only, so the other 23 units stay behind the door for now — the{" "}
+          class is invite-only, so the other 23 units stay behind the door for now. The{" "}
           <Link href="/#newsletter">waitlist</Link> is how you get in.
         </p>
 
@@ -62,7 +62,7 @@ export default function DemoLesson() {
           <h2 className="lms-section-h demo-close-h">The rest is waiting for the founding class.</h2>
           <p className="lms-section-sub">
             Streaks, XP, flashcard decks for every unit, a final with honors, and a certificate
-            worth printing. Doors open soon — the waitlist hears first.
+            worth printing. Doors open soon. The waitlist hears first.
           </p>
           <div className="demo-close-ctas">
             <Link href="/#newsletter" className="btn btn--solid">

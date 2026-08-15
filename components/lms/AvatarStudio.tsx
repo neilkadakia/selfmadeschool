@@ -126,7 +126,7 @@ export default function AvatarStudio({
         {firstRun && (
           <p className="lms-studio-note">
             You can retake Picture Day anytime in the Locker. Saving also pays out Credits for
-            every unit you&apos;ve already finished — shopping money.
+            every unit you&apos;ve already finished. Shopping money.
           </p>
         )}
       </div>

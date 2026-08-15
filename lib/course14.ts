@@ -1,4 +1,4 @@
-// The 14th Grade — money, mastered. Demo course for review:
+// The 14th Grade: money, mastered. Demo course for review:
 // full structure, three units carry complete lessons.
 
 import type { Course } from "./lms";
@@ -11,7 +11,7 @@ export const COURSE_14: Course = {
   status: "preview",
   headline: "Money, mastered. Earning it, growing it, keeping it.",
   description:
-    "The deeper money course: negotiate what you earn, put it to work, and protect it from taxes, bad products, and scams — 12 units, plain English throughout.",
+    "The deeper money course: negotiate what you earn, put it to work, and protect it from taxes, bad products, and scams. 12 units, plain English throughout.",
   parts: [
     {
       id: "earn",
@@ -21,7 +21,7 @@ export const COURSE_14: Course = {
       action: "Run one real number from this chapter on your own situation today.",
       units: [
         { slug: "salary-negotiation", title: "Salary Negotiation", blurb: "The script, the silence, and why the first number matters so much.", live: true },
-        { slug: "job-offer-math", title: "Job Offer Math", blurb: "Base, bonus, equity, benefits — comparing offers on the full number.", live: false },
+        { slug: "job-offer-math", title: "Job Offer Math", blurb: "Base, bonus, equity, benefits: comparing offers on the full number.", live: false },
         { slug: "side-income", title: "Side Income", blurb: "Turning a skill into a second paycheck without burning out.", live: false },
         { slug: "freelance-basics", title: "Freelance Basics", blurb: "Contracts, invoices, and getting paid on time, every time.", live: false },
       ],
@@ -31,10 +31,10 @@ export const COURSE_14: Course = {
       name: "Grow It",
       tone: "vio",
       tagline: "Compounding does the work. You just have to not interrupt it.",
-      action: "Open the account or check the fund — one concrete step, today.",
+      action: "Open the account or check the fund. One concrete step, today.",
       units: [
         { slug: "index-funds-explained", title: "Index Funds, Actually Explained", blurb: "What you own, what it costs, and why fees decide more than skill.", live: true },
-        { slug: "retirement-alphabet", title: "The Retirement Alphabet", blurb: "401(k), IRA, Roth, HSA — which bucket, in which order, and why.", live: false },
+        { slug: "retirement-alphabet", title: "The Retirement Alphabet", blurb: "401(k), IRA, Roth, HSA: which bucket, in which order, and why.", live: false },
         { slug: "brokerage-basics", title: "Brokerage Basics", blurb: "Opening an account, placing your first order, and the settings that matter.", live: false },
         { slug: "risk-and-time", title: "Risk & Time", blurb: "Why your age changes the answer, and what \"risk tolerance\" actually means.", live: false },
       ],
@@ -46,7 +46,7 @@ export const COURSE_14: Course = {
       tagline: "Making money is loud. Keeping it is quiet.",
       action: "Check one account, statement, or policy from this chapter today.",
       units: [
-        { slug: "scam-proof", title: "Scam-Proof", blurb: "The scripts scammers use on smart people — and the two-step habit that beats all of them.", live: true },
+        { slug: "scam-proof", title: "Scam-Proof", blurb: "The scripts scammers use on smart people, and the two-step habit that beats all of them.", live: true },
         { slug: "taxes-level-two", title: "Taxes, Level Two", blurb: "Brackets, capital gains, and the moves that legally shrink the bill.", live: false },
         { slug: "insurance-decoded", title: "Insurance, Decoded", blurb: "What to insure, what to skip, and how deductibles really work.", live: false },
         { slug: "beneficiaries-and-wills", title: "Beneficiaries & Wills", blurb: "The one-page folder your family hopes you have.", live: false },
@@ -57,18 +57,18 @@ export const COURSE_14: Course = {
     "salary-negotiation": {
       hook: "The scariest 30 seconds of your career are worth more than most years of work.",
       blocks: [
-        { kind: "p", text: "Here's the math nobody shows you: raises compound. A $10,000 higher starting salary, with normal percentage raises on top, is easily $100,000+ over a decade — from one conversation you were too polite to have." },
+        { kind: "p", text: "Here's the math nobody shows you: raises compound. A $10,000 higher starting salary, with normal percentage raises on top, is easily $100,000+ over a decade, from one conversation you were too polite to have." },
         { kind: "h", text: "Why negotiating doesn't blow up the offer" },
-        { kind: "p", text: "The fear is that asking will make the offer disappear. In practice, companies expect it — recruiters have a range, and the first number is almost never the top of it. A respectful ask doesn't read as greedy; it reads as someone who knows how this works. Offers get pulled over rudeness and dishonesty, not over a polite counter." },
-        { kind: "callout", title: "Real talk", text: "If negotiating feels disrespectful — especially if you were raised to be grateful and not make noise — reframe it: the company negotiated. Their first number was a negotiation move. You're not starting the game, you're just finally playing it." },
+        { kind: "p", text: "The fear is that asking will make the offer disappear. In practice, companies expect it: recruiters have a range, and the first number is almost never the top of it. A respectful ask doesn't read as greedy; it reads as someone who knows how this works. Offers get pulled over rudeness and dishonesty, not over a polite counter." },
+        { kind: "callout", title: "Real talk", text: "If negotiating feels disrespectful, especially if you were raised to be grateful and not make noise, reframe it: the company negotiated. Their first number was a negotiation move. You're not starting the game, you're just finally playing it." },
         { kind: "h", text: "The script" },
         { kind: "list", title: "Four sentences, in order", items: [
           "Enthusiasm first: \"I'm really excited about this role and the team.\"",
           "The anchor: \"Based on the scope and what I'm seeing for this kind of role, I was expecting something closer to [number 10–15% above their offer].\"",
-          "One supporting reason: the strongest thing you bring — a skill, a result, a competing signal.",
-          "Then silence. The silence is the negotiation. Whoever fills it first, loses ground — let it sit.",
+          "One supporting reason: the strongest thing you bring: a skill, a result, a competing signal.",
+          "Then silence. The silence is the negotiation. Whoever fills it first, loses ground. Let it sit.",
         ] },
-        { kind: "example", title: "Worked example", text: "Anika gets offered $85,000. She says the four sentences with $97,000 as her number, then stops talking. The recruiter comes back at $92,000 plus a $5,000 signing bonus. Ninety seconds of discomfort, $12,000 in year one — and every future raise now compounds from 92, not 85." },
+        { kind: "example", title: "Worked example", text: "Anika gets offered $85,000. She says the four sentences with $97,000 as her number, then stops talking. The recruiter comes back at $92,000 plus a $5,000 signing bonus. Ninety seconds of discomfort, $12,000 in year one, and every future raise now compounds from 92, not 85." },
         { kind: "h", text: "If the base truly can't move" },
         { kind: "p", text: "Sometimes the band is real. Then you negotiate the other levers: signing bonus, extra vacation days, remote days, a six-month review with a defined raise, education budget, start date. \"If the base is fixed, is there flexibility on a signing bonus or an early review?\" keeps the conversation open after the first no." },
         { kind: "bigfact", stat: "10–15%", caption: "a normal counter above the initial offer. High enough to matter, low enough that nobody blinks." },
@@ -77,7 +77,7 @@ export const COURSE_14: Course = {
         {
           q: "Why does a higher starting salary matter beyond year one?",
           options: [
-            "It doesn't — a salary is a salary",
+            "It doesn't. A salary is a salary",
             "Future raises are percentages on top of it, so the gap compounds for years",
             "It only matters for taxes",
             "Companies never give raises anyway",
@@ -90,7 +90,7 @@ export const COURSE_14: Course = {
           options: [
             "Any attempt to negotiate",
             "Countering above 5%",
-            "Rudeness or dishonesty — not a polite, reasoned counter",
+            "Rudeness or dishonesty, not a polite, reasoned counter",
             "Asking for time to think",
           ],
           answer: 2,
@@ -101,16 +101,16 @@ export const COURSE_14: Course = {
           options: [
             "Immediately soften: \"but the current offer is fine too!\"",
             "Fill the silence with more reasons",
-            "Let the silence sit — it's part of the negotiation",
+            "Let the silence sit. It's part of the negotiation",
             "Withdraw the counter and apologize",
           ],
           answer: 2,
-          explain: "Whoever fills the silence first gives ground. You made a reasonable ask; the discomfort is doing the work — let it.",
+          explain: "Whoever fills the silence first gives ground. You made a reasonable ask; the discomfort is doing the work. Let it.",
         },
         {
           q: "The recruiter says the base is truly fixed. Best response?",
           options: [
-            "Accept immediately — it's over",
+            "Accept immediately. It's over",
             "Ask about the other levers: signing bonus, early review with defined raise, vacation, remote days",
             "Walk away on principle",
             "Ask them to check with their manager repeatedly",
@@ -125,21 +125,21 @@ export const COURSE_14: Course = {
         { front: "How much to counter", back: "10–15% above the offer is the normal, no-one-blinks range." },
         { front: "The silence rule", back: "After your number, stop talking. Whoever fills the silence first loses ground." },
         { front: "When base is fixed", back: "Negotiate the other levers: signing bonus, early review with defined raise, vacation, remote days, education budget." },
-        { front: "What kills offers", back: "Rudeness and dishonesty — not polite counters. Companies expect the ask." },
+        { front: "What kills offers", back: "Rudeness and dishonesty, not polite counters. Companies expect the ask." },
       ],
-      action: "Write your four sentences for your current job or next interview, with a real number in them. Say them out loud twice — the words need to have been in your mouth before the day they matter.",
+      action: "Write your four sentences for your current job or next interview, with a real number in them. Say them out loud twice: the words need to have been in your mouth before the day they matter.",
     },
     "index-funds-explained": {
-      hook: "You already believe in index funds — you just haven't checked what your money is actually in.",
+      hook: "You already believe in index funds. You just haven't checked what your money is actually in.",
       blocks: [
         { kind: "p", text: "The 13th Grade told you index funds beat stock-picking for normal people. This unit is the level-two version: what you actually own, what it silently costs, and the two or three settings that decide most of the outcome." },
         { kind: "h", text: "What you own when you own an index fund" },
-        { kind: "p", text: "An S&P 500 fund holds shares of the 500 largest US public companies, weighted by size. A \"total market\" fund holds thousands, small ones included. A \"target date\" fund (like Target 2065) holds a mix of stock and bond funds that automatically gets more conservative as the year approaches — the set-and-forget option inside most 401(k)s." },
+        { kind: "p", text: "An S&P 500 fund holds shares of the 500 largest US public companies, weighted by size. A \"total market\" fund holds thousands, small ones included. A \"target date\" fund (like Target 2065) holds a mix of stock and bond funds that automatically gets more conservative as the year approaches: the set-and-forget option inside most 401(k)s." },
         { kind: "h", text: "Fees: the quiet decider" },
-        { kind: "p", text: "Every fund charges an expense ratio — a yearly percentage skimmed automatically. It sounds tiny. It is not. 0.04% and 1% look similar on paper; over 30 years the difference is a six-figure haircut on a normal retirement account, taken silently, every year, regardless of performance." },
-        { kind: "bigfact", stat: "0.20% or less", caption: "a fair expense ratio for a broad index fund. Big providers are at 0.02–0.10%. Anything near 1% deserves an explanation — and usually doesn't have one." },
-        { kind: "callout", title: "Real talk", text: "The most expensive mistake in most 401(k)s isn't picking the wrong fund — it's never picking at all, and sitting in a high-fee default or in cash for years. Ten minutes in the settings fixes it." },
-        { kind: "example", title: "Worked example", text: "Rohan, 26, finally opens his 401(k) portal. His contributions have been sitting in a money market fund — basically cash — for two years. He moves the balance and future contributions into a Target 2065 fund with a 0.08% expense ratio. Ten minutes. Those ten minutes are plausibly worth more than every stock tip he'll ever receive." },
+        { kind: "p", text: "Every fund charges an expense ratio: a yearly percentage skimmed automatically. It sounds tiny. It is not. 0.04% and 1% look similar on paper; over 30 years the difference is a six-figure haircut on a normal retirement account, taken silently, every year, regardless of performance." },
+        { kind: "bigfact", stat: "0.20% or less", caption: "a fair expense ratio for a broad index fund. Big providers are at 0.02–0.10%. Anything near 1% deserves an explanation, and usually doesn't have one." },
+        { kind: "callout", title: "Real talk", text: "The most expensive mistake in most 401(k)s isn't picking the wrong fund. It's never picking at all, and sitting in a high-fee default or in cash for years. Ten minutes in the settings fixes it." },
+        { kind: "example", title: "Worked example", text: "Rohan, 26, finally opens his 401(k) portal. His contributions have been sitting in a money market fund (basically cash) for two years. He moves the balance and future contributions into a Target 2065 fund with a 0.08% expense ratio. Ten minutes. Those ten minutes are plausibly worth more than every stock tip he'll ever receive." },
         { kind: "list", title: "The checklist for any fund", items: [
           "What does it hold? (broad index > narrow bet)",
           "What's the expense ratio? (under 0.20% for an index fund)",
@@ -152,7 +152,7 @@ export const COURSE_14: Course = {
           options: [
             "Guarantees your money by 2065",
             "Holds a stock/bond mix that automatically gets more conservative as the date approaches",
-            "Only unlocks in 2065",
+            "Can't be touched until 2065",
             "Is a single company's stock held until 2065",
           ],
           answer: 1,
@@ -161,20 +161,20 @@ export const COURSE_14: Course = {
         {
           q: "Fund A charges 0.04%, Fund B charges 1%. Over 30 years on a retirement account, the difference is roughly…",
           options: [
-            "Trivial — both are under 1%",
+            "Trivial, both are under 1%",
             "A rounding error",
-            "Six figures — fees compound against you exactly like returns compound for you",
+            "Six figures: fees compound against you exactly like returns compound for you",
             "Zero if both track the same index",
           ],
           answer: 2,
-          explain: "The percentage is skimmed yearly on the whole growing balance. Tiny-looking fee gaps become enormous over decades — fees are the one part of investing you fully control.",
+          explain: "The percentage is skimmed yearly on the whole growing balance. Tiny-looking fee gaps become enormous over decades. Fees are the one part of investing you fully control.",
         },
         {
           q: "The most expensive common 401(k) mistake is…",
           options: [
             "Choosing an index fund instead of the hot fund",
             "Contributing too much",
-            "Never choosing at all — sitting in a high-fee default or cash for years",
+            "Never choosing at all: sitting in a high-fee default or cash for years",
             "Checking the balance too often",
           ],
           answer: 2,
@@ -198,35 +198,35 @@ export const COURSE_14: Course = {
       action: "Open your 401(k) or brokerage portal and find two numbers: what fund your money is in, and its expense ratio. If it's cash or above 0.5%, you found this month's highest-value ten minutes.",
     },
     "scam-proof": {
-      hook: "Scams don't work because people are dumb. They work because the script is good — and you can learn the script.",
+      hook: "Scams don't work because people are dumb. They work because the script is good, and you can learn the script.",
       blocks: [
-        { kind: "p", text: "Doctors, engineers, retired teachers — scam victims are disproportionately smart people who were sure it couldn't happen to them. Scams don't attack your intelligence. They attack your emotions, on a deadline." },
+        { kind: "p", text: "Doctors, engineers, retired teachers: scam victims are disproportionately smart people who were sure it couldn't happen to them. Scams don't attack your intelligence. They attack your emotions, on a deadline." },
         { kind: "h", text: "Every scam has the same skeleton" },
         { kind: "list", title: "The three ingredients", items: [
-          "Authority — they claim to be the bank, the IRS, the police, Amazon, a government visa office, your grandchild.",
-          "Urgency — act in the next 30 minutes, your account is compromised, there's a warrant, the deal expires.",
-          "Unusual payment or access — gift cards, wire transfer, crypto, remote access to your device, or \"verify\" a code they sent you.",
+          "Authority: they claim to be the bank, the IRS, the police, Amazon, a government visa office, your grandchild.",
+          "Urgency: act in the next 30 minutes, your account is compromised, there's a warrant, the deal expires.",
+          "Unusual payment or access: gift cards, wire transfer, crypto, remote access to your device, or \"verify\" a code they sent you.",
         ] },
         { kind: "p", text: "Any two of those together is a scam until proven otherwise. All three is a certainty. Real institutions are boring: they send letters, they wait, and they never ask for gift cards." },
-        { kind: "callout", title: "Real talk", text: "The code texted to your phone is the key to your account. Anyone who asks you to read it out loud — \"to verify your identity\" — is stealing the account while you're on the phone with them. No real company asks. Ever." },
+        { kind: "callout", title: "Real talk", text: "The code texted to your phone is the key to your account. Anyone who asks you to read it out loud (\"to verify your identity\") is stealing the account while you're on the phone with them. No real company asks. Ever." },
         { kind: "h", text: "The two-step habit that beats all of them" },
-        { kind: "p", text: "Step one: hang up or close the message. Step two: contact the institution yourself through the number on your card or the official app. That's the entire defense. Scammers control the channel they contacted you on — a callback through an official channel breaks every script they have. The 60 seconds this takes defeats attacks that fool people with PhDs." },
-        { kind: "example", title: "Worked example", text: "\"Chase fraud department\" calls Nina: someone's draining her account, she must move money to a \"safe account\" now. Caller ID says Chase. It's spoofed — caller ID proves nothing. Nina says \"I'll call back through the app,\" hangs up, opens her banking app: no alerts. That's a scam defeated by a habit, not by brilliance." },
+        { kind: "p", text: "Step one: hang up or close the message. Step two: contact the institution yourself through the number on your card or the official app. That's the entire defense. Scammers control the channel they contacted you on. A callback through an official channel breaks every script they have. The 60 seconds this takes defeats attacks that fool people with PhDs." },
+        { kind: "example", title: "Worked example", text: "\"Chase fraud department\" calls Nina: someone's draining her account, she must move money to a \"safe account\" now. Caller ID says Chase. It's spoofed. Caller ID proves nothing. Nina says \"I'll call back through the app,\" hangs up, opens her banking app: no alerts. That's a scam defeated by a habit, not by brilliance." },
         { kind: "h", text: "The family conversation" },
-        { kind: "p", text: "Parents and grandparents are targeted hardest — especially in immigrant families, with scripts about visas, customs, unpaid taxes, or a relative in trouble. Agree on a family rule before it's needed: any money-moving call gets a callback through an official number, and any \"family emergency\" gets verified by calling that family member directly. Saying it out loud once, at dinner, is the vaccine." },
-        { kind: "bigfact", stat: "$10B+", caption: "reported stolen by scams in the US in a single recent year — and reported is the undercount, because embarrassment keeps people quiet. Talking about scams openly is protection." },
+        { kind: "p", text: "Parents and grandparents are targeted hardest, especially in immigrant families, with scripts about visas, customs, unpaid taxes, or a relative in trouble. Agree on a family rule before it's needed: any money-moving call gets a callback through an official number, and any \"family emergency\" gets verified by calling that family member directly. Saying it out loud once, at dinner, is the vaccine." },
+        { kind: "bigfact", stat: "$10B+", caption: "reported stolen by scams in the US in a single recent year, and reported is the undercount, because embarrassment keeps people quiet. Talking about scams openly is protection." },
       ],
       quiz: [
         {
-          q: "\"Your account is compromised — read me the code we just texted so I can verify you.\" This is…",
+          q: "\"Your account is compromised. Read me the code we just texted so I can verify you.\" This is…",
           options: [
             "Standard bank security procedure",
             "Safe if the caller ID matches your bank",
-            "Account theft in progress — the code is the key, and no real company asks for it",
+            "Account theft in progress: the code is the key, and no real company asks for it",
             "Fine if they already know your name and card number",
           ],
           answer: 2,
-          explain: "That code is a one-time key to log in or move money. Real institutions never ask you to read it out. Knowing your details proves nothing — data leaks are everywhere.",
+          explain: "That code is a one-time key to log in or move money. Real institutions never ask you to read it out. Knowing your details proves nothing. Data leaks are everywhere.",
         },
         {
           q: "The two-step habit that defeats nearly every scam:",
@@ -237,13 +237,13 @@ export const COURSE_14: Course = {
             "Give fake information to waste their time",
           ],
           answer: 1,
-          explain: "Scammers control the channel they contacted you on. A callback through an official channel — the number on your card, the real app — breaks every script.",
+          explain: "Scammers control the channel they contacted you on. A callback through an official channel (the number on your card, the real app) breaks every script.",
         },
         {
           q: "Caller ID shows your bank's real name and number. This means…",
           options: [
             "The call is legitimate",
-            "Nothing — caller ID is trivially spoofed",
+            "Nothing: caller ID is trivially spoofed",
             "The bank is required to be calling",
             "You can safely share your password",
           ],
@@ -255,7 +255,7 @@ export const COURSE_14: Course = {
           options: [
             "All three, when it's serious",
             "Urgency, but never gift cards",
-            "None as pressure — real institutions send boring letters, wait, and never take gift cards",
+            "None as pressure: real institutions send boring letters, wait, and never take gift cards",
             "Depends on the institution",
           ],
           answer: 2,
@@ -270,7 +270,7 @@ export const COURSE_14: Course = {
         { front: "Why smart people get scammed", back: "Scams attack emotions on a deadline, not intelligence. Certainty that \"it can't happen to me\" is a vulnerability." },
         { front: "The family rule", back: "Money-moving calls get an official-channel callback; \"family emergencies\" get verified by calling that person directly. Agree on it at dinner, before it's needed." },
       ],
-      action: "Have the two-step conversation with one family member this week — parents first. Agree out loud: any call about money gets a hang-up and an official callback, no exceptions.",
+      action: "Have the two-step conversation with one family member this week, parents first. Agree out loud: any call about money gets a hang-up and an official callback, no exceptions.",
     },
   },
 };

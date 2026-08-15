@@ -4,7 +4,7 @@ import AuthGate from "@/components/lms/AuthGate";
 import Arena from "@/components/lms/Arena";
 
 export const metadata: Metadata = {
-  title: "The After-School Arena — Self Made School",
+  title: "The After-School Arena · Self Made School",
   description: "Every section has a boss. Answer well, hit hard.",
   robots: { index: false },
 };

@@ -1,6 +1,6 @@
 "use client";
 
-// Knowledge check — one question at a time, instant feedback, retake forever.
+// Knowledge check: one question at a time, instant feedback, retake forever.
 
 import { useState } from "react";
 import type { QuizQuestion } from "@/lib/lms";
@@ -43,8 +43,8 @@ export default function Quiz({
             {perfect
               ? "Perfect. That's the whole unit, locked in."
               : correctCount >= total - 1
-                ? "Almost perfect — check the one you missed and run it back."
-                : "Good attempt. The explanations above are the actual lesson — worth a reread."}
+                ? "Almost perfect. Check the one you missed and run it back."
+                : "Good attempt. The explanations above are the actual lesson, worth a reread."}
           </p>
           <button className="btn btn--outline lms-quiz-btn" onClick={restart}>
             Try Again

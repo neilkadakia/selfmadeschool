@@ -29,7 +29,7 @@ export default function CoursePage({ slug }: { slug: string }) {
           </Link>
           <p className={`kicker kicker--${course.tone}`}>
             {course.kicker}
-            {course.status === "preview" ? " — Demo Preview" : ""}
+            {course.status === "preview" ? " · Demo Preview" : ""}
           </p>
           <h1 className="learn-h1">{course.title}</h1>
           <p className="learn-sub">{course.description}</p>

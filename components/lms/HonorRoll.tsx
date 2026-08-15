@@ -1,6 +1,6 @@
 "use client";
 
-// Honor Roll: the class leaderboard, names and numbers only — the
+// Honor Roll: the class leaderboard, names and numbers only. The
 // point is friendly rivalry, not surveillance. Hidden until there are
 // at least two students to race. Two races: This Week (XP since Monday,
 // so newer students get a real shot) and All Time.
@@ -57,7 +57,7 @@ export default function HonorRoll() {
       <h2 className="lms-section-h">Honor Roll</h2>
       <p className="lms-section-sub">
         {week
-          ? "The class, ranked by XP earned since Monday — a fresh race every week."
+          ? "The class, ranked by XP earned since Monday: a fresh race every week."
           : "The class, ranked by all-time XP. Fastest way up: finish units and keep the streak alive."}
       </p>
       <div className="lms-tabs lms-honor-tabs" role="tablist" aria-label="Honor Roll range">
@@ -90,7 +90,7 @@ export default function HonorRoll() {
             <span className="lms-honor-meta">
               {r.units} unit{r.units === 1 ? "" : "s"}
             </span>
-            <span className="lms-honor-meta">{r.streak > 0 ? `${r.streak}d 🔥` : "—"}</span>
+            <span className="lms-honor-meta">{r.streak > 0 ? `${r.streak}d 🔥` : "·"}</span>
             <span className="lms-honor-xp">
               {week ? `+${r.xp} XP` : `${r.xp} XP`}
             </span>

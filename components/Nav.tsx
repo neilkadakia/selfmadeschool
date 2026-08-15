@@ -40,7 +40,7 @@ export default function Nav() {
 
   const close = () => setOpen(false);
 
-  // The classroom has its own shell — the marketing nav stays out of it.
+  // The classroom has its own shell. The marketing nav stays out of it.
   if (inClassroom) return null;
 
   return (

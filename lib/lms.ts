@@ -1,4 +1,4 @@
-// Self Made School LMS — multi-course model.
+// Self Made School LMS: multi-course model.
 // Courses wrap parts of units; live units carry a full Lesson
 // (written lesson, knowledge check, flashcards, real-life action).
 
@@ -55,7 +55,7 @@ export const COURSES: Course[] = [
     status: "live",
     headline: "The intro course. Everything school skipped.",
     description:
-      "Working on your mindset, your money, and dealing with life's big calls — 24 bite-size units, each paired with a chapter of the book.",
+      "Working on your mindset, your money, and dealing with life's big calls. 24 bite-size units, each paired with a chapter of the book.",
     parts: PARTS,
     lessons: LESSONS_13,
   },
@@ -149,7 +149,7 @@ export const BADGES: Badge[] = [
 export const XP_EXTRA = {
   review: 25, // once per day
   final: 200, // first pass per course
-  fieldwork: 50, // per unit, first filing only — the real world pays best
+  fieldwork: 50, // per unit, first filing only. The real world pays best
 } as const;
 
 export const FINAL_QUESTIONS = 12;

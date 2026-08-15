@@ -1,7 +1,7 @@
 "use client";
 
 // The classroom shell: a persistent left sidebar for every signed-in
-// /learn page — wordmark, section nav, course list with live progress,
+// /learn page: wordmark, section nav, course list with live progress,
 // account row. The unit player keeps its own immersive layout (it has
 // a lesson sidebar of its own), and signed-out visitors just get the
 // gate, full width.
@@ -26,12 +26,12 @@ export default function Classroom({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const lms = useLms();
 
-  // /learn/[course]/[unit] is the player — three segments, minus the
+  // /learn/[course]/[unit] is the player: three segments, minus the
   // named depth-2 rooms which can never collide with a course slug.
   const segs = pathname.split("/").filter(Boolean);
   const isPlayer = segs.length === 3;
 
-  // On phones the sidebar is a horizontal scroll bar — keep the active
+  // On phones the sidebar is a horizontal scroll bar. Keep the active
   // room visible. block: "nearest" makes this a no-op vertically. The
   // ready flag matters: on first load the shell mounts only after auth
   // loads, without a pathname change.
@@ -42,13 +42,13 @@ export default function Classroom({ children }: { children: React.ReactNode }) {
       ?.scrollIntoView({ block: "nearest", inline: "center" });
   }, [pathname, ready]);
 
-  // While Acting As someone, a banner rides above everything — the
-  // player included — so nobody forgets whose account they're driving.
+  // While Acting As someone, a banner rides above everything (the
+  // player included) so nobody forgets whose account they're driving.
   const banner =
     lms.actor && lms.auth ? (
       <div className="lms-actas-bar" role="status">
         <span className="lms-actas-text">
-          Acting as <strong>{lms.auth.name || lms.auth.email}</strong> — everything you do lands
+          Acting as <strong>{lms.auth.name || lms.auth.email}</strong>. Everything you do lands
           on their account.
         </span>
         <button className="lms-actas-return" onClick={() => lms.returnToSelf()}>
@@ -152,7 +152,7 @@ export default function Classroom({ children }: { children: React.ReactNode }) {
                 {lms.sync === "saving"
                   ? "Saving…"
                   : lms.sync === "error"
-                    ? "Offline — saved here"
+                    ? "Offline · saved here"
                     : level.name}
               </span>
             </span>

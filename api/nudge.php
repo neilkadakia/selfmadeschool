@@ -1,5 +1,5 @@
 <?php
-// Nudge emails — the school checks in, once a day, one email max per
+// Nudge emails: the school checks in, once a day, one email max per
 // student. Priorities: a streak about to die beats a waiting Final beats
 // an almost-finished course beats a quiet week. Runs from Hostinger cron
 // via secret key (same pattern as backup.php); the Global Administrator
@@ -17,8 +17,8 @@ const NUDGE_COOLDOWNS = [
     'winback' => 14,
 ];
 
-// No student hears from the school two days running, whatever the reason —
-// without this, the priority ladder would cycle a fresh nudge type daily.
+// No student hears from the school two days running, whatever the reason.
+// Without this, the priority ladder would cycle a fresh nudge type daily.
 const NUDGE_GLOBAL_COOLDOWN = 2;
 
 function nudge_key(): string {
@@ -30,7 +30,7 @@ function nudge_key(): string {
     return $ops['nudgeKey'];
 }
 
-// The school runs on Pacific time — day math must match the audience.
+// The school runs on Pacific time, so day math must match the audience.
 function school_day(int $offset = 0): string {
     $d = new DateTime('now', new DateTimeZone('America/Los_Angeles'));
     if ($offset !== 0) $d->modify("$offset day");
@@ -76,9 +76,9 @@ function pick_nudge(string $email, array $user, array $courseUnits, array $final
             'type' => 'streak',
             'course' => null,
             'subject' => "Your {$streak}-day streak dies at midnight",
-            'body' => "{$first} —\n\n"
+            'body' => "{$first},\n\n"
                 . "You've shown up {$streak} days in a row. Tonight that either becomes "
-                . ($streak + 1) . " or it becomes zero — and one unit takes about ten minutes.\n\n"
+                . ($streak + 1) . " or it becomes zero. One unit takes about ten minutes.\n\n"
                 . "Keep it alive: https://selfmadeschool.org/learn\n",
         ];
     }
@@ -94,8 +94,8 @@ function pick_nudge(string $email, array $user, array $courseUnits, array $final
         return [
             'type' => 'final',
             'course' => $slug,
-            'subject' => "Your Final is waiting — {$title}",
-            'body' => "{$first} —\n\n"
+            'subject' => "Your Final is waiting: {$title}",
+            'body' => "{$first},\n\n"
                 . "Every unit of {$title}: done. The only thing between you and a certificate "
                 . "that reads With Honors is twelve questions you already know the answers to.\n\n"
                 . "Sit the Final: https://selfmadeschool.org/learn/final/?course={$slug}\n",
@@ -116,8 +116,8 @@ function pick_nudge(string $email, array $user, array $courseUnits, array $final
             'type' => 'almost',
             'course' => $slug,
             'subject' => "{$left} unit" . ($left === 1 ? '' : 's') . " from your certificate",
-            'body' => "{$first} —\n\n"
-                . "{$n} of {$total} units of {$title} — that's the hard part, already behind you. "
+            'body' => "{$first},\n\n"
+                . "{$n} of {$total} units of {$title}: that's the hard part, already behind you. "
                 . "{$left} more and the certificate has your name on it.\n\n"
                 . "Finish it: https://selfmadeschool.org/learn/{$slug}\n",
         ];
@@ -130,9 +130,9 @@ function pick_nudge(string $email, array $user, array $courseUnits, array $final
             'type' => 'winback',
             'course' => null,
             'subject' => 'Class is still in session',
-            'body' => "{$first} —\n\n"
-                . "It's been a week. No grades, no guilt — that's the whole point of this school — "
-                . "but the version of you who enrolled had a reason. One unit, ten minutes, tonight?\n\n"
+            'body' => "{$first},\n\n"
+                . "It's been a week. No grades, no guilt. That's the whole point of this school. "
+                . "But the version of you who enrolled had a reason. One unit, ten minutes, tonight?\n\n"
                 . "Pick up where you left off: https://selfmadeschool.org/learn\n",
         ];
     }
@@ -157,7 +157,7 @@ function run_nudges(bool $dry): array {
         }
         $nudge = pick_nudge($email, $user, $courseUnits, $finals, $log[$email] ?? []);
         if ($nudge === null) continue;
-        $footer = "\n—\nSelf Made School · selfmadeschool.org\n"
+        $footer = "\n-- \nSelf Made School · selfmadeschool.org\n"
             . "Turn these emails off any time: https://selfmadeschool.org/learn/profile\n";
         if (!$dry) {
             $headers = "From: Self Made School <noreply@selfmadeschool.org>\r\n"

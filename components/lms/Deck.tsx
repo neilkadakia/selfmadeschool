@@ -1,6 +1,6 @@
 "use client";
 
-// Flashcard deck — tap to flip, work through the stack once to finish it.
+// Flashcard deck: tap to flip, work through the stack once to finish it.
 
 import { useState } from "react";
 import type { Flashcard } from "@/lib/lms";

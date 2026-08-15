@@ -1,5 +1,5 @@
 // The student portrait: a layered flat-sticker SVG built from the
-// avatar config plus whatever gear is equipped. Pure and prop-driven —
+// avatar config plus whatever gear is equipped. Pure and prop-driven:
 // safe anywhere, from the 34px sidebar chip to the Arena. Pass an aura
 // tier and the figure visibly powers up: glow, sparks, halo.
 
@@ -16,7 +16,7 @@ import {
 
 const INK = "#14141a";
 
-// Four-point spark, drawn at the origin — position with transform.
+// Four-point spark, drawn at the origin. Position with transform.
 function Spark({ x, y, s, color, i }: { x: number; y: number; s: number; color: string; i: number }) {
   return (
     <path
@@ -71,23 +71,23 @@ function Aura({ tier, uid }: { tier: number; uid: string }) {
 
 function Hair({ style, color }: { style: number; color: string }) {
   switch (style) {
-    case 0: // Buzz — tight cap
+    case 0: // Buzz: tight cap
       return <path d="M38 34 Q38 16 60 16 Q82 16 82 34 L82 36 Q71 26 60 26 Q49 26 38 36 Z" fill={color} />;
-    case 1: // Quiff — cap with a front swoop
+    case 1: // Quiff: cap with a front swoop
       return (
         <path
           d="M36 38 Q34 14 62 14 Q84 14 84 36 L84 40 Q80 30 72 28 Q76 22 70 18 Q60 24 46 26 Q38 30 36 38 Z"
           fill={color}
         />
       );
-    case 2: // Curls — three bumps
+    case 2: // Curls: three bumps
       return (
         <path
           d="M36 38 Q34 26 42 22 Q42 12 54 14 Q60 8 68 14 Q80 12 80 22 Q86 26 84 38 Q78 28 68 28 Q60 24 52 28 Q42 28 36 38 Z"
           fill={color}
         />
       );
-    case 3: // Long — falls past the shoulders
+    case 3: // Long: falls past the shoulders
       return (
         <path
           d="M34 62 Q30 16 60 14 Q90 16 86 62 L80 62 Q84 34 76 28 Q66 24 54 26 Q40 30 40 44 L40 62 Z M34 62 Q36 66 42 66 L40 50 Z M86 62 Q84 66 78 66 L80 50 Z"
@@ -249,8 +249,8 @@ function Helmet({ id }: { id: string }) {
   }
 }
 
-// A gear item alone, cropped out of the portrait coordinate space —
-// the Locker uses these as shop icons so you can see what you're buying.
+// A gear item alone, cropped out of the portrait coordinate space.
+// The Locker uses these as shop icons so you can see what you're buying.
 const ICON_VIEW: Record<GearSlot, string> = {
   weapon: "74 22 50 82",
   shield: "2 60 44 56",

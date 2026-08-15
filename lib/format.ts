@@ -1,9 +1,9 @@
-// US-format display helpers — house rule: storage stays ISO
+// US-format display helpers. House rule: storage stays ISO
 // (yyyy-mm-dd, RFC timestamps), but everything a person SEES uses
 // US formats: phones as +1 (949) 201-9160, dates as MM-DD-YYYY.
 
 // Full-treatment formatting for US numbers (10 digits, or 11 with a
-// leading 1). Anything else — foreign codes, short fragments — is
+// leading 1). Anything else (foreign codes, short fragments) is
 // returned as typed, whitespace tidied, never mangled.
 export function formatPhone(raw: string): string {
   const trimmed = raw.replace(/\s+/g, " ").trim();

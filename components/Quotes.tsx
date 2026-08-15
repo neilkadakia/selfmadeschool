@@ -1,6 +1,6 @@
 "use client";
 
-// Real student quotes, fetched from the API — only admin-approved lines
+// Real student quotes, fetched from the API. Only admin-approved lines
 // ever render. If none exist yet, this renders nothing at all.
 
 import { useEffect, useState } from "react";
@@ -36,7 +36,7 @@ export default function Quotes() {
           )}
           <p>&quot;{q.text}&quot;</p>
           <cite>
-            — {q.name.split(" ")[0]}
+            {q.name.split(" ")[0]}
             {q.context ? ` · ${q.context}` : ""}
           </cite>
         </blockquote>

@@ -63,7 +63,7 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
   const [sideOpen, setSideOpen] = useState(false);
   const [noteSaved, setNoteSaved] = useState(false);
 
-  // On phones the syllabus is a full-screen sheet — lock the page behind it.
+  // On phones the syllabus is a full-screen sheet, so lock the page behind it.
   useEffect(() => {
     document.body.style.overflow = sideOpen ? "hidden" : "";
     return () => {
@@ -170,14 +170,14 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
                   </svg>
                 </div>
               ) : (
-                <p className="lms-muted">Video in production — the written lesson above has you covered.</p>
+                <p className="lms-muted">Video in production. The written lesson above has you covered.</p>
               )}
             </section>
 
             <section className="lms-section" id="quiz">
               <h2 className="lms-section-h">Knowledge check</h2>
               <p className="lms-section-sub">
-                Not a pop quiz — nothing is graded, and you can retake it forever. It exists so you
+                Not a pop quiz. Nothing is graded, and you can retake it forever. It exists so you
                 know what stuck.
               </p>
               <Quiz
@@ -191,7 +191,7 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
             <section className="lms-section">
               <h2 className="lms-section-h">Flashcards</h2>
               <p className="lms-section-sub">
-                The unit in six cards — the version that stays with you after the tab closes.
+                The unit in six cards: the version that stays with you after the tab closes.
               </p>
               <Deck
                 cards={lesson.cards}
@@ -211,7 +211,7 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
               </p>
               <p className="panel-body">
                 This unit is chapter-first: the full treatment lives in the book, and the video is
-                in production. The blurb version — {unit.blurb.toLowerCase()}
+                in production. The blurb version: {unit.blurb.toLowerCase()}
               </p>
             </div>
             <div className="panel panel--watch">
@@ -232,7 +232,7 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
           <textarea
             key={`${noteKey}:${loaded}`}
             className="lms-notes"
-            placeholder={"Write it in your own words — that's when it sticks."}
+            placeholder={"Write it in your own words. That's when it sticks."}
             defaultValue={state.notes[noteKey] ?? ""}
             onChange={() => setNoteSaved(false)}
             onBlur={(e) => {
@@ -269,7 +269,7 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
             </Link>
           ) : (
             <Link href={`/learn/${courseSlug}`} className="unit-nav-link">
-              Finish — Back to Course →
+              Finish · Back to Course →
             </Link>
           )}
         </nav>
