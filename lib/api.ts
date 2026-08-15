@@ -174,6 +174,39 @@ export async function apiLeaderboard(token: string) {
   return call("progress.php?leaderboard=1", { token });
 }
 
+// Office Hours: live sessions with seats and a self-promoting waitlist.
+export type Session = {
+  id: string;
+  title: string;
+  blurb: string;
+  startsAt: string;
+  durationMin: number;
+  capacity: number;
+  seats: number;
+  waiting: number;
+  host: string;
+  you: "in" | "waitlist" | null;
+  waitSpot: number | null;
+  link?: string;
+  rsvps?: string[]; // faculty only
+  waitlist?: string[]; // faculty only
+};
+
+export async function apiSessions(token: string) {
+  return call("sessions.php", { token });
+}
+
+export async function apiSessionAct(token: string, action: "rsvp" | "cancel" | "delete", id: string) {
+  return call("sessions.php", { method: "POST", token, body: { action, id } });
+}
+
+export async function apiSessionCreate(
+  token: string,
+  s: { title: string; blurb: string; startsAt: string; durationMin: number; capacity: number; link: string }
+) {
+  return call("sessions.php", { method: "POST", token, body: { action: "create", ...s } });
+}
+
 // Study Group: one discussion thread per unit.
 export type DiscussPost = {
   id: string;

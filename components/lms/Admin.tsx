@@ -29,6 +29,10 @@ import {
   apiBackupRun,
   apiNudgeInfo,
   apiNudgeRun,
+  apiSessions,
+  apiSessionAct,
+  apiSessionCreate,
+  type Session,
   type Role,
 } from "@/lib/api";
 import { COURSES, courseUnits } from "@/lib/lms";
@@ -105,6 +109,15 @@ export default function Admin() {
   const [pwCurrent, setPwCurrent] = useState("");
   const [pwNext, setPwNext] = useState("");
 
+  // Office Hours scheduling
+  const [sessions, setSessions] = useState<Session[] | null>(null);
+  const [sTitle, setSTitle] = useState("");
+  const [sWhen, setSWhen] = useState("");
+  const [sDuration, setSDuration] = useState("60");
+  const [sCapacity, setSCapacity] = useState("12");
+  const [sLink, setSLink] = useState("");
+  const [sBlurb, setSBlurb] = useState("");
+
   useEffect(() => {
     if (!token || myRank < ROLE_RANK.educator) return;
     void apiClassOverview(token).then((r) => {
@@ -112,6 +125,9 @@ export default function Admin() {
     });
     void apiBulletinList(token).then((r) => {
       if (r.ok) setNotes(r.data.notes as Note[]);
+    });
+    void apiSessions(token).then((r) => {
+      if (r.ok) setSessions(r.data.sessions as Session[]);
     });
     void apiUsersList(token).then((r) => {
       if (r.ok) setStudents(r.data.users as Student[]);
@@ -231,6 +247,30 @@ export default function Admin() {
       if (r.ok) setNotes(r.data.notes as Note[]);
     } else {
       flash((res.data.error as string) ?? "Could not pin the note.");
+    }
+  };
+
+  const createSession = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!sWhen) return;
+    const res = await apiSessionCreate(token, {
+      title: sTitle.trim(),
+      blurb: sBlurb.trim(),
+      startsAt: new Date(sWhen).toISOString(),
+      durationMin: parseInt(sDuration, 10) || 60,
+      capacity: parseInt(sCapacity, 10) || 12,
+      link: sLink.trim(),
+    });
+    if (res.ok) {
+      flash("On the calendar. Students see it on their desk now.");
+      setSTitle("");
+      setSWhen("");
+      setSLink("");
+      setSBlurb("");
+      const r = await apiSessions(token);
+      if (r.ok) setSessions(r.data.sessions as Session[]);
+    } else {
+      flash((res.data.error as string) ?? "Could not schedule that.");
     }
   };
 
@@ -373,6 +413,98 @@ export default function Admin() {
                 />
                 <button className="btn btn--solid lms-login-btn" type="submit">
                   Pin to the Bulletin
+                </button>
+              </form>
+            </section>
+
+            <section className="lms-section">
+              <h2 className="lms-section-h">Office Hours</h2>
+              <p className="lms-section-sub">
+                Schedule a live session with real seats. Students RSVP until it&apos;s full, then a
+                waitlist takes over — the server emails whoever gets promoted when a seat opens.
+                The join link only ever goes to seat holders.
+              </p>
+              {sessions && sessions.length > 0 && (
+                <div className="lms-admin-table">
+                  {sessions.map((s) => (
+                    <div key={s.id} className="lms-admin-row lms-bulletin-row">
+                      <span className="lms-admin-name">
+                        {s.title} — {usDate(s.startsAt)}{" "}
+                        {new Date(s.startsAt).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}
+                      </span>
+                      <span className="lms-admin-meta">
+                        {s.seats}/{s.capacity} in · {s.waiting} waiting
+                      </span>
+                      <button
+                        className="lms-signout"
+                        onClick={async () => {
+                          const r = await apiSessionAct(token, "delete", s.id);
+                          if (r.ok) {
+                            setSessions((prev) => prev!.filter((x) => x.id !== s.id));
+                            flash("Session cancelled — seat holders were told.");
+                          }
+                        }}
+                      >
+                        Take Down
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <form className="lms-admin-form" onSubmit={createSession}>
+                <input
+                  className="lms-cert-name"
+                  placeholder="Title — e.g. Office Hours: Money Questions"
+                  required
+                  minLength={3}
+                  maxLength={80}
+                  value={sTitle}
+                  onChange={(e) => setSTitle(e.target.value)}
+                />
+                <div className="lms-form-row">
+                  <input
+                    className="lms-cert-name"
+                    type="datetime-local"
+                    required
+                    value={sWhen}
+                    onChange={(e) => setSWhen(e.target.value)}
+                  />
+                  <input
+                    className="lms-cert-name"
+                    type="number"
+                    min={15}
+                    max={240}
+                    placeholder="Minutes"
+                    value={sDuration}
+                    onChange={(e) => setSDuration(e.target.value)}
+                  />
+                  <input
+                    className="lms-cert-name"
+                    type="number"
+                    min={1}
+                    max={500}
+                    placeholder="Seats"
+                    required
+                    value={sCapacity}
+                    onChange={(e) => setSCapacity(e.target.value)}
+                  />
+                </div>
+                <input
+                  className="lms-cert-name"
+                  type="url"
+                  placeholder="Join link (optional — Meet, Zoom, wherever class happens)"
+                  value={sLink}
+                  onChange={(e) => setSLink(e.target.value)}
+                />
+                <input
+                  className="lms-cert-name"
+                  placeholder="One-line blurb (optional)"
+                  maxLength={240}
+                  value={sBlurb}
+                  onChange={(e) => setSBlurb(e.target.value)}
+                />
+                <button className="btn btn--solid lms-login-btn" type="submit">
+                  Put It on the Calendar
                 </button>
               </form>
             </section>

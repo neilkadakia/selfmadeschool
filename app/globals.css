@@ -2938,6 +2938,108 @@ html.lms-light .lms-do .lms-notes::placeholder {
   cursor: pointer;
 }
 
+/* Office Hours — the desk's live-session card. */
+.lms-oh {
+  margin-top: 28px;
+  border: 1px solid rgba(242, 238, 227, 0.16);
+  border-radius: 22px;
+  padding: 24px;
+}
+
+.lms-oh-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 16px 0;
+  border-top: 1px solid rgba(242, 238, 227, 0.12);
+}
+
+.lms-oh-when {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin: 0 0 6px;
+}
+
+.lms-oh-title {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  margin: 0 0 4px;
+}
+
+.lms-oh-blurb {
+  margin: 0 0 8px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+}
+
+.lms-oh-seats {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted-on-ink);
+}
+
+.lms-oh-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.lms-oh-state {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--acc);
+  white-space: nowrap;
+}
+
+.lms-oh-btn {
+  white-space: nowrap;
+}
+
+.lms-oh-cancel {
+  background: none;
+  border: none;
+  padding: 6px 0;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted-on-ink);
+  text-decoration: underline;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+html.lms-light .lms-oh {
+  border-color: rgba(14, 14, 18, 0.18);
+}
+
+html.lms-light .lms-oh-row {
+  border-color: rgba(14, 14, 18, 0.12);
+}
+
+html.lms-light .lms-oh-when,
+html.lms-light .lms-oh-state {
+  color: #157a3e;
+}
+
+@media (max-width: 640px) {
+  .lms-oh-row {
+    flex-direction: column;
+  }
+
+  .lms-oh-side {
+    align-items: flex-start;
+  }
+}
+
 /* Study Group — the unit's discussion thread. */
 .lms-sg {
   border-top: 1px solid rgba(242, 238, 227, 0.12);
@@ -5452,6 +5554,8 @@ html.lms-light .classroom .lms-signout {
 
   .learn-cols .lms-continue { order: 1; }
   .learn-cols .lms-bulletin { order: 2; }
+  /* Same order as the bulletin: DOM position keeps it directly after. */
+  .learn-cols .lms-oh { order: 2; }
   .learn-cols .lms-plan { order: 3; margin-top: 14px; }
   .learn-cols .lms-stats { order: 4; margin-top: 14px; }
   .learn-cols .lms-foryou { order: 5; }

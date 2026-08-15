@@ -10,6 +10,7 @@ import AvatarStudio from "./AvatarStudio";
 import StudentId from "./StudentId";
 import Bulletin from "./Bulletin";
 import CommandK from "./CommandK";
+import OfficeHours from "./OfficeHours";
 import FeedbackCard from "./FeedbackCard";
 import HonorRoll from "./HonorRoll";
 import RewardToast from "./RewardToast";
@@ -153,6 +154,8 @@ export default function LearnHome() {
             </Link>
 
             <Bulletin />
+
+            <OfficeHours />
 
             {totalDone > 0 && (
               <div className="lms-foryou">
