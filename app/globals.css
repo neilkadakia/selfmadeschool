@@ -357,12 +357,6 @@ p {
 }
 
 @media (max-width: 880px) {
-  /* Below this the pills wrap under the paragraph, and a wrapped row starts
-     from the left rather than the right edge the desktop row pushes them to. */
-  .hero-ctas {
-    margin-left: 0;
-  }
-
   .nav-links {
     gap: 16px;
   }
@@ -746,9 +740,13 @@ p {
     right: 4%;
   }
 
+  /* Up top opposite the quiz sticker. Down by the copy it landed on top of
+     the paragraph once the paragraph got its full width back. */
   .sticker--free {
-    bottom: 26%;
-    right: 8%;
+    top: 9%;
+    bottom: auto;
+    left: 6%;
+    right: auto;
   }
 
   /* Phones carry the non-academic line in the hero copy instead. */
@@ -814,6 +812,18 @@ p {
   margin-left: auto;
   /* Pills keep their natural width on phones; the second drops a row. */
   flex-wrap: wrap;
+}
+
+/* Has to sit here, below the base rule: an override of the same specificity
+   higher up the file loses the cascade (the same trap the sticker rules fell
+   into). Below 880 the pills wrap under the paragraph, so they start from the
+   left and take the whole line, which lets the second pill drop under the
+   first instead of running off the screen. */
+@media (max-width: 880px) {
+  .hero-ctas {
+    flex: 1 1 100%;
+    margin-left: 0;
+  }
 }
 
 .btn {
@@ -2585,6 +2595,30 @@ p {
   color: var(--acc);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* Phones: the About page and the legal pages were left out of the small-screen
+   block up the file (and could not be added to it, since these rules are
+   declared later and would win anyway). Same 20px gutter and the same tighter
+   vertical rhythm the home sections use. */
+@media (max-width: 640px) {
+  .about-hero {
+    padding: 120px 20px 60px;
+  }
+
+  .mission,
+  .beliefs,
+  .founder {
+    padding: 76px 20px 84px;
+  }
+
+  .about-cta {
+    padding: 80px 20px;
+  }
+
+  .legal {
+    padding: 130px 20px 90px;
+  }
 }
 
 /* ---------- Learn (LMS) ---------- */

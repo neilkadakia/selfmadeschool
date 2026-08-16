@@ -570,8 +570,10 @@ export default function Home() {
         <div className="container nl-wrap">
           <div data-reveal className="nl-copy">
             <p className="kicker kicker--acc">Extra Credit</p>
+            {/* The space before the break matters: .br-wide is display:none on
+                phones, and without it the two lines run together as "yourinbox". */}
             <h2 className="h2 nl-h2">
-              One lesson in your
+              One lesson in your{" "}
               <br className="br-wide" />
               inbox, every month.
             </h2>
@@ -592,7 +594,7 @@ export default function Home() {
           Pre-launch · doors open soon
         </p>
         <h2 data-reveal className="h2 h2--enroll">
-          Your first adult
+          Your first adult{" "}
           <br className="br-wide" />
           decision? This one.
         </h2>
@@ -606,7 +608,7 @@ export default function Home() {
         </div>
         <p data-reveal className="enroll-note">
           The founding class is invite-only while we finish building. The waitlist is the line.
-          Free when it opens. No credit card. Ironically.
+          Free when it opens. No credit card, ironically.
         </p>
       </section>
     </div>
