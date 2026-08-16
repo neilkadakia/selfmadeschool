@@ -1913,7 +1913,9 @@ p {
   padding: 34px 30px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* Title block in the top third, foot pinned to the sunrise. Centering the
+     middle let the sub-line sink into the dawn on the shorter mobile cover. */
+  justify-content: flex-start;
   position: relative;
   transform: rotate(-4deg);
   box-shadow: 0 30px 70px rgba(14, 14, 18, 0.35);
@@ -1947,6 +1949,65 @@ p {
   box-shadow: inset -2px 0 0 rgba(14, 14, 18, 0.15);
 }
 
+/* Graph-paper ruling on the upper half of the cover (it is a schoolbook),
+   fading out before the sunrise takes over. */
+.book-rule {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: linear-gradient(rgba(14, 14, 18, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 14, 18, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  -webkit-mask-image: linear-gradient(#000 46%, transparent 74%);
+  mask-image: linear-gradient(#000 46%, transparent 74%);
+}
+
+/* The dawn underline at poster scale: concentric sunrise bands coming up over
+   the bottom edge. Hard stops, so it prints like silkscreen, not a glow. */
+.book-dawn {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40%;
+  border-radius: 0 0 16px 8px;
+  background: radial-gradient(
+    130% 105% at 50% 118%,
+    var(--coral) 0 30%,
+    var(--lime) 30% 47%,
+    #2bb35c 47% 62%,
+    rgba(43, 179, 92, 0.16) 62% 74%,
+    transparent 74%
+  );
+}
+
+/* A real bookmark, hanging over the top edge. */
+.book-ribbon {
+  position: absolute;
+  top: -8px;
+  right: 36px;
+  width: 26px;
+  height: 74px;
+  background: var(--vio);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
+  box-shadow: 0 4px 10px rgba(14, 14, 18, 0.18);
+}
+
+/* The cover art paints first; everything written on it stacks above. */
+.book-brand,
+.book-mid,
+.book-foot {
+  position: relative;
+}
+
+.book-mid {
+  margin-top: 26px;
+}
+
+.book-foot {
+  margin-top: auto;
+}
+
 .book-brand {
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
@@ -1957,9 +2018,27 @@ p {
 .book-num {
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
-  font-size: 96px;
+  font-size: 108px;
   line-height: 1;
+  letter-spacing: -0.03em;
   color: var(--ink);
+  /* Printed, not painted: same fade the grade numerals wear, with the same
+     padding so background-clip does not shave the 3. */
+  display: inline-block;
+  padding-right: 0.08em;
+  background: linear-gradient(
+    170deg,
+    currentColor 30%,
+    color-mix(in srgb, currentColor 55%, transparent) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* The full-strength amber period, opting back out of the parent's clip. */
+.book-num .dot {
+  -webkit-text-fill-color: var(--coral);
 }
 
 .book-title {
@@ -1969,7 +2048,7 @@ p {
   line-height: 0.98;
   letter-spacing: -0.02em;
   text-transform: uppercase;
-  margin: 10px 0 12px;
+  margin: 6px 0 12px;
 }
 
 .book-sub {
@@ -1977,23 +2056,32 @@ p {
   line-height: 1.5;
   color: var(--muted-on-paper);
   margin: 0;
+  max-width: 24ch;
 }
 
+/* Sits down on the sunrise, so it carries ink at full strength. */
 .book-foot {
-  display: flex;
-  align-items: center;
-  gap: 10px;
   font-size: 12px;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  opacity: 0.7;
+  color: var(--ink);
 }
 
-.book-mark {
-  width: 64px;
-  height: 8px;
-  flex: none;
-  overflow: visible;
+/* The cover shrinks to 70vw on phones; the type shrinks with it so the
+   sub-line clears the sunrise. */
+@media (max-width: 640px) {
+  .book-num {
+    font-size: 84px;
+  }
+
+  .book-title {
+    font-size: 28px;
+  }
+
+  .book-mid {
+    margin-top: 18px;
+  }
 }
 
 .sticker--book {

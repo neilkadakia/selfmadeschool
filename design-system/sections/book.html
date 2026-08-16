@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 <style>
-  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; }
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; --lime: #B8C94F; }
   * { box-sizing: border-box; }
   body { margin: 0; font-family: "Instrument Sans", sans-serif; background: var(--coral); color: var(--ink); padding: 40px 32px; overflow-x: hidden; }
   a { text-decoration: none; }
@@ -25,7 +25,7 @@
   .btn--outline-ink { border: 1.5px solid rgba(14,14,18,0.35); color: var(--ink); }
   .btn--outline-ink:hover { border-color: var(--ink); }
   .stage { position: relative; display: flex; justify-content: center; }
-  .book { width: min(280px, 60vw); aspect-ratio: 5 / 7; background: var(--paper); color: var(--ink); border-radius: 8px 16px 16px 8px; padding: 30px 26px; display: flex; flex-direction: column; justify-content: space-between; position: relative; transform: rotate(-4deg); box-shadow: 0 30px 70px rgba(14,14,18,0.35); transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; }
+  .book { --acc: #2bb35c; width: min(280px, 60vw); aspect-ratio: 5 / 7; background: var(--paper); color: var(--ink); border-radius: 8px 16px 16px 8px; padding: 30px 26px; display: flex; flex-direction: column; justify-content: flex-start; position: relative; transform: rotate(-4deg); box-shadow: 0 30px 70px rgba(14,14,18,0.35); transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; }
   .book:hover { transform: rotate(0deg) translateY(-8px); box-shadow: 0 40px 80px rgba(14,14,18,0.4); }
   .book::before { content: ""; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: rgba(14,14,18,0.15); }
   .book::after { content: ""; position: absolute; right: -8px; top: 10px; bottom: 6px; width: 8px; background: #fff; border-radius: 0 4px 4px 0; box-shadow: inset -2px 0 0 rgba(14,14,18,0.15); }
@@ -34,12 +34,15 @@
   .wordmark .school { color: var(--acc); }
   .wordmark .dash { color: var(--acc); font-size: 0.62em; vertical-align: 0.1em; }
   .wordmark svg { position: absolute; left: 0; bottom: 0; width: 100%; height: 5px; overflow: visible; }
-  .num { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 84px; line-height: 1; color: var(--ink); }
-  .num .dot { color: var(--coral); }
-  .title { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 30px; line-height: 0.98; letter-spacing: -0.02em; text-transform: uppercase; margin: 10px 0 12px; }
-  .sub { font-size: 13px; line-height: 1.5; color: rgba(14,14,18,0.75); margin: 0; }
-  .foot { display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; }
-  .book-mark { width: 58px; height: 8px; flex: none; overflow: visible; }
+  .book-rule { position: absolute; inset: 0; border-radius: inherit; background-image: linear-gradient(rgba(14,14,18,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(14,14,18,0.06) 1px, transparent 1px); background-size: 28px 28px; -webkit-mask-image: linear-gradient(#000 46%, transparent 74%); mask-image: linear-gradient(#000 46%, transparent 74%); }
+  .book-dawn { position: absolute; left: 0; right: 0; bottom: 0; height: 40%; border-radius: 0 0 16px 8px; background: radial-gradient(130% 105% at 50% 118%, var(--coral) 0 30%, var(--lime) 30% 47%, #2bb35c 47% 62%, rgba(43,179,92,0.16) 62% 74%, transparent 74%); }
+  .book-ribbon { position: absolute; top: -8px; right: 36px; width: 26px; height: 74px; background: var(--vio); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%); box-shadow: 0 4px 10px rgba(14,14,18,0.18); }
+  .book-brand, .book .mid, .foot { position: relative; } .book .mid { margin-top: 24px; } .book .foot { margin-top: auto; }
+  .num { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 96px; line-height: 1; letter-spacing: -0.03em; color: var(--ink); display: inline-block; padding-right: 0.08em; background: linear-gradient(170deg, currentColor 30%, color-mix(in srgb, currentColor 55%, transparent) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .num .dot { color: var(--coral); -webkit-text-fill-color: var(--coral); }
+  .title { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 30px; line-height: 0.98; letter-spacing: -0.02em; text-transform: uppercase; margin: 6px 0 12px; }
+  .sub { font-size: 13px; line-height: 1.5; color: rgba(14,14,18,0.75); margin: 0; max-width: 24ch; }
+  .foot { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
   .sticker { position: absolute; top: -14px; right: 2%; background: var(--vio); color: #fff; padding: 10px 20px; border-radius: 999px; font-weight: 700; font-size: 14px; transform: rotate(7deg); letter-spacing: 0.04em; }
 </style>
 </head>
@@ -54,13 +57,16 @@
     </div>
     <div class="stage">
       <div class="book">
+        <span class="book-rule" aria-hidden="true"></span>
+        <span class="book-dawn" aria-hidden="true"></span>
+        <span class="book-ribbon" aria-hidden="true"></span>
         <span class="book-brand"><span class="wordmark">SELF<span class="dash">-</span>MADE <span class="school">SCHOOL</span><svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="dawn-cover-card" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><path d="M6,15 C90,4 230,4 294,11" stroke="url(#dawn-cover-card)" stroke-width="8" fill="none" stroke-linecap="round"/></svg></span></span>
-        <div>
+        <div class="mid">
           <span class="num">13<span class="dot">.</span></span>
           <h3 class="title">The 13th Grade</h3>
           <p class="sub">The missing textbook for your first decade of adulthood.</p>
         </div>
-        <div class="foot"><svg class="book-mark" viewBox="0 0 300 20" aria-hidden="true"><defs><linearGradient id="dawn-book-card" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><path d="M6,15 C90,4 230,4 294,11" stroke="url(#dawn-book-card)" stroke-width="8" fill="none" stroke-linecap="round"/></svg><span>First Edition · Class of '26</span></div>
+        <div class="foot"><span>First Edition · Class of '26</span></div>
       </div>
       <div class="sticker">parent approved ✓</div>
     </div>

@@ -516,11 +516,17 @@ export default function Home() {
             </div>
           </div>
           <div className="book-stage">
+            {/* The cover carries the school's whole language: graph paper up
+                top, the dawn underline grown into a sunrise across the bottom,
+                a ribbon so it reads as an object. */}
             <div data-card className="book-cover">
+              <span className="book-rule" aria-hidden="true" />
+              <span className="book-dawn" aria-hidden="true" />
+              <span className="book-ribbon" aria-hidden="true" />
               <span className="book-brand">
                 <Wordmark gid="dawn-bookcover" />
               </span>
-              <div>
+              <div className="book-mid">
                 <span className="book-num">
                   13<span className="dot">.</span>
                 </span>
@@ -528,22 +534,6 @@ export default function Home() {
                 <p className="book-sub">The missing textbook for your first decade of adulthood.</p>
               </div>
               <div className="book-foot">
-                <svg className="book-mark" viewBox="0 0 300 20" aria-hidden="true">
-                  <defs>
-                    <linearGradient id="dawn-book" x1="0" y1="0" x2="1" y2="0">
-                      <stop offset="0" stopColor="#F5A83C" />
-                      <stop offset="0.55" stopColor="#B8C94F" />
-                      <stop offset="1" stopColor="#43DE7B" />
-                    </linearGradient>
-                  </defs>
-                  <path
-                    d="M6,15 C90,4 230,4 294,11"
-                    stroke="url(#dawn-book)"
-                    strokeWidth="8"
-                    fill="none"
-                    strokeLinecap="round"
-                  />
-                </svg>
                 <span>First Edition · Class of &apos;26</span>
               </div>
             </div>
