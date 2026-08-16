@@ -735,35 +735,19 @@ p {
 /* After the base rules so they actually win: an earlier copy of these
    overrides sat above the bases and silently lost the cascade.
 
-   On phones the stickers stop floating. Every version of "pin it near the top
-   by percentage" ends up under the fixed nav on a short screen, and every
-   version of "pin it lower" ends up on the copy. So they become a row in the
-   flow above the kicker: nothing to collide with, at any height. */
+   The hero stickers come off entirely on phones. Floated near the top they
+   land under the fixed nav on a short screen, floated lower they land on the
+   copy, and in the flow they push the headline down the page. The hero says
+   all three things in its own paragraph anyway. This only touches the hero
+   set: the book cover's sticker is not in that wrapper and keeps floating. */
 @media (max-width: 640px) {
   .stickers {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 0 0 22px;
+    display: none;
   }
 
   .sticker {
-    position: static;
     font-size: 12px;
-    padding: 8px 15px;
-  }
-
-  .sticker--quiz {
-    transform: rotate(-3deg);
-  }
-
-  .sticker--free {
-    transform: rotate(2deg);
-  }
-
-  .sticker--academic {
-    display: block;
-    transform: rotate(-2deg);
+    padding: 8px 16px;
   }
 }
 
