@@ -75,7 +75,7 @@ $doc = [
                     'items' => [
                         ['title' => 'The 13th Grade', 'body' => "The intro year. Mindset, money basics, and life's big calls. The foundations of running yourself. 24 units.", 'tone' => 'acc'],
                         ['title' => 'The 14th Grade', 'body' => "All money, all year. Handling it, understanding it, and making the right calls with it.", 'tone' => 'vio'],
-                        ['title' => 'The 15th Grade', 'body' => "The big decisions: career, place, people. How to actually think them through instead of guessing.", 'tone' => 'coral'],
+                        ['title' => 'The 15th Grade', 'body' => "Emotional intelligence, purpose, and the big decisions: career, place, people. How to actually think them through instead of guessing.", 'tone' => 'coral'],
                     ],
                 ],
                 [
