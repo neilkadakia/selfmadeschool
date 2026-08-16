@@ -2337,6 +2337,46 @@ p {
   color: var(--muted-on-paper);
 }
 
+/* The founder note: a plain column of paragraphs, because the point is that
+   somebody wrote this by hand for people he loves. */
+.founder {
+  padding: 110px 32px;
+}
+
+.founder-copy {
+  max-width: 660px;
+  margin: 34px 0 0;
+}
+
+.founder-copy p {
+  font-size: 17px;
+  line-height: 1.7;
+  margin: 0 0 20px;
+  color: var(--muted-on-paper);
+}
+
+/* Scoped so they outrank `.founder-copy p` without reaching for !important. */
+.founder-copy .founder-line {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 30px 0 26px;
+  color: var(--ink);
+}
+
+.founder-copy .founder-sign {
+  display: inline-block;
+  padding-top: 16px;
+  border-top: 1px solid rgba(14, 14, 18, 0.2);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
 .beliefs {
   background: var(--ink);
   padding: 110px 32px;

@@ -48,8 +48,9 @@ Same nav (About link highlighted green, links point back to Home anchors) and fo
 1. **Hero**: 82vh, "SM" watermark with parallax, kicker "★ About Self Made School", H1 "Nobody is born / knowing this stuff." ("this stuff" green), sub-paragraph max 560px.
 2. **Why we exist**: cream section, kicker (cobalt), H2 "Adulthood is a curriculum. Someone should teach it." (max 20ch), paragraph max 620px.
 3. **Three house rules**: ink section, three cards (min-height 260px; green / cobalt / amber). Each: numeral 01–03 (Bricolage 56px) + title 26px + body. Titles: "Plain English or nothing" / "Doing beats knowing" / "No shame in the syllabus".
-4. **Team quote**: centered feature blockquote, oversized dawn-gradient quote mark over display type at `clamp(30px, 4.6vw, 60px)`, closing sentence in the dawn gradient, cite under a hairline rule. "Nobody is behind. The ones who look like they have it together just found the manual sooner. **You're holding it now.**" with cite The Self Made School Team.
-5. **CTA**: green section, "Class starts whenever you do." + ink pill "Start With the 13th Grade" → Home `#enroll`.
+4. **Who we are**: cream section, kicker (cobalt), H2 "It started as a letter to three daughters.", a 660px column of plain paragraphs on the founder (Neil Kadakia, a father of three young daughters, writing down what he wished someone had handed him at eighteen), closing on a Bricolage line at `clamp(22px, 2.6vw, 30px)` in ink and a small uppercase signature under a hairline rule.
+5. **Team quote**: centered feature blockquote, oversized dawn-gradient quote mark over display type at `clamp(30px, 4.6vw, 60px)`, closing sentence in the dawn gradient, cite under a hairline rule. "Nobody is behind. The ones who look like they have it together just found the manual sooner. **You're holding it now.**" with cite The Self Made School Team.
+6. **CTA**: green section, "Class starts whenever you do." + ink pill "Start With the 13th Grade" → Home `#enroll`.
 
 ## Interactions & Behavior (GSAP 3.12.5 + ScrollTrigger)
 All animation uses GSAP; scroll-linked effects use ScrollTrigger.

@@ -146,6 +146,41 @@ export default function About() {
         </div>
       </section>
 
+      <section className="section-paper founder">
+        <div className="container">
+          <p data-reveal className="kicker kicker--vio">
+            Who we are
+          </p>
+          <h2 data-reveal className="h2 h2--mission">
+            It started as a letter to three daughters.
+          </h2>
+          <div className="founder-copy">
+            <p data-reveal>
+              Self Made School is the work of Neil Kadakia, a father of three young daughters. He
+              did not want them learning the important parts of life the way he did, late and
+              expensively, so he started writing them down.
+            </p>
+            <p data-reveal>
+              What came out was the thing he wished someone had handed him at eighteen. How money
+              actually works. What to say to yourself after you fail. How to make a decision you can
+              live with. Not a lecture. A manual, in plain English, written by someone who loves you.
+            </p>
+            <p data-reveal>
+              Then it stopped being about three daughters. Everyone graduates into this, and almost
+              nobody is handed the manual. So the letter became a school: open to anyone who wants
+              it, free for as long as we can keep it that way, and taught with the same care it was
+              written with.
+            </p>
+            <p data-reveal className="founder-line">
+              A love letter to three daughters, and to every young mind coming up behind them.
+            </p>
+            <p data-reveal className="founder-sign">
+              Neil Kadakia · Founder
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="note-section">
         <blockquote data-reveal className="quote quote--feature">
           <span className="quote-mark" aria-hidden="true">
