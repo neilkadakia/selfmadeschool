@@ -87,7 +87,7 @@ $doc = [
                     'title' => 'The method, four steps',
                     'items' => [
                         "Read. Every unit starts as a chapter of the book, on your own time.",
-                        "Watch. A short filmed piece per chapter, inside a unit that runs about 20 minutes start to finish.",
+                        "Watch. A five-minute animated video per chapter, inside a unit that runs about 20 minutes start to finish.",
                         "Do. A real challenge with your real numbers: build the budget, file the thing, make the call.",
                         "Flex. Badges, a final, and a certificate at the end of it.",
                     ],
@@ -195,7 +195,7 @@ $doc = [
                     'type' => 'list',
                     'title' => 'Not done yet, and known',
                     'items' => [
-                        "The filmed pieces. The structure expects them; they are not shot.",
+                        "The animated videos. The structure expects them; they are not made yet.",
                         "The remaining 36 units of writing.",
                         "Public launch. The classroom is invite-only and noindexed on purpose.",
                     ],
