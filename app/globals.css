@@ -693,6 +693,12 @@ p {
   z-index: 2;
 }
 
+/* No box of its own on wide screens: each sticker positions against the hero,
+   the way it always has. The phone rule below turns this into a real row. */
+.stickers {
+  display: contents;
+}
+
 .sticker {
   position: absolute;
   padding: 10px 20px;
@@ -727,31 +733,37 @@ p {
 }
 
 /* After the base rules so they actually win: an earlier copy of these
-   overrides sat above the bases and silently lost the cascade. */
+   overrides sat above the bases and silently lost the cascade.
+
+   On phones the stickers stop floating. Every version of "pin it near the top
+   by percentage" ends up under the fixed nav on a short screen, and every
+   version of "pin it lower" ends up on the copy. So they become a row in the
+   flow above the kicker: nothing to collide with, at any height. */
 @media (max-width: 640px) {
+  .stickers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 22px;
+  }
+
   .sticker {
+    position: static;
     font-size: 12px;
-    padding: 8px 16px;
+    padding: 8px 15px;
   }
 
-  /* Above the headline's box: at ≤360 the old 21% sat on the "OL" of SCHOOL. */
   .sticker--quiz {
-    top: 10%;
-    right: 4%;
+    transform: rotate(-3deg);
   }
 
-  /* Up top opposite the quiz sticker. Down by the copy it landed on top of
-     the paragraph once the paragraph got its full width back. */
   .sticker--free {
-    top: 9%;
-    bottom: auto;
-    left: 6%;
-    right: auto;
+    transform: rotate(2deg);
   }
 
-  /* Phones carry the non-academic line in the hero copy instead. */
   .sticker--academic {
-    display: none;
+    display: block;
+    transform: rotate(-2deg);
   }
 }
 
@@ -1517,10 +1529,16 @@ p {
 
 /* ---------- How It Works ---------- */
 
-/* Base state is a native swipe rail so the panels exist without JS and under
+/* Cream, not ink. The Grades lands on ink at its own bottom edge and Receipts
+   starts on ink, so a dark section here made three dark sections in a row with
+   nothing between them. Bright is the only choice that reads as an edge on
+   both sides, and it turns the pinned rail into the light moment in the middle
+   of the page.
+   Base state is a native swipe rail so the panels exist without JS and under
    prefers-reduced-motion; the GSAP pin sets overflow: hidden when it takes over. */
 .how {
-  background: var(--ink);
+  background: var(--paper);
+  color: var(--ink);
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x proximity;
@@ -1540,11 +1558,16 @@ p {
   padding: 100px max(32px, calc((100% - 1240px) / 2)) 0;
 }
 
+/* Growth green is unreadable on cream, so the section's green goes dark. */
+.how .kicker--acc {
+  color: #157a3e;
+}
+
 /* The direction cue is the arrow itself: it sets off to the right, where the
    steps travel, then turns down, which is the way you actually scroll. */
 .how-arrow {
   display: inline-block;
-  color: var(--acc);
+  color: #157a3e;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -1588,7 +1611,13 @@ p {
   align-items: stretch;
 }
 
+/* Same chrome as the grade cards: a rail across the top saying how far along
+   this step sits, a numeral that fades toward its baseline, and a shadow so
+   the panel lifts off the cream rather than lying on it. */
 .how-panel {
+  --rail: 20%;
+  position: relative;
+  overflow: hidden;
   width: min(42vw, 440px);
   scroll-snap-align: start;
   border-radius: 28px;
@@ -1598,6 +1627,34 @@ p {
   justify-content: space-between;
   gap: 28px;
   min-height: 360px;
+  box-shadow: 0 20px 44px rgba(14, 14, 18, 0.14);
+}
+
+.how-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: var(--rail);
+  background: currentColor;
+  opacity: 0.4;
+}
+
+.how-panel:nth-child(2) {
+  --rail: 40%;
+}
+
+.how-panel:nth-child(3) {
+  --rail: 60%;
+}
+
+.how-panel:nth-child(4) {
+  --rail: 80%;
+}
+
+.how-panel:nth-child(5) {
+  --rail: 100%;
 }
 
 .how-panel--acc {
@@ -1615,43 +1672,59 @@ p {
   color: var(--ink);
 }
 
-.how-panel--paper {
-  background: var(--paper);
+/* Was cream, which is the section's own ground now. */
+.how-panel--pink {
+  background: var(--pink);
   color: var(--ink);
 }
 
 .how-panel--ink {
   background: var(--ink);
   color: var(--paper);
-  border: 2px solid rgba(242, 238, 227, 0.35);
 }
 
-/* Number and icon sit together on the left, flush with the title and body
-   below, so the whole panel reads down one edge. */
+/* Numeral on the left margin, icon out on the right one, so the panel is
+   bracketed by the same two edges the text below sits between. The icon runs a
+   little shorter than the numeral so the numeral still leads. */
 .how-top {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 18px;
 }
 
 .how-icon {
-  width: 36px;
-  height: 36px;
+  width: 68px;
+  height: 68px;
   flex: none;
-  opacity: 0.9;
+  opacity: 0.55;
 }
 
 .how-num {
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
-  font-size: 84px;
+  font-size: 88px;
   line-height: 1;
+  letter-spacing: -0.03em;
+  /* Padding for the same reason as the grade numerals: background-clip paints
+     inside the box, and the negative tracking pulls it in tighter than the ink. */
+  display: inline-block;
+  padding-right: 0.08em;
+  background: linear-gradient(
+    170deg,
+    currentColor 24%,
+    color-mix(in srgb, currentColor 48%, transparent) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .how-title {
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
   font-size: 36px;
+  letter-spacing: -0.02em;
   margin: 0 0 10px;
 }
 
@@ -1660,6 +1733,11 @@ p {
   font-size: 17px;
   line-height: 1.55;
   max-width: 360px;
+  opacity: 0.78;
+}
+
+.how-panel--vio .how-body {
+  opacity: 0.88;
 }
 
 /* ---------- Receipts ---------- */
