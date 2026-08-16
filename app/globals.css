@@ -462,8 +462,10 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* Lines up with the 1240px container every section below uses. */
-  padding: 140px max(32px, calc((100% - 1240px) / 2)) 60px;
+  /* Full bleed on purpose: the home headline runs to the edge of the page
+     rather than sitting in the container the sections below it use. The About
+     hero overrides this, because that page reads as one column. */
+  padding: 140px 32px 60px;
   position: relative;
   overflow: hidden;
   /* A dome of light over the top of the page, so the ground has depth before
@@ -1762,56 +1764,6 @@ p {
   color: var(--acc);
 }
 
-/* The one line the About page is built around, so it gets the room: an
-   oversized dawn quote mark, display type at book-cover scale, and the closing
-   sentence in the gradient. */
-.quote--feature {
-  max-width: 1040px;
-}
-
-.quote-mark {
-  display: block;
-  font-family: var(--font-bricolage), sans-serif;
-  font-weight: 800;
-  font-size: 120px;
-  line-height: 0.7;
-  height: 58px;
-  background: linear-gradient(90deg, #f5a83c, #b8c94f, #43de7b);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.quote--feature p {
-  font-size: clamp(30px, 4.6vw, 60px);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.025em;
-  margin: 0 0 32px;
-  text-wrap: balance;
-}
-
-.quote-em {
-  background: linear-gradient(90deg, #f5a83c, #b8c94f, #43de7b);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.quote--feature cite {
-  display: inline-block;
-  padding-top: 18px;
-  border-top: 1px solid rgba(242, 238, 227, 0.16);
-  color: var(--muted-on-ink);
-}
-
-@media (max-width: 640px) {
-  .quote-mark {
-    font-size: 88px;
-    height: 42px;
-  }
-}
-
 /* ---------- The Book ---------- */
 
 .book-section {
@@ -2543,16 +2495,6 @@ p {
 
 .card--vio .rule-body {
   opacity: 0.85;
-}
-
-.note-section {
-  background: var(--ink);
-  padding: 20px 32px 120px;
-  border-top: 1px solid rgba(242, 238, 227, 0.1);
-}
-
-.note-section .quote {
-  margin: 80px auto 0;
 }
 
 .about-cta {

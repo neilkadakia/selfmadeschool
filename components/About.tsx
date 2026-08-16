@@ -190,19 +190,6 @@ export default function About() {
         </div>
       </section>
 
-      <section className="note-section">
-        <blockquote data-reveal className="quote quote--feature">
-          <span className="quote-mark" aria-hidden="true">
-            &ldquo;
-          </span>
-          <p>
-            Nobody is behind. The ones who look like they have it together just found the manual
-            sooner. <span className="quote-em">You&apos;re holding it now.</span>
-          </p>
-          <cite>The Self Made School Team</cite>
-        </blockquote>
-      </section>
-
       <section className="about-cta">
         <h2 data-reveal className="h2 h2--about-cta">
           Class starts whenever
