@@ -453,12 +453,17 @@ p {
 /* ---------- Hero ---------- */
 
 .hero {
+  /* Where the cursor light sits. Seeded in px so the tween that follows the
+     pointer keeps the unit it starts with. */
+  --mx: 640px;
+  --my: 340px;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 140px 32px 60px;
+  /* Lines up with the 1240px container every section below uses. */
+  padding: 140px max(32px, calc((100% - 1240px) / 2)) 60px;
   position: relative;
   overflow: hidden;
   /* A dome of light over the top of the page, so the ground has depth before
@@ -466,10 +471,14 @@ p {
   background: radial-gradient(135% 85% at 50% -5%, #1a1c33 0%, rgba(14, 14, 18, 0) 58%), var(--ink);
 }
 
-/* The field, back to front: graph paper (this is a school), two slow lights
-   drifting behind it, dawn coming up along the bottom edge to meet the green
-   marquee band, a vignette to hold the middle, and grain over all of it so the
-   gradients read as printed rather than rendered. */
+/* The field, back to front: graph paper (this is a school), a circle of
+   brighter ruling under the cursor, two slow lights drifting behind it, dawn
+   coming up along the bottom edge to meet the green marquee band, a vignette
+   to hold the middle, and grain over all of it so the gradients read as
+   printed rather than rendered.
+   The paper and the cursor light do not take the pointer parallax: they have
+   to stay in register with each other, and 1px ruling that slides around goes
+   soft. Only the light moves. */
 .hero-bg {
   position: absolute;
   inset: -10%;
@@ -477,17 +486,121 @@ p {
   pointer-events: none;
 }
 
-.hero-grid {
+/* Minor rule every 76px, major every fourth, like real graph paper. */
+.hero-grid,
+.hero-spot {
   position: absolute;
-  inset: 0;
-  /* Minor rule every 76px, major every fourth, like real graph paper. */
+  /* Equal on every side so the cursor light can convert hero coordinates into
+     this box with one number: 10% of the hero is 8.3333% of 120% of it. */
+  inset: -10%;
+  z-index: 0;
+  pointer-events: none;
   background-image: linear-gradient(rgba(242, 238, 227, 0.16) 1px, transparent 1px),
     linear-gradient(90deg, rgba(242, 238, 227, 0.16) 1px, transparent 1px),
     linear-gradient(rgba(242, 238, 227, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(242, 238, 227, 0.05) 1px, transparent 1px);
   background-size: 304px 304px, 304px 304px, 76px 76px, 76px 76px;
+}
+
+.hero-grid {
   -webkit-mask-image: radial-gradient(105% 80% at 50% 34%, #000 18%, rgba(0, 0, 0, 0.4) 55%, transparent 80%);
   mask-image: radial-gradient(105% 80% at 50% 34%, #000 18%, rgba(0, 0, 0, 0.4) 55%, transparent 80%);
+}
+
+/* The same ruling, brighter and green, revealed in a soft circle wherever the
+   cursor is. Hidden until the pointer has actually moved. */
+.hero-spot {
+  opacity: 0;
+  background-image: radial-gradient(
+      circle 320px at calc(var(--mx, 41.6667%) + 8.3333%) calc(var(--my, 33.3333%) + 8.3333%),
+      rgba(67, 222, 123, 0.09),
+      rgba(67, 222, 123, 0) 72%
+    ),
+    linear-gradient(rgba(140, 255, 190, 0.72) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(140, 255, 190, 0.72) 1px, transparent 1px),
+    linear-gradient(rgba(140, 255, 190, 0.32) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(140, 255, 190, 0.32) 1px, transparent 1px);
+  background-size: 100% 100%, 304px 304px, 304px 304px, 76px 76px, 76px 76px;
+  -webkit-mask-image: radial-gradient(
+    circle 320px at calc(var(--mx, 41.6667%) + 8.3333%) calc(var(--my, 33.3333%) + 8.3333%),
+    #000 0%,
+    rgba(0, 0, 0, 0.35) 45%,
+    transparent 72%
+  );
+  mask-image: radial-gradient(
+    circle 320px at calc(var(--mx, 41.6667%) + 8.3333%) calc(var(--my, 33.3333%) + 8.3333%),
+    #000 0%,
+    rgba(0, 0, 0, 0.35) 45%,
+    transparent 72%
+  );
+  transition: opacity 0.6s ease;
+}
+
+.hero--lit .hero-spot {
+  opacity: 1;
+}
+
+/* A few squares of the paper filled in, slowly, like somebody is working on
+   it in the next room. */
+.hero-cell {
+  position: absolute;
+  width: 76px;
+  height: 76px;
+  opacity: 0;
+}
+
+.hero-cell--1 {
+  left: 1064px;
+  top: 152px;
+  background: radial-gradient(circle at 50% 50%, rgba(91, 124, 250, 0.14), rgba(91, 124, 250, 0.04));
+}
+
+.hero-cell--2 {
+  left: 1216px;
+  top: 456px;
+  background: radial-gradient(circle at 50% 50%, rgba(67, 222, 123, 0.12), rgba(67, 222, 123, 0.03));
+}
+
+.hero-cell--3 {
+  left: 380px;
+  top: 760px;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 180, 58, 0.11), rgba(255, 180, 58, 0.03));
+}
+
+.hero-cell--4 {
+  left: 988px;
+  top: 684px;
+  background: radial-gradient(circle at 50% 50%, rgba(184, 201, 79, 0.1), rgba(184, 201, 79, 0.03));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-cell--1 {
+    animation: cell-lit 11s ease-in-out 1s infinite;
+  }
+
+  .hero-cell--2 {
+    animation: cell-lit 9s ease-in-out 4s infinite;
+  }
+
+  .hero-cell--3 {
+    animation: cell-lit 13s ease-in-out 2.5s infinite;
+  }
+
+  .hero-cell--4 {
+    animation: cell-lit 15s ease-in-out 7s infinite;
+  }
+}
+
+@keyframes cell-lit {
+  0%,
+  70%,
+  100% {
+    opacity: 0;
+  }
+  20%,
+  45% {
+    opacity: 1;
+  }
 }
 
 .hero-bg::after {
@@ -577,24 +690,11 @@ p {
 /* Everything in the hero's flow sits above the field. */
 .hero > .kicker,
 .hero-h1,
-.hero-sub {
+.hero-sub,
+.about-h1,
+.about-sub {
   position: relative;
   z-index: 2;
-}
-
-.wm {
-  position: absolute;
-  right: -4%;
-  top: 4%;
-  font-family: var(--font-bricolage), sans-serif;
-  font-weight: 800;
-  font-size: clamp(300px, 44vw, 780px);
-  line-height: 0.8;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(242, 238, 227, 0.07);
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
 }
 
 .sticker {
@@ -1353,6 +1453,11 @@ p {
   font-size: 88px;
   line-height: 1;
   letter-spacing: -0.03em;
+  /* background-clip: text paints inside the element's box, and the negative
+     tracking pulls that box in tighter than the last glyph's ink, which
+     shaved the right edge off the 3. The padding gives the paint room. */
+  display: inline-block;
+  padding-right: 0.08em;
   /* Full tone at the cap, easing off toward the baseline. Weight and fall
      instead of a glow: the numeral reads as printed, not lit. `color` stays
      the tone so currentColor still resolves, and a browser without
@@ -1407,6 +1512,13 @@ p {
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x proximity;
+  /* Snap to the page's left margin, not to the raw edge of the scrollport.
+     Without this the rail snaps the first panel flush left, which scrolls the
+     whole section sideways and takes the heading with it. The JS also turns
+     snapping off once the pin takes over, but this holds in the window before
+     hydration, with JS off, and under reduced motion, where the rail stays a
+     native swipe. Keep it equal to .how-track's left padding. */
+  scroll-padding-left: max(32px, calc((100% - 1240px) / 2));
 }
 
 /* The heading and the first panel line up with every other section's left
@@ -1574,11 +1686,26 @@ p {
   border-top-color: var(--lime);
 }
 
+/* The ghost holds the column at its widest value so the live number can count
+   through a digit change without shoving anything sideways. */
 .stat-num {
+  position: relative;
+  display: inline-block;
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
   font-size: clamp(52px, 8vw, 72px);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.stat-num-ghost {
+  visibility: hidden;
+}
+
+.stat-num-live {
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .stat--acc .stat-num {
@@ -2287,20 +2414,18 @@ p {
 
 /* ---------- About ---------- */
 
+/* Same left edge as every section below it. The hero used to start at a flat
+   32px while the rest of the page sat inside the 1240px container, which read
+   as two different pages stacked. */
 .about-hero {
   min-height: 82vh;
   min-height: 82dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 160px 32px 80px;
+  padding: 160px max(32px, calc((100% - 1240px) / 2)) 80px;
   position: relative;
   overflow: hidden;
-}
-
-.about-wm {
-  top: 6%;
-  font-size: clamp(260px, 38vw, 640px);
 }
 
 .about-h1 {

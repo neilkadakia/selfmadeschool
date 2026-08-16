@@ -37,10 +37,10 @@ export default function About() {
         gsap.from("[data-hero-kicker]", { y: 20, opacity: 0, duration: 0.7, ease: "power3.out" });
         gsap.from("[data-hline]", { yPercent: 115, duration: 1.05, stagger: 0.1, ease: "power4.out", delay: 0.1 });
         gsap.from("[data-hero-sub]", { y: 30, opacity: 0, duration: 0.8, delay: 0.5, ease: "power3.out" });
-        gsap.from("[data-wm]", { opacity: 0, x: 80, duration: 1.4, ease: "power2.out", delay: 0.3 });
+        gsap.from(".hero-grid", { opacity: 0, duration: 1.6, ease: "power2.out", delay: 0.2 });
 
-        gsap.to("[data-wm]", {
-          y: 140,
+        gsap.to(".hero-grid", {
+          y: 90,
           ease: "none",
           scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
         });
@@ -76,8 +76,11 @@ export default function About() {
   return (
     <div ref={rootRef}>
       <header ref={heroRef} className="hero about-hero">
-        <div data-wm aria-hidden="true" className="wm about-wm">
-          SM
+        {/* The same field as the home hero, quieter: paper, one light, grain. */}
+        <div className="hero-grid" aria-hidden="true" />
+        <div className="hero-bg" aria-hidden="true">
+          <span className="hero-orb hero-orb--acc" />
+          <span className="hero-vignette" />
         </div>
         <p data-hero-kicker className="kicker kicker--acc kicker--hero">
           ★ About Self Made School
@@ -156,8 +159,8 @@ export default function About() {
           </h2>
           <div className="founder-copy">
             <p data-reveal>
-              Self Made School is the work of Neil Kadakia, a father of three young daughters. He
-              did not want them learning the important parts of life the way he did, late and
+              Self Made School began with Neil Kadakia, a father of three young daughters. He did
+              not want them learning the important parts of life the way he did, late and
               expensively, so he started writing them down.
             </p>
             <p data-reveal>
@@ -166,16 +169,22 @@ export default function About() {
               live with. Not a lecture. A manual, in plain English, written by someone who loves you.
             </p>
             <p data-reveal>
-              Then it stopped being about three daughters. Everyone graduates into this, and almost
-              nobody is handed the manual. So the letter became a school: open to anyone who wants
-              it, free for as long as we can keep it that way, and taught with the same care it was
-              written with.
+              It is not one person&apos;s voice anymore. Teachers, financial educators, and writers
+              who have spent their careers explaining hard things to young adults have shaped every
+              unit here. They argue about the wording, cut the jargon, and refuse to publish
+              anything they would not hand to their own students.
+            </p>
+            <p data-reveal>
+              Because it was never only about three daughters. Everyone graduates into this, and
+              almost nobody is handed the manual. So the letter became a school: open to anyone who
+              wants it, free for as long as we can keep it that way, and taught with the same care
+              it was written with.
             </p>
             <p data-reveal className="founder-line">
               A love letter to three daughters, and to every young mind coming up behind them.
             </p>
             <p data-reveal className="founder-sign">
-              Neil Kadakia · Founder
+              Neil Kadakia · Founder, and the educators who built this with him
             </p>
           </div>
         </div>

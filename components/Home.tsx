@@ -35,7 +35,7 @@ const GRADES = [
     pill: "pill--coral",
     status: "Final Year",
     title: "The 15th Grade",
-    body: "The big calls in life (career, place, people) and how to actually think them through instead of flipping a coin.",
+    body: "Emotional intelligence, purpose, and the big calls in life (career, place, people): how to actually think them through instead of flipping a coin.",
     link: "Join the Waitlist →",
   },
 ];
@@ -81,13 +81,16 @@ const STEPS = [
 // The row counts as a cascade, left to right. Two of them run backwards,
 // which is the joke: tuition falls off a cliff and the parabolas drop to
 // nothing, both faster than the honest numbers climb. Real life lands last.
+// `widest` is the longest string each counter passes through. It gets rendered
+// invisibly behind the live number so the column is already that wide: without
+// it, 99 becoming 100 shoves the % sign sideways mid-count.
 const STATS = [
-  { from: 0, to: 24, suffix: "/24", display: "24/24", label: "13th Grade units live", tone: "stat--acc", dur: 1.5 },
-  { from: 0, to: 20, suffix: " min", display: "20 min", label: "Average unit", tone: "stat--vio", dur: 1.4 },
-  { from: 1000, to: 0, prefix: "$", display: "$0", label: "Tuition, forever", tone: "stat--coral", dur: 1, ease: "power3.out" },
-  { from: 100, to: 0, display: "0", label: "Parabolas", tone: "", dur: 0.7, ease: "power4.out" },
+  { from: 0, to: 24, suffix: "/24", display: "24/24", widest: "24/24", label: "13th Grade units live", tone: "stat--acc", dur: 2.2 },
+  { from: 0, to: 20, suffix: " min", display: "20 min", widest: "20 min", label: "Average unit", tone: "stat--vio", dur: 2 },
+  { from: 1000, to: 0, prefix: "$", display: "$0", widest: "$1,000", label: "Tuition, forever", tone: "stat--coral", dur: 1.7, ease: "power3.out" },
+  { from: 100, to: 0, display: "0", widest: "100", label: "Parabolas", tone: "", dur: 1.2, ease: "power4.out" },
   // No overshoot on this one: 106% real life reads as a bug, not a joke.
-  { from: 0, to: 100, suffix: "%", display: "100%", label: "Real life", tone: "stat--lime", dur: 1.3, ease: "expo.out" },
+  { from: 0, to: 100, suffix: "%", display: "100%", widest: "100%", label: "Real life relevance", tone: "stat--lime", dur: 1.9, ease: "expo.out" },
 ];
 
 const MANTRA_WORDS = ["Build", "Grow", "Break", "Remake", "Refocus", "Restart"];
@@ -101,6 +104,7 @@ export default function Home() {
   const howRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
@@ -112,26 +116,36 @@ export default function Home() {
         gsap.from("[data-hline]", { yPercent: 115, duration: 1.05, stagger: 0.1, ease: "power4.out", delay: 0.1 });
         gsap.from("[data-hero-sub] > *", { y: 30, opacity: 0, duration: 0.8, stagger: 0.12, delay: 0.55, ease: "power3.out" });
         gsap.from("[data-sticker]", { scale: 0, opacity: 0, duration: 0.7, stagger: 0.14, delay: 0.8, ease: "back.out(2.2)" });
-        gsap.from("[data-wm]", { opacity: 0, x: 80, duration: 1.4, ease: "power2.out", delay: 0.3 });
+        gsap.from(".hero-grid", { opacity: 0, duration: 1.6, ease: "power2.out", delay: 0.2 });
 
-        // Watermark parallax
-        gsap.to("[data-wm]", {
-          y: 160,
+        // The paper drifts up a little slower than the page, so the hero has
+        // depth on the way out. The cursor light rides with it to stay in
+        // register with the ruling.
+        gsap.to(".hero-grid, .hero-spot", {
+          y: 90,
           ease: "none",
           scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
         });
 
-        // The hero field leans toward the pointer. Fine pointers only: on a
-        // touch screen there is nothing to follow and the listener is waste.
+        // Two pointer effects, fine pointers only: the light leans away from
+        // the cursor, and a soft circle of brighter ruling follows it, so the
+        // graph paper reads as lit rather than printed on.
         const bg = bgRef.current;
         const hero = heroRef.current;
         let onMove: ((e: PointerEvent) => void) | undefined;
         if (bg && hero && window.matchMedia("(pointer: fine)").matches) {
           const xTo = gsap.quickTo(bg, "x", { duration: 1.1, ease: "power3.out" });
           const yTo = gsap.quickTo(bg, "y", { duration: 1.1, ease: "power3.out" });
+          const mxTo = gsap.quickTo(hero, "--mx", { duration: 0.4, ease: "power2.out" });
+          const myTo = gsap.quickTo(hero, "--my", { duration: 0.4, ease: "power2.out" });
           onMove = (e: PointerEvent) => {
             xTo((e.clientX / window.innerWidth - 0.5) * -38);
             yTo((e.clientY / window.innerHeight - 0.5) * -26);
+            const r = hero.getBoundingClientRect();
+            mxTo(e.clientX - r.left);
+            myTo(e.clientY - r.top);
+            // Only once the light has somewhere real to be.
+            hero.classList.add("hero--lit");
           };
           window.addEventListener("pointermove", onMove, { passive: true });
         }
@@ -231,13 +245,14 @@ export default function Home() {
                     prefix + Math.round(obj.v).toLocaleString("en-US") + suffix;
                 },
               },
-              i * 0.11
+              i * 0.16
             );
           });
         }
 
         return () => {
           if (onMove) window.removeEventListener("pointermove", onMove);
+          heroRef.current?.classList.remove("hero--lit");
         };
       });
 
@@ -265,17 +280,21 @@ export default function Home() {
   return (
     <div ref={rootRef}>
       <header id="top" ref={heroRef} className="hero">
-        {/* Graph paper in the dark with dawn coming up behind it. Drifts on its
-            own, leans a few pixels toward the pointer. */}
+        {/* Graph paper in the dark with dawn coming up behind it. The paper
+            stays put so the ruling stays sharp and the cursor light lines up
+            with it; the light itself drifts and leans toward the pointer. */}
+        <div ref={gridRef} className="hero-grid" aria-hidden="true">
+          <span className="hero-cell hero-cell--1" />
+          <span className="hero-cell hero-cell--2" />
+          <span className="hero-cell hero-cell--3" />
+          <span className="hero-cell hero-cell--4" />
+        </div>
+        <div className="hero-spot" aria-hidden="true" />
         <div ref={bgRef} className="hero-bg" aria-hidden="true">
-          <span className="hero-grid" />
           <span className="hero-orb hero-orb--acc" />
           <span className="hero-orb hero-orb--vio" />
           <span className="hero-dawn" />
           <span className="hero-vignette" />
-        </div>
-        <div data-wm aria-hidden="true" className="wm">
-          SM
         </div>
         <div data-sticker className="sticker sticker--quiz">
           no pop quizzes ✓
@@ -437,17 +456,22 @@ export default function Home() {
           <div data-stats className="stats-grid">
             {STATS.map((s) => (
               <div key={s.label} data-reveal className={`stat ${s.tone}`}>
-                <span
-                  data-count
-                  data-from={s.from}
-                  data-to={s.to}
-                  data-prefix={s.prefix}
-                  data-suffix={s.suffix}
-                  data-dur={s.dur}
-                  data-ease={s.ease}
-                  className="stat-num"
-                >
-                  {s.display}
+                <span className="stat-num">
+                  <span className="stat-num-ghost" aria-hidden="true">
+                    {s.widest}
+                  </span>
+                  <span
+                    data-count
+                    data-from={s.from}
+                    data-to={s.to}
+                    data-prefix={s.prefix}
+                    data-suffix={s.suffix}
+                    data-dur={s.dur}
+                    data-ease={s.ease}
+                    className="stat-num-live"
+                  >
+                    {s.display}
+                  </span>
                 </span>
                 <p className="stat-label">{s.label}</p>
               </div>

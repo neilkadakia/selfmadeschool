@@ -9,7 +9,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 <!-- END:nextjs-agent-rules -->
 # Self Made School website
 
-Marketing site for Self Made School: courses The 13th Grade (intro), The 14th Grade (money), The 15th Grade (big calls). Two pages: Home, About.
+Marketing site for Self Made School: courses The 13th Grade (intro), The 14th Grade (money), The 15th Grade (emotional intelligence, purpose, the big calls). Two pages: Home, About.
 
 ## Source of truth
 `design/README.md` is the full design spec (tokens, layouts, animation timings). `design/*.dc.html` are the high-fidelity prototypes: open them in a browser to see intended look and motion (keep `design/support.js` next to them; do not ship it). `design/screenshots/` has section-by-section captures.

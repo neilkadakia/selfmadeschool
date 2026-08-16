@@ -30,7 +30,9 @@ export default function Footer() {
 
   return (
     <footer className="footer">
-      <p className="footer-cheer">{pep}</p>
+      {/* One page carries the encouragement line: About, where somebody is
+          already reading about why the school exists. */}
+      {pathname === "/about" && <p className="footer-cheer">{pep}</p>}
       <span className="footer-logo">
         <Wordmark gid="dawn-footer" />
       </span>
