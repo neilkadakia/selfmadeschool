@@ -8,16 +8,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 <style>
-  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; }
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; --deep: #1B2247; }
   * { box-sizing: border-box; }
-  body { margin: 0; padding: 28px; font-family: "Instrument Sans", sans-serif; background: var(--paper); color: var(--ink); }
-  .spec { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.55; margin: 0 0 12px; }
+  body { margin: 0; padding: 28px; font-family: "Instrument Sans", sans-serif; background: linear-gradient(180deg, var(--deep) 0%, #141834 44%, var(--ink) 100%); color: var(--paper); }
+  .spec { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin: 0 0 12px; line-height: 1.7; }
   a { text-decoration: none; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
-  .card { background: var(--ink); color: var(--paper); border-radius: 24px; padding: 40px 34px; min-height: 380px; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; }
-  .card:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(0,0,0,0.28); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; padding-top: 60px; }
+  .card { --tone: rgba(67,222,123,0.30); --rail: 34%; --lift: 0px; position: relative; overflow: hidden; border-radius: 24px; padding: 40px 34px; min-height: 380px; display: flex; flex-direction: column; justify-content: space-between; color: var(--paper); border: 1px solid rgba(242,238,227,0.14); background: radial-gradient(125% 85% at 50% 118%, var(--tone), transparent 64%), linear-gradient(168deg, rgba(242,238,227,0.08), rgba(242,238,227,0.015)); transform: translateY(var(--lift)); transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; }
+  .card::before { content: ""; position: absolute; top: 0; left: 0; height: 3px; width: var(--rail); background: linear-gradient(90deg, transparent, var(--tone)); }
+  .card:hover { transform: translateY(calc(var(--lift) - 6px)); box-shadow: 0 24px 60px rgba(0,0,0,0.45); }
+  .card:nth-child(1) { border-color: rgba(67,222,123,0.32); }
+  .card:nth-child(2) { --tone: rgba(91,124,250,0.34); --rail: 67%; --lift: -30px; border-color: rgba(91,124,250,0.34); }
+  .card:nth-child(3) { --tone: rgba(255,180,58,0.30); --rail: 100%; --lift: -60px; border-color: rgba(255,180,58,0.34); }
   .top { display: flex; justify-content: space-between; align-items: flex-start; }
-  .num { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 88px; line-height: 1; }
+  .num { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 88px; line-height: 1; text-shadow: 0 0 46px currentColor; }
   .pill { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; }
   h3 { font-weight: 700; font-size: 26px; margin: 0 0 12px; letter-spacing: -0.02em; }
   p { margin: 0 0 20px; font-size: 16px; line-height: 1.55; opacity: 0.7; }
@@ -25,7 +29,7 @@
 </style>
 </head>
 <body>
-  <p class="spec">Grade cards: ink bg · giant Bricolage numeral 88px in course color · status pill · colored text link</p>
+  <p class="spec">Grade cards on The Grades ground, a day-into-night gradient from midnight to ink: the cream Syllabus sits above it and the ink How It Works below, so the section breaks hard at the top and hands off invisibly at the bottom. Each card is cold glass with its course tone rising from the floor, an 88px Bricolage numeral lit by a 46px shadow of its own color, and a top rail that runs a third, two thirds, then the full width. The three step up 30px at a time above 1000px, flat below it.</p>
   <div class="grid">
     <div class="card">
       <div class="top"><span class="num" style="color:var(--acc);">13</span><span class="pill" style="background:var(--acc);color:var(--ink);">Start Here</span></div>

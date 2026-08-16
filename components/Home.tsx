@@ -81,7 +81,8 @@ const STATS = [
   { count: 24, suffix: "/24", display: "24/24", label: "13th Grade units live", tone: "stat--acc" },
   { count: 10, suffix: " min", display: "10 min", label: "Average lesson", tone: "stat--vio" },
   { count: 0, prefix: "$", display: "$0", label: "Tuition, forever", tone: "stat--coral" },
-  { count: 0, display: "0", label: "Pop quizzes", tone: "" },
+  { count: 100, suffix: "%", display: "100%", label: "Real life", tone: "stat--lime" },
+  { count: 0, display: "0", label: "Parabolas", tone: "" },
 ];
 
 const MANTRA_WORDS = ["Build", "Grow", "Break", "Remake", "Refocus", "Restart"];
@@ -301,9 +302,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="grades" className="section-paper grades">
+      <section id="grades" className="grades">
         <div className="container">
-          <p data-reveal className="kicker kicker--vio">
+          <p data-reveal className="kicker kicker--coral">
             The Grades
           </p>
           <h2 data-reveal className="h2">
@@ -311,7 +312,7 @@ export default function Home() {
           </h2>
           <div className="grade-grid">
             {GRADES.map((g) => (
-              <div key={g.num} data-card className="card card--ink grade-card">
+              <div key={g.num} data-card className="card grade-card">
                 <div className="grade-top">
                   <span className={`grade-num ${g.tone}`}>{g.num}</span>
                   <span className={`pill ${g.pill}`}>{g.status}</span>

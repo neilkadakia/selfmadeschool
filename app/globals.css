@@ -350,6 +350,12 @@ p {
 }
 
 @media (max-width: 880px) {
+  /* Below this the pills wrap under the paragraph, and a wrapped row starts
+     from the left rather than the right edge the desktop row pushes them to. */
+  .hero-ctas {
+    margin-left: 0;
+  }
+
   .nav-links {
     gap: 16px;
   }
@@ -561,8 +567,11 @@ p {
   flex-wrap: wrap;
 }
 
+/* Grows into whatever the pills leave behind, up to a line long enough to keep
+   the paragraph at three rows on a wide screen. */
 .hero-copy {
-  max-width: 520px;
+  flex: 1 1 420px;
+  max-width: 860px;
   font-size: 18px;
   line-height: 1.55;
   color: var(--muted-on-ink);
@@ -573,6 +582,7 @@ p {
   display: flex;
   gap: 14px;
   align-items: center;
+  flex: none;
   margin-left: auto;
   /* Pills keep their natural width on phones; the second drops a row. */
   flex-wrap: wrap;
@@ -1123,21 +1133,86 @@ p {
   opacity: 0.75;
 }
 
-/* ---------- The Grades ---------- */
+/* ---------- The Grades ----------
+   Day into night. The Syllabus above is cream and How It Works below is ink,
+   so this section starts at midnight for a clean break from the cream and
+   lands on ink at its own bottom edge, handing off without a seam. The three
+   cards then climb: each one steps higher, its glow rises further, and its
+   top rail runs longer than the last. */
 
 .grades {
-  padding: 0 32px 130px;
+  padding: 118px 32px 150px;
+  color: var(--paper);
+  background: linear-gradient(180deg, var(--deep) 0%, #141834 44%, var(--ink) 100%);
 }
 
 .grade-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 22px;
+  /* Room for the lifted cards to sit above the grid line. */
+  padding-top: 60px;
 }
 
 .grade-card {
+  --lift: 0px;
+  --tone: var(--acc);
+  --rail: 34%;
+  position: relative;
+  overflow: hidden;
   padding: 40px 34px;
   min-height: 380px;
+  color: var(--paper);
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  /* Tone rising from the floor of the card, over cold glass. */
+  background:
+    radial-gradient(125% 85% at 50% 118%, var(--tone), transparent 64%),
+    linear-gradient(168deg, rgba(242, 238, 227, 0.08), rgba(242, 238, 227, 0.015));
+  transform: translateY(var(--lift));
+}
+
+/* The rail: how far along the ladder this grade sits. */
+.grade-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: var(--rail);
+  background: linear-gradient(90deg, transparent, var(--tone));
+}
+
+.grade-card:hover {
+  transform: translateY(calc(var(--lift) - 6px));
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.grade-card:nth-child(1) {
+  --tone: rgba(67, 222, 123, 0.3);
+  border-color: rgba(67, 222, 123, 0.32);
+}
+
+.grade-card:nth-child(2) {
+  --tone: rgba(91, 124, 250, 0.34);
+  --rail: 67%;
+  border-color: rgba(91, 124, 250, 0.34);
+}
+
+.grade-card:nth-child(3) {
+  --tone: rgba(255, 180, 58, 0.3);
+  --rail: 100%;
+  border-color: rgba(255, 180, 58, 0.34);
+}
+
+/* The staircase only reads as one while all three are side by side. */
+@media (min-width: 1001px) {
+  .grade-card:nth-child(2) {
+    --lift: -30px;
+  }
+
+  .grade-card:nth-child(3) {
+    --lift: -60px;
+  }
 }
 
 .grade-top {
@@ -1151,6 +1226,8 @@ p {
   font-weight: 800;
   font-size: 88px;
   line-height: 1;
+  /* Reads as lit rather than painted on the dark card. */
+  text-shadow: 0 0 46px currentColor;
 }
 
 .tone-acc {
@@ -1248,7 +1325,7 @@ p {
 }
 
 .how-panel {
-  width: min(52vw, 540px);
+  width: min(42vw, 440px);
   scroll-snap-align: start;
   border-radius: 28px;
   padding: 38px 40px;
@@ -1285,17 +1362,18 @@ p {
   border: 2px solid rgba(242, 238, 227, 0.35);
 }
 
+/* Number and icon sit together on the left, flush with the title and body
+   below, so the whole panel reads down one edge. */
 .how-top {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  gap: 18px;
 }
 
 .how-icon {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   flex: none;
-  margin-top: 8px;
   opacity: 0.9;
 }
 
@@ -1317,7 +1395,7 @@ p {
   margin: 0;
   font-size: 17px;
   line-height: 1.55;
-  max-width: 420px;
+  max-width: 360px;
 }
 
 /* ---------- Receipts ---------- */
@@ -1352,6 +1430,10 @@ p {
   border-top-color: var(--coral);
 }
 
+.stat--lime {
+  border-top-color: var(--lime);
+}
+
 .stat-num {
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
@@ -1369,6 +1451,10 @@ p {
 
 .stat--coral .stat-num {
   color: var(--coral);
+}
+
+.stat--lime .stat-num {
+  color: var(--lime);
 }
 
 .stat-label {
@@ -1926,7 +2012,11 @@ p {
   }
 
   .grades {
-    padding: 0 20px 90px;
+    padding: 80px 20px 90px;
+  }
+
+  .grade-grid {
+    padding-top: 0;
   }
 
   .h2 {
