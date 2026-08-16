@@ -228,7 +228,7 @@ export default function Home() {
           0% academic
         </div>
         <p data-hero-kicker className="kicker kicker--acc kicker--hero">
-          ★ Pre-launch · founding class forming
+          ★ Pre-launch
         </p>
         <h1 className="hero-h1">
           <span className="hline-mask">
@@ -278,11 +278,8 @@ export default function Home() {
       <section id="the-point" className="mantra-section">
         <div className="mantra-glow" aria-hidden="true" />
         <div className="container mantra-inner">
-          <p data-reveal className="kicker kicker--acc">
-            ★ The whole point
-          </p>
           <h2 data-reveal className="mantra-h2">
-            You are the greatest project you&apos;ll ever <span className="mantra-grad">work on</span>
+            You are the greatest project you&apos;ll ever <span className="mantra-em">work on</span>
             <span className="dot">.</span>
           </h2>
           <ul data-mantra-row className="mantra-words">

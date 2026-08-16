@@ -651,9 +651,16 @@ p {
 
 /* ---------- Mantra band (the whole point) ---------- */
 
+/* Cobalt, not ink. The hero above is ink and the marquee that separates them
+   is green, so a dark band with a green glow read as one long dark run with a
+   stripe through it. Cobalt is the one brand color with no full-bleed section
+   yet (green is Enroll, amber is The Book), it breaks the dark run without
+   repeating the marquee, and the cream Syllabus below still gets a clean edge.
+   Type is ink, matching how every other color section carries its copy. */
 .mantra-section {
   position: relative;
-  background: var(--ink);
+  background: var(--vio);
+  color: var(--ink);
   padding: 120px 32px 130px;
   overflow: hidden;
   text-align: center;
@@ -666,7 +673,7 @@ p {
   width: min(1200px, 130%);
   aspect-ratio: 1 / 1;
   transform: translateX(-50%);
-  background: radial-gradient(circle at 50% 50%, rgba(67, 222, 123, 0.18), rgba(67, 222, 123, 0) 62%);
+  background: radial-gradient(circle at 50% 50%, rgba(242, 238, 227, 0.22), rgba(242, 238, 227, 0) 62%);
   pointer-events: none;
 }
 
@@ -689,11 +696,8 @@ p {
   text-wrap: balance;
 }
 
-.mantra-grad {
-  background: linear-gradient(90deg, #f5a83c, #b8c94f, #43de7b);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.mantra-em {
+  color: var(--paper);
 }
 
 .mantra-words {
@@ -706,14 +710,17 @@ p {
   gap: 12px;
 }
 
+/* Ink pills carrying the bright half of the palette, the same way The Book
+   section wears its ink-on-color pills. Cobalt is missing on purpose: it is
+   the ground here. */
 .mantra-word {
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
   font-size: clamp(17px, 2.2vw, 30px);
   line-height: 1;
   text-transform: uppercase;
-  padding: 13px 22px;
-  border: 2px solid currentColor;
+  padding: 15px 24px;
+  background: var(--ink);
   border-radius: 999px;
 }
 
@@ -726,7 +733,7 @@ p {
 }
 
 .mantra-word:nth-child(3) {
-  color: var(--vio);
+  color: var(--paper);
 }
 
 .mantra-word:nth-child(4) {
@@ -742,11 +749,11 @@ p {
   margin: 0;
   font-size: clamp(17px, 1.5vw, 20px);
   line-height: 1.6;
-  color: var(--muted-on-ink);
+  color: rgba(14, 14, 18, 0.86);
 }
 
 .mantra-strong {
-  color: var(--paper);
+  color: var(--ink);
   font-weight: 700;
 }
 
