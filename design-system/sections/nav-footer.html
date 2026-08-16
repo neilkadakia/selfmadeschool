@@ -27,6 +27,7 @@
   .nav-cta { background: var(--acc); color: var(--ink); padding: 10px 22px; border-radius: 999px; font-weight: 700; }
   .nav-cta:hover { background: #fff; color: var(--ink); }
   .footer { background: var(--ink); padding: 40px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 14px; color: rgba(242,238,227,0.55); }
+  .footer-cheer { flex-basis: 100%; margin: 0 0 12px; padding-bottom: 26px; border-bottom: 1px solid rgba(242,238,227,0.12); font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(21px, 2.6vw, 32px); line-height: 1.18; letter-spacing: -0.01em; background: linear-gradient(90deg, #f5a83c, #b8c94f, #43de7b); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .footer-logo { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 18px; color: var(--paper); }
   .footer-links { display: flex; gap: 24px; }
 </style>
@@ -59,8 +60,9 @@
       <a href="#" class="nav-cta">Classroom</a>
     </nav>
   </div>
-  <p class="spec">Footer: space-between, muted 0.55 links (hover green)</p>
+  <p class="spec">Footer: a full-width encouragement line in the dawn gradient (rotates by calendar day), a hairline rule, then space-between with muted 0.55 links (hover green)</p>
   <footer class="footer">
+    <p class="footer-cheer">You are allowed to start over. You are also allowed to start over again.</p>
     <span class="footer-logo"><span class="wordmark">SELF<span class="dash">-</span>MADE <span class="school">SCHOOL</span><svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="dawn-foot-card" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><path d="M6,15 C90,4 230,4 294,11" stroke="url(#dawn-foot-card)" stroke-width="8" fill="none" stroke-linecap="round"/></svg></span></span>
     <div class="footer-links"><a href="#">Syllabus</a><a href="#">How It Works</a><a href="#">The Book</a><a href="#">Demo Lesson</a><a href="#">About</a><a href="#">Waitlist</a><a href="#">Privacy</a></div>
     <span>© 2026 Self Made School. Not actual financial advice. Actual life advice.</span>
