@@ -147,8 +147,14 @@ export default function About() {
       </section>
 
       <section className="note-section">
-        <blockquote data-reveal className="quote">
-          <p>&quot;We&apos;re not here to make you feel behind. We&apos;re here to make catching up feel easy.&quot;</p>
+        <blockquote data-reveal className="quote quote--feature">
+          <span className="quote-mark" aria-hidden="true">
+            &ldquo;
+          </span>
+          <p>
+            Nobody is behind. The ones who look like they have it together just found the manual
+            sooner. <span className="quote-em">You&apos;re holding it now.</span>
+          </p>
           <cite>The Self Made School Team</cite>
         </blockquote>
       </section>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Wordmark from "./Wordmark";
+import { handleAnchorClick } from "@/lib/anchor";
 import { useLms } from "./useLms";
 
 const LINKS = [
@@ -40,6 +41,13 @@ export default function Nav() {
 
   const close = () => setOpen(false);
 
+  // Same-page section links scroll themselves. Left to the router they miss
+  // when the hash is already in the URL, and land under the nav bar when it is
+  // not. Cross-page links fall through to a normal navigation.
+  const jump = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (handleAnchorClick(e, href, pathname)) close();
+  };
+
   // The classroom has its own shell. The marketing nav stays out of it.
   if (inClassroom) return null;
 
@@ -53,7 +61,14 @@ export default function Nav() {
         inert={!open}
       >
         {LINKS.map((link) => (
-          <Link key={link.href} href={link.href} onClick={close}>
+          <Link
+            key={link.href}
+            href={link.href}
+            onClick={(e) => {
+              close();
+              handleAnchorClick(e, link.href, pathname);
+            }}
+          >
             {link.label}
           </Link>
         ))}
@@ -72,7 +87,14 @@ export default function Nav() {
             <Link href="/learn" onClick={close}>
               Log In
             </Link>
-            <Link href="/#newsletter" className="nav-overlay-cta" onClick={close}>
+            <Link
+              href="/#newsletter"
+              className="nav-overlay-cta"
+              onClick={(e) => {
+                close();
+                handleAnchorClick(e, "/#newsletter", pathname);
+              }}
+            >
               Join the Waitlist
             </Link>
           </>
@@ -84,7 +106,12 @@ export default function Nav() {
       </Link>
       <nav className="nav-links" aria-label="Main">
         {LINKS.map((link) => (
-          <Link key={link.href} href={link.href} className="nav-link">
+          <Link
+            key={link.href}
+            href={link.href}
+            className="nav-link"
+            onClick={(e) => jump(e, link.href)}
+          >
             {link.label}
           </Link>
         ))}
@@ -103,7 +130,11 @@ export default function Nav() {
             <Link href="/learn" className="nav-link nav-link--login">
               Log In
             </Link>
-            <Link href="/#newsletter" className="nav-cta">
+            <Link
+              href="/#newsletter"
+              className="nav-cta"
+              onClick={(e) => jump(e, "/#newsletter")}
+            >
               Join the Waitlist
             </Link>
           </>

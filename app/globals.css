@@ -139,11 +139,18 @@ p {
   color: var(--ink);
 }
 
+/* Every in-page target the nav or footer can link to. The bar is fixed, so a
+   target without this lands underneath it and the link reads as broken. Keep
+   this list in step with the ids in Home, Nav, and Footer. */
+#top,
+#the-point,
 #syllabus,
 #grades,
 #how,
 #receipts,
 #book,
+#faq,
+#newsletter,
 #enroll {
   scroll-margin-top: 84px;
 }
@@ -1345,8 +1352,19 @@ p {
   font-weight: 800;
   font-size: 88px;
   line-height: 1;
-  /* Reads as lit rather than painted on the dark card. */
-  text-shadow: 0 0 46px currentColor;
+  letter-spacing: -0.03em;
+  /* Full tone at the cap, easing off toward the baseline. Weight and fall
+     instead of a glow: the numeral reads as printed, not lit. `color` stays
+     the tone so currentColor still resolves, and a browser without
+     text-fill-color simply gets the solid tone. */
+  background: linear-gradient(
+    170deg,
+    currentColor 22%,
+    color-mix(in srgb, currentColor 42%, transparent) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .tone-acc {
@@ -1615,6 +1633,56 @@ p {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--acc);
+}
+
+/* The one line the About page is built around, so it gets the room: an
+   oversized dawn quote mark, display type at book-cover scale, and the closing
+   sentence in the gradient. */
+.quote--feature {
+  max-width: 1040px;
+}
+
+.quote-mark {
+  display: block;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 120px;
+  line-height: 0.7;
+  height: 58px;
+  background: linear-gradient(90deg, #f5a83c, #b8c94f, #43de7b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.quote--feature p {
+  font-size: clamp(30px, 4.6vw, 60px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin: 0 0 32px;
+  text-wrap: balance;
+}
+
+.quote-em {
+  background: linear-gradient(90deg, #f5a83c, #b8c94f, #43de7b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.quote--feature cite {
+  display: inline-block;
+  padding-top: 18px;
+  border-top: 1px solid rgba(242, 238, 227, 0.16);
+  color: var(--muted-on-ink);
+}
+
+@media (max-width: 640px) {
+  .quote-mark {
+    font-size: 88px;
+    height: 42px;
+  }
 }
 
 /* ---------- The Book ---------- */

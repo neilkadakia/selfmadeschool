@@ -17,7 +17,7 @@ const jsonLd = {
       "@type": "Course",
       name: "The 13th Grade",
       description:
-        "The intro course. Working on your mindset, your money, and dealing with life's big calls: the foundations of running your own life, in 24 units.",
+        "The foundational and introductory course. Working on your mindset, your money, and dealing with life's big calls: the groundwork for running your own life, in 24 units.",
       isAccessibleForFree: true,
       provider: { "@id": `${siteUrl}/#org` },
     },

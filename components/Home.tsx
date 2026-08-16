@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Wordmark from "./Wordmark";
 import SyllabusExplorer from "./SyllabusExplorer";
 import Newsletter from "./Newsletter";
 import Quotes from "./Quotes";
 import { FAQS } from "@/lib/faqs";
+import { scrollToHash } from "@/lib/anchor";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 
 const GRADES = [
@@ -16,7 +17,7 @@ const GRADES = [
     pill: "pill--acc",
     status: "Start Here",
     title: "The 13th Grade",
-    body: "The intro course. Working on your mindset, your money, and dealing with life's big calls: the foundations of running your own life, in 24 units.",
+    body: "The foundational and introductory course. Working on your mindset, your money, and dealing with life's big calls: the groundwork for running your own life, in 24 units.",
     link: "Enroll Free →",
   },
   {
@@ -77,12 +78,16 @@ const STEPS = [
   },
 ];
 
+// The row counts as a cascade, left to right. Two of them run backwards,
+// which is the joke: tuition falls off a cliff and the parabolas drop to
+// nothing, both faster than the honest numbers climb. Real life lands last.
 const STATS = [
-  { count: 24, suffix: "/24", display: "24/24", label: "13th Grade units live", tone: "stat--acc" },
-  { count: 20, suffix: " min", display: "20 min", label: "Average unit", tone: "stat--vio" },
-  { count: 0, prefix: "$", display: "$0", label: "Tuition, forever", tone: "stat--coral" },
-  { count: 100, suffix: "%", display: "100%", label: "Real life", tone: "stat--lime" },
-  { count: 0, display: "0", label: "Parabolas", tone: "" },
+  { from: 0, to: 24, suffix: "/24", display: "24/24", label: "13th Grade units live", tone: "stat--acc", dur: 1.5 },
+  { from: 0, to: 20, suffix: " min", display: "20 min", label: "Average unit", tone: "stat--vio", dur: 1.4 },
+  { from: 1000, to: 0, prefix: "$", display: "$0", label: "Tuition, forever", tone: "stat--coral", dur: 1, ease: "power3.out" },
+  { from: 100, to: 0, display: "0", label: "Parabolas", tone: "", dur: 0.7, ease: "power4.out" },
+  // No overshoot on this one: 106% real life reads as a bug, not a joke.
+  { from: 0, to: 100, suffix: "%", display: "100%", label: "Real life", tone: "stat--lime", dur: 1.3, ease: "expo.out" },
 ];
 
 const MANTRA_WORDS = ["Build", "Grow", "Break", "Remake", "Refocus", "Restart"];
@@ -179,7 +184,13 @@ export default function Home() {
           // The CSS base state is a native swipe rail (reduced-motion / no-JS
           // path); the pin drives the track itself, so take the scrollbar away.
           // matchMedia's revert restores it.
-          gsap.set(hwrap, { overflow: "hidden" });
+          //
+          // Snapping has to go with it: the rail snaps to the first panel's
+          // start edge, which scrolls the container by exactly the track's
+          // left padding and drags the heading off the page's left margin
+          // with it. Kill the snap, then undo the scroll it already did.
+          gsap.set(hwrap, { overflow: "hidden", scrollSnapType: "none" });
+          hwrap.scrollLeft = 0;
           const dist = () => track.scrollWidth - window.innerWidth + 64;
           gsap.to(track, {
             x: () => -dist(),
@@ -195,23 +206,35 @@ export default function Home() {
           });
         }
 
-        // Counters
-        gsap.utils.toArray<HTMLElement>("[data-count]").forEach((el) => {
-          const target = parseFloat(el.dataset.count || "0");
-          if (!target) return;
-          const prefix = el.dataset.prefix || "";
-          const suffix = el.dataset.suffix || "";
-          const obj = { v: 0 };
-          gsap.to(obj, {
-            v: target,
-            duration: 1.6,
-            ease: "power2.out",
-            scrollTrigger: { trigger: el, start: "top 88%", once: true },
-            onUpdate: () => {
-              el.textContent = prefix + Math.round(obj.v) + suffix;
-            },
+        // Counters: one cascade for the whole row rather than five separate
+        // triggers, so the numbers land left to right instead of at once.
+        // Two of them count down, which is the joke.
+        const strip = document.querySelector("[data-stats]");
+        if (strip) {
+          const tl = gsap.timeline({
+            scrollTrigger: { trigger: strip, start: "top 85%", once: true },
           });
-        });
+          gsap.utils.toArray<HTMLElement>("[data-count]").forEach((el, i) => {
+            const from = parseFloat(el.dataset.from || "0");
+            const to = parseFloat(el.dataset.to || "0");
+            const prefix = el.dataset.prefix || "";
+            const suffix = el.dataset.suffix || "";
+            const obj = { v: from };
+            tl.to(
+              obj,
+              {
+                v: to,
+                duration: parseFloat(el.dataset.dur || "1.4"),
+                ease: el.dataset.ease || "power2.out",
+                onUpdate: () => {
+                  el.textContent =
+                    prefix + Math.round(obj.v).toLocaleString("en-US") + suffix;
+                },
+              },
+              i * 0.11
+            );
+          });
+        }
 
         return () => {
           if (onMove) window.removeEventListener("pointermove", onMove);
@@ -222,6 +245,22 @@ export default function Home() {
     },
     { scope: rootRef }
   );
+
+  // Arriving with a hash (from another page, a shared link, or the back
+  // button). The browser scrolls before the display font swaps and before the
+  // pins measure, which lands you short. Land it again once both are settled.
+  useEffect(() => {
+    const land = () => {
+      if (window.location.hash) scrollToHash(window.location.hash, false);
+    };
+    if (window.location.hash) {
+      void (document.fonts?.ready ?? Promise.resolve()).then(() =>
+        requestAnimationFrame(land)
+      );
+    }
+    window.addEventListener("hashchange", land);
+    return () => window.removeEventListener("hashchange", land);
+  }, []);
 
   return (
     <div ref={rootRef}>
@@ -395,10 +434,19 @@ export default function Home() {
 
       <section id="receipts" className="receipts">
         <div className="container">
-          <div className="stats-grid">
+          <div data-stats className="stats-grid">
             {STATS.map((s) => (
               <div key={s.label} data-reveal className={`stat ${s.tone}`}>
-                <span data-count={s.count} data-prefix={s.prefix} data-suffix={s.suffix} className="stat-num">
+                <span
+                  data-count
+                  data-from={s.from}
+                  data-to={s.to}
+                  data-prefix={s.prefix}
+                  data-suffix={s.suffix}
+                  data-dur={s.dur}
+                  data-ease={s.ease}
+                  className="stat-num"
+                >
                   {s.display}
                 </span>
                 <p className="stat-label">{s.label}</p>

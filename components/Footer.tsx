@@ -3,8 +3,21 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { handleAnchorClick } from "@/lib/anchor";
 import { PEP_LINES, pepForDay } from "@/lib/encouragement";
 import Wordmark from "./Wordmark";
+
+const FOOTER_LINKS = [
+  { href: "/#syllabus", label: "Syllabus" },
+  { href: "/#how", label: "How It Works" },
+  { href: "/#book", label: "The Book" },
+  { href: "/demo/lesson", label: "Demo Lesson" },
+  { href: "/about", label: "About" },
+  { href: "/#newsletter", label: "Waitlist" },
+  { href: "/learn", label: "Sign In" },
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms of Use" },
+];
 
 export default function Footer() {
   const pathname = usePathname();
@@ -22,15 +35,15 @@ export default function Footer() {
         <Wordmark gid="dawn-footer" />
       </span>
       <div className="footer-links">
-        <Link href="/#syllabus">Syllabus</Link>
-        <Link href="/#how">How It Works</Link>
-        <Link href="/#book">The Book</Link>
-        <Link href="/demo/lesson">Demo Lesson</Link>
-        <Link href="/about">About</Link>
-        <Link href="/#newsletter">Waitlist</Link>
-        <Link href="/learn">Sign In</Link>
-        <Link href="/privacy">Privacy</Link>
-        <Link href="/terms">Terms of Use</Link>
+        {FOOTER_LINKS.map((l) => (
+          <Link
+            key={l.href}
+            href={l.href}
+            onClick={(e) => handleAnchorClick(e, l.href, pathname)}
+          >
+            {l.label}
+          </Link>
+        ))}
       </div>
       <span>© 2026 Self Made School. Not actual financial advice. Actual life advice.</span>
     </footer>
