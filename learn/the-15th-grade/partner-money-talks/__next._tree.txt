@@ -1,6 +1,6 @@
 :HL["/_next/static/chunks/3qwfje3wtetav.css","style"]
-:HL["/_next/static/chunks/1i6flew160l4j.css","style"]
+:HL["/_next/static/chunks/0myryh4_q9rnz.css","style"]
 :HL["/_next/static/media/2aa781f449db21e3-s.p.1pg2nifvadz06.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/510598db810e1932-s.p.20g9nkyuy-bea.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/f06bf9da926bae75-s.p.2874ccu1_u7jf.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"learn","param":null,"prefetchHints":4192,"slots":{"children":{"name":"course","param":{"type":"d","key":"the-15th-grade","siblings":["admin","arena","certificate","final","locker","profile","review"]},"prefetchHints":4192,"slots":{"children":{"name":"unit","param":{"type":"d","key":"partner-money-talks","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}}}},"staleTime":300,"buildId":"3kHETxrJqHjPjwLOVIRBH"}
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"learn","param":null,"prefetchHints":4192,"slots":{"children":{"name":"course","param":{"type":"d","key":"the-15th-grade","siblings":["admin","arena","certificate","final","locker","profile","review"]},"prefetchHints":4192,"slots":{"children":{"name":"unit","param":{"type":"d","key":"partner-money-talks","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}}}},"staleTime":300,"buildId":"Nj1krF3QvJoK7e60aILhv"}
