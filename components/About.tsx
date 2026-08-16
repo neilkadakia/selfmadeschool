@@ -160,7 +160,7 @@ export default function About() {
           you do.
         </h2>
         <div data-reveal className="enroll-ctas">
-          <Link href="/demo" className="btn btn--ink">
+          <Link href="/demo/lesson" className="btn btn--ink">
             Try the Demo Lesson
           </Link>
           <Link href="/#newsletter" className="btn btn--ink">

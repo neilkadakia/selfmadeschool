@@ -324,3 +324,39 @@ export async function apiBackupInfo(token: string) {
 export async function apiBackupRun(token: string) {
   return call("backup.php", { method: "POST", token });
 }
+
+// The Walkthrough. Administrator and up. The document lives on the server
+// so the private copy never ships inside the static bundle.
+export type DemoBlock =
+  | { type: "text"; body: string }
+  | { type: "note"; body: string }
+  | { type: "list"; title?: string; items: string[] }
+  | { type: "stats"; items: { value: string; label: string; note?: string }[] }
+  | { type: "cards"; items: { title: string; body: string; tone?: string }[] }
+  | {
+      type: "live";
+      title?: string;
+      items: { title: string; body: string; href: string; cta: string }[];
+    }
+  | { type: "table"; head: string[]; rows: string[][] };
+
+export type DemoChapter = {
+  id: string;
+  num: string;
+  label: string;
+  kicker: string;
+  title: string;
+  lede: string;
+  blocks: DemoBlock[];
+};
+
+export type DemoDoc = {
+  title: string;
+  subtitle: string;
+  updated: string;
+  chapters: DemoChapter[];
+};
+
+export async function apiDemoDoc(token: string) {
+  return call("demo.php", { token });
+}

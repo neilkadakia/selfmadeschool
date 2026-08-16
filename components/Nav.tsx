@@ -66,7 +66,7 @@ export default function Nav() {
           </Link>
         ) : (
           <>
-            <Link href="/demo" onClick={close}>
+            <Link href="/demo/lesson" onClick={close}>
               Demo Lesson
             </Link>
             <Link href="/learn" onClick={close}>

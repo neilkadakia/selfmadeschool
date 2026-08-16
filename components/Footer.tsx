@@ -17,9 +17,10 @@ export default function Footer() {
         <Link href="/#syllabus">Syllabus</Link>
         <Link href="/#how">How It Works</Link>
         <Link href="/#book">The Book</Link>
-        <Link href="/demo">Demo Lesson</Link>
+        <Link href="/demo/lesson">Demo Lesson</Link>
         <Link href="/about">About</Link>
         <Link href="/#newsletter">Waitlist</Link>
+        <Link href="/learn">Sign In</Link>
         <Link href="/privacy">Privacy</Link>
       </div>
       <span>© 2026 Self Made School. Not actual financial advice. Actual life advice.</span>

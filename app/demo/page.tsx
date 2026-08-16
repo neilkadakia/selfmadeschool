@@ -1,16 +1,24 @@
 import type { Metadata } from "next";
-import DemoLesson from "@/components/DemoLesson";
+import AuthGate from "@/components/lms/AuthGate";
+import DemoTour from "@/components/DemoTour";
 
-const title = "Demo Lesson: Mindset Hacks | Self Made School";
-const description =
-  "Take Unit 01 of The 13th Grade free, no account needed: the full Mindset Hacks lesson with its knowledge check and flashcards. The other 23 units open with the founding class.";
+// The Walkthrough: private, administrator-only guided demo of the school.
+// The public demo lesson lives at /demo/lesson.
+//
+// Noindexed here and kept out of the sitemap. The real protection is that
+// the content is served by api/demo.php behind a token and a role check,
+// so this route ships a renderer with nothing in it.
 
 export const metadata: Metadata = {
-  title,
-  description,
-  openGraph: { title, description, url: "/demo" },
+  title: "The Walkthrough · Self Made School",
+  description: "Private walkthrough of the school, the product, and the build.",
+  robots: { index: false, follow: false },
 };
 
-export default function DemoPage() {
-  return <DemoLesson />;
+export default function WalkthroughPage() {
+  return (
+    <AuthGate>
+      <DemoTour />
+    </AuthGate>
+  );
 }

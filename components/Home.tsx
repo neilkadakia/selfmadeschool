@@ -228,7 +228,7 @@ export default function Home() {
             start making yourself.
           </p>
           <div className="hero-ctas">
-            <Link href="/demo" className="btn btn--solid">
+            <Link href="/demo/lesson" className="btn btn--solid">
               Try the Demo Lesson →
             </Link>
             <a href="#syllabus" className="btn btn--outline">
@@ -456,17 +456,13 @@ export default function Home() {
           <a href="#newsletter" className="btn btn--ink">
             Join the Waitlist
           </a>
-          <Link href="/demo" className="btn btn--ink">
+          <Link href="/demo/lesson" className="btn btn--ink">
             Try the Demo Lesson
           </Link>
         </div>
         <p data-reveal className="enroll-note">
           The founding class is invite-only while we finish building. The waitlist is the line.
-          Free when it opens. No credit card. Ironically. Already enrolled?{" "}
-          <Link href="/learn" className="enroll-signin">
-            Sign In
-          </Link>
-          .
+          Free when it opens. No credit card. Ironically.
         </p>
       </section>
     </div>

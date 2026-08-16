@@ -1664,12 +1664,6 @@ p {
   opacity: 0.65;
 }
 
-.enroll-signin {
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
 /* ---------- Footer ---------- */
 
 .footer {
@@ -7300,3 +7294,647 @@ html.lms-light .lms-matrix-cell:not(.is-done) {
   }
 }
 
+
+/* ==================================================================
+   The Walkthrough  (/demo)
+   Private, administrator-only guided demo of the school and the build.
+   Renderer: components/DemoTour.tsx. All copy is served by
+   api/demo.php, so nothing here depends on content shipped in the
+   bundle. The public demo lesson keeps its own .demo-* styles above.
+   ================================================================== */
+
+/* body carries overflow-x: hidden globally, and `hidden` makes body a
+   scroll container, which silently stops position: sticky from ever
+   sticking. The chapter rail depends on sticky, so swap in `clip` for
+   this page only: same horizontal protection, no scroll container. Scoped
+   rather than global so the GSAP-pinned home section is left alone. */
+body:has(.tour) {
+  overflow-x: clip;
+}
+
+.tour {
+  position: relative;
+  min-height: 60vh;
+}
+
+/* Scroll position, as a hairline. Above the nav (50), below the skip
+   link (100). */
+.tour-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  z-index: 90;
+  background: rgba(242, 238, 227, 0.1);
+  pointer-events: none;
+}
+
+.tour-progress span {
+  display: block;
+  height: 100%;
+  background: var(--acc);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+.tour-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* Cover ------------------------------------------------------------- */
+
+.tour-cover {
+  padding: 152px 0 72px;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.12);
+}
+
+.tour-title {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(46px, 8vw, 108px);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  margin: 18px 0 24px;
+}
+
+.tour-subtitle {
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 1.45;
+  color: var(--muted-on-ink);
+  max-width: 46ch;
+  margin: 0 0 32px;
+}
+
+.tour-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(242, 238, 227, 0.55);
+}
+
+.tour-meta strong {
+  color: var(--paper);
+  font-weight: 600;
+}
+
+.tour-meta-dot {
+  opacity: 0.4;
+}
+
+/* Body: sticky chapter rail beside the chapters ---------------------- */
+
+.tour-body {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 32px 120px;
+  display: grid;
+  grid-template-columns: 188px minmax(0, 1fr);
+  gap: 56px;
+  align-items: start;
+}
+
+.tour-rail {
+  position: sticky;
+  top: 108px;
+  padding-top: 72px;
+}
+
+.tour-rail-h {
+  font-family: var(--font-bricolage), sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(242, 238, 227, 0.4);
+  margin: 0 0 14px;
+}
+
+.tour-rail ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.tour-rail a {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 7px 10px 7px 12px;
+  border-left: 2px solid rgba(242, 238, 227, 0.14);
+  font-size: 13.5px;
+  line-height: 1.3;
+  color: rgba(242, 238, 227, 0.55);
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.tour-rail a:hover {
+  color: var(--paper);
+  border-left-color: rgba(242, 238, 227, 0.5);
+}
+
+.tour-rail a.tour-rail-on {
+  color: var(--paper);
+  border-left-color: var(--acc);
+}
+
+.tour-rail-num {
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  color: rgba(242, 238, 227, 0.35);
+}
+
+.tour-rail a.tour-rail-on .tour-rail-num {
+  color: var(--acc);
+}
+
+/* Chapters ------------------------------------------------------------ */
+
+.tour-chapters {
+  min-width: 0;
+}
+
+.tour-chapter {
+  padding: 72px 0 8px;
+  scroll-margin-top: 96px;
+  border-top: 1px solid rgba(242, 238, 227, 0.1);
+}
+
+.tour-chapter:first-child {
+  border-top: 0;
+}
+
+.tour-chapter-head {
+  position: relative;
+  margin-bottom: 36px;
+}
+
+.tour-chapter-num {
+  position: absolute;
+  top: -46px;
+  right: 0;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(64px, 9vw, 132px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgba(242, 238, 227, 0.05);
+  pointer-events: none;
+  user-select: none;
+}
+
+.tour-chapter-h {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(30px, 4.2vw, 52px);
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  margin: 14px 0 18px;
+  max-width: 20ch;
+}
+
+.tour-chapter-lede {
+  font-size: clamp(17px, 1.7vw, 20px);
+  line-height: 1.55;
+  color: var(--muted-on-ink);
+  max-width: 60ch;
+  margin: 0;
+}
+
+/* Blocks --------------------------------------------------------------- */
+
+.tour-block-h {
+  font-family: var(--font-bricolage), sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(242, 238, 227, 0.5);
+  margin: 0 0 16px;
+}
+
+.tour-text {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--paper);
+  max-width: 68ch;
+  margin: 0 0 28px;
+}
+
+.tour-note {
+  position: relative;
+  margin: 0 0 32px;
+  padding: 18px 22px 18px 24px;
+  border-left: 3px solid var(--acc);
+  background: rgba(67, 222, 123, 0.06);
+  border-radius: 0 12px 12px 0;
+  max-width: 72ch;
+}
+
+.tour-note p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--paper);
+}
+
+.tour-list {
+  margin: 0 0 34px;
+}
+
+.tour-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1px;
+  max-width: 74ch;
+}
+
+.tour-list li {
+  position: relative;
+  padding: 13px 16px 13px 40px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--paper);
+  border-top: 1px solid rgba(242, 238, 227, 0.1);
+}
+
+.tour-list li:last-child {
+  border-bottom: 1px solid rgba(242, 238, 227, 0.1);
+}
+
+.tour-list li::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 21px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--acc);
+}
+
+/* Stats ----------------------------------------------------------------- */
+
+.tour-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1px;
+  margin: 0 0 36px;
+  background: rgba(242, 238, 227, 0.12);
+  border: 1px solid rgba(242, 238, 227, 0.12);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.tour-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 26px 24px;
+  background: var(--ink);
+}
+
+.tour-stat-value {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(38px, 5vw, 58px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--acc);
+}
+
+.tour-stat-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--paper);
+}
+
+.tour-stat-note {
+  font-size: 13px;
+  color: rgba(242, 238, 227, 0.5);
+}
+
+/* Cards ------------------------------------------------------------------ */
+
+.tour-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 14px;
+  margin: 0 0 36px;
+}
+
+.tour-card {
+  padding: 22px 22px 24px;
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-top-width: 3px;
+  border-radius: 14px;
+  background: rgba(242, 238, 227, 0.03);
+}
+
+.tour-card--acc {
+  border-top-color: var(--acc);
+}
+
+.tour-card--vio {
+  border-top-color: var(--vio);
+}
+
+.tour-card--coral {
+  border-top-color: var(--coral);
+}
+
+.tour-card-h {
+  font-family: var(--font-bricolage), sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 9px;
+}
+
+.tour-card-p {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--muted-on-ink);
+  margin: 0;
+}
+
+/* Live stops: links into the real running product ------------------------- */
+
+.tour-live {
+  margin: 0 0 36px;
+}
+
+.tour-live-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+/* Exactly four stops would otherwise wrap 3 + 1 and leave one stranded.
+   Square them up instead. */
+@media (min-width: 720px) {
+  .tour-live-grid:has(> :nth-child(4):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.tour-live-card {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 22px;
+  border: 1px solid rgba(67, 222, 123, 0.35);
+  border-radius: 14px;
+  background: rgba(67, 222, 123, 0.05);
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.tour-live-card:hover {
+  background: rgba(67, 222, 123, 0.11);
+  border-color: var(--acc);
+  transform: translateY(-2px);
+  color: inherit;
+}
+
+.tour-live-tag {
+  align-self: flex-start;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--acc);
+  border-radius: 999px;
+  padding: 3px 9px;
+}
+
+.tour-live-h {
+  font-family: var(--font-bricolage), sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.tour-live-p {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+}
+
+.tour-live-cta {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--acc);
+}
+
+/* Table -------------------------------------------------------------------- */
+
+.tour-table-wrap {
+  margin: 0 0 36px;
+  overflow-x: auto;
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-radius: 14px;
+}
+
+.tour-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  min-width: 420px;
+}
+
+.tour-table th,
+.tour-table td {
+  padding: 13px 18px;
+  text-align: left;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.1);
+}
+
+.tour-table thead th {
+  font-family: var(--font-bricolage), sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(242, 238, 227, 0.5);
+  background: rgba(242, 238, 227, 0.04);
+}
+
+.tour-table tbody th {
+  font-weight: 600;
+  color: var(--paper);
+}
+
+.tour-table td {
+  color: var(--muted-on-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.tour-table tbody tr:last-child th,
+.tour-table tbody tr:last-child td {
+  border-bottom: 0;
+  color: var(--paper);
+  font-weight: 600;
+}
+
+/* End card and message states ------------------------------------------------ */
+
+.tour-end {
+  margin-top: 72px;
+  padding: 44px 36px;
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-radius: 20px;
+  background: rgba(242, 238, 227, 0.03);
+  text-align: center;
+}
+
+.tour-end-h {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(26px, 3.4vw, 40px);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin: 12px 0 14px;
+}
+
+.tour-end-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.tour-msg {
+  padding-top: 180px;
+  padding-bottom: 140px;
+  max-width: 640px;
+  text-align: center;
+}
+
+.tour-msg-h {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  margin: 12px 0 16px;
+}
+
+.tour-msg-p {
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--muted-on-ink);
+  margin: 0 0 26px;
+}
+
+/* Reveal: progressive enhancement. The observer adds .is-in. Content is
+   only dimmed when motion is welcome and the script is running, so a
+   failed script still leaves every word readable. */
+.tour [data-reveal] {
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tour [data-reveal]:not(.is-in) {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+.tour [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Narrow ---------------------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+  .tour-body {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  /* The rail becomes a scrollable strip pinned under the nav. */
+  .tour-rail {
+    position: sticky;
+    top: 64px;
+    z-index: 30;
+    padding: 10px 0;
+    margin: 0 -32px;
+    background: rgba(14, 14, 18, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(242, 238, 227, 0.12);
+  }
+
+  .tour-rail-h {
+    display: none;
+  }
+
+  .tour-rail ol {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 4px;
+    padding: 0 32px;
+    scrollbar-width: none;
+  }
+
+  .tour-rail ol::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tour-rail li {
+    flex: none;
+  }
+
+  .tour-rail a {
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+    padding: 6px 4px;
+    white-space: nowrap;
+  }
+
+  .tour-rail a.tour-rail-on {
+    border-bottom-color: var(--acc);
+  }
+
+  .tour-chapter-num {
+    top: -34px;
+  }
+}
+
+@media (max-width: 640px) {
+  .tour-shell,
+  .tour-body {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .tour-cover {
+    padding-top: 124px;
+  }
+
+  .tour-rail {
+    margin: 0 -20px;
+  }
+
+  .tour-rail ol {
+    padding: 0 20px;
+  }
+
+  .tour-chapter {
+    padding-top: 52px;
+  }
+
+  .tour-end {
+    padding: 32px 22px;
+  }
+}

@@ -85,7 +85,7 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
           We&apos;re pre-launch: the founding class is in session while we finish building, and
           enrollment isn&apos;t open to the public yet. Have an account? Sign in. Your progress
           follows you to any device. No account? Try the{" "}
-          <Link href="/demo">demo lesson</Link> and join the{" "}
+          <Link href="/demo/lesson">demo lesson</Link> and join the{" "}
           <Link href="/#newsletter">waitlist</Link>. Those inboxes hear first when doors open.
         </p>
 
