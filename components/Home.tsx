@@ -79,7 +79,7 @@ const STEPS = [
 
 const STATS = [
   { count: 24, suffix: "/24", display: "24/24", label: "13th Grade units live", tone: "stat--acc" },
-  { count: 10, suffix: " min", display: "10 min", label: "Average lesson", tone: "stat--vio" },
+  { count: 20, suffix: " min", display: "20 min", label: "Average unit", tone: "stat--vio" },
   { count: 0, prefix: "$", display: "$0", label: "Tuition, forever", tone: "stat--coral" },
   { count: 100, suffix: "%", display: "100%", label: "Real life", tone: "stat--lime" },
   { count: 0, display: "0", label: "Parabolas", tone: "" },
@@ -95,6 +95,7 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const howRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
@@ -114,6 +115,21 @@ export default function Home() {
           ease: "none",
           scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
         });
+
+        // The hero field leans toward the pointer. Fine pointers only: on a
+        // touch screen there is nothing to follow and the listener is waste.
+        const bg = bgRef.current;
+        const hero = heroRef.current;
+        let onMove: ((e: PointerEvent) => void) | undefined;
+        if (bg && hero && window.matchMedia("(pointer: fine)").matches) {
+          const xTo = gsap.quickTo(bg, "x", { duration: 1.1, ease: "power3.out" });
+          const yTo = gsap.quickTo(bg, "y", { duration: 1.1, ease: "power3.out" });
+          onMove = (e: PointerEvent) => {
+            xTo((e.clientX / window.innerWidth - 0.5) * -38);
+            yTo((e.clientY / window.innerHeight - 0.5) * -26);
+          };
+          window.addEventListener("pointermove", onMove, { passive: true });
+        }
 
         // Marquee: shift exactly one of the three copies per cycle (no visible seam).
         // Duration scaled with the longer topic list to keep the original speed.
@@ -196,6 +212,10 @@ export default function Home() {
             },
           });
         });
+
+        return () => {
+          if (onMove) window.removeEventListener("pointermove", onMove);
+        };
       });
 
       document.fonts?.ready.then(() => ScrollTrigger.refresh());
@@ -206,6 +226,15 @@ export default function Home() {
   return (
     <div ref={rootRef}>
       <header id="top" ref={heroRef} className="hero">
+        {/* Graph paper in the dark with dawn coming up behind it. Drifts on its
+            own, leans a few pixels toward the pointer. */}
+        <div ref={bgRef} className="hero-bg" aria-hidden="true">
+          <span className="hero-grid" />
+          <span className="hero-orb hero-orb--acc" />
+          <span className="hero-orb hero-orb--vio" />
+          <span className="hero-dawn" />
+          <span className="hero-vignette" />
+        </div>
         <div data-wm aria-hidden="true" className="wm">
           SM
         </div>

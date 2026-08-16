@@ -7,7 +7,7 @@
 
 import Link from "next/link";
 import { getCourse, courseUnits, getLesson } from "@/lib/lms";
-import { Block } from "@/components/lms/Player";
+import { Block, Takeaways } from "@/components/lms/Player";
 import Quiz from "@/components/lms/Quiz";
 import Deck from "@/components/lms/Deck";
 
@@ -37,6 +37,8 @@ export default function DemoLesson() {
             <Block key={i} block={block} />
           ))}
         </article>
+
+        <Takeaways takeaways={lesson.takeaways} theLesson={lesson.theLesson} />
 
         <section className="lms-do" aria-label="Knowledge check">
           <h2 className="lms-section-h">Knowledge check</h2>

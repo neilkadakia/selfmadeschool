@@ -27,6 +27,12 @@ export type Flashcard = { front: string; back: string };
 export type Lesson = {
   hook: string;
   blocks: LessonBlock[];
+  /* Key Takeaways and The Lesson, carried over from the book: the chapter
+     distilled to bullets, then to a single line. Optional while the chapters
+     are being brought across one unit at a time; a unit without them renders
+     exactly as it did before. */
+  takeaways?: string[];
+  theLesson?: string;
   quiz: QuizQuestion[];
   cards: Flashcard[];
   action: string;

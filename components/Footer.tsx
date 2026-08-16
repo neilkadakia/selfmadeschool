@@ -30,6 +30,7 @@ export default function Footer() {
         <Link href="/#newsletter">Waitlist</Link>
         <Link href="/learn">Sign In</Link>
         <Link href="/privacy">Privacy</Link>
+        <Link href="/terms">Terms of Use</Link>
       </div>
       <span>© 2026 Self Made School. Not actual financial advice. Actual life advice.</span>
     </footer>

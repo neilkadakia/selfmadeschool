@@ -56,6 +56,35 @@ export function Block({ block }: { block: LessonBlock }) {
   }
 }
 
+// The close of the written lesson, in the book's order: the chapter in
+// bullets, then the chapter in one line. Both are optional, so a unit whose
+// chapter has not been carried over yet simply skips them.
+export function Takeaways({ takeaways, theLesson }: { takeaways?: string[]; theLesson?: string }) {
+  if (!takeaways?.length && !theLesson) return null;
+  return (
+    <>
+      {takeaways?.length ? (
+        <section className="lms-section">
+          <h2 className="lms-section-h">Key takeaways</h2>
+          <p className="lms-section-sub">The whole unit, in the order it landed.</p>
+          <ul className="lms-takeaways">
+            {takeaways.map((t, i) => (
+              <li key={i}>{t}</li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      {theLesson ? (
+        <section className="lms-thelesson">
+          <p className="lms-thelesson-kicker">The Lesson</p>
+          <p className="lms-thelesson-line">{theLesson}</p>
+        </section>
+      ) : null}
+    </>
+  );
+}
+
 export default function Player({ courseSlug, unitSlug }: { courseSlug: string; unitSlug: string }) {
   const router = useRouter();
   const lms = useLms();
@@ -160,6 +189,8 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
               ))}
             </article>
 
+            <Takeaways takeaways={lesson.takeaways} theLesson={lesson.theLesson} />
+
             <section className="lms-section">
               <h2 className="lms-section-h">Watch</h2>
               {unit.live ? (
@@ -217,7 +248,7 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
             <div className="panel panel--watch">
               <p className="panel-kicker">Watch</p>
               <p className="panel-title">Video in production</p>
-              <p className="panel-body">This unit&apos;s video is being filmed. The chapter has you covered.</p>
+              <p className="panel-body">This unit&apos;s video is being animated. The chapter has you covered.</p>
             </div>
             <div className="panel panel--do">
               <p className="panel-kicker">Do</p>

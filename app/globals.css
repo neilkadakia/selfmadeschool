@@ -454,6 +454,125 @@ p {
   padding: 140px 32px 60px;
   position: relative;
   overflow: hidden;
+  /* A dome of light over the top of the page, so the ground has depth before
+     anything is drawn on it. */
+  background: radial-gradient(135% 85% at 50% -5%, #1a1c33 0%, rgba(14, 14, 18, 0) 58%), var(--ink);
+}
+
+/* The field, back to front: graph paper (this is a school), two slow lights
+   drifting behind it, dawn coming up along the bottom edge to meet the green
+   marquee band, a vignette to hold the middle, and grain over all of it so the
+   gradients read as printed rather than rendered. */
+.hero-bg {
+  position: absolute;
+  inset: -10%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  /* Minor rule every 76px, major every fourth, like real graph paper. */
+  background-image: linear-gradient(rgba(242, 238, 227, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 238, 227, 0.16) 1px, transparent 1px),
+    linear-gradient(rgba(242, 238, 227, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 238, 227, 0.05) 1px, transparent 1px);
+  background-size: 304px 304px, 304px 304px, 76px 76px, 76px 76px;
+  -webkit-mask-image: radial-gradient(105% 80% at 50% 34%, #000 18%, rgba(0, 0, 0, 0.4) 55%, transparent 80%);
+  mask-image: radial-gradient(105% 80% at 50% 34%, #000 18%, rgba(0, 0, 0, 0.4) 55%, transparent 80%);
+}
+
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.hero-orb {
+  position: absolute;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
+
+.hero-orb--acc {
+  left: -18%;
+  top: 0%;
+  width: 66vw;
+  background: radial-gradient(circle at 50% 50%, rgba(67, 222, 123, 0.34), rgba(67, 222, 123, 0.1) 34%, rgba(67, 222, 123, 0) 66%);
+}
+
+.hero-orb--vio {
+  right: -20%;
+  top: -18%;
+  width: 64vw;
+  background: radial-gradient(circle at 50% 50%, rgba(91, 124, 250, 0.42), rgba(91, 124, 250, 0.12) 34%, rgba(91, 124, 250, 0) 66%);
+}
+
+/* Sunrise along the bottom edge. The green marquee band sits directly under
+   the hero, so this reads as light coming up off the horizon line. */
+.hero-dawn {
+  position: absolute;
+  left: -6%;
+  right: -6%;
+  bottom: -6%;
+  height: 46%;
+  background: radial-gradient(
+    68% 100% at 50% 100%,
+    rgba(255, 180, 58, 0.3),
+    rgba(184, 201, 79, 0.17) 34%,
+    rgba(67, 222, 123, 0.12) 56%,
+    rgba(67, 222, 123, 0) 78%
+  );
+}
+
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(112% 86% at 50% 40%, rgba(8, 8, 12, 0) 42%, rgba(8, 8, 12, 0.5) 100%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-orb--acc {
+    animation: orb-drift-a 27s ease-in-out infinite alternate;
+  }
+
+  .hero-orb--vio {
+    animation: orb-drift-b 34s ease-in-out infinite alternate;
+  }
+
+  .hero-dawn {
+    animation: dawn-breathe 22s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes orb-drift-a {
+  to {
+    transform: translate3d(9%, -6%, 0) scale(1.16);
+  }
+}
+
+@keyframes orb-drift-b {
+  to {
+    transform: translate3d(-7%, 7%, 0) scale(1.12);
+  }
+}
+
+@keyframes dawn-breathe {
+  to {
+    transform: translate3d(0, 4%, 0) scale(1.08);
+    opacity: 0.75;
+  }
+}
+
+/* Everything in the hero's flow sits above the field. */
+.hero > .kicker,
+.hero-h1,
+.hero-sub {
+  position: relative;
+  z-index: 2;
 }
 
 .wm {
@@ -1272,8 +1391,11 @@ p {
   scroll-snap-type: x proximity;
 }
 
+/* The heading and the first panel line up with every other section's left
+   edge: 32px on narrow screens, the 1240px container's gutter on wide ones.
+   Without this the whole section hugged the viewport edge. */
 .how-head {
-  padding: 100px 32px 0;
+  padding: 100px max(32px, calc((100% - 1240px) / 2)) 0;
 }
 
 /* The direction cue is the arrow itself: it sets off to the right, where the
@@ -1319,7 +1441,7 @@ p {
 .how-track {
   display: flex;
   gap: 28px;
-  padding: 60px 32px 100px;
+  padding: 60px max(32px, calc((100% - 1240px) / 2)) 100px;
   width: max-content;
   align-items: stretch;
 }
@@ -2264,6 +2386,30 @@ p {
   line-height: 1.65;
   color: var(--muted-on-ink);
   margin: 0 0 20px;
+}
+
+.legal-h2 {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 24px;
+  letter-spacing: -0.01em;
+  margin: 40px 0 12px;
+}
+
+/* Scoped so it outranks `.legal p` without reaching for !important. */
+.legal .legal-date {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: -18px 0 8px;
+  opacity: 0.6;
+}
+
+.legal a {
+  color: var(--acc);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* ---------- Learn (LMS) ---------- */
@@ -3244,6 +3390,72 @@ kbd {
   height: 8px;
   border-radius: 2px;
   background: var(--acc);
+}
+
+/* Key Takeaways and The Lesson: the close of the written unit, carried over
+   from the book's chapter structure. */
+.lms-takeaways {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 70ch;
+}
+
+.lms-takeaways li {
+  position: relative;
+  padding: 0 0 0 30px;
+  margin-bottom: 14px;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.lms-takeaways li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 16px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--acc);
+}
+
+.lms-thelesson {
+  margin: 34px 0 44px;
+  padding: 30px 34px;
+  border-radius: 20px;
+  border: 1px solid rgba(67, 222, 123, 0.32);
+  background: linear-gradient(140deg, rgba(67, 222, 123, 0.12), rgba(67, 222, 123, 0.02));
+  max-width: 70ch;
+}
+
+.lms-thelesson-kicker {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--acc);
+}
+
+.lms-thelesson-line {
+  margin: 0;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+html.lms-light .lms-thelesson {
+  border-color: rgba(21, 122, 62, 0.3);
+  background: linear-gradient(140deg, rgba(21, 122, 62, 0.1), rgba(21, 122, 62, 0.02));
+}
+
+html.lms-light .lms-thelesson-kicker,
+html.lms-light .lms-takeaways li::before {
+  color: #157a3e;
+  background: #157a3e;
 }
 
 .lms-muted {

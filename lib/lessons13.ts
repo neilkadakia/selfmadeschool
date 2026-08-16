@@ -23,6 +23,17 @@ export const LESSONS_13: Record<string, Lesson> = {
       ] },
       { kind: "p", text: "One more thing about the critic voice. You don't defeat it by arguing. You defeat it by getting so specific it has nothing to say. \"I'm bad at math\" is unanswerable. \"I got question four wrong because I rushed the second step\" is a to-do item. Specificity is self-respect." },
     ],
+    takeaways: [
+      "The voice in your head is a habit you copied from somebody, not honesty. Habits can be changed.",
+      "The coach test: if a coach spoke to a player the way you speak to yourself after a mistake, would that player get better, or quit?",
+      "Being hard on yourself is not discipline. Discipline is doing the thing again tomorrow, and self-criticism mostly makes tomorrow harder.",
+      "Motivation is unreliable. Systems are not. Shrink the habit until starting is almost free, because starting was always the hard part.",
+      "One habit at a time, attached to something you already do, tracked somewhere you can see it. Stacking five new habits is how you end up with zero.",
+      "When you miss a day, and you will, the only rule that matters is never miss twice.",
+      "Specificity is self-respect. \"I rushed the second step\" is a to-do item. \"I'm bad at math\" is not.",
+    ],
+    theLesson:
+      "Talk to yourself the way a good coach would, then make the next step small enough that you cannot lose.",
     quiz: [
       {
         q: "You bombed a presentation. What does the coach voice sound like?",

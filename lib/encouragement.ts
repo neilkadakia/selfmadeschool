@@ -10,7 +10,7 @@ export const PEP_LINES = [
   "Wherever you are starting from today, that is a fine place to start.",
   "Nobody gets this on the first try. You are right on time.",
   "Twenty minutes today beats a perfect plan you never open.",
-  "You are allowed to start over. You are also allowed to start over again.",
+  "You are allowed to start over. You are also allowed to start over again. You're not allowed to give up on yourself.",
   "The version of you from last month would be impressed.",
   "Confused is what learning feels like from the inside. Keep going.",
   "You do not have to be good at this yet. You just have to keep showing up.",
