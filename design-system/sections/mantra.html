@@ -8,43 +8,45 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 <style>
-  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; --lime: #B8C94F; --pink: #FF9DE2; --muted-on-ink: rgba(242, 238, 227, 0.75); }
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; --lime: #B8C94F; --pink: #FF9DE2; --deep: #1B2247; --muted-on-ink: rgba(242, 238, 227, 0.75); }
   * { box-sizing: border-box; }
   body { margin: 0; font-family: "Instrument Sans", sans-serif; background: var(--ink); color: var(--paper); padding: 28px 0 0; overflow-x: hidden; }
   .spec { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; margin: 26px 28px 12px; }
   .spec:first-child { margin-top: 0; }
-  .mantra-section { position: relative; background: var(--vio); color: var(--ink); padding: 96px 32px 100px; overflow: hidden; text-align: center; }
-  .mantra-glow { position: absolute; left: 50%; top: -55%; width: min(1200px, 130%); aspect-ratio: 1 / 1; transform: translateX(-50%); background: radial-gradient(circle at 50% 50%, rgba(242, 238, 227, 0.22), rgba(242, 238, 227, 0) 62%); pointer-events: none; }
+  .mantra-section { position: relative; background: var(--deep); color: var(--paper); padding: 96px 32px 100px; overflow: hidden; text-align: center; }
+  .mantra-glow { position: absolute; left: 50%; top: -55%; width: min(1200px, 130%); aspect-ratio: 1 / 1; transform: translateX(-50%); background: radial-gradient(circle at 50% 50%, rgba(91, 124, 250, 0.3), rgba(91, 124, 250, 0) 62%); pointer-events: none; }
   .mantra-inner { position: relative; max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
   .mantra-h2 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(42px, 7vw, 108px); line-height: 0.94; letter-spacing: -0.03em; text-transform: uppercase; margin: 0 0 44px; max-width: 15ch; text-wrap: balance; }
-  .mantra-em { color: var(--paper); }
+  .mantra-em { background: linear-gradient(90deg, #f5a83c, #b8c94f, #43de7b); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .dot { color: var(--coral); }
   .mantra-words { list-style: none; margin: 0 0 44px; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
-  .mantra-word { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(17px, 2.2vw, 30px); line-height: 1; text-transform: uppercase; padding: 15px 24px; background: var(--ink); border-radius: 999px; }
+  .mantra-word { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(17px, 2.2vw, 30px); line-height: 1; text-transform: uppercase; padding: 13px 22px; border: 2px solid currentColor; border-radius: 999px; }
   .mantra-word:nth-child(1) { color: var(--acc); }
   .mantra-word:nth-child(2) { color: var(--coral); }
   .mantra-word:nth-child(3) { color: var(--paper); }
   .mantra-word:nth-child(4) { color: var(--lime); }
   .mantra-word:nth-child(5) { color: var(--pink); }
-  .mantra-sub { max-width: 64ch; margin: 0; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.6; color: rgba(14, 14, 18, 0.86); }
-  .mantra-strong { color: var(--ink); font-weight: 700; }
+  .mantra-word:nth-child(6) { color: var(--acc); }
+  .mantra-sub { max-width: 64ch; margin: 0; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.6; color: rgba(242, 238, 227, 0.8); }
+  .mantra-strong { color: var(--paper); font-weight: 700; }
   .footer-cheer { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(21px, 2.6vw, 32px); line-height: 1.18; letter-spacing: -0.01em; background: linear-gradient(90deg, #f5a83c, #b8c94f, #43de7b); -webkit-background-clip: text; background-clip: text; color: transparent; margin: 0 0 12px; padding: 0 32px 26px; border-bottom: 1px solid rgba(242, 238, 227, 0.12); }
   .lms-pep { display: inline-flex; align-items: center; gap: 10px; margin: 0 32px; padding: 12px 18px; border-radius: 999px; border: 1px solid rgba(67, 222, 123, 0.42); background: rgba(67, 222, 123, 0.1); font-size: 15px; font-weight: 600; line-height: 1.4; }
   .lms-pep::before { content: "★"; color: var(--acc); font-size: 13px; }
 </style>
 </head>
 <body>
-  <p class="spec">Mantra band, home page section two: cobalt ground with ink type, soft cream glow from above, centered stack, no kicker. Cobalt because the hero above is ink and the marquee between them is green, so a dark band read as one long dark run; it is also the last brand color without a full-bleed section. Headline runs 42 to 108px with the emphasis in cream. Five ink word pills carry the bright half of the palette and land in a 0.09s stagger on scroll.</p>
+  <p class="spec">Mantra band, home page section two: midnight ground (--deep, ink with a fifth of cobalt), cobalt glow from above, centered stack, no kicker. Full cobalt was too loud under the green marquee and plain ink read as a continuation of the ink hero, so this sits between them and still lets the dawn gradient carry the last two words. Headline runs 42 to 108px. Six outlined pills cycle the bright half of the palette and land in a 0.09s stagger on scroll; Restart closes the loop back on Build's green.</p>
   <section class="mantra-section">
     <div class="mantra-glow"></div>
     <div class="mantra-inner">
       <h2 class="mantra-h2">You are the greatest project you'll ever <span class="mantra-em">work on</span><span class="dot">.</span></h2>
       <ul class="mantra-words">
         <li class="mantra-word">Build</li>
-        <li class="mantra-word">Restart</li>
-        <li class="mantra-word">Reset</li>
+        <li class="mantra-word">Grow</li>
+        <li class="mantra-word">Break</li>
         <li class="mantra-word">Remake</li>
         <li class="mantra-word">Refocus</li>
+        <li class="mantra-word">Restart</li>
       </ul>
       <p class="mantra-sub">As many times as you need. There is no late pass here, no final grade you cannot retake, and no version of you that started too late. Everyone you look up to has rebuilt themselves more than once, and most of them are still doing it. <strong class="mantra-strong">Just don't give up.</strong></p>
     </div>

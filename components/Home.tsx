@@ -84,7 +84,7 @@ const STATS = [
   { count: 0, display: "0", label: "Pop quizzes", tone: "" },
 ];
 
-const MANTRA_WORDS = ["Build", "Restart", "Reset", "Remake", "Refocus"];
+const MANTRA_WORDS = ["Build", "Grow", "Break", "Remake", "Refocus", "Restart"];
 
 const MARQUEE =
   "Mindset ★ Money ★ Habits ★ Discipline ★ Big calls ★ Taxes ★ Credit ★ 401(k) ★ Negotiation ★ Relationships ★ Emotional intelligence ★ Purpose ★ First Principles Thinking ★ Boundaries ★ Insurance ★ First apartments ★ Build ★ Break ★ Rebuild ★";
@@ -94,7 +94,6 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const howRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const railRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
@@ -164,10 +163,6 @@ export default function Home() {
           // path); the pin drives the track itself, so take the scrollbar away.
           // matchMedia's revert restores it.
           gsap.set(hwrap, { overflow: "hidden" });
-          // Tells the CSS the section is pinned, so the hint reads "scroll down"
-          // instead of "swipe across" and the progress rail shows up.
-          hwrap.classList.add("how--pinned");
-          const fill = railRef.current?.firstElementChild as HTMLElement | null;
           const dist = () => track.scrollWidth - window.innerWidth + 64;
           gsap.to(track, {
             x: () => -dist(),
@@ -179,9 +174,6 @@ export default function Home() {
               start: "top top",
               end: () => "+=" + dist(),
               invalidateOnRefresh: true,
-              onUpdate: (self) => {
-                if (fill) gsap.set(fill, { scaleX: self.progress });
-              },
             },
           });
         }
@@ -203,8 +195,6 @@ export default function Home() {
             },
           });
         });
-
-        return () => howRef.current?.classList.remove("how--pinned");
       });
 
       document.fonts?.ready.then(() => ScrollTrigger.refresh());
@@ -261,7 +251,6 @@ export default function Home() {
               See the Syllabus
             </a>
           </div>
-          <p className="hero-mantra">Build. Break. Rebuild. Repeat.</p>
         </div>
       </header>
 
@@ -349,26 +338,12 @@ export default function Home() {
             How it works
           </p>
           <h2 data-reveal className="h2 h2--how">
-            Five steps. Keep scrolling.
+            Five steps. Keep scrolling{" "}
+            {/* Points right (where the steps go), then turns down (where you scroll). */}
+            <span className="how-arrow" aria-hidden="true">
+              →
+            </span>
           </h2>
-          <div data-reveal className="how-hint">
-            <span className="how-cue how-cue--scroll">
-              Scroll Down
-              <svg className="how-cue-arrow" viewBox="0 0 24 24" aria-hidden="true">
-                <path fill="currentColor" d="M12 4v12.2l-5.6-5.6L5 12l7 7 7-7-1.4-1.4-5.6 5.6V4z" />
-              </svg>
-            </span>
-            <span className="how-cue how-cue--swipe">
-              Swipe Across
-              <svg className="how-cue-arrow" viewBox="0 0 24 24" aria-hidden="true">
-                <path fill="currentColor" d="M4 12h12.2l-5.6-5.6L12 5l7 7-7 7-1.4-1.4 5.6-5.6H4z" />
-              </svg>
-            </span>
-            <span className="how-hint-note">and the steps slide past you, one at a time.</span>
-          </div>
-          <div ref={railRef} className="how-rail" aria-hidden="true">
-            <span className="how-rail-fill" />
-          </div>
         </div>
         <div ref={trackRef} className="how-track">
           {STEPS.map((s) => (

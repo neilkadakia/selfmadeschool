@@ -6,6 +6,10 @@
   --coral: #FFB43A;
   --lime: #B8C94F;
   --pink: #FF9DE2;
+  /* Midnight: ink with about a fifth of cobalt in it. A dark ground that is
+     plainly not the hero's near-black, so a section can sit apart without
+     shouting. */
+  --deep: #1B2247;
   --muted-on-ink: rgba(242, 238, 227, 0.75);
   --muted-on-paper: rgba(14, 14, 18, 0.75);
 }
@@ -547,16 +551,18 @@ p {
   color: var(--coral);
 }
 
+/* Two items since the loop line moved to its own section: the paragraph, then
+   the pills pushed out to the far edge so neither crowds the other. */
 .hero-sub {
   display: flex;
-  gap: 32px;
+  gap: 48px;
   align-items: flex-end;
   margin-top: 40px;
   flex-wrap: wrap;
 }
 
 .hero-copy {
-  max-width: 460px;
+  max-width: 520px;
   font-size: 18px;
   line-height: 1.55;
   color: var(--muted-on-ink);
@@ -567,6 +573,7 @@ p {
   display: flex;
   gap: 14px;
   align-items: center;
+  margin-left: auto;
   /* Pills keep their natural width on phones; the second drops a row. */
   flex-wrap: wrap;
 }
@@ -651,16 +658,15 @@ p {
 
 /* ---------- Mantra band (the whole point) ---------- */
 
-/* Cobalt, not ink. The hero above is ink and the marquee that separates them
-   is green, so a dark band with a green glow read as one long dark run with a
-   stripe through it. Cobalt is the one brand color with no full-bleed section
-   yet (green is Enroll, amber is The Book), it breaks the dark run without
-   repeating the marquee, and the cream Syllabus below still gets a clean edge.
-   Type is ink, matching how every other color section carries its copy. */
+/* Midnight (--deep): ink with cobalt stirred in, roughly a fifth. Full cobalt
+   was too loud to sit under the green marquee, and plain ink made this band
+   read as a continuation of the ink hero above it. This is dark enough for the
+   dawn gradient to carry the headline, blue enough to be its own room, and it
+   still hands the cream Syllabus below a clean edge. */
 .mantra-section {
   position: relative;
-  background: var(--vio);
-  color: var(--ink);
+  background: var(--deep);
+  color: var(--paper);
   padding: 120px 32px 130px;
   overflow: hidden;
   text-align: center;
@@ -673,7 +679,7 @@ p {
   width: min(1200px, 130%);
   aspect-ratio: 1 / 1;
   transform: translateX(-50%);
-  background: radial-gradient(circle at 50% 50%, rgba(242, 238, 227, 0.22), rgba(242, 238, 227, 0) 62%);
+  background: radial-gradient(circle at 50% 50%, rgba(91, 124, 250, 0.3), rgba(91, 124, 250, 0) 62%);
   pointer-events: none;
 }
 
@@ -697,7 +703,10 @@ p {
 }
 
 .mantra-em {
-  color: var(--paper);
+  background: linear-gradient(90deg, #f5a83c, #b8c94f, #43de7b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .mantra-words {
@@ -710,17 +719,16 @@ p {
   gap: 12px;
 }
 
-/* Ink pills carrying the bright half of the palette, the same way The Book
-   section wears its ink-on-color pills. Cobalt is missing on purpose: it is
-   the ground here. */
+/* Outlined pills cycling the bright half of the palette. Cobalt sits this one
+   out: it is mixed into the ground. */
 .mantra-word {
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
   font-size: clamp(17px, 2.2vw, 30px);
   line-height: 1;
   text-transform: uppercase;
-  padding: 15px 24px;
-  background: var(--ink);
+  padding: 13px 22px;
+  border: 2px solid currentColor;
   border-radius: 999px;
 }
 
@@ -744,16 +752,21 @@ p {
   color: var(--pink);
 }
 
+/* Restart lands back on Build's green: the loop closing. */
+.mantra-word:nth-child(6) {
+  color: var(--acc);
+}
+
 .mantra-sub {
   max-width: 64ch;
   margin: 0;
   font-size: clamp(17px, 1.5vw, 20px);
   line-height: 1.6;
-  color: rgba(14, 14, 18, 0.86);
+  color: rgba(242, 238, 227, 0.8);
 }
 
 .mantra-strong {
-  color: var(--ink);
+  color: var(--paper);
   font-weight: 700;
 }
 
@@ -1186,89 +1199,44 @@ p {
   padding: 100px 32px 0;
 }
 
-/* Direction cue. The base label is the swipe rail (no JS / reduced motion);
-   .how--pinned swaps it for the vertical one the pin actually responds to. */
-.how-hint {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 14px;
-  margin-top: 26px;
-}
-
-.how-cue {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: var(--acc);
-  border-radius: 999px;
-  padding: 9px 16px;
-}
-
-.how-cue--scroll {
-  display: none;
-}
-
-.how--pinned .how-cue--scroll {
-  display: inline-flex;
-}
-
-.how--pinned .how-cue--swipe {
-  display: none;
-}
-
-.how-cue-arrow {
-  width: 15px;
-  height: 15px;
+/* The direction cue is the arrow itself: it sets off to the right, where the
+   steps travel, then turns down, which is the way you actually scroll. */
+.how-arrow {
+  display: inline-block;
+  color: var(--acc);
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .how-cue--scroll .how-cue-arrow {
-    animation: how-nudge 1.6s ease-in-out infinite;
+  .how-arrow {
+    animation: how-arrow 3.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
   }
 }
 
-@keyframes how-nudge {
-  0%,
-  100% {
-    transform: translateY(-2px);
+@keyframes how-arrow {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
   }
+  10%,
+  26% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  40%,
   50% {
-    transform: translateY(3px);
+    transform: translate(18px, 0) rotate(0deg);
+    opacity: 1;
   }
-}
-
-.how-hint-note {
-  font-size: 15px;
-  color: var(--muted-on-ink);
-}
-
-.how-rail {
-  display: none;
-  margin-top: 22px;
-  height: 4px;
-  border-radius: 999px;
-  background: rgba(242, 238, 227, 0.14);
-  overflow: hidden;
-  max-width: 420px;
-}
-
-.how--pinned .how-rail {
-  display: block;
-}
-
-.how-rail-fill {
-  display: block;
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #f5a83c, #b8c94f, #43de7b);
-  transform: scaleX(0);
-  transform-origin: left center;
+  64%,
+  74% {
+    transform: translate(18px, 0) rotate(90deg);
+    opacity: 1;
+  }
+  94%,
+  100% {
+    transform: translate(18px, 22px) rotate(90deg);
+    opacity: 0;
+  }
 }
 
 .how-track {
@@ -2164,6 +2132,7 @@ p {
 
 .page-hero .hero-ctas {
   margin-top: 40px;
+  margin-left: 0;
 }
 
 .error-num {
@@ -4243,21 +4212,6 @@ html.lms-light .lms-signout.is-on {
 .lms-pref-text {
   font-size: 14px;
   color: var(--muted-on-ink);
-}
-
-/* Hero mantra: the school's loop, stated once, small */
-
-.hero-mantra {
-  margin: 26px 0 0;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  background: linear-gradient(90deg, #f5a83c, #b8c94f, #43de7b);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  width: fit-content;
 }
 
 /* ---------- For you row + rings + profile + insights ---------- */
