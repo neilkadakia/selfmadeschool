@@ -50,7 +50,7 @@ const STEPS = [
   {
     num: "02",
     title: "Watch",
-    body: 'Each chapter pairs with a unit you can finish in under 20 minutes. No 40-slide decks, no "circle back."',
+    body: 'Each chapter pairs with a unit that runs about 20 minutes start to finish, video and practice included. No 40-slide decks, no "circle back."',
     tone: "how-panel--vio",
     icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z",
   },
@@ -84,6 +84,8 @@ const STATS = [
   { count: 0, display: "0", label: "Pop quizzes", tone: "" },
 ];
 
+const MANTRA_WORDS = ["Build", "Restart", "Reset", "Remake", "Refocus"];
+
 const MARQUEE =
   "Mindset ★ Money ★ Habits ★ Discipline ★ Big calls ★ Taxes ★ Credit ★ 401(k) ★ Negotiation ★ Relationships ★ Emotional intelligence ★ Purpose ★ First Principles Thinking ★ Boundaries ★ Insurance ★ First apartments ★ Build ★ Break ★ Rebuild ★";
 
@@ -92,6 +94,7 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const howRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
@@ -139,6 +142,20 @@ export default function Home() {
           });
         });
 
+        // Mantra words land one after another, left to right
+        gsap.utils.toArray<HTMLElement>("[data-mantra-row]").forEach((row) => {
+          const words = Array.from(row.children);
+          gsap.from(words, {
+            y: 34,
+            opacity: 0,
+            duration: 0.7,
+            stagger: 0.09,
+            ease: "back.out(1.7)",
+            scrollTrigger: { trigger: row, start: "top 88%", once: true },
+            onComplete: () => gsap.set(words, { clearProps: "transform,opacity" }),
+          });
+        });
+
         // Pinned horizontal scroll
         const track = trackRef.current;
         const hwrap = howRef.current;
@@ -147,6 +164,10 @@ export default function Home() {
           // path); the pin drives the track itself, so take the scrollbar away.
           // matchMedia's revert restores it.
           gsap.set(hwrap, { overflow: "hidden" });
+          // Tells the CSS the section is pinned, so the hint reads "scroll down"
+          // instead of "swipe across" and the progress rail shows up.
+          hwrap.classList.add("how--pinned");
+          const fill = railRef.current?.firstElementChild as HTMLElement | null;
           const dist = () => track.scrollWidth - window.innerWidth + 64;
           gsap.to(track, {
             x: () => -dist(),
@@ -158,6 +179,9 @@ export default function Home() {
               start: "top top",
               end: () => "+=" + dist(),
               invalidateOnRefresh: true,
+              onUpdate: (self) => {
+                if (fill) gsap.set(fill, { scaleX: self.progress });
+              },
             },
           });
         }
@@ -179,6 +203,8 @@ export default function Home() {
             },
           });
         });
+
+        return () => howRef.current?.classList.remove("how--pinned");
       });
 
       document.fonts?.ready.then(() => ScrollTrigger.refresh());
@@ -249,6 +275,32 @@ export default function Home() {
         </div>
       </div>
 
+      <section id="the-point" className="mantra-section">
+        <div className="mantra-glow" aria-hidden="true" />
+        <div className="container mantra-inner">
+          <p data-reveal className="kicker kicker--acc">
+            ★ The whole point
+          </p>
+          <h2 data-reveal className="mantra-h2">
+            You are the greatest project you&apos;ll ever <span className="mantra-grad">work on</span>
+            <span className="dot">.</span>
+          </h2>
+          <ul data-mantra-row className="mantra-words">
+            {MANTRA_WORDS.map((w) => (
+              <li key={w} className="mantra-word">
+                {w}
+              </li>
+            ))}
+          </ul>
+          <p data-reveal className="mantra-sub">
+            As many times as you need. There is no late pass here, no final grade you cannot retake, and
+            no version of you that started too late. Everyone you look up to has rebuilt themselves more
+            than once, and most of them are still doing it.{" "}
+            <strong className="mantra-strong">Just don&apos;t give up.</strong>
+          </p>
+        </div>
+      </section>
+
       <section id="syllabus" className="section-paper syllabus">
         <div className="container">
           <p data-reveal className="kicker kicker--vio">
@@ -300,8 +352,26 @@ export default function Home() {
             How it works
           </p>
           <h2 data-reveal className="h2 h2--how">
-            Five steps. Keep scrolling →
+            Five steps. Keep scrolling.
           </h2>
+          <div data-reveal className="how-hint">
+            <span className="how-cue how-cue--scroll">
+              Scroll Down
+              <svg className="how-cue-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M12 4v12.2l-5.6-5.6L5 12l7 7 7-7-1.4-1.4-5.6 5.6V4z" />
+              </svg>
+            </span>
+            <span className="how-cue how-cue--swipe">
+              Swipe Across
+              <svg className="how-cue-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M4 12h12.2l-5.6-5.6L12 5l7 7-7 7-1.4-1.4 5.6-5.6H4z" />
+              </svg>
+            </span>
+            <span className="how-hint-note">and the steps slide past you, one at a time.</span>
+          </div>
+          <div ref={railRef} className="how-rail" aria-hidden="true">
+            <span className="how-rail-fill" />
+          </div>
         </div>
         <div ref={trackRef} className="how-track">
           {STEPS.map((s) => (

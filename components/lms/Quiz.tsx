@@ -43,8 +43,8 @@ export default function Quiz({
             {perfect
               ? "Perfect. That's the whole unit, locked in."
               : correctCount >= total - 1
-                ? "Almost perfect. Check the one you missed and run it back."
-                : "Good attempt. The explanations above are the actual lesson, worth a reread."}
+                ? "So close. Check the one you missed and run it back, it'll stick this time."
+                : "Missing a few is how this is supposed to go. The explanations above are the actual lesson: read them once, take it again, and watch the number move."}
           </p>
           <button className="btn btn--outline lms-quiz-btn" onClick={restart}>
             Try Again
@@ -93,7 +93,8 @@ export default function Quiz({
       </div>
       {picked !== null && (
         <div className={`lms-quiz-explain${picked === q.answer ? " is-right" : ""}`}>
-          <strong>{picked === q.answer ? "Right." : "Not quite."}</strong> {q.explain}
+          <strong>{picked === q.answer ? "Right." : "Not quite, and that's fine."}</strong>{" "}
+          {q.explain}
         </div>
       )}
       {picked !== null && (

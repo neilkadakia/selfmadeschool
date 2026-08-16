@@ -87,7 +87,7 @@ $doc = [
                     'title' => 'The method, four steps',
                     'items' => [
                         "Read. Every unit starts as a chapter of the book, on your own time.",
-                        "Watch. A short filmed piece per chapter, finishable in under 20 minutes.",
+                        "Watch. A short filmed piece per chapter, inside a unit that runs about 20 minutes start to finish.",
                         "Do. A real challenge with your real numbers: build the budget, file the thing, make the call.",
                         "Flex. Badges, a final, and a certificate at the end of it.",
                     ],

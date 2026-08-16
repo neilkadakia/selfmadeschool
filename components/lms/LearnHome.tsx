@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { PEP_LINES, pepForDay } from "@/lib/encouragement";
 import { BADGES, COURSES, levelFor, courseUnits } from "@/lib/lms";
 import { allBosses } from "@/lib/game";
 import { dueQuestions } from "@/lib/mastery";
@@ -32,6 +34,9 @@ export default function LearnHome() {
   const lms = useLms();
   const { state, loaded } = lms;
   const level = levelFor(state.xp);
+  // Prerendered pages ship line one; the day's line lands after mount.
+  const [pep, setPep] = useState(PEP_LINES[0]);
+  useEffect(() => setPep(pepForDay()), []);
 
   const totalDone = Object.values(state.done).reduce((a, b) => a + b.length, 0);
 
@@ -134,6 +139,7 @@ export default function LearnHome() {
             Three courses, one rule: read the chapter, watch the video, do the thing. Your progress
             is saved to your account and follows you to any device. No pop quizzes.
           </p>
+          <p className="lms-pep">{pep}</p>
         </header>
 
         <div className="learn-cols">

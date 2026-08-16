@@ -10,7 +10,7 @@ export const FAQS = [
   },
   {
     q: "How long does it take?",
-    a: "It's designed as a 24-week run: one unit a week. Each week is light: the unit is under 20 minutes online, the chapter reads in about 20, and the homework is your real life. Move faster if you want; the pace is yours.",
+    a: "It's designed as a 24-week run: one unit a week. Each week is light: the unit is about 20 minutes online with the video and practice inside that, the chapter reads in about 20, and the homework is your real life. Move faster if you want; the pace is yours.",
   },
   {
     q: "Is this financial advice?",
