@@ -166,11 +166,9 @@ export default function About() {
             </p>
             <p data-reveal>
               Many conversations, a lot of research, and years of deep thinking later, those talks
-              became a curriculum. Archana built much of what these units actually teach: the
-              financial education and the mindset theory at the heart of the school. The way every
-              lesson starts with how you talk to yourself before it touches what you do with your
-              money, that thinking is hers. Neil began writing it all down as a letter to their
-              daughters.
+              became a curriculum. Neil began writing it all down as a letter to their daughters,
+              and Archana shaped it the whole way: many of the financial education sections started
+              as her ideas, argued out at their own kitchen table.
             </p>
             <p data-reveal>
               What came out was the thing they wished someone had handed them at eighteen. How money
