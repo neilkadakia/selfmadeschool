@@ -14,7 +14,6 @@ import {
   apiDraftSave,
   apiDraftDelete,
   type Draft,
-  type DraftLesson,
 } from "@/lib/api";
 import { usDate } from "@/lib/format";
 import { useLms } from "@/components/useLms";
