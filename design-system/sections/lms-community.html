@@ -1,0 +1,195 @@
+<!-- @dsCard group="Sections" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; --lime: #B8C94F; --muted: rgba(242,238,227,0.68); }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Instrument Sans", sans-serif; background: #0E0E12; color: var(--paper); padding: 40px 32px 60px; }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  .kicker { font-size: 12px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--acc); margin: 0 0 10px; }
+  .h1 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(32px, 5vw, 56px); line-height: 0.95; letter-spacing: -0.03em; text-transform: uppercase; margin: 0 0 14px; }
+  .sub { font-size: 16px; line-height: 1.6; color: var(--muted); margin: 0 0 34px; }
+  .h2 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.02em; text-transform: uppercase; line-height: 1; margin: 0 0 14px; }
+  .cols { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 44px; align-items: start; }
+
+  /* The feed: only events that can prove when they happened. */
+  .event { display: block; border-bottom: 1px solid rgba(242,238,227,0.12); padding: 16px 0 14px; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--acc); margin-bottom: 6px; }
+  .etext { font-size: 15px; line-height: 1.5; margin: 0; }
+  .equote { font-size: 15px; line-height: 1.55; color: var(--muted); margin: 6px 0 0; }
+  .edate { display: block; font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+  /* Clubs. A room you are in wears its own colour on the edge. */
+  .club { border: 1px solid rgba(242,238,227,0.14); border-radius: 18px; padding: 18px 20px 14px; margin-bottom: 14px; }
+  .club.is-in { border-left: 3px solid currentColor; }
+  .tone-acc { color: var(--acc); } .tone-vio { color: var(--vio); } .tone-coral { color: var(--coral); } .tone-lime { color: var(--lime); }
+  .cname { display: block; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.02em; color: var(--paper); }
+  .cblurb { display: block; font-size: 14px; line-height: 1.5; color: var(--muted); margin-top: 6px; }
+  .cfoot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; }
+  .ccount { font-size: 12px; color: var(--muted); }
+  .join { border: 1.5px solid rgba(242,238,227,0.3); border-radius: 999px; background: none; padding: 6px 16px; font-family: inherit; font-size: 13px; font-weight: 700; color: var(--paper); cursor: pointer; }
+  .join.is-in { border-color: var(--acc); color: var(--acc); }
+
+  /* Named reactions, drawn as line icons. Never emoji. */
+  .post { border-bottom: 1px solid rgba(242,238,227,0.12); padding: 20px 0 16px; }
+  .post.is-pinned { padding-left: 16px; border-left: 3px solid var(--acc); }
+  .phead { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .pname { font-weight: 700; display: inline-flex; align-items: center; gap: 8px; }
+  .badge { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid rgba(242,238,227,0.3); border-radius: 999px; padding: 2px 8px; color: var(--muted); }
+  .badge.is-pin { border-color: var(--acc); color: var(--acc); }
+  .pmeta { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .ptext { font-size: 16px; line-height: 1.6; margin: 10px 0 14px; }
+  .reacts { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .react { display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(242,238,227,0.18); border-radius: 999px; background: none; padding: 5px 12px; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; }
+  .react.is-on { border-color: var(--acc); color: var(--acc); }
+  .act { background: none; border: none; padding: 5px 6px; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; }
+
+  /* Challenges: the bar only fills for work done since you joined. */
+  .chgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .ch { border: 1px solid rgba(242,238,227,0.14); border-radius: 18px; padding: 20px 22px 16px; }
+  .ch.is-done { border-color: var(--acc); }
+  .chname { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.02em; margin: 0; }
+  .chblurb { font-size: 15px; line-height: 1.55; color: var(--muted); margin: 8px 0 0; }
+  .chgoal { font-size: 13px; color: var(--muted); margin: 12px 0 0; }
+  .chgoal strong { color: var(--paper); }
+  .meter { height: 8px; border-radius: 999px; background: rgba(242,238,227,0.12); overflow: hidden; margin: 14px 0 8px; }
+  .meter span { display: block; height: 100%; border-radius: 999px; background: var(--acc); }
+  .chcount { font-size: 13px; font-weight: 600; margin: 0; }
+
+  /* The Register. Emails never cross to a student. */
+  .reg { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .rcard { border: 1px solid rgba(242,238,227,0.14); border-radius: 18px; padding: 18px 20px 14px; }
+  .rcard.is-you { border-color: var(--acc); }
+  .rtop { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .rname { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 17px; letter-spacing: -0.02em; display: inline-flex; align-items: center; gap: 8px; }
+  .rtag { font-family: inherit; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--acc); border-radius: 999px; padding: 2px 8px; color: var(--acc); }
+  .rlevel { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .rstats { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--muted); margin-top: 10px; }
+  .rstats strong { color: var(--paper); }
+  .rclubs { font-size: 12px; color: var(--muted); margin: 10px 0 0; }
+
+  /* The bell. */
+  .bellrow { display: flex; align-items: flex-start; gap: 18px; margin-top: 12px; }
+  .bell-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border: 1px solid var(--acc); border-radius: 999px; background: none; color: var(--acc); flex: none; }
+  .bell-count { position: absolute; top: -5px; right: -5px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 999px; background: var(--acc); color: var(--ink); font-size: 10px; font-weight: 800; line-height: 17px; text-align: center; }
+  .panel { width: 300px; background: #16161c; border: 1px solid rgba(242,238,227,0.16); border-radius: 14px; box-shadow: 0 22px 50px rgba(0,0,0,0.5); }
+  .phead2 { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px 10px; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid rgba(242,238,227,0.1); }
+  .note { display: block; padding: 11px 14px; border-bottom: 1px solid rgba(242,238,227,0.08); }
+  .note:last-child { border-bottom: none; }
+  .ntext { display: block; font-size: 14px; line-height: 1.45; }
+  .ndate { display: block; font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  .section { margin-top: 52px; }
+  @media (max-width: 900px) { .cols { grid-template-columns: 1fr; gap: 32px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">The Quad</p>
+  <h1 class="h1">The school, out loud.</h1>
+  <p class="sub">Clubs are rooms: join the ones you want, say something, and the rest of the class hears it. Everything here is public to the school and nothing here is private mail.</p>
+
+  <div class="cols">
+    <div>
+      <h2 class="h2">Lately</h2>
+      <div class="event"><span class="tag">Kudos</span><p class="etext"><strong>Ada Quad</strong> gave kudos to <strong>Bo Quad</strong>: "Talked me off a ledge about the card."</p><span class="edate">08-17-2026</span></div>
+      <div class="event"><span class="tag">Challenge</span><p class="etext"><strong>Bo Quad</strong> finished <strong>The Five-Day Reset</strong>.</p><span class="edate">08-17-2026</span></div>
+      <div class="event"><span class="tag">Win</span><p class="etext"><strong>Bo Quad</strong> in The Win Column</p><p class="equote">Called the hospital about a bill I had been ignoring since February. They knocked 40 percent off because I asked one question.</p><span class="edate">08-17-2026 · 2 replies</span></div>
+      <div class="event"><span class="tag">Final</span><p class="etext"><strong>Ada Quad</strong> passed the final for <strong>The 13th Grade</strong>.</p><span class="edate">08-16-2026</span></div>
+    </div>
+
+    <div>
+      <h2 class="h2">Clubs</h2>
+      <article class="club tone-acc is-in">
+        <span class="cname">Roll Call</span>
+        <span class="cblurb">New here? Say hello, and tell the class where you are starting from.</span>
+        <div class="cfoot"><span class="ccount">14 members · 9 posts</span><button class="join is-in">Joined</button></div>
+      </article>
+      <article class="club tone-lime is-in">
+        <span class="cname">The Win Column</span>
+        <span class="cblurb">Something worked. Post it, however small. This is the room that keeps people going.</span>
+        <div class="cfoot"><span class="ccount">12 members · 21 posts</span><button class="join is-in">Joined</button></div>
+      </article>
+      <article class="club tone-vio">
+        <span class="cname">Ask the Class</span>
+        <span class="cblurb">A question the units did not answer. Somebody here has been where you are.</span>
+        <div class="cfoot"><span class="ccount">11 members · 17 posts</span><button class="join">Join</button></div>
+      </article>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="h2">A post, and its reactions</h2>
+    <article class="post is-pinned">
+      <div class="phead"><span class="pname">Neil Kadakia <span class="badge">Faculty</span> <span class="badge is-pin">Pinned</span></span><span class="pmeta">Discussion · 08-17-2026</span></div>
+      <p class="ptext">Reminder that the chapter comes before the video. Every single time somebody tells me a unit did not land, they watched first and read after.</p>
+      <div class="reacts">
+        <button class="react"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v10H4V10h3zm3 10h7.5a2 2 0 0 0 1.94-1.5l1.5-6A2 2 0 0 0 19 10h-4.5l.7-3.4A1.6 1.6 0 0 0 13.6 4.6L10 10v10z"/></svg><span>6</span></button>
+        <button class="react is-on"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg><span>4</span></button>
+        <button class="react"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.5.4.8 1 .9 1.6l.1.6h5.2l.1-.6c.1-.6.4-1.2.9-1.6A6 6 0 0 0 12 3z"/></svg><span>9</span></button>
+        <button class="react"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.6-7 9-7 9z"/></svg><span>2</span></button>
+        <button class="act">3 Replies</button><button class="act">Report</button><button class="act">Pin</button>
+      </div>
+    </article>
+  </div>
+
+  <div class="section">
+    <p class="kicker">Challenges</p>
+    <h2 class="h2">Something to aim at</h2>
+    <div class="chgrid">
+      <article class="ch">
+        <h3 class="chname">The Five-Day Reset</h3>
+        <p class="chblurb">Six units before Sunday. Read the chapter first, watch second.</p>
+        <p class="chgoal"><strong>6 units</strong> · from the day you join · closes 08-24-2026</p>
+        <div class="meter"><span style="width:50%"></span></div>
+        <p class="chcount">3 of 6 units</p>
+      </article>
+      <article class="ch is-done">
+        <h3 class="chname">Say Three Things</h3>
+        <p class="chblurb">Three posts in the Quad. Questions count.</p>
+        <p class="chgoal"><strong>3 posts</strong> · from the day you join · closes 08-24-2026</p>
+        <div class="meter"><span style="width:100%"></span></div>
+        <p class="chcount">3 of 3 posts · finished 08-17-2026</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="kicker">The Register</p>
+    <h2 class="h2">Everyone else doing this</h2>
+    <div class="reg">
+      <article class="rcard is-you">
+        <div class="rtop"><span class="rname">Ada Quad <span class="rtag">You</span></span><span class="rlevel">Sophomore</span></div>
+        <div class="rstats"><span><strong>1,240</strong> XP</span><span><strong>11</strong> units</span><span><strong>4</strong> day streak</span></div>
+        <p class="rclubs">Roll Call · The Win Column · Ask the Class</p>
+      </article>
+      <article class="rcard">
+        <div class="rtop"><span class="rname">Bo Quad</span><span class="rlevel">Freshman</span></div>
+        <div class="rstats"><span><strong>760</strong> XP</span><span><strong>6</strong> units</span><span><strong>3</strong> kudos</span></div>
+        <p class="rclubs">The Win Column · Field Notes</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="h2">The bell</h2>
+    <p class="sub">Every line was written by the action that caused it, so a notification can never claim something that did not happen. Nothing rings its own author.</p>
+    <div class="bellrow">
+      <button class="bell-btn"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="bell-count">3</span></button>
+      <div class="panel">
+        <div class="phead2"><span>Lately</span><span>Clear</span></div>
+        <span class="note"><span class="ntext">New on the Bulletin: Office Hours moved to Thursday this week. Same link, one hour later.</span><span class="ndate">08-17-2026</span></span>
+        <span class="note"><span class="ntext">Bo Quad replied to your post in Ask the Class.</span><span class="ndate">08-17-2026</span></span>
+        <span class="note"><span class="ntext">Faculty marked your answer in Money 101 as the one worth keeping.</span><span class="ndate">08-16-2026</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

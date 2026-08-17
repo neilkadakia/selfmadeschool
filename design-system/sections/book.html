@@ -10,7 +10,7 @@
 <style>
   :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; --lime: #B8C94F; }
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: "Instrument Sans", sans-serif; background: var(--coral); color: var(--ink); padding: 40px 32px; overflow-x: hidden; }
+  body { margin: 0; font-family: "Instrument Sans", sans-serif; background: var(--coral); color: var(--ink); padding: 40px 32px 70px; overflow-x: hidden; }
   a { text-decoration: none; }
   .grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 56px; align-items: center; }
   .kicker { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; margin: 0 0 16px; }
@@ -25,25 +25,73 @@
   .btn--outline-ink { border: 1.5px solid rgba(14,14,18,0.35); color: var(--ink); }
   .btn--outline-ink:hover { border-color: var(--ink); }
   .stage { position: relative; display: flex; justify-content: center; }
-  .book { --acc: #2bb35c; width: min(280px, 60vw); aspect-ratio: 5 / 7; background: var(--paper); color: var(--ink); border-radius: 8px 16px 16px 8px; padding: 30px 26px; display: flex; flex-direction: column; justify-content: flex-start; position: relative; transform: rotate(-4deg); box-shadow: 0 30px 70px rgba(14,14,18,0.35); transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; }
-  .book:hover { transform: rotate(0deg) translateY(-8px); box-shadow: 0 40px 80px rgba(14,14,18,0.4); }
-  .book::before { content: ""; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: rgba(14,14,18,0.15); }
-  .book::after { content: ""; position: absolute; right: -8px; top: 10px; bottom: 6px; width: 8px; background: #fff; border-radius: 0 4px 4px 0; box-shadow: inset -2px 0 0 rgba(14,14,18,0.15); }
+
+  /* One object, two printed faces. The tilt and lift live on the outer
+     element; the turn happens on the inner, so they animate together. */
+  .flip { width: min(280px, 60vw); aspect-ratio: 5 / 7; position: relative; perspective: 1700px; transform: rotate(-4deg); transition: transform 0.45s cubic-bezier(0.22,1,0.36,1); }
+  .flip:hover, .stage:has(.turn:hover) .flip { transform: rotate(0deg) translateY(-10px) scale(1.12); }
+  .flip-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.85s cubic-bezier(0.62,0.02,0.24,1); }
+  .flip:hover .flip-inner, .stage:has(.turn:hover) .flip-inner { transform: rotateY(-180deg); }
+
+  .face { --acc: #2bb35c; position: absolute; inset: 0; background: var(--paper); color: var(--ink); display: flex; flex-direction: column; backface-visibility: hidden; box-shadow: 0 30px 70px rgba(14,14,18,0.35); }
+  .front { border-radius: 8px 16px 16px 8px; padding: 30px 26px; justify-content: flex-start; }
+  .front::before { content: ""; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: rgba(14,14,18,0.15); }
+  .front::after { content: ""; position: absolute; right: -8px; top: 10px; bottom: 6px; width: 8px; background: #fff; border-radius: 0 4px 4px 0; box-shadow: inset -2px 0 0 rgba(14,14,18,0.15); }
+  /* The back mirrors the spine and the page edge, so the turn reads as one
+     physical object rather than two cards. */
+  .back { border-radius: 16px 8px 8px 16px; padding: 23px 21px 18px; transform: rotateY(180deg); }
+  .back::before { content: ""; position: absolute; right: 10px; top: 0; bottom: 0; width: 2px; background: rgba(14,14,18,0.15); }
+  .back::after { content: ""; position: absolute; left: -8px; top: 10px; bottom: 6px; width: 8px; background: #fff; border-radius: 4px 0 0 4px; box-shadow: inset 2px 0 0 rgba(14,14,18,0.15); }
+
   .book-brand { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 15px; letter-spacing: -0.02em; }
   .wordmark { letter-spacing: -0.03em; position: relative; display: inline-block; white-space: nowrap; padding: 0 0 6px; }
   .wordmark .school { color: var(--acc); }
   .wordmark .dash { color: var(--acc); font-size: 0.62em; vertical-align: 0.1em; }
   .wordmark svg { position: absolute; left: 0; bottom: 0; width: 100%; height: 5px; overflow: visible; }
-  .book-rule { position: absolute; inset: 0; border-radius: inherit; background-image: linear-gradient(rgba(14,14,18,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(14,14,18,0.06) 1px, transparent 1px); background-size: 28px 28px; -webkit-mask-image: linear-gradient(#000 46%, transparent 74%); mask-image: linear-gradient(#000 46%, transparent 74%); }
-  .book-dawn { position: absolute; left: 0; right: 0; bottom: 0; height: 40%; border-radius: 0 0 16px 8px; background: radial-gradient(130% 105% at 50% 118%, var(--coral) 0 30%, var(--lime) 30% 47%, #2bb35c 47% 62%, rgba(43,179,92,0.16) 62% 74%, transparent 74%); }
-  .book-ribbon { position: absolute; top: -8px; right: 36px; width: 26px; height: 74px; background: var(--vio); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%); box-shadow: 0 4px 10px rgba(14,14,18,0.18); }
-  .book-brand, .book .mid, .foot { position: relative; } .book .mid { margin-top: 24px; } .book .foot { margin-top: auto; }
+  .rule { position: absolute; inset: 0; border-radius: inherit; background-image: linear-gradient(rgba(14,14,18,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(14,14,18,0.06) 1px, transparent 1px); background-size: 28px 28px; -webkit-mask-image: linear-gradient(#000 46%, transparent 74%); mask-image: linear-gradient(#000 46%, transparent 74%); }
+  .rule--back { -webkit-mask-image: linear-gradient(#000 16%, transparent 38%); mask-image: linear-gradient(#000 16%, transparent 38%); }
+  .dawn { position: absolute; left: 0; right: 0; bottom: 0; height: 40%; border-radius: 0 0 16px 8px; background: radial-gradient(130% 105% at 50% 118%, var(--coral) 0 30%, var(--lime) 30% 47%, #2bb35c 47% 62%, rgba(43,179,92,0.16) 62% 74%, transparent 74%); }
+  .dawn--back { height: 21%; border-radius: 0 0 8px 16px; }
+  .ribbon { position: absolute; top: -8px; right: 36px; width: 26px; height: 74px; background: var(--vio); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%); box-shadow: 0 4px 10px rgba(14,14,18,0.18); }
+  /* From the back you see only the stub over the top edge, which also keeps
+     it off the hook line. */
+  .ribbon--back { right: auto; left: 36px; height: 22px; clip-path: none; border-radius: 0 0 2px 2px; }
+  .book-brand, .mid, .foot, .hook, .copy, .bfoot { position: relative; }
+  .mid { margin-top: 24px; } .foot { margin-top: auto; }
   .num { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 96px; line-height: 1; letter-spacing: -0.03em; color: var(--ink); display: inline-block; padding-right: 0.08em; background: linear-gradient(170deg, currentColor 30%, color-mix(in srgb, currentColor 55%, transparent) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
   .num .dot { color: var(--coral); -webkit-text-fill-color: var(--coral); }
   .title { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 30px; line-height: 0.98; letter-spacing: -0.02em; text-transform: uppercase; margin: 6px 0 12px; }
   .sub { font-size: 13px; line-height: 1.5; color: rgba(14,14,18,0.75); margin: 0; max-width: 24ch; }
   .foot { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); }
-  .sticker { position: absolute; bottom: -14px; right: 2%; background: var(--vio); color: #fff; padding: 10px 20px; border-radius: 999px; font-weight: 700; font-size: 14px; transform: rotate(-7deg); letter-spacing: 0.04em; }
+
+  /* Back cover: hook, jacket copy set small the way it really is, then the
+     imprint and barcode on their own patches over the sunrise. */
+  .hook { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 13px; line-height: 1.14; letter-spacing: -0.02em; margin: 0 0 10px; padding-bottom: 10px; }
+  .hook::after { content: ""; position: absolute; left: 0; bottom: 0; width: 48px; height: 3px; border-radius: 2px; background: linear-gradient(90deg, #F5A83C, #B8C94F 55%, #43DE7B); }
+  .copy { flex: 1; min-height: 0; font-size: 8px; line-height: 1.5; color: rgba(14,14,18,0.75); }
+  .copy p { margin: 0 0 5px; }
+  .copy p:last-child { margin: 0; font-weight: 700; color: var(--ink); }
+  .bfoot { margin-top: 10px; display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
+  .imprint { display: flex; flex-direction: column; gap: 4px; padding: 5px 7px 4px; border-radius: 2px; background: var(--paper); box-shadow: 0 1px 3px rgba(14,14,18,0.14); font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 9px; letter-spacing: -0.02em; }
+  .site { font-family: "Instrument Sans", sans-serif; font-weight: 600; font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(14,14,18,0.75); }
+  .barcode { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: none; background: #fff; border-radius: 2px; padding: 4px 5px 3px; box-shadow: 0 1px 3px rgba(14,14,18,0.16); }
+  .barcode svg { display: block; width: 64px; height: 22px; fill: #14141a; }
+  .digits { font-size: 5.5px; font-weight: 600; letter-spacing: 0.14em; color: #14141a; }
+
+  .sticker { position: absolute; bottom: -14px; right: 2%; background: var(--vio); color: #fff; padding: 10px 20px; border-radius: 999px; font-weight: 700; font-size: 14px; transform: rotate(-7deg); letter-spacing: 0.04em; pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease; }
+  .stage:hover .sticker, .stage:has(.turn:hover) .sticker { opacity: 0; transform: rotate(-7deg) scale(0.92); }
+  /* Hover alone would strand touch and keyboard, so the turn has a control. */
+  .turn { position: absolute; bottom: -54px; left: 50%; transform: translateX(-50%); padding: 9px 21px; border: 1.5px solid rgba(14,14,18,0.3); border-radius: 999px; background: none; color: var(--ink); font-family: "Instrument Sans", sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+  .turn:hover { border-color: var(--ink); background: rgba(14,14,18,0.06); }
+
+  /* Where motion is unwelcome the back simply takes the front's place. */
+  @media (prefers-reduced-motion: reduce) {
+    .flip, .flip-inner { transition: none; }
+    .flip:hover, .stage:has(.turn:hover) .flip { transform: rotate(-4deg); }
+    .flip:hover .flip-inner, .stage:has(.turn:hover) .flip-inner { transform: none; }
+    .back { transform: none; backface-visibility: visible; opacity: 0; transition: opacity 0.2s ease; }
+    .flip:hover .back, .stage:has(.turn:hover) .back { opacity: 1; }
+  }
 </style>
 </head>
 <body>
@@ -56,19 +104,71 @@
       <div class="ctas"><a href="#" class="btn btn--ink">Get the Book →</a><a href="#" class="btn btn--outline-ink">Read a Sample</a></div>
     </div>
     <div class="stage">
-      <div class="book">
-        <span class="book-rule" aria-hidden="true"></span>
-        <span class="book-dawn" aria-hidden="true"></span>
-        <span class="book-ribbon" aria-hidden="true"></span>
-        <span class="book-brand"><span class="wordmark">SELF<span class="dash">-</span>MADE <span class="school">SCHOOL</span><svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="dawn-cover-card" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><path d="M6,15 C90,4 230,4 294,11" stroke="url(#dawn-cover-card)" stroke-width="8" fill="none" stroke-linecap="round"/></svg></span></span>
-        <div class="mid">
-          <span class="num">13<span class="dot">.</span></span>
-          <h3 class="title">The 13th Grade</h3>
-          <p class="sub">The missing textbook for your first decade of adulthood.</p>
+      <div class="flip">
+        <div class="flip-inner">
+          <div class="face front">
+            <span class="rule" aria-hidden="true"></span>
+            <span class="dawn" aria-hidden="true"></span>
+            <span class="ribbon" aria-hidden="true"></span>
+            <span class="book-brand"><span class="wordmark">SELF<span class="dash">-</span>MADE <span class="school">SCHOOL</span><svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="dawn-cover-card" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><path d="M6,15 C90,4 230,4 294,11" stroke="url(#dawn-cover-card)" stroke-width="8" fill="none" stroke-linecap="round"/></svg></span></span>
+            <div class="mid">
+              <span class="num">13<span class="dot">.</span></span>
+              <h3 class="title">The 13th Grade</h3>
+              <p class="sub">The missing textbook for your first decade of adulthood.</p>
+            </div>
+            <div class="foot"><span>Neil R. Kadakia</span></div>
+          </div>
+
+          <div class="face back">
+            <span class="rule rule--back" aria-hidden="true"></span>
+            <span class="dawn dawn--back" aria-hidden="true"></span>
+            <span class="ribbon ribbon--back" aria-hidden="true"></span>
+            <p class="hook">Twelve years got you into college.<br>Not one got you ready for life.</p>
+            <div class="copy">
+              <p>I wrote this for one person: myself, at eighteen.</p>
+              <p>Everything before that was aimed at one thing: getting into college. Thirteen years of work for an acceptance letter, and almost nothing for the life waiting on the other side of it.</p>
+              <p>No one handed me a manual. How money actually works, how to think when a decision is real and the cost is mine, how to tell the few choices that quietly shape a life from the noise of the ones that don't.</p>
+              <p>This is everything I wish someone had told me before I walked into my twenties. Not a weekend read: a year you can take on your own.</p>
+              <p>This is the manual I needed. Now it's yours.</p>
+            </div>
+            <div class="bfoot">
+              <span class="imprint">
+                <span class="wordmark">SELF<span class="dash">-</span>MADE <span class="school">SCHOOL</span><svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="dawn-back-card" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5A83C"/><stop offset="0.55" stop-color="#B8C94F"/><stop offset="1" stop-color="#43DE7B"/></linearGradient></defs><path d="M6,15 C90,4 230,4 294,11" stroke="url(#dawn-back-card)" stroke-width="8" fill="none" stroke-linecap="round"/></svg></span>
+                <span class="site">selfmadeschool.org</span>
+              </span>
+              <span class="barcode" aria-hidden="true">
+                <svg viewBox="0 0 152 34" preserveAspectRatio="none">
+                  <rect x="0" y="0" width="1" height="34"/><rect x="2" y="0" width="2" height="34"/>
+                  <rect x="7" y="0" width="1" height="29"/><rect x="11" y="0" width="3" height="29"/>
+                  <rect x="15" y="0" width="1" height="29"/><rect x="18" y="0" width="2" height="29"/>
+                  <rect x="21" y="0" width="1" height="29"/><rect x="25" y="0" width="1" height="29"/>
+                  <rect x="27" y="0" width="2" height="29"/><rect x="32" y="0" width="3" height="29"/>
+                  <rect x="36" y="0" width="1" height="29"/><rect x="39" y="0" width="2" height="29"/>
+                  <rect x="43" y="0" width="1" height="29"/><rect x="46" y="0" width="1" height="29"/>
+                  <rect x="49" y="0" width="3" height="29"/><rect x="54" y="0" width="1" height="29"/>
+                  <rect x="57" y="0" width="2" height="29"/><rect x="61" y="0" width="1" height="29"/>
+                  <rect x="64" y="0" width="1" height="34"/><rect x="66" y="0" width="2" height="34"/>
+                  <rect x="71" y="0" width="1" height="29"/><rect x="74" y="0" width="3" height="29"/>
+                  <rect x="79" y="0" width="1" height="29"/><rect x="82" y="0" width="2" height="29"/>
+                  <rect x="86" y="0" width="1" height="29"/><rect x="89" y="0" width="1" height="29"/>
+                  <rect x="92" y="0" width="3" height="29"/><rect x="97" y="0" width="2" height="29"/>
+                  <rect x="101" y="0" width="1" height="29"/><rect x="104" y="0" width="2" height="29"/>
+                  <rect x="108" y="0" width="1" height="29"/><rect x="111" y="0" width="1" height="29"/>
+                  <rect x="114" y="0" width="3" height="29"/><rect x="119" y="0" width="1" height="29"/>
+                  <rect x="122" y="0" width="2" height="29"/><rect x="126" y="0" width="1" height="29"/>
+                  <rect x="129" y="0" width="2" height="29"/><rect x="133" y="0" width="1" height="29"/>
+                  <rect x="136" y="0" width="1" height="29"/><rect x="139" y="0" width="3" height="29"/>
+                  <rect x="144" y="0" width="1" height="29"/><rect x="147" y="0" width="1" height="34"/>
+                  <rect x="149" y="0" width="2" height="34"/>
+                </svg>
+                <span class="digits">9 781234 567890</span>
+              </span>
+            </div>
+          </div>
         </div>
-        <div class="foot"><span>Neil R. Kadakia</span></div>
       </div>
       <div class="sticker">parent approved ✓</div>
+      <button class="turn" type="button">Read the Back</button>
     </div>
   </div>
 </body>
