@@ -77,10 +77,10 @@ export const COURSE_14: Course = {
         {
           q: "Why does a higher starting salary matter beyond year one?",
           options: [
-            "It doesn't. A salary is a salary",
-            "Future raises are percentages on top of it, so the gap compounds for years",
-            "It only matters for taxes",
-            "Companies never give raises anyway",
+            "It mostly evens out once promotions start landing",
+            "Raises are percentages of it, so the gap compounds",
+            "It changes the tax band more than the take-home pay",
+            "It matters least at firms that raise pay on a schedule",
           ],
           answer: 1,
           explain: "Percentage raises stack on the base. A $10k higher start quietly becomes six figures of difference over a decade.",
@@ -88,10 +88,10 @@ export const COURSE_14: Course = {
         {
           q: "What actually gets offers pulled?",
           options: [
-            "Any attempt to negotiate",
-            "Countering above 5%",
-            "Rudeness or dishonesty, not a polite, reasoned counter",
-            "Asking for time to think",
+            "Negotiating at all, once the offer is in writing",
+            "Countering by more than about five percent",
+            "Rudeness or dishonesty, not a reasoned counter",
+            "Asking for a few days to think it over first",
           ],
           answer: 2,
           explain: "Recruiters expect a counter; their first number is rarely the top of the band. Polite negotiation reads as competence, not greed.",
@@ -99,10 +99,10 @@ export const COURSE_14: Course = {
         {
           q: "You said your number. The recruiter goes quiet. You should…",
           options: [
-            "Immediately soften: \"but the current offer is fine too!\"",
-            "Fill the silence with more reasons",
-            "Let the silence sit. It's part of the negotiation",
-            "Withdraw the counter and apologize",
+            "Soften it, and say the current offer works too",
+            "Fill the gap with more reasons for the number",
+            "Let the silence sit: it is part of the process",
+            "Take the counter back and apologise for it",
           ],
           answer: 2,
           explain: "Whoever fills the silence first gives ground. You made a reasonable ask; the discomfort is doing the work. Let it.",
@@ -110,10 +110,10 @@ export const COURSE_14: Course = {
         {
           q: "The recruiter says the base is truly fixed. Best response?",
           options: [
-            "Accept immediately. It's over",
-            "Ask about the other levers: signing bonus, early review with defined raise, vacation, remote days",
-            "Walk away on principle",
-            "Ask them to check with their manager repeatedly",
+            "Accept it: a fixed base means the talk is finished",
+            "Ask the other levers: bonus, early review, vacation",
+            "Decline, since a firm with no flexibility says a lot",
+            "Ask them to raise it with their manager once more",
           ],
           answer: 1,
           explain: "Base is one lever of several. Signing bonuses and defined early reviews are often easier for a company to say yes to than base changes.",
@@ -150,10 +150,10 @@ export const COURSE_14: Course = {
         {
           q: "A target-date fund (e.g. Target 2065)…",
           options: [
-            "Guarantees your money by 2065",
-            "Holds a stock/bond mix that automatically gets more conservative as the date approaches",
-            "Can't be touched until 2065",
-            "Is a single company's stock held until 2065",
+            "Guarantees a set amount will be there by that year",
+            "Shifts from stocks toward bonds as the date nears",
+            "Locks the money away until the year on the label",
+            "Tracks one company chosen to hold for the period",
           ],
           answer: 1,
           explain: "It's the set-and-forget option: diversified from day one, gradually shifting toward safer holdings as retirement nears.",
@@ -161,10 +161,10 @@ export const COURSE_14: Course = {
         {
           q: "Fund A charges 0.04%, Fund B charges 1%. Over 30 years on a retirement account, the difference is roughly…",
           options: [
-            "Trivial, both are under 1%",
-            "A rounding error",
-            "Six figures: fees compound against you exactly like returns compound for you",
-            "Zero if both track the same index",
+            "Small, given that both sit at or below one percent",
+            "Close to nothing once inflation is accounted for",
+            "Six figures: fees compound the way returns do",
+            "Nothing at all, if the two track the same index",
           ],
           answer: 2,
           explain: "The percentage is skimmed yearly on the whole growing balance. Tiny-looking fee gaps become enormous over decades. Fees are the one part of investing you fully control.",
@@ -172,17 +172,17 @@ export const COURSE_14: Course = {
         {
           q: "The most expensive common 401(k) mistake is…",
           options: [
-            "Choosing an index fund instead of the hot fund",
-            "Contributing too much",
-            "Never choosing at all: sitting in a high-fee default or cash for years",
-            "Checking the balance too often",
+            "Taking the index fund over the one that is performing",
+            "Putting in more than the employer will match",
+            "Never choosing: sitting in cash or a costly default",
+            "Watching the balance closely enough to react to it",
           ],
           answer: 2,
           explain: "Contributions parked in cash or an expensive default miss the growth entirely. Ten minutes in the portal settings is the fix.",
         },
         {
           q: "A fair expense ratio for a broad index fund is…",
-          options: ["Around 1%", "0.20% or less", "2–3% for good ones", "Expense ratios don't matter for index funds"],
+          options: ["Around one percent, which is the industry norm", "A fifth of one percent, or lower than that", "Two to three percent for the better-run funds", "It hardly matters when the fund just tracks an index"],
           answer: 1,
           explain: "Major providers offer broad index funds at 0.02–0.10%. Anything approaching 1% needs a very good reason, and rarely has one.",
         },
@@ -220,10 +220,10 @@ export const COURSE_14: Course = {
         {
           q: "\"Your account is compromised. Read me the code we just texted so I can verify you.\" This is…",
           options: [
-            "Standard bank security procedure",
-            "Safe if the caller ID matches your bank",
-            "Account theft in progress: the code is the key, and no real company asks for it",
-            "Fine if they already know your name and card number",
+            "Standard security procedure at most large banks",
+            "Safe enough, when the caller ID matches the bank",
+            "Theft in progress: that code is the key itself",
+            "Fine once they have your name and card number",
           ],
           answer: 2,
           explain: "That code is a one-time key to log in or move money. Real institutions never ask you to read it out. Knowing your details proves nothing. Data leaks are everywhere.",
@@ -231,10 +231,10 @@ export const COURSE_14: Course = {
         {
           q: "The two-step habit that defeats nearly every scam:",
           options: [
-            "Ask the caller detailed questions to test them",
-            "Hang up, then contact the institution yourself through its official number or app",
-            "Keep them talking while you search online",
-            "Give fake information to waste their time",
+            "Ask enough detailed questions to catch them out",
+            "Hang up, then call back on the official number",
+            "Keep them talking while you look the number up",
+            "Feed them wrong details and waste their time",
           ],
           answer: 1,
           explain: "Scammers control the channel they contacted you on. A callback through an official channel (the number on your card, the real app) breaks every script.",
@@ -242,10 +242,10 @@ export const COURSE_14: Course = {
         {
           q: "Caller ID shows your bank's real name and number. This means…",
           options: [
-            "The call is legitimate",
-            "Nothing: caller ID is trivially spoofed",
-            "The bank is required to be calling",
-            "You can safely share your password",
+            "The call is genuine and came from the bank",
+            "Nothing at all: caller ID is trivial to fake",
+            "The bank has a duty to identify itself first",
+            "Sharing details is safe on this call only",
           ],
           answer: 1,
           explain: "Spoofing caller ID is easy and standard scam practice. Trust the callback you make, never the call you receive.",
@@ -253,10 +253,10 @@ export const COURSE_14: Course = {
         {
           q: "Authority + urgency + gift cards. How many of these does a real institution use?",
           options: [
-            "All three, when it's serious",
-            "Urgency, but never gift cards",
-            "None as pressure: real institutions send boring letters, wait, and never take gift cards",
-            "Depends on the institution",
+            "All three, when the situation is serious enough",
+            "Urgency, though never the gift card part of it",
+            "None: real ones write letters and then wait",
+            "It varies by institution and by what is owed",
           ],
           answer: 2,
           explain: "The IRS sends mail. Banks wait. Nobody legitimate is paid in gift cards. Pressure to act right now IS the tell.",

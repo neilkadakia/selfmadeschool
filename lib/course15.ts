@@ -80,10 +80,10 @@ export const COURSE_15: Course = {
         {
           q: "Better than asking \"should I quit?\" is asking…",
           options: [
-            "\"Is everyone else quitting?\"",
-            "\"What would need to be true in six months for staying to be right?\" and then testing whether it's achievable",
-            "\"Can I survive two weeks of no income?\"",
-            "\"Does my manager like me?\"",
+            "Whether the people you respect are leaving too",
+            "What would have to be true in six months to stay",
+            "Whether you could survive a month without income",
+            "Whether your manager rates you as highly as you think",
           ],
           answer: 1,
           explain: "The reframe turns a mood question into a testable plan. Nothing believable on the list = your answer. A real list = things to actually ask for.",
@@ -91,10 +91,10 @@ export const COURSE_15: Course = {
         {
           q: "Your manager is the only bad part of an otherwise good job. The framework says…",
           options: [
-            "Quit: a bad manager poisons everything",
-            "Wait: you're running from one variable that itself changes often; managers move constantly",
-            "Transfer to any other company immediately",
-            "Complain to their manager first",
+            "Leave: one bad manager sours the whole of a job",
+            "Wait: managers move, and that is one variable",
+            "Move to another company at the first opportunity",
+            "Raise it with their manager before doing anything",
           ],
           answer: 1,
           explain: "Trading a whole good job to escape one person is usually a bad trade: that person is one org change away from leaving anyway. Different if the whole culture is the problem.",
@@ -102,10 +102,10 @@ export const COURSE_15: Course = {
         {
           q: "Why interview while still employed?",
           options: [
-            "It's the only legal way",
-            "Desperation negotiates badly. Employed candidates have options, and options are the negotiation",
-            "Companies only hire employed people",
-            "To use work hours for interviews",
+            "It is the only way to be considered at most firms",
+            "Desperation negotiates badly; options are leverage",
+            "A gap on the record is hard to explain afterwards",
+            "It lets you use the working day for the interviews",
           ],
           answer: 1,
           explain: "An offer you can walk away from is worth more. Quit first and every interview carries a countdown clock the other side can feel.",
@@ -113,10 +113,10 @@ export const COURSE_15: Course = {
         {
           q: "You've asked twice for a raise with clear reasoning; silence both times. Leaving now is…",
           options: [
-            "Impulsive. Give it a third year",
-            "The response: you played the hand, the answer was the silence",
-            "Only okay if you have no other option",
-            "Disloyal after what the company gave you",
+            "Impulsive: a third ask would settle it either way",
+            "The answer: you played the hand, silence replied",
+            "Reasonable only once you have nothing else lined up",
+            "Ungrateful, given what the job has given you so far",
           ],
           answer: 1,
           explain: "Quitting before asking is folding an unplayed hand. Asking clearly, twice, and hearing silence IS the answer. Leaving after that is a decision, not a mood.",
@@ -155,10 +155,10 @@ export const COURSE_15: Course = {
         {
           q: "The mortgage would equal your current rent. The honest cost comparison is…",
           options: [
-            "Equal: same monthly number, same cost",
-            "Owning is cheaper because you build equity",
-            "Rent vs. mortgage + 30–50%: taxes, insurance, maintenance, and transaction fees are part of owning",
-            "Impossible to compare",
+            "Equal, since the monthly number is the same either way",
+            "Owning wins, because the payment builds equity",
+            "Rent against the mortgage plus a third to a half again",
+            "Not comparable: the two arrangements are different",
           ],
           answer: 2,
           explain: "The mortgage is the beginning of owning's costs, not the total. Taxes, insurance, ~1%/year maintenance, and fees in and out change the picture completely.",
@@ -166,10 +166,10 @@ export const COURSE_15: Course = {
         {
           q: "Why does the five-year rule exist?",
           options: [
-            "Mortgages can't be ended before five years",
-            "Buying and selling costs are so large it takes years of ownership just to break even on them",
-            "Home prices only rise after year five",
-            "Banks require five years of history",
+            "A mortgage cannot be ended inside the first five years",
+            "The costs in and out take years just to break even",
+            "Prices in most markets only climb after year five",
+            "Lenders want five years of payments on the record",
           ],
           answer: 1,
           explain: "2–5% in on closing costs, more out in agent fees. A short stay means selling before the fees are recovered. Time is what makes buying work.",
@@ -177,10 +177,10 @@ export const COURSE_15: Course = {
         {
           q: "\"Rent is throwing money away.\" What's rent actually buying?",
           options: [
-            "Nothing: the saying is right",
-            "Flexibility, zero repair risk, and the freedom to leave in 30 days, plus your down payment stays invested and compounding",
-            "Only a place to sleep",
-            "The landlord's goodwill",
+            "Nothing that lasts, which is what the saying means",
+            "Flexibility, no repair risk, capital left invested",
+            "A roof, and nothing else worth counting as a return",
+            "A relationship with a landlord who may renew cheaply",
           ],
           answer: 1,
           explain: "Renting buys optionality and shifts repair risk to someone else, while your capital compounds elsewhere. That's a real product, not waste.",
@@ -188,10 +188,10 @@ export const COURSE_15: Course = {
         {
           q: "Buying most clearly wins when…",
           options: [
-            "Anytime you can afford the down payment",
-            "The mortgage is under 50% of income",
-            "Long timeline + stable income + comfortable at FULL cost + sane local price-to-rent",
-            "Your family says it's time",
+            "As soon as the deposit is genuinely within reach",
+            "Once the mortgage would sit under half your income",
+            "Long stay, steady income, full cost affordable",
+            "When the people around you say the time has come",
           ],
           answer: 2,
           explain: "With those four in place, owning builds equity, locks housing costs against rent inflation, and buys real stability. Missing several, the proverb is just pressure.",
@@ -231,10 +231,10 @@ export const COURSE_15: Course = {
         {
           q: "When should you learn each other's real financial facts (income, debts, scores)?",
           options: [
-            "After marriage. It's rude before",
-            "Before deep commitment; combining lives on hidden facts is building on sand",
-            "Only if buying property together",
-            "Never: separate money means separate information",
+            "After marriage: asking earlier reads as mistrust",
+            "Before deep commitment: hidden facts are sand",
+            "Only when you are about to buy something together",
+            "Never, if you intend to keep the money separate",
           ],
           answer: 1,
           explain: "You're not entitled to a stranger's finances, but you are each entitled to full facts before merging lives. Discovered debt damages trust far beyond the dollars.",
@@ -242,10 +242,10 @@ export const COURSE_15: Course = {
         {
           q: "One partner earns double. Why do proportional contributions usually beat 50/50?",
           options: [
-            "They don't. Equal split is equal respect",
-            "50/50 quietly consumes the lower earner's entire margin, turning shared life into subsidized resentment",
-            "The higher earner should pay everything",
-            "Proportional is only for married couples",
+            "They do not: an equal split is the fairer signal",
+            "An even split eats the lower earner's margin",
+            "The higher earner should simply cover all of it",
+            "Proportional splits only make sense once married",
           ],
           answer: 1,
           explain: "Equal-dollar splits at unequal incomes leave one person with no personal margin. Proportional keeps both partners with real breathing room and no scorekeeping.",
@@ -253,10 +253,10 @@ export const COURSE_15: Course = {
         {
           q: "\"I send my parents money monthly and always will.\" This belongs…",
           options: [
-            "Nowhere. It's private",
-            "Early, in the facts-and-future conversations: surprising a partner with it years in breeds resentment about the silence, not the money",
-            "Only in a prenup",
-            "After the wedding, once it's harder to object",
+            "Nowhere: what you send your family is your own",
+            "Early: resentment lands on silence, not the sum",
+            "In the paperwork, if you end up signing any",
+            "After the wedding, when it is harder to object to",
           ],
           answer: 1,
           explain: "Family support is a lifelong financial fact in many households. Partners handle the number fine. What they don't forgive easily is learning it late.",
@@ -264,10 +264,10 @@ export const COURSE_15: Course = {
         {
           q: "Which is a red flag rather than a workable difference?",
           options: [
-            "A saver paired with a spender",
-            "Different comfort levels with investing risk",
-            "One partner policing the other's spending and imposing an allowance",
-            "Preferring separate personal accounts",
+            "A saver and a spender trying to run one budget",
+            "Different appetites for risk when investing money",
+            "One partner policing the other's spending",
+            "A preference for keeping separate personal accounts",
           ],
           answer: 2,
           explain: "Style differences get systems. Control (policing, imposed allowances, using money to limit options) is a power problem wearing a money costume.",

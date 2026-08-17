@@ -18,11 +18,23 @@
 import { COURSES, courseUnits, getLesson } from "../lib/lms";
 import { seedFrom, shuffledOptions } from "../lib/shuffle";
 
-// Over this share of questions where the correct option is the single
+// Over this share of questions where the correct option is the noticeably
 // longest, a student can pass on instinct alone.
-const LONGEST_LIMIT = 0.4;
+const LIMIT = 0.35;
 
-type Row = { key: string; answer: number; lens: number[]; correctIsLongest: boolean; ratio: number };
+// A one-character difference is not a tell; nobody counts letters. This is
+// roughly a word and a half, which is the point at which one option starts
+// visibly standing out from the others.
+const NOTICEABLE = 8;
+
+type Row = {
+  key: string;
+  answer: number;
+  lens: number[];
+  correctIsLongest: boolean;
+  correctIsShortest: boolean;
+  ratio: number;
+};
 
 const rows: Row[] = [];
 let remapBroken = 0;
@@ -42,7 +54,8 @@ for (const course of COURSES) {
         key,
         answer: q.answer,
         lens,
-        correctIsLongest: correctLen > maxOther,
+        correctIsLongest: correctLen > maxOther + NOTICEABLE,
+        correctIsShortest: correctLen < Math.min(...others) - NOTICEABLE,
         ratio: correctLen / (others.reduce((a, b) => a + b, 0) / others.length),
       });
 
@@ -61,6 +74,8 @@ const total = rows.length;
 const pos = [0, 0, 0, 0];
 rows.forEach((r) => pos[r.answer]++);
 const longest = rows.filter((r) => r.correctIsLongest).length;
+// The mirror image: trimming every correct answer would just move the tell.
+const shortest = rows.filter((r) => r.correctIsShortest).length;
 const meanRatio = rows.reduce((a, r) => a + r.ratio, 0) / total;
 
 const pct = (n: number) => `${Math.round((n / total) * 100)}%`;
@@ -68,7 +83,8 @@ const pct = (n: number) => `${Math.round((n / total) * 100)}%`;
 console.log(`questions: ${total}`);
 console.log(`answer position A/B/C/D as authored: ${pos.join(" / ")}  (${pos.map(pct).join(" / ")})`);
 console.log(`   shuffled at render, so this is hygiene, not an exploit`);
-console.log(`correct option is the single longest: ${longest} (${pct(longest)})`);
+console.log(`correct option noticeably longest: ${longest} (${pct(longest)})`);
+console.log(`correct option noticeably shortest: ${shortest} (${pct(shortest)})`);
 console.log(`correct option length vs mean distractor: ${meanRatio.toFixed(2)}x`);
 console.log(`shuffle remap check: ${remapBroken === 0 ? "sound" : `BROKEN in ${remapBroken} cases`}`);
 
@@ -86,9 +102,16 @@ if (remapBroken > 0) {
   console.error("\nThe shuffle remap is broken. The Final would mark right answers wrong.");
   process.exit(1);
 }
-if (strict && longest / total > LONGEST_LIMIT) {
+if (strict && shortest / total > LIMIT) {
   console.error(
-    `\nThe length tell is too strong: ${pct(longest)} of questions hand the answer to anyone who picks the longest option (limit ${Math.round(LONGEST_LIMIT * 100)}%).`
+    `
+The tell just moved: ${pct(shortest)} of questions hand the answer to anyone who picks the shortest option.`
+  );
+  process.exit(1);
+}
+if (strict && longest / total > LIMIT) {
+  console.error(
+    `\nThe length tell is too strong: ${pct(longest)} of questions hand the answer to anyone who picks the longest option (limit ${Math.round(LIMIT * 100)}%).`
   );
   process.exit(1);
 }

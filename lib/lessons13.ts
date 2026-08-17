@@ -72,7 +72,7 @@ export const LESSONS_13: Record<string, Lesson> = {
         q: "What actually quiets the critic voice?",
         options: [
           "Repeating something positive about yourself until it starts to land",
-          "Naming the mistake precisely enough that a to-do item is left",
+          "Naming the mistake precisely enough to leave a to-do item",
           "Arguing back with the evidence until the voice runs out of material",
           "Staying out of the situations where you are most likely to fail again",
         ],
@@ -112,7 +112,7 @@ export const LESSONS_13: Record<string, Lesson> = {
       { q: "Why is comparing yourself to social media rigged from the start?", options: ["You weigh your ordinary day against someone's selected best", "Because the people posting really are doing better than you are", "Because any comparison between two people is unfair by nature", "Because the numbers on a feed are mostly bought rather than earned"], answer: 0, explain: "Feeds show a curated 1 percent. Your full life against someone's trailer isn't a comparison at all. It's a setup, whether or not their numbers are real." },
       { q: "The healthy replacement for comparing to strangers is…", options: ["Comparing yourself to richer people so the gap keeps you moving", "Comparing yourself to nobody at all and ignoring the question", "Comparing to who you were six months ago, on what you control", "Leaving the apps entirely so the comparison never gets a chance"], answer: 2, explain: "A scoreboard built on your own past self updates when you act. That's the axis where effort shows up. Quitting the apps removes the trigger but never builds the scoreboard." },
       { q: "Envy at someone's post is most useful as…", options: ["A signal that buying the same thing would settle the feeling", "Proof that you are further behind than you had been admitting", "Data about what you want: usually the freedom, not the object", "Something to feel bad about and then put out of your mind"], answer: 2, explain: "Envy is a messy arrow pointing at a real want. Read the want underneath it, then build toward that." },
-      { q: "What's the point of muting instead of doom-scrolling past accounts that sting?", options: ["It signals to the poster that their content missed the mark", "It teaches the algorithm to show you calmer things over time", "It is the polite version of unfollowing, so nobody gets hurt", "It is free, invisible, and removes the trigger quietly"], answer: 3, explain: "You're not obligated to carry a feed that reliably makes you feel behind. Muting curates your inputs without burning any bridge, and the poster never learns a thing." },
+      { q: "What's the point of muting instead of doom-scrolling past accounts that sting?", options: ["It signals to the poster that their content missed the mark", "It teaches the algorithm to show you calmer things over time", "It is the polite version of unfollowing, so nobody gets hurt", "It is free and invisible, and it removes the trigger"], answer: 3, explain: "You're not obligated to carry a feed that reliably makes you feel behind. Muting curates your inputs without burning any bridge, and the poster never learns a thing." },
     ],
     cards: [
       { front: "The highlight-reel problem", back: "Feeds show a selected ~1% of a life. Comparing your average Tuesday to a stranger's best moment is a rigged game." },
@@ -177,7 +177,7 @@ export const LESSONS_13: Record<string, Lesson> = {
       { kind: "bigfact", stat: "~40%", caption: "of daily actions are habits, not decisions. Engineering that 40% pays off more than any other self-improvement move." },
     ],
     quiz: [
-      { q: "The three parts of every habit loop:", options: ["Motivation, then action, then the streak you are protecting", "Cue, then routine, then reward", "A goal, a written plan, and a result you can measure", "Morning anchor, afternoon slump, evening wind-down"], answer: 1, explain: "Something triggers it, you do the thing, you get a payoff. All three are levers you can engineer. Goals and plans sit outside the loop entirely." },
+      { q: "The three parts of every habit loop:", options: ["Motivation, then action, then the streak you are protecting", "A cue, then the routine, then the reward", "A goal, a written plan, and a result you can measure", "Morning anchor, afternoon slump, evening wind-down"], answer: 1, explain: "Something triggers it, you do the thing, you get a payoff. All three are levers you can engineer. Goals and plans sit outside the loop entirely." },
       { q: "Why do people with \"great discipline\" mostly succeed?", options: ["They have trained themselves to stop feeling the temptation", "They hold themselves to a real consequence when they slip", "They live where the good choice is also the easy choice", "They start earlier in the day, before their willpower drains"], answer: 2, explain: "Design beats resolve. Willpower is a battery; environment is the charger. The disciplined people you know mostly moved the furniture." },
       { q: "You scroll in bed every night and hate it. The highest-payoff fix:", options: ["Charge the phone in the next room, so reaching it takes effort", "Set a screen-time limit and let the phone do the enforcing", "Read about what the scrolling is doing to your sleep quality", "Promise yourself, properly this time, that tonight you will stop"], answer: 0, explain: "Twenty seconds of friction kills most habits. Move the furniture instead of fighting the loop, and instead of asking tonight's tired brain to win." },
       { q: "Breaking a bad habit usually works best by…", options: ["Removing yourself from every situation that sets the habit off", "Keeping the cue and the reward, and swapping out the routine", "Waiting until you want the change more than you want the habit", "Deciding once, firmly, and holding the line by willpower alone"], answer: 1, explain: "The 3pm break and the treat-yourself feeling stay; the snack becomes a walk. Loops get redirected, not erased, and you cannot dodge every cue for life." },
@@ -322,7 +322,7 @@ export const LESSONS_13: Record<string, Lesson> = {
     quiz: [
       { q: "Why does \"find your passion\" mostly produce paralysis?", options: ["It treats purpose as an object to find, not one you grow", "Because most people genuinely do not have a passion to find", "Because the search takes more time than anyone actually has", "Because passion is a word invented to sell people courses"], answer: 0, explain: "Purpose is grown, not found. Plant something plausible, water it with effort. Meaning is the byproduct of getting good at something." },
       { q: "A rough heading plus motion beats a perfect plan because…", options: ["Because every plan turns out to be wrong once it meets reality", "Motion produces information that no amount of planning can", "Because getting it perfect takes longer than the window allows", "Because the direction matters far less than people believe"], answer: 1, explain: "You learn what fits by doing, not by deliberating. The heading gets corrected by contact with reality, which is why moving early beats planning long." },
-      { q: "Passion usually arrives…", options: ["Early, mostly formed, in the things you loved as a child", "After competence: progress lights the fire", "Mainly in creative work, where the output is personal", "Rarely, and mostly as a story told after the fact"], answer: 1, explain: "Almost nobody is passionate about what they're bad at. Get good at something useful and watch it become interesting." },
+      { q: "Passion usually arrives…", options: ["Early, mostly formed, in the things you loved as a child", "After competence, once progress lights the fire", "Mainly in creative work, where the output is personal", "Rarely, and mostly as a story told after the fact"], answer: 1, explain: "Almost nobody is passionate about what they're bad at. Get good at something useful and watch it become interesting." },
       { q: "What is this year's anger or heartbreak useful for?", options: ["Marking what you think should be different, which is fuel", "Little, beyond the lesson to avoid that situation again", "Deciding who to keep at a distance from here onward", "Telling people about, since it is the most honest material"], answer: 0, explain: "Fury at how things are is a compass needle pointing at what you would work to change. That's purpose material, roughly." },
     ],
     cards: [
@@ -358,7 +358,7 @@ export const LESSONS_13: Record<string, Lesson> = {
       {
         q: "Your offer letter says $60,000. Why is your monthly budget NOT based on $5,000?",
         options: [
-          "Taxes and deductions come out first, so less lands",
+          "Taxes and deductions come out first, so less than that lands",
           "Because budgeting under the real number is the safer habit",
           "Because most employers pay a little under what they offered",
           "Because rent leaves the account before the paycheck arrives",
@@ -391,7 +391,7 @@ export const LESSONS_13: Record<string, Lesson> = {
       {
         q: "Why automate savings on payday?",
         options: [
-          "Payday you decides better than 11pm you does",
+          "Payday you decides better than 11pm checkout you",
           "Automatic transfers usually earn a slightly better rate",
           "A regular transfer shows up well on your credit report",
           "It means you never have to look at the accounts again"
@@ -435,7 +435,7 @@ export const LESSONS_13: Record<string, Lesson> = {
         options: [
           "Treat it as spent money: withholding was handled at the source",
           "Leave it until April, when the exact amount owed is knowable",
-          "Set aside 25 to 30 percent: nothing was withheld",
+          "Set aside 25 to 30 percent, since nothing was withheld",
           "Small freelance amounts fall under the reporting threshold",
         ],
         answer: 2,
@@ -444,7 +444,7 @@ export const LESSONS_13: Record<string, Lesson> = {
       {
         q: "A big tax refund means…",
         options: [
-          "You overpaid all year and got your own money back",
+          "You overpaid all year and are getting your own money back",
           "You came out ahead, which is the point of filing carefully",
           "You underpaid during the year and the timing worked out",
           "Payroll made an error worth raising with your employer"
@@ -529,7 +529,7 @@ export const LESSONS_13: Record<string, Lesson> = {
       },
       {
         q: "Your limit is $1,000. For a great utilization number, keep the reported balance under…",
-        options: ["$900, which still leaves room before the limit", "$500, keeping it to half of what you were given", "$300, and under $100 is better still", "Any amount, as long as it clears before the due date"],
+        options: ["$900, which still leaves room before the limit", "$500, keeping it to half of what you were given", "$300, and staying under $100 is better still", "Any amount, as long as it clears before the due date"],
         answer: 2,
         explain: "Utilization under 30% is good, under 10% is great. High utilization signals stretched finances even if you pay in full.",
       },
@@ -586,10 +586,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       {
         q: "Your employer matches 401(k) contributions up to 4% of salary. Not contributing means…",
         options: [
-          "Nothing; you'll invest later when you earn more",
-          "You're declining free salary: the match is a 100% instant return",
-          "You're being smart, since 401(k)s lock money away",
-          "You save on taxes",
+          "Little, as long as you start investing once you earn more",
+          "You are declining salary: the match is an instant return",
+          "You keep flexibility, since a 401(k) locks the money away",
+          "You lower this year's tax bill by taking the pay as cash",
         ],
         answer: 1,
         explain: "The match is compensation that only exists if you claim it. Contributing to the full match comes before every other investing move.",
@@ -597,21 +597,21 @@ export const LESSONS_13: Record<string, Lesson> = {
       {
         q: "Why do index funds beat stock-picking for normal people?",
         options: [
-          "Index funds are government-insured",
-          "They never lose value",
-          "Most professionals fail to beat the index anyway; owning everything captures the winners without finding them",
-          "Stocks are illegal to buy directly under 25",
+          "An index fund is insured, so the downside is covered",
+          "Owning everything catches the winners without picking",
+          "Index funds hold their value when the market turns down",
+          "Buying individual shares is restricted until you are older",
         ],
-        answer: 2,
+        answer: 1,
         explain: "Even full-time professionals mostly fail to beat the S&P 500 over long periods. The index gives you the market's average, which turns out to be the winning play.",
       },
       {
         q: "You have credit card debt at 22% APR and $300 spare each month (after getting the full 401(k) match). What's the move?",
         options: [
-          "Split it into index funds and never miss a month of investing",
-          "Pay off the card first: a guaranteed 22% return beats the market's ~10% average",
-          "Buy individual stocks to grow it faster",
-          "Save it as cash until the debt clears itself",
+          "Invest it monthly, because time in the market is what counts",
+          "Clear the card first: 22 percent guaranteed beats 10 average",
+          "Put it into individual shares, where the upside is larger",
+          "Hold it in cash until the balance is small enough to clear",
         ],
         answer: 1,
         explain: "Paying off 22% debt is a guaranteed 22% return. No investment reliably offers that. Match first, then high-interest debt, then everything else.",
@@ -619,10 +619,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       {
         q: "The market drops 20% two years into your plan. The pre-written move is…",
         options: [
-          "Sell to protect what's left",
-          "Stop contributing until it recovers",
-          "Keep buying on schedule; you're getting the same funds at a discount",
-          "Switch to picking individual winners",
+          "Sell now, and buy back once the direction is clearer",
+          "Pause contributions until the recovery is properly underway",
+          "Keep buying on schedule, at a lower price per share",
+          "Move to individual names that held up better than the index",
         ],
         answer: 2,
         explain: "Drops are a scheduled part of the ride. Selling converts a temporary dip into a permanent loss; continuing to buy means your automatic purchases are happening on sale.",
@@ -659,10 +659,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       { kind: "bigfact", stat: "$600+", caption: "what a typical employer HSA contribution alone is worth: free, but only if you pick the plan and open the account." },
     ],
     quiz: [
-      { q: "The HSA's superpower is…", options: ["It pays your rent", "Triple tax advantage: untaxed in, untaxed growth, untaxed out for medical costs", "It replaces health insurance", "Unlimited free money"], answer: 1, explain: "No other account in the US tax code does all three. If you're on a high-deductible plan, it's the strongest account available to you." },
-      { q: "The FSA differs from the HSA how?", options: ["It's the same thing", "FSA money is use-it-or-lose-it within the year, so only fund it with money you're sure you'll spend", "FSA money grows forever", "FSAs are only for dental"], answer: 1, explain: "Fund the FSA for predictable costs: glasses, prescriptions, copays. Overfund it and December becomes a shopping spree for eye drops." },
-      { q: "How do you honestly compare two health plans?", options: ["Pick the lower premium", "Pick the bigger network", "Total yearly premiums + your realistic usage + the bad-year out-of-pocket max, then compare numbers", "Ask a coworker what they picked"], answer: 2, explain: "The cheap-premium plan can be expensive and the expensive plan can be cheap; only the arithmetic across good and bad years tells you which." },
-      { q: "The most common benefits mistake:", options: ["Over-contributing to the 401(k)", "Clicking the onboarding defaults and never opening the portal again", "Choosing an HSA", "Reading the packet too carefully"], answer: 1, explain: "Defaults are set for the company's convenience, not your finances. Twenty minutes in the portal is one of the best-paid tasks of your year, and open enrollment every fall is the do-over." },
+      { q: "The HSA's superpower is…", options: ["It stands in for insurance on a high-deductible plan", "Untaxed going in, growing, and coming out for medical", "It can be spent on any cost once the year closes out", "The employer contribution arrives with no strings on it"], answer: 1, explain: "No other account in the US tax code does all three. If you're on a high-deductible plan, it's the strongest account available to you." },
+      { q: "The FSA differs from the HSA how?", options: ["FSA money rolls forward and compounds the same way", "FSA money is use-it-or-lose-it inside the plan year", "FSAs cover dental and vision costs but nothing else", "They are two names for the same account at most firms"], answer: 1, explain: "Fund the FSA for predictable costs: glasses, prescriptions, copays. Overfund it and December becomes a shopping spree for eye drops." },
+      { q: "How do you honestly compare two health plans?", options: ["Take the lower premium: it is the number you pay monthly", "Take the wider network, so your doctors stay in reach", "Add premiums, real usage, and the bad-year maximum", "Ask a coworker in the same situation what they chose"], answer: 2, explain: "The cheap-premium plan can be expensive and the expensive plan can be cheap; only the arithmetic across good and bad years tells you which." },
+      { q: "The most common benefits mistake:", options: ["Putting too much into the 401(k) in the first year", "Taking the onboarding defaults and never looking back", "Choosing the HSA plan without knowing your usage", "Spending so long on the packet that the window closes"], answer: 1, explain: "Defaults are set for the company's convenience, not your finances. Twenty minutes in the portal is one of the best-paid tasks of your year, and open enrollment every fall is the do-over." },
     ],
     cards: [
       { front: "HSA", back: "High-deductible plan companion. Untaxed in, untaxed growth, untaxed out for medical. The strongest tax-advantaged account in the US." },
@@ -694,10 +694,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       { kind: "bigfact", stat: "20+ years", caption: "how long minimum payments can stretch a single card balance. The minimum is the floor, not the plan." },
     ],
     quiz: [
-      { q: "The first strategic move against debt is…", options: ["Extra payments immediately", "Every balance, rate, and minimum on one page: measure the monster", "Consolidating everything", "Cutting up all cards"], answer: 1, explain: "Strategy requires visibility. The ten-minute list is the boring act of courage everything else builds on." },
-      { q: "Avalanche vs snowball. The honest answer for most people:", options: ["Avalanche, always; math wins", "Snowball, always; feelings win", "The one you'll still be running in month eight; snowball if motivation is fragile, avalanche if you're a spreadsheet person", "Neither works"], answer: 2, explain: "Avalanche is optimal on paper; abandoned avalanche is worth zero. Consistency beats optimality." },
-      { q: "You have a 4.5% student loan and a 24% card. Spare dollars go…", options: ["Split evenly", "To the card: the rate is the test, and 24% is a fire while 4.5% is furniture", "To the student loan, since it's bigger", "To savings until both are gone"], answer: 1, explain: "Sort by rate. Toxic-rate debt is the emergency; low-rate debt can even lose to index-fund returns on spare dollars." },
-      { q: "\"Can you lower my APR?\" is…", options: ["Pointless; rates are fixed", "A real call that works surprisingly often for on-time customers", "Only for people with perfect credit", "Likely to get your card cancelled"], answer: 1, explain: "Retention is cheaper than acquisition; the person on the phone has options. Two minutes, real success rate, and the ask costs nothing." },
+      { q: "The first strategic move against debt is…", options: ["Put every spare dollar at it starting with this paycheck", "Every balance, every rate and every minimum on one page", "Consolidate it all into a single monthly payment", "Close the cards so the balances cannot grow again"], answer: 1, explain: "Strategy requires visibility. The ten-minute list is the boring act of courage everything else builds on." },
+      { q: "Avalanche vs snowball. The honest answer for most people:", options: ["Avalanche every time, because the arithmetic decides it", "Snowball every time, because momentum is what carries it", "Whichever one you will still be running in month eight", "Neither: the difference between them is mostly marketing"], answer: 2, explain: "Avalanche is optimal on paper; abandoned avalanche is worth zero. Consistency beats optimality." },
+      { q: "You have a 4.5% student loan and a 24% card. Spare dollars go…", options: ["Split them evenly, so both balances keep moving down", "To the card: 24 percent is a fire, 4.5 is furniture", "To the student loan, since the balance is the larger one", "To savings, until there is a cushion behind the payments"], answer: 1, explain: "Sort by rate. Toxic-rate debt is the emergency; low-rate debt can even lose to index-fund returns on spare dollars." },
+      { q: "\"Can you lower my APR?\" is…", options: ["Not worth making, because the rate is set by the contract", "A real call that often works for an on-time customer", "Worth making only once your credit is close to spotless", "Risky, since asking flags the account for review"], answer: 1, explain: "Retention is cheaper than acquisition; the person on the phone has options. Two minutes, real success rate, and the ask costs nothing." },
     ],
     cards: [
       { front: "The one-page list", back: "Every balance, rate, minimum. Ten minutes. Debt strategy is impossible without visibility. The monster shrinks when measured." },
@@ -729,10 +729,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       { kind: "bigfact", stat: "57%", caption: "of Americans can't cover a $1,000 emergency from savings. The starter tier alone puts you in the calm half of the country." },
     ],
     quiz: [
-      { q: "The emergency fund's actual job is…", options: ["Growth; it should be invested", "Insurance you sell yourself: it converts crises into errands and buys you options", "Impressing lenders", "Retirement"], answer: 1, explain: "It earns almost nothing and does almost everything: survivable bad bosses, leavable bad apartments, calm layoffs. The return is optionality." },
-      { q: "\"Three months of expenses\" means…", options: ["Three months of your current lifestyle", "Three months of bare-bones: rent, food, transport, insurance, minimums", "Three months of salary", "Whatever feels right"], answer: 1, explain: "Size it on survival mode, not lifestyle mode. That's the number that keeps you alive between jobs, and it's smaller than you feared." },
-      { q: "Why keep it in an HYSA instead of index funds?", options: ["Index funds are always bad", "Crashes and layoffs tend to arrive together, so the fund must be boring precisely when everything else isn't", "HYSAs earn more long-term", "Banks require it"], answer: 1, explain: "The one time you need this money is exactly when markets are most likely to be down. Insurance can't be volatile." },
-      { q: "You spent $800 from the fund on an urgent car repair. This means…", options: ["The plan failed", "The fund worked. Refill it first, skip the guilt", "You should have used a credit card", "Emergencies don't count under $1,000"], answer: 1, explain: "Spending it on unexpected+necessary+urgent is the entire purpose. Refilling becomes the top priority; shame isn't part of the system." },
+      { q: "The emergency fund's actual job is…", options: ["Growth, so it should be invested like the rest of it", "Insurance you sell yourself: crises become errands", "Showing a lender that you can handle a larger loan", "The early foundation of what becomes retirement money"], answer: 1, explain: "It earns almost nothing and does almost everything: survivable bad bosses, leavable bad apartments, calm layoffs. The return is optionality." },
+      { q: "\"Three months of expenses\" means…", options: ["Three months of the life you are currently living", "Three months of basics: rent, food, transport, bills", "Three months of gross salary, before anything comes out", "Whatever amount lets you sleep through the night"], answer: 1, explain: "Size it on survival mode, not lifestyle mode. That's the number that keeps you alive between jobs, and it's smaller than you feared." },
+      { q: "Why keep it in an HYSA instead of index funds?", options: ["A savings account pays more over a long enough stretch", "Layoffs and crashes arrive together; it stays boring", "Investing it would tie the money up past the notice period", "Lenders want to see the balance sitting in a bank account"], answer: 1, explain: "The one time you need this money is exactly when markets are most likely to be down. Insurance can't be volatile." },
+      { q: "You spent $800 from the fund on an urgent car repair. This means…", options: ["The plan did not hold, so the number was set too low", "The fund worked. Refill it first and skip the guilt", "The card would have been better, keeping the fund whole", "It was not really an emergency at under a thousand dollars"], answer: 1, explain: "Spending it on unexpected+necessary+urgent is the entire purpose. Refilling becomes the top priority; shame isn't part of the system." },
     ],
     cards: [
       { front: "The three tiers", back: "$1,000 starter (fast, before extra investing) → 3 months bare-bones → 6 months if income is variable or family leans on you." },
@@ -769,10 +769,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       { kind: "bigfact", stat: "9 minutes", caption: "the typical length of a bill-negotiation call, hold music included. Few hourly rates in your life will ever beat it." },
     ],
     quiz: [
-      { q: "Why does anchoring with a number and a reason beat \"can you do better?\"", options: ["It sounds smarter", "It gives the other side something concrete to respond to and sets the range in your favor", "It's more polite", "Numbers are legally binding"], answer: 1, explain: "Vague asks get vague discounts. A reasoned number frames the negotiation around YOUR figure instead of theirs." },
-      { q: "The magic word when calling about a bill is…", options: ["\"Discount\"", "\"Manager\"", "\"Retention\": it routes you to the department that can actually lower prices", "\"Please\""], answer: 2, explain: "Front-line support can't do much; retention exists to stop you leaving and has real offers. Name the department and you skip a level." },
-      { q: "Why decide your walk-away before the conversation?", options: ["So you can threaten with it", "Without one you're requesting permission; with one, no is just information, and the calm makes yes more likely", "It's required by consumer law", "To end calls faster"], answer: 1, explain: "A plan B changes your posture more than your words. The other side can hear whether you have options." },
-      { q: "\"Haggling is embarrassing.\" The reframe:", options: ["It is; only negotiate salaries", "The sticker price and first quote WERE their negotiation moves; calm asking is participation, not rudeness", "Only negotiate through email", "Embarrassment means stop"], answer: 1, explain: "The negotiation started before you arrived; declining to participate just means accepting their opening offer." },
+      { q: "Why does anchoring with a number and a reason beat \"can you do better?\"", options: ["It signals that you have done the background research", "It gives them something concrete, and sets the range", "It comes across as more polite than an open question", "A stated figure is harder for them to walk back later"], answer: 1, explain: "Vague asks get vague discounts. A reasoned number frames the negotiation around YOUR figure instead of theirs." },
+      { q: "The magic word when calling about a bill is…", options: ["Discount, which is the outcome you are actually after", "Manager, since authority sits a level above the front line", "Retention: the desk that exists to stop you leaving", "Cancel, which forces the system to make you an offer"], answer: 2, explain: "Front-line support can't do much; retention exists to stop you leaving and has real offers. Name the department and you skip a level." },
+      { q: "Why decide your walk-away before the conversation?", options: ["So you can put it on the table if the talk stalls out", "Without one you ask permission; with one, no is data", "Because a stated limit is what makes an offer binding", "So the conversation finishes inside a sensible window"], answer: 1, explain: "A plan B changes your posture more than your words. The other side can hear whether you have options." },
+      { q: "\"Haggling is embarrassing.\" The reframe:", options: ["It is, a little, so save it for salary and rent alone", "The sticker price was their move; asking is participation", "Do it in writing, where nobody has to feel the awkwardness", "The discomfort is a signal that the ask is out of line"], answer: 1, explain: "The negotiation started before you arrived; declining to participate just means accepting their opening offer." },
     ],
     cards: [
       { front: "The three rules", back: "Ask (unasked = automatic no) · Anchor with number + reason · Silence after the ask." },
@@ -807,10 +807,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       {
         q: "First move on any big decision?",
         options: [
-          "List every possible outcome in a spreadsheet",
-          "Sort it: two-way door (reversible) or one-way door (irreversible)?",
-          "Ask five people for advice",
-          "Sleep on it for a month minimum",
+          "Lay every possible outcome out where you can weigh them",
+          "Sort it: is this a two-way door, or a one-way door?",
+          "Ask five people you trust and look for the pattern",
+          "Give it a month, because time reveals what you want",
         ],
         answer: 1,
         explain: "The sort decides the speed. Reversible calls deserve fast, decent decisions; irreversible ones deserve the slow, careful treatment. Most people reverse this.",
@@ -818,10 +818,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       {
         q: "The 10/10/10 lens asks…",
         options: [
-          "Ten pros, ten cons, ten alternatives",
-          "How you'll feel in 10 minutes, 10 months, and 10 years",
-          "Whether ten people agree with you",
-          "If the decision costs more than $10, $100, or $1,000",
+          "For ten pros, ten cons, and ten alternatives on paper",
+          "How this will feel in 10 minutes, 10 months, 10 years",
+          "Whether ten people you respect would agree with it",
+          "Whether it costs more than 10, 100 or 1,000 dollars",
         ],
         answer: 1,
         explain: "Fear dominates the 10-minute view. The 10-year view is where your actual life happens; the lens exists to get you out of the short-term panic frame.",
@@ -829,10 +829,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       {
         q: "Why does the friend test work?",
         options: [
-          "Friends give better advice than you",
-          "It removes your fear from the equation: you usually already know the answer, you're just afraid to say it to yourself",
-          "It spreads responsibility if things go wrong",
-          "It doesn't; never take your own advice",
+          "Someone outside the situation can see it more clearly",
+          "It takes your fear out; you knew and would not say it",
+          "It shares the responsibility if the call turns out badly",
+          "It does not: advice you give yourself is the least trusted",
         ],
         answer: 1,
         explain: "Describing your situation as someone else's strips the fear and self-image out. What's left is usually the answer you've been avoiding.",
@@ -840,10 +840,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       {
         q: "You have 70% of the information on a reversible call. The move is…",
         options: [
-          "Wait for 90%+, since big calls deserve full information",
-          "Decide: on a two-way door, waiting for certainty usually costs more than a recoverable mistake",
-          "Flip a coin, it's basically random now",
-          "Hand the decision to someone with more experience",
+          "Hold out for 90: a big call deserves full information",
+          "Decide: certainty costs more than a recoverable miss",
+          "Pick at random, because the remaining 30 is unknowable",
+          "Pass it to somebody who has made this call before"
         ],
         answer: 1,
         explain: "On reversible decisions, the cost of frozen months usually beats the cost of a correctable mistake. Certainty is for one-way doors.",
@@ -880,10 +880,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       { kind: "bigfact", stat: "30%", caption: "of take-home pay: the classic rent guardrail. Break it knowingly if you must, but know exactly which other goal is paying for the view." },
     ],
     quiz: [
-      { q: "The \"real monthly number\" for a $1,400 apartment is…", options: ["$1,400; that's the rent", "Rent plus utilities, internet, insurance, parking, and the amortized move, often $300+ more", "$1,400 minus the deposit", "Whatever the listing says"], answer: 1, explain: "Budget on the all-in number. The $1,400 headline is routinely a $1,750 life, and the surprise is where budgets die." },
-      { q: "The single best protector of your security deposit:", options: ["Being friendly with the landlord", "Timestamped photos of every existing flaw, emailed on day one", "Paying rent early", "A verbal walkthrough"], answer: 1, explain: "Paper beats memory, and email creates a record with a date. The day-one photo email is your deposit's bodyguard at move-out." },
-      { q: "Why visit the apartment at night before signing?", options: ["Landlords are more honest at night", "The street at 10pm is a different street: noise, safety, parking all change", "Rent is negotiable after dark", "To meet the neighbors"], answer: 1, explain: "You're leasing the location at all hours, not just the sunny Saturday showing." },
-      { q: "The roommate conversation that matters most BEFORE move-in:", options: ["Favorite shows", "Rent split, bills, guests, quiet hours, and what happens if someone leaves early", "Whose furniture is nicer", "It's rude to discuss money with friends"], answer: 1, explain: "The early-exit scenario is the one that torches friendships. One awkward hour before beats twelve resentful months after." },
+      { q: "The \"real monthly number\" for a $1,400 apartment is…", options: ["$1,400, which is the figure you agreed to pay monthly", "Rent plus utilities, internet, insurance and parking", "$1,400 plus the deposit, spread over the first year", "Whatever the listing quotes once fees are included"], answer: 1, explain: "Budget on the all-in number. The $1,400 headline is routinely a $1,750 life, and the surprise is where budgets die." },
+      { q: "The single best protector of your security deposit:", options: ["A good relationship with the landlord from day one", "Dated photos of every flaw, emailed on day one", "A clean payment record across the whole of the lease", "A walkthrough together before you hand the keys back"], answer: 1, explain: "Paper beats memory, and email creates a record with a date. The day-one photo email is your deposit's bodyguard at move-out." },
+      { q: "Why visit the apartment at night before signing?", options: ["An evening viewing gets you more of the agent's time", "The street at 10pm is a different street entirely", "Evening is when the neighbours are actually home to meet", "Landlords price more flexibly outside of office hours"], answer: 1, explain: "You're leasing the location at all hours, not just the sunny Saturday showing." },
+      { q: "The roommate conversation that matters most BEFORE move-in:", options: ["Whose furniture goes where, so the place works day one", "Rent split, bills, guests, and who covers an early exit", "How you will handle it if one of you starts dating someone", "Nothing: raising money with friends sours the whole thing"], answer: 1, explain: "The early-exit scenario is the one that torches friendships. One awkward hour before beats twelve resentful months after." },
     ],
     cards: [
       { front: "The real monthly number", back: "Rent + utilities + internet + renter's insurance + parking/transit + amortized move-in. A $1,400 listing is a ~$1,750 life." },
@@ -917,10 +917,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       { kind: "bigfact", stat: "1 hour", caption: "a year, checking what your title pays on the open market. Compensation drift is silent; the market check is the smoke alarm." },
     ],
     quiz: [
-      { q: "The four yearly audit questions:", options: ["Salary, title, office, boss", "Learning, earning, story, energy", "Promotion, bonus, vacation, stock", "Age, tenure, industry, degree"], answer: 1, explain: "Growth, market pay, a describable chapter, and the fill/drain trend line. Two+ reds twice in a row = look at other holds." },
-      { q: "\"Auditing\" your employer yearly is…", options: ["Disloyal", "Symmetrical: they run one on you called a compensation review", "Only for unhappy employees", "A firing risk"], answer: 1, explain: "Loyalty is between people. The company already measures your value annually; measuring back is just being awake." },
-      { q: "The audit fails but you like the company. First moves:", options: ["Quit anyway; failed audit is failed audit", "Internal: scope expansion, team transfer, manager change, skills budget, since companies would rather re-pot you than lose you", "Wait another year", "Complain to HR"], answer: 1, explain: "\"I want to own X. What would it take?\" opens doors resignation letters close. Leaving is one move among several." },
-      { q: "Why update your resume every six months even when happy?", options: ["Superstition", "Memories of results fade fast, and people with current options negotiate differently", "Recruiters require it", "To feel important"], answer: 1, explain: "The best career insurance is maintained while things are fine: fresh resume, fed network, one compounding skill. Options change posture." },
+      { q: "The four yearly audit questions:", options: ["Salary, job title, where you sit, and who you report to", "Learning, earning, the story it tells, and your energy", "Promotion timing, bonus, vacation days, and equity", "Your age, tenure, the industry, and what you studied"], answer: 1, explain: "Growth, market pay, a describable chapter, and the fill/drain trend line. Two+ reds twice in a row = look at other holds." },
+      { q: "\"Auditing\" your employer yearly is…", options: ["Disloyal, if they have been good to you so far", "Symmetrical: they run one on you every review cycle", "A thing to do only once you are already unhappy there", "Risky, since that kind of thinking tends to show"], answer: 1, explain: "Loyalty is between people. The company already measures your value annually; measuring back is just being awake." },
+      { q: "The audit fails but you like the company. First moves:", options: ["Leave anyway: a failed audit is a failed audit", "Ask internally: scope, transfer, manager, skills budget", "Give it another year and see whether it corrects itself", "Take it to HR, who are paid to resolve exactly this"], answer: 1, explain: "\"I want to own X. What would it take?\" opens doors resignation letters close. Leaving is one move among several." },
+      { q: "Why update your resume every six months even when happy?", options: ["It keeps you visible to recruiters watching the market", "Results fade fast, and options change how you ask", "Most employers expect a current one on file internally", "It is a useful ritual for noticing how far you have come"], answer: 1, explain: "The best career insurance is maintained while things are fine: fresh resume, fed network, one compounding skill. Options change posture." },
     ],
     cards: [
       { front: "The yearly audit", back: "Learning · Earning · Story · Energy. Two+ reds, two audits running = the wall is talking." },
@@ -953,10 +953,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       { kind: "bigfact", stat: "2–6", caption: "the valley months, when novelty has faded and friendships haven't formed. Book the recurring commitments in month one; attendance beats motivation." },
     ],
     quiz: [
-      { q: "A +$14k offer in a city where rent is +$700/month is…", options: ["A $14k raise", "Roughly break-even: cost-of-living is a ratio, and rent is its biggest term", "Always worth it for the experience", "A scam"], answer: 1, explain: "$8,400 of the raise is spoken for by rent alone before taxes and quirks. Run the ratio, then decide; sometimes the non-financial factors are the real deciders." },
-      { q: "The runway rule for landing in a new city:", options: ["One month of expenses", "3 months of the NEW city's expenses, or 6 without a job lined up", "No savings needed with a job offer", "A return ticket"], answer: 1, explain: "Deposits stack, jobs wobble, cars break. Runway is what makes the first bad month a story instead of a spiral." },
-      { q: "The loneliness budget is best spent on…", options: ["A nicer apartment to enjoy alone", "Two recurring weekly commitments with the same humans, booked in month one before you feel like it", "Frequent trips back home every weekend", "Waiting for coworkers to become friends"], answer: 1, explain: "Adult friendship runs on repetition, not chemistry. Structure beats motivation, especially in the month-2-to-6 valley." },
-      { q: "Leaving parents who rely on you is…", options: ["Sentimental noise; ignore it in the decision", "A real cost that belongs on paper, and distance has settings between \"here\" and \"across the country\"", "A reason never to move", "Only relevant if they object"], answer: 1, explain: "Care, translation, presence: real line items. Naming them honestly sometimes lands on a two-hour city instead of a coast, and that can be the optimal answer." },
+      { q: "A +$14k offer in a city where rent is +$700/month is…", options: ["A fourteen thousand dollar raise, before tax is taken", "Break-even: rent is the biggest term in the ratio", "Worth taking regardless, for what the move teaches you", "A worse deal, since bigger cities tax you on everything"], answer: 1, explain: "$8,400 of the raise is spoken for by rent alone before taxes and quirks. Run the ratio, then decide; sometimes the non-financial factors are the real deciders." },
+      { q: "The runway rule for landing in a new city:", options: ["One month of expenses, so the first rent is covered", "Three months of the new city, or six with no job yet", "Nothing extra, provided the job offer is already signed", "Enough set aside to get yourself home if it goes wrong"], answer: 1, explain: "Deposits stack, jobs wobble, cars break. Runway is what makes the first bad month a story instead of a spiral." },
+      { q: "The loneliness budget is best spent on…", options: ["A better apartment, since you will be in it a lot", "Two weekly commitments with the same people, booked early", "Regular trips home, which keep the real friendships alive", "Time with colleagues, who become the easiest friends to make"], answer: 1, explain: "Adult friendship runs on repetition, not chemistry. Structure beats motivation, especially in the month-2-to-6 valley." },
+      { q: "Leaving parents who rely on you is…", options: ["Sentiment, and it does not belong in a real decision", "A cost that belongs on paper; distance has settings", "A reason to stay, whatever else the move would offer", "Worth weighing only if they say something about it"], answer: 1, explain: "Care, translation, presence: real line items. Naming them honestly sometimes lands on a two-hour city instead of a coast, and that can be the optimal answer." },
     ],
     cards: [
       { front: "The two budgets", back: "Money (ratio, move costs, runway, taxes) and loneliness (the month 2–6 valley). Both need funding before the truck." },
@@ -989,10 +989,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       { kind: "bigfact", stat: "#1", caption: "contempt: the single strongest predictor of relationship failure in decades of research. Watch how someone disagrees with you; it's the trailer for the marriage." },
     ],
     quiz: [
-      { q: "The strongest researched predictor of relationship failure:", options: ["Money differences", "Contempt: mockery and eye-rolling as a habit of disagreement", "Different hobbies", "Long distance"], answer: 1, explain: "Disagreement is weather; contempt is climate. How someone fights with you is the trailer for the whole film." },
-      { q: "\"Sliding vs deciding\" refers to…", options: ["Dating app behavior", "Drifting into thresholds (moving in, marriage) vs explicitly deciding at each one; deciders consistently do better", "Physical chemistry", "Who proposes"], answer: 1, explain: "The lease being up is not a reason to merge lives. The talk is the commitment; the party is the announcement." },
-      { q: "Which is a rough edge rather than a red flag?", options: ["You're afraid to disagree with them", "They control who you see and what you spend", "Different tidiness standards and unshared hobbies", "Hidden accounts"], answer: 2, explain: "Rough edges respond to systems and time. Control, structured secrets, and fear grow WITH commitment; they don't sand down." },
-      { q: "Family involvement in choosing a partner means the framework…", options: ["Doesn't apply", "Still applies: approval is a data point, but direction-match and how-you-fight are still yours to run", "Is replaced by the family's judgment", "Only applies after marriage"], answer: 1, explain: "Family wisdom can be real input. But nobody else attends the marriage; the core questions stay yours." },
+      { q: "The strongest researched predictor of relationship failure:", options: ["Money: mismatched habits around it wear a couple down", "Contempt: mockery and eye-rolling as a habit", "Sharing none of the same interests or weekend plans", "Distance, and the years it can quietly stretch to"], answer: 1, explain: "Disagreement is weather; contempt is climate. How someone fights with you is the trailer for the whole film." },
+      { q: "\"Sliding vs deciding\" refers to…", options: ["How quickly people move between apps and matches", "Drifting into thresholds instead of choosing them", "Whether the physical side of it came early or later", "Which person raises the question of getting married"], answer: 1, explain: "The lease being up is not a reason to merge lives. The talk is the commitment; the party is the announcement." },
+      { q: "Which is a rough edge rather than a red flag?", options: ["You find yourself afraid to disagree with them", "They have opinions about who you see and what you spend", "Different standards of tidiness, and separate hobbies", "There are accounts and messages you are not shown"], answer: 2, explain: "Rough edges respond to systems and time. Control, structured secrets, and fear grow WITH commitment; they don't sand down." },
+      { q: "Family involvement in choosing a partner means the framework…", options: ["Does not really apply, since the choice is a shared one", "Still applies: approval is input, the core checks are yours", "Is replaced by the judgment of people with more experience", "Matters mostly later, once the marriage is actually underway"], answer: 1, explain: "Family wisdom can be real input. But nobody else attends the marriage; the core questions stay yours." },
     ],
     cards: [
       { front: "The four predictors", back: "How you fight (contempt = climate) · repair speed · direction match · admiration that survives Tuesday." },
@@ -1026,10 +1026,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       { kind: "bigfact", stat: "100%", caption: "what most plans pay for preventive care (physicals, vaccines, screenings), even before the deductible. You already bought it. Use it." },
     ],
     quiz: [
-      { q: "The out-of-pocket maximum is…", options: ["The most insurance will ever pay", "The yearly ceiling on YOUR spending: past it, insurance pays 100%. It's where bankruptcy protection lives", "The same as the deductible", "A marketing number"], answer: 1, explain: "Premiums buy you a worst-case ceiling. Know this number and size your emergency fund with it in mind." },
-      { q: "You're insured with a $2,000 deductible you haven't touched. A $150 doctor visit costs you…", options: ["Nothing; you're insured", "Likely the negotiated rate out of pocket (or just a copay, if your plan has one for visits); the deductible comes first", "$2,000", "20% of $150"], answer: 1, explain: "Before the deductible you pay most costs at the plan's negotiated rates; copays are the common exception. Insurance sharing starts after the deductible." },
-      { q: "The two-minute habit before planned procedures:", options: ["Ask the doctor if it's expensive", "Confirm the provider, facility, AND anesthesiologist are in-network for your specific plan", "Bring cash", "Schedule early in the year"], answer: 1, explain: "Out-of-network is the trap door. Surprise-billing rules protect emergencies, but planned care is yours to route in-network." },
-      { q: "Skipping your annual physical to save money is…", options: ["Frugal", "Backwards: preventive care is typically covered at 100% and you already paid for it in premiums", "Smart if you feel healthy", "Only an option with an HSA"], answer: 1, explain: "Preventive visits are usually free before the deductible, and they catch expensive things while they're cheap things." },
+      { q: "The out-of-pocket maximum is…", options: ["The most the insurer will pay out in a single year", "The yearly cap on your spending; then they cover it", "Another name for the deductible, worded differently", "A headline figure that rarely applies to a real claim"], answer: 1, explain: "Premiums buy you a worst-case ceiling. Know this number and size your emergency fund with it in mind." },
+      { q: "You're insured with a $2,000 deductible you haven't touched. A $150 doctor visit costs you…", options: ["Nothing at all, because the coverage is already active", "The negotiated rate, or a copay: the deductible first", "The full two thousand, since that is what you owe first", "A fifth of it, with the insurer covering the remainder"], answer: 1, explain: "Before the deductible you pay most costs at the plan's negotiated rates; copays are the common exception. Insurance sharing starts after the deductible." },
+      { q: "The two-minute habit before planned procedures:", options: ["Ask the doctor whether this one tends to be expensive", "Check the facility and anesthetist are in network", "Have a way to pay on the day, so nothing gets delayed", "Book it early in the year, before the deductible resets"], answer: 1, explain: "Out-of-network is the trap door. Surprise-billing rules protect emergencies, but planned care is yours to route in-network." },
+      { q: "Skipping your annual physical to save money is…", options: ["Sensible, given how little a healthy year turns up", "Backwards: preventive care is usually free", "Reasonable while you are young and feeling fine", "A choice you only really have on certain plans"], answer: 1, explain: "Preventive visits are usually free before the deductible, and they catch expensive things while they're cheap things." },
     ],
     cards: [
       { front: "The five words", back: "Premium (monthly) · deductible (you-first threshold) · copay (flat visit fee) · coinsurance (the split after) · out-of-pocket max (your yearly ceiling)." },
@@ -1061,10 +1061,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       { kind: "bigfact", stat: "1 number", caption: "a reliable monthly figure, decided in calm: the thing that beats sporadic heroics for your parents AND your savings rate. Fog is the enemy; the number is the fix." },
     ],
     quiz: [
-      { q: "The sustainable structure for supporting parents:", options: ["Give whatever is asked, whenever", "A reliable budgeted number decided in calm, with your emergency fund and retirement match still funded first", "Nothing until you're rich", "Lump sums at holidays"], answer: 1, explain: "The oxygen-mask rule isn't selfishness: a financially drowning helper eventually helps no one. Reliability beats heroics in both directions." },
-      { q: "Accepting a large money gift from parents. The key move:", options: ["Take it and say nothing", "Name the terms out loud: gift or loan, and if loan: amount, schedule, late-plan, in writing", "Refuse on principle", "Accept only in cash"], answer: 1, explain: "Fog is where resentment grows. Paper protects love; unspoken terms get renegotiated at every family dinner forever." },
-      { q: "The rule for lending to family:", options: ["Never lend to family", "Lend only what you can afford to lose, and consider it spent the moment it leaves", "Always charge interest", "Lend anything; family pays back"], answer: 1, explain: "If it comes back, wonderful. If you can't afford to lose it, the answer is a no with an alternative, which protects the relationship better than a resented yes." },
-      { q: "Siblings splitting parent support unevenly. The fix:", options: ["Whoever earns most pays everything, silently", "One honest conversation counting ALL contributions (money, time, and logistics) out loud", "Exact 50/50 or nothing", "Let parents assign shares"], answer: 1, explain: "Driving to appointments and managing paperwork are contributions. Counting everything out loud once beats silent scorekeeping at a decade of holidays." },
+      { q: "The sustainable structure for supporting parents:", options: ["Give what is asked, whenever the asking happens", "A budgeted number, decided calmly, after your own basics", "Nothing at all until your own position is genuinely secure", "Larger amounts at holidays, when it is most useful to them"], answer: 1, explain: "The oxygen-mask rule isn't selfishness: a financially drowning helper eventually helps no one. Reliability beats heroics in both directions." },
+      { q: "Accepting a large money gift from parents. The key move:", options: ["Take it graciously and let the terms stay unspoken", "Say it out loud: gift or loan, and if loan, in writing", "Decline it, because the strings always turn up eventually", "Accept it only as cash, so no record follows it around"], answer: 1, explain: "Fog is where resentment grows. Paper protects love; unspoken terms get renegotiated at every family dinner forever." },
+      { q: "The rule for lending to family:", options: ["Never lend to family, whatever the circumstances are", "Lend only what you can lose, and count it gone", "Charge interest, so that it is treated as a real loan", "Lend freely: family is the one place it comes back"], answer: 1, explain: "If it comes back, wonderful. If you can't afford to lose it, the answer is a no with an alternative, which protects the relationship better than a resented yes." },
+      { q: "Siblings splitting parent support unevenly. The fix:", options: ["The highest earner covers it and says nothing about it", "One honest talk that counts money, time and logistics", "An even split, whatever anyone earns or lives near", "Let the parents decide who should be contributing what"], answer: 1, explain: "Driving to appointments and managing paperwork are contributions. Counting everything out loud once beats silent scorekeeping at a decade of holidays." },
     ],
     cards: [
       { front: "The number beats the fog", back: "A reliable monthly figure decided in calm, budgeted like rent, beats sporadic crisis rescues for everyone involved." },
@@ -1097,10 +1097,10 @@ export const LESSONS_13: Record<string, Lesson> = {
       { kind: "bigfact", stat: "10 years", caption: "the runway on which boring monthly defaults become an unrecognizable life, in whichever direction they were pointed." },
     ],
     quiz: [
-      { q: "The core insight of the ten-year view:", options: ["Plan every decade in detail", "People overestimate one year and underestimate ten; compounding needs runway to look like magic", "Long-term thinking means no fun now", "Ten years is too far to matter"], answer: 1, explain: "Small rates on long runways produce absurd endings. The year feels slow; the decade moves like four Tuesdays." },
-      { q: "Which list is \"compounds FOR you\"?", options: ["Cars, phones, furniture", "Invested money, stacking skills, reputation, tended relationships, credit history", "Lottery tickets and collectibles", "Anything expensive"], answer: 1, explain: "The compounding set stacks on itself. Stuff depreciates; debt and avoided conversations compound against you." },
-      { q: "Most people budget their anxiety backwards, meaning…", options: ["They worry too little", "They spend worry on this week's noise (awkward emails) instead of the echoing set (daily practice, evenings' company, the 401(k) box)", "Anxiety is always useless", "They should worry about everything equally"], answer: 1, explain: "A tiny set of choices echoes at ten-year resolution. Spend the worry there; the rest is noise that feels loud up close." },
-      { q: "The graduation assignment is…", options: ["A list of ten-year goals", "A one-page SCENE of an ordinary day in ten years, then one default per domain installed this month to serve it", "A vision board", "A five-year plan reviewed yearly"], answer: 1, explain: "A scene beats goals because it forces specifics, and defaults beat resolutions because they run without you. Big calls are made of small defaults." },
+      { q: "The core insight of the ten-year view:", options: ["A decade is long enough to be worth planning in detail", "People overrate one year and underrate a decade", "Thinking that far ahead costs you the years in between", "Ten years out is too uncertain to plan against usefully"], answer: 1, explain: "Small rates on long runways produce absurd endings. The year feels slow; the decade moves like four Tuesdays." },
+      { q: "Which list is \"compounds FOR you\"?", options: ["Cars, phones and furniture, which hold some value", "Invested money, skills, reputation, relationships", "Collectibles and anything with a scarce supply behind it", "Anything expensive enough to still be worth something"], answer: 1, explain: "The compounding set stacks on itself. Stuff depreciates; debt and avoided conversations compound against you." },
+      { q: "Most people budget their anxiety backwards, meaning…", options: ["They worry less than the situation actually warrants", "They spend it on this week, not the choices that echo", "Worrying does no useful work in any of these cases", "They should spread the worry evenly across everything"], answer: 1, explain: "A tiny set of choices echoes at ten-year resolution. Spend the worry there; the rest is noise that feels loud up close." },
+      { q: "The graduation assignment is…", options: ["A list of the goals you want to have hit in ten years", "One page describing an ordinary day, then a default each", "A board of images of the life you are aiming yourself at", "A five-year plan, revisited and revised once every year"], answer: 1, explain: "A scene beats goals because it forces specifics, and defaults beat resolutions because they run without you. Big calls are made of small defaults." },
     ],
     cards: [
       { front: "The ten-year asymmetry", back: "One year changes less than you hope; ten change more than you can picture. Compounding needs runway." },
