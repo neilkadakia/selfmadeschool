@@ -8,6 +8,75 @@ declare(strict_types=1);
 require __DIR__ . '/_lib.php';
 cors_and_preflight();
 
+// How long before a session the reminder goes out, and how close is too
+// close to bother: somebody who signs up an hour before does not need mail.
+const REMIND_WITHIN_HOURS = 24;
+
+function session_key(): string {
+    $ops = read_store('ops');
+    if (empty($ops['sessionKey'])) {
+        $ops['sessionKey'] = bin2hex(random_bytes(16));
+        write_store('ops', $ops);
+    }
+    return $ops['sessionKey'];
+}
+
+function mail_out(string $to, string $subject, string $body): void {
+    $headers = "From: Self Made School <noreply@selfmadeschool.org>\r\n"
+        . "Content-Type: text/plain; charset=utf-8";
+    @mail($to, $subject, $body, $headers);
+}
+
+function when_line(array $s): string {
+    return date('m-d-Y \a\t g:i A T', strtotime($s['startsAt'] ?? 'now'));
+}
+
+// The reminder pass. Seat-holders only, once per session per person, for
+// anything starting inside the window. Runs from cron; the store records who
+// has already been told so a second run in the same day is harmless.
+function run_reminders(bool $dry): array {
+    $all = read_store('sessions');
+    $now = time();
+    $sent = 0;
+    $touched = 0;
+    $queue = [];
+    foreach ($all as $id => $s) {
+        $starts = strtotime($s['startsAt'] ?? '');
+        if ($starts === false || $starts < $now) continue;
+        if ($starts - $now > REMIND_WITHIN_HOURS * 3600) continue;
+        $told = $s['reminded'] ?? [];
+        foreach (($s['rsvps'] ?? []) as $email) {
+            if (in_array($email, $told, true)) continue;
+            $told[] = $email;
+            $sent++;
+            $queue[] = [$email, $s];
+        }
+        if (count($told) !== count($s['reminded'] ?? [])) {
+            $all[$id]['reminded'] = array_values($told);
+            $touched++;
+        }
+    }
+    if (!$dry && $touched > 0) write_store('sessions', $all);
+    if (!$dry) {
+        foreach ($queue as [$email, $s]) {
+            $body = "\"{$s['title']}\" starts soon.\n\n"
+                . "When: " . when_line($s) . "\n"
+                . (!empty($s['link']) ? "Join link: {$s['link']}\n" : '')
+                . "\nSee it in the classroom: https://selfmadeschool.org/learn\n"
+                . "\n-- \nSelf Made School · selfmadeschool.org\n";
+            mail_out($email, "Starting soon: {$s['title']}", $body);
+        }
+    }
+    return ['reminded' => $sent, 'sessions' => $touched, 'dry' => $dry];
+}
+
+// Cron path: the key alone authorizes a run, the same way nudge.php works.
+$cronKey = trim($_GET['key'] ?? '');
+if ($cronKey !== '') {
+    if (!hash_equals(session_key(), $cronKey)) respond(401, ['error' => 'Bad key.']);
+    respond(200, ['ok' => true] + run_reminders(isset($_GET['dry'])));
+}
+
 $auth = require_auth();
 $isFaculty = auth_rank($auth) >= ROLE_RANK['educator'];
 $method = $_SERVER['REQUEST_METHOD'] ?? '';
@@ -40,21 +109,25 @@ function session_row(string $id, array $s, string $email, bool $isFaculty): arra
     return $row;
 }
 
-function promote_next(string $id, array &$s): void {
+// Moves the next person off the waitlist and returns who, so the caller can
+// answer first and mail afterwards. Nobody waits on mail() to hear that their
+// own cancellation went through.
+function promote_next(string $id, array &$s): ?string {
     $wait = $s['waitlist'] ?? [];
-    if (count($wait) === 0 || count($s['rsvps'] ?? []) >= (int)($s['capacity'] ?? 0)) return;
+    if (count($wait) === 0 || count($s['rsvps'] ?? []) >= (int)($s['capacity'] ?? 0)) return null;
     $lucky = array_shift($wait);
     $s['waitlist'] = array_values($wait);
     $s['rsvps'][] = $lucky;
-    $when = date('m-d-Y \a\t g:i A T', strtotime($s['startsAt'] ?? 'now'));
+    return $lucky;
+}
+
+function mail_promoted(string $to, array $s): void {
     $body = "Good news: a seat opened up in \"{$s['title']}\" and it's yours.\n\n"
-        . "When: {$when}\n"
+        . "When: " . when_line($s) . "\n"
         . (!empty($s['link']) ? "Join link: {$s['link']}\n" : '')
         . "\nSee it in the classroom: https://selfmadeschool.org/learn\n"
         . "\n-- \nSelf Made School · selfmadeschool.org\n";
-    $headers = "From: Self Made School <noreply@selfmadeschool.org>\r\n"
-        . "Content-Type: text/plain; charset=utf-8";
-    @mail($lucky, "You're in: {$s['title']}", $body, $headers);
+    mail_out($to, "You're in: {$s['title']}", $body);
 }
 
 if ($method === 'GET') {
@@ -66,7 +139,14 @@ if ($method === 'GET') {
         $rows[] = session_row($id, $s, $auth['email'], $isFaculty);
     }
     usort($rows, fn($a, $b) => strcmp($a['startsAt'], $b['startsAt']));
-    respond(200, ['ok' => true, 'sessions' => $rows]);
+    $out = ['ok' => true, 'sessions' => $rows];
+    // School Ops shows the reminder cron line, the same as backups and nudges.
+    if (auth_rank($auth) >= ROLE_RANK['global_admin']) {
+        $scheme = (($_SERVER['HTTPS'] ?? '') !== '' ? 'https' : 'http');
+        $host = $_SERVER['HTTP_HOST'] ?? 'selfmadeschool.org';
+        $out['cronUrl'] = "$scheme://$host/api/sessions.php?key=" . session_key();
+    }
+    respond(200, $out);
 }
 
 if ($method !== 'POST') respond(405, ['error' => 'GET or POST only.']);
@@ -128,26 +208,32 @@ if ($action === 'cancel') {
     $hadSeat = in_array($email, $s['rsvps'] ?? [], true);
     $s['rsvps'] = array_values(array_diff($s['rsvps'] ?? [], [$email]));
     $s['waitlist'] = array_values(array_diff($s['waitlist'] ?? [], [$email]));
-    if ($hadSeat) promote_next($id, $s);
+    // Giving up a seat should not have somebody watching a spinner while the
+    // mail server tells the next person in line.
+    $promoted = $hadSeat ? promote_next($id, $s) : null;
     $all[$id] = $s;
     write_store('sessions', $all);
-    respond(200, ['ok' => true, 'session' => session_row($id, $s, $email, $isFaculty)]);
+    $row = session_row($id, $s, $email, $isFaculty);
+    if ($promoted === null) respond(200, ['ok' => true, 'session' => $row]);
+    respond_then(200, ['ok' => true, 'session' => $row], function () use ($promoted, $s) {
+        mail_promoted($promoted, $s);
+    });
 }
 
 if ($action === 'delete') {
     require_rank($auth, ROLE_RANK['educator']);
-    // Tell the people who were holding seats.
-    foreach (($s['rsvps'] ?? []) as $email) {
-        $headers = "From: Self Made School <noreply@selfmadeschool.org>\r\n"
-            . "Content-Type: text/plain; charset=utf-8";
-        @mail($email, "Cancelled: {$s['title']}",
-            "Office Hours \"{$s['title']}\" was cancelled. If it gets rescheduled, "
-            . "you'll see it in the classroom first: https://selfmadeschool.org/learn\n",
-            $headers);
-    }
+    $seated = array_values($s['rsvps'] ?? []);
     unset($all[$id]);
     write_store('sessions', $all);
-    respond(200, ['ok' => true]);
+    // Tell the people who were holding seats, after the teacher has their
+    // answer. Thirty seats used to mean thirty blocking mail() calls.
+    respond_then(200, ['ok' => true], function () use ($seated, $s) {
+        foreach ($seated as $email) {
+            mail_out($email, "Cancelled: {$s['title']}",
+                "Office Hours \"{$s['title']}\" was cancelled. If it gets rescheduled, "
+                . "you'll see it in the classroom first: https://selfmadeschool.org/learn\n");
+        }
+    });
 }
 
 respond(400, ['error' => 'Unknown action.']);

@@ -8,6 +8,7 @@
 import { useEffect, useState } from "react";
 import { apiSessions, apiSessionAct, type Session } from "@/lib/api";
 import { usDate } from "@/lib/format";
+import { downloadIcs } from "@/lib/ics";
 import { useLms } from "@/components/useLms";
 
 function when(s: Session): string {
@@ -64,6 +65,9 @@ export default function OfficeHours() {
                       Join Link →
                     </a>
                   )}
+                  <button className="lms-oh-cancel" onClick={() => downloadIcs(s)}>
+                    Add to Calendar
+                  </button>
                   <button
                     className="lms-oh-cancel"
                     onClick={() => void apiSessionAct(token, "cancel", s.id).then(load)}

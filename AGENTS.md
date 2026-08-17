@@ -81,7 +81,17 @@ not a route, which keeps context and sidesteps dynamic routes under static expor
   rule shapes the Quad feed: it carries posts, kudos and passed finals, because
   those know when they happened. Completions are not in it for the same reason.
 - **Slow work happens after the response.** `respond_then()` answers the caller,
-  then sends mail. Never make somebody wait on `mail()`.
+  then sends mail. Never make somebody wait on `mail()`. Watch for the loop
+  version of this: cancelling Office Hours mails every seat-holder, which used
+  to be thirty blocking calls before the teacher heard anything back.
+- **Cron jobs authorize with a key, not a session.** `backup.php`, `nudge.php`
+  and `sessions.php` each mint a secret into the `ops` store and accept
+  `?key=`; School Ops shows the curl line. Reminder passes record who they have
+  already told, so running one twice is harmless.
+- **Calendar files are written in the browser.** A plain link cannot carry the
+  auth header, and the student already holds everything the file needs, so
+  `lib/ics.ts` builds the `.ics` client-side. Keep the line folding: readers
+  break on fields over 75 octets.
 
 ## Conventions
 - Title Case for all buttons, links, nav items, CTA labels (e.g. "See the Syllabus", "Enroll Free", "How It Works").

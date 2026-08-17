@@ -12,6 +12,7 @@ import {
   apiBackupRun,
   apiNudgeInfo,
   apiNudgeRun,
+  apiSessions,
 } from "@/lib/api";
 import { auditGet, schoolAdmin, schoolFeatures, type AuditEntry, type Features, type SchoolAdmin } from "@/lib/faculty";
 import { usDate } from "@/lib/format";
@@ -57,6 +58,7 @@ export default function SchoolOps() {
   const [tab, setTab] = useState<Tab>("switches");
   const [cronUrl, setCronUrl] = useState("");
   const [nudgeCron, setNudgeCron] = useState("");
+  const [sessionCron, setSessionCron] = useState("");
   const [log, setLog] = useState<AuditEntry[] | null>(null);
   const [q, setQ] = useState("");
   const [busy, setBusy] = useState(false);
@@ -68,6 +70,9 @@ export default function SchoolOps() {
     });
     void apiNudgeInfo(token).then((r) => {
       if (r.ok) setNudgeCron(r.data.cronUrl as string);
+    });
+    void apiSessions(token).then((r) => {
+      if (r.ok && r.data.cronUrl) setSessionCron(r.data.cronUrl as string);
     });
   }, [token]);
 
@@ -257,6 +262,38 @@ export default function SchoolOps() {
                 Send Nudges Now
               </button>
             </div>
+          </Panel>
+
+          <Panel
+            title="Office Hours reminders"
+            sub="Emails everybody holding a seat once, the day before their session starts. Nobody hears about the same session twice, so running this hourly is safe and running it daily is enough."
+          >
+            {sessionCron ? (
+              <div className="fac-item-actions">
+                <code
+                  style={{
+                    flex: 1,
+                    minWidth: 0,
+                    overflow: "auto",
+                    fontSize: 12.5,
+                    padding: "9px 12px",
+                    borderRadius: 9,
+                    background: "rgba(14,14,18,0.6)",
+                    border: "1px solid rgba(242,238,227,0.11)",
+                  }}
+                >
+                  curl -s &quot;{sessionCron}&quot; &gt; /dev/null
+                </code>
+                <button
+                  className="fac-btn fac-btn--sm"
+                  onClick={() => copy(`curl -s "${sessionCron}" > /dev/null`, "Reminder cron copied.")}
+                >
+                  Copy
+                </button>
+              </div>
+            ) : (
+              <p className="fac-panel-sub">Nothing scheduled yet, so there is nothing to remind anybody about.</p>
+            )}
           </Panel>
 
           <Panel title="Uptime">
