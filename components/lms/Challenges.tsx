@@ -44,7 +44,8 @@ export default function Challenges() {
   const closed = rows?.filter((c) => !c.open) ?? [];
 
   return (
-    <div className="challenges">
+    <div className="learn challenges">
+      <div className="learn-wrap">
       <header className="learn-head">
         <p className="kicker kicker--acc">Challenges</p>
         <h1 className="learn-h1">Something to aim at.</h1>
@@ -64,8 +65,10 @@ export default function Challenges() {
       )}
 
       {open.length > 0 && (
-        <section className="lms-section" aria-label="Running now">
-          <h2 className="lms-section-h">Running now</h2>
+        <section className="reg-section" aria-label="Running now">
+          <h2 className="quad-h2">
+            Running now <span className="quad-h2-count">{open.length}</span>
+          </h2>
           <div className="ch-grid">
             {open.map((c) => (
               <Card key={c.id} c={c} onJoin={join} />
@@ -75,8 +78,8 @@ export default function Challenges() {
       )}
 
       {closed.length > 0 && (
-        <section className="lms-section" aria-label="Finished">
-          <h2 className="lms-section-h">Closed</h2>
+        <section className="reg-section" aria-label="Closed">
+          <h2 className="quad-h2">Closed</h2>
           <div className="ch-grid">
             {closed.map((c) => (
               <Card key={c.id} c={c} onJoin={join} />
@@ -84,6 +87,7 @@ export default function Challenges() {
           </div>
         </section>
       )}
+      </div>
     </div>
   );
 }
@@ -92,38 +96,54 @@ function Card({ c, onJoin }: { c: Challenge; onJoin: (id: string, next: boolean)
   const progress = c.you?.progress ?? 0;
   const pct = Math.min(100, Math.round((progress / c.target) * 100));
   const done = Boolean(c.you?.done);
+  const left = Math.max(0, c.target - progress);
 
   return (
     <article className={`ch-card${done ? " is-done" : ""}${c.open ? "" : " is-closed"}`}>
       <div className="ch-card-top">
         <h3 className="ch-name">{c.name}</h3>
-        {done && <span className="ch-badge">Finished</span>}
+        {done ? (
+          <span className="ch-badge">Finished</span>
+        ) : (
+          !c.open && <span className="ch-badge is-quiet">Closed</span>
+        )}
       </div>
-      {c.blurb && <p className="ch-blurb">{c.blurb}</p>}
 
+      {/* The number is the point of a challenge, so it is the biggest thing
+          on the card rather than a line of small print. */}
+      <p className="ch-target">
+        <span className="ch-target-num">{c.target}</span>
+        <span className="ch-target-unit">{c.unit}</span>
+      </p>
       <p className="ch-goal">
-        <strong>
-          {c.target} {c.unit}
-        </strong>{" "}
-        · {c.absolute ? "reach it" : "from the day you join"}
+        {c.absolute ? "Reach it" : "Counted from the day you join"}
         {c.endsAt ? ` · closes ${usDate(c.endsAt)}` : ""}
       </p>
 
-      {c.you && (
-        <div className="ch-meter" role="img" aria-label={`${progress} of ${c.target} ${c.unit}`}>
-          <span className="ch-meter-fill" style={{ width: `${pct}%` }} />
+      {c.blurb && <p className="ch-blurb">{c.blurb}</p>}
+
+      {c.you ? (
+        <div className="ch-progress">
+          <div className="ch-meter" role="img" aria-label={`${progress} of ${c.target} ${c.unit}`}>
+            <span className="ch-meter-fill" style={{ width: `${pct}%` }} />
+          </div>
+          <p className="ch-count">
+            {done ? (
+              <>Done{c.you.doneAt ? ` · ${usDate(c.you.doneAt)}` : ""}</>
+            ) : (
+              <>
+                <strong>{progress}</strong> of {c.target} · {left} to go
+              </>
+            )}
+          </p>
         </div>
-      )}
-      {c.you && (
-        <p className="ch-count">
-          {progress} of {c.target} {c.unit}
-          {done && c.you.doneAt ? ` · finished ${usDate(c.you.doneAt)}` : ""}
-        </p>
+      ) : (
+        <p className="ch-notyet">Join and the bar starts from where you stand today.</p>
       )}
 
       <div className="ch-foot">
         <span className="ch-people">
-          {c.members} {c.members === 1 ? "person" : "people"}
+          {c.members} {c.members === 1 ? "person in" : "people in"}
           {c.finished > 0 ? ` · ${c.finished} finished` : ""}
         </span>
         {c.open && !done && (
@@ -137,7 +157,12 @@ function Card({ c, onJoin }: { c: Challenge; onJoin: (id: string, next: boolean)
         )}
       </div>
 
-      {c.finishers.length > 0 && <p className="ch-finishers">{c.finishers.join(" · ")}</p>}
+      {c.finishers.length > 0 && (
+        <p className="ch-finishers">
+          <span className="ch-finishers-label">Finished</span>
+          {c.finishers.join(" · ")}
+        </p>
+      )}
     </article>
   );
 }

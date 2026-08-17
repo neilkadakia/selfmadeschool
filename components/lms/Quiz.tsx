@@ -2,8 +2,9 @@
 
 // Knowledge check: one question at a time, instant feedback, retake forever.
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { QuizQuestion } from "@/lib/lms";
+import { seedFrom, shuffledOptions } from "@/lib/shuffle";
 
 export default function Quiz({
   questions,
@@ -20,15 +21,31 @@ export default function Quiz({
   const [picked, setPicked] = useState<number | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
   const [finished, setFinished] = useState(false);
+  // Bumped on every retake, so a second run moves the options and you cannot
+  // pass on remembering that it was the third one.
+  const [attempt, setAttempt] = useState(0);
 
-  const q = questions[i];
   const total = questions.length;
+
+  // Options move; the question does not. Seeded by the question text so the
+  // order holds still while you are looking at it.
+  const shown = useMemo(
+    () =>
+      questions.map((q) => {
+        const s = shuffledOptions(q.options, q.answer, seedFrom(`${q.q}|${attempt}`));
+        return { ...q, options: s.options, answer: s.answer };
+      }),
+    [questions, attempt]
+  );
+
+  const q = shown[i];
 
   const restart = () => {
     setI(0);
     setPicked(null);
     setCorrectCount(0);
     setFinished(false);
+    setAttempt((n) => n + 1);
   };
 
   if (finished) {

@@ -7,7 +7,8 @@
     "prebuild": "tsx scripts/export-final-keys.ts",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "audit:quiz": "tsx scripts/quiz-audit.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

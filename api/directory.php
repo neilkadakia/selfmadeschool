@@ -57,9 +57,15 @@ if ($method === 'GET') {
         $state = state_of($email);
         $done = 0;
         foreach (($state['done'] ?? []) as $list) $done += count($list);
+        // The portrait each student built. It is already in the state we just
+        // read, so drawing the real face costs nothing and the room stops
+        // being a wall of names.
+        $avatar = is_array($state['avatar'] ?? null) ? $state['avatar'] : null;
         $row = [
             'name' => name_of($users, $email),
             'role' => $u['role'] ?? 'student',
+            'avatar' => $avatar !== null && !empty($avatar['created']) ? $avatar : null,
+            'equipped' => is_array($state['equipped'] ?? null) ? $state['equipped'] : null,
             'xp' => (int)($state['xp'] ?? 0),
             'streak' => (int)($state['streak']['count'] ?? 0),
             'units' => $done,

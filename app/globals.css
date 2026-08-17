@@ -1502,6 +1502,16 @@ p {
   color: var(--coral);
 }
 
+/* The Quad's discs and club washes reach for these two as well, so they
+   need to exist alongside the other three. */
+.tone-lime {
+  color: var(--lime);
+}
+
+.tone-pink {
+  color: var(--pink);
+}
+
 .grade-title {
   font-weight: 700;
   font-size: 26px;
@@ -9347,558 +9357,6 @@ body:has(.tour) {
   }
 }
 
-/* ---------- The Quad and the Register ---------- */
-
-/* One-line cousin of .lms-notes, for replies and short notes. */
-.lms-input {
-  width: 100%;
-  background: rgba(242, 238, 227, 0.04);
-  border: 1px solid rgba(242, 238, 227, 0.14);
-  border-radius: 999px;
-  padding: 12px 18px;
-  font-family: var(--font-instrument), sans-serif;
-  /* 16px floor: smaller makes iOS zoom the page when the field focuses. */
-  font-size: 16px;
-  color: var(--paper);
-}
-
-.lms-input:focus {
-  outline: 2px solid var(--acc);
-  outline-offset: 2px;
-}
-
-.quad-cols {
-  display: grid;
-  grid-template-columns: 1.25fr 0.75fr;
-  gap: 44px;
-  align-items: start;
-  margin-top: 40px;
-}
-
-/* ---- the feed ---- */
-
-.quad-feed {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.quad-event {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  border-bottom: 1px solid rgba(242, 238, 227, 0.12);
-  padding: 16px 0 14px;
-  color: var(--paper);
-  font-family: var(--font-instrument), sans-serif;
-}
-
-.quad-event--post {
-  cursor: pointer;
-}
-
-.quad-event--post:hover {
-  background: rgba(242, 238, 227, 0.03);
-}
-
-.quad-event-tag {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--acc);
-  margin-bottom: 6px;
-}
-
-.quad-event-text {
-  font-size: 15px;
-  line-height: 1.5;
-  margin: 0;
-}
-
-.quad-event-quote {
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--muted-on-ink);
-  margin: 6px 0 0;
-}
-
-.quad-event-date {
-  display: block;
-  font-size: 12px;
-  color: var(--muted-on-ink);
-  margin-top: 8px;
-}
-
-/* ---- the club rail ---- */
-
-.quad-rooms {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.quad-club {
-  border: 1px solid rgba(242, 238, 227, 0.14);
-  border-radius: 18px;
-  padding: 18px 20px 14px;
-  transition: border-color 0.2s ease;
-}
-
-.quad-club:hover {
-  border-color: rgba(242, 238, 227, 0.3);
-}
-
-/* A room you are in wears its own colour on the edge. */
-.quad-club.is-in {
-  border-left: 3px solid currentColor;
-}
-
-.quad-club-open {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  padding: 0;
-  color: inherit;
-  cursor: pointer;
-  font-family: var(--font-instrument), sans-serif;
-}
-
-.quad-club-open:disabled {
-  cursor: default;
-  opacity: 0.6;
-}
-
-.quad-club-name {
-  display: block;
-  font-family: var(--font-bricolage), sans-serif;
-  font-weight: 800;
-  font-size: 18px;
-  letter-spacing: -0.02em;
-  color: var(--paper);
-}
-
-.quad-club-blurb {
-  display: block;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--muted-on-ink);
-  margin-top: 6px;
-}
-
-.quad-club-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 14px;
-}
-
-.quad-club-count {
-  font-size: 12px;
-  color: var(--muted-on-ink);
-}
-
-.quad-join {
-  border: 1.5px solid rgba(242, 238, 227, 0.3);
-  border-radius: 999px;
-  background: none;
-  padding: 6px 16px;
-  font-family: var(--font-instrument), sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--paper);
-  cursor: pointer;
-  white-space: nowrap;
-  text-decoration: none;
-  transition: border-color 0.2s ease, background 0.2s ease;
-}
-
-.quad-join:hover {
-  border-color: var(--paper);
-}
-
-.quad-join.is-in {
-  border-color: var(--acc);
-  color: var(--acc);
-}
-
-/* ---- one room ---- */
-
-.quad-back {
-  background: none;
-  border: none;
-  padding: 0;
-  margin-bottom: 20px;
-  font-family: var(--font-instrument), sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--muted-on-ink);
-  cursor: pointer;
-}
-
-.quad-back:hover {
-  color: var(--paper);
-}
-
-.quad-room-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 28px;
-}
-
-.quad-room-h {
-  font-size: clamp(30px, 4.6vw, 52px);
-}
-
-.quad-composer {
-  border: 1px solid rgba(242, 238, 227, 0.14);
-  border-radius: 20px;
-  padding: 18px;
-  margin-bottom: 32px;
-}
-
-.quad-kinds {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-}
-
-.quad-kind {
-  border: 1px solid rgba(242, 238, 227, 0.2);
-  border-radius: 999px;
-  background: none;
-  padding: 5px 14px;
-  font-family: var(--font-instrument), sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--muted-on-ink);
-  cursor: pointer;
-}
-
-.quad-kind.is-on {
-  border-color: var(--acc);
-  color: var(--acc);
-}
-
-/* ---- posts ---- */
-
-.quad-post {
-  border-bottom: 1px solid rgba(242, 238, 227, 0.12);
-  padding: 20px 0 16px;
-}
-
-.quad-post.is-pinned {
-  padding-left: 16px;
-  border-left: 3px solid var(--acc);
-}
-
-.quad-post-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-}
-
-.quad-post-name {
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.quad-post-badge {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border: 1px solid rgba(242, 238, 227, 0.3);
-  border-radius: 999px;
-  padding: 2px 8px;
-  color: var(--muted-on-ink);
-}
-
-.quad-post-badge.is-pin {
-  border-color: var(--acc);
-  color: var(--acc);
-}
-
-.quad-post-meta {
-  font-size: 12px;
-  color: var(--muted-on-ink);
-  white-space: nowrap;
-}
-
-.quad-post-text {
-  font-size: 16px;
-  line-height: 1.6;
-  margin: 10px 0 14px;
-  white-space: pre-wrap;
-}
-
-.quad-reacts {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.quad-react {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border: 1px solid rgba(242, 238, 227, 0.18);
-  border-radius: 999px;
-  background: none;
-  padding: 5px 12px;
-  font-family: var(--font-instrument), sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--muted-on-ink);
-  cursor: pointer;
-  transition: border-color 0.2s ease, color 0.2s ease;
-}
-
-.quad-react:hover:not(:disabled) {
-  border-color: var(--paper);
-  color: var(--paper);
-}
-
-.quad-react.is-on {
-  border-color: var(--acc);
-  color: var(--acc);
-}
-
-.quad-react:disabled {
-  cursor: default;
-  opacity: 0.55;
-}
-
-.quad-post-act {
-  background: none;
-  border: none;
-  padding: 5px 6px;
-  font-family: var(--font-instrument), sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--muted-on-ink);
-  cursor: pointer;
-}
-
-.quad-post-act:hover {
-  color: var(--paper);
-}
-
-/* ---- comments ---- */
-
-.quad-comments {
-  margin: 16px 0 0 18px;
-  padding-left: 16px;
-  border-left: 1px solid rgba(242, 238, 227, 0.12);
-}
-
-.quad-comment {
-  padding: 10px 0;
-}
-
-.quad-comment-name {
-  font-size: 14px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.quad-comment-text {
-  font-size: 15px;
-  line-height: 1.55;
-  margin: 4px 0 0;
-  white-space: pre-wrap;
-}
-
-.quad-comment-date {
-  font-size: 12px;
-  color: var(--muted-on-ink);
-}
-
-.quad-reply {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.quad-reply .lms-input {
-  flex: 1;
-}
-
-/* ---- the Register ---- */
-
-.reg-kudos {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 14px;
-}
-
-.reg-kudo {
-  border: 1px solid rgba(242, 238, 227, 0.14);
-  border-left: 3px solid var(--acc);
-  border-radius: 0 14px 14px 0;
-  padding: 14px 16px;
-}
-
-.reg-kudo-from {
-  font-weight: 700;
-  font-size: 15px;
-}
-
-.reg-kudo-note {
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--muted-on-ink);
-  margin: 6px 0 0;
-}
-
-.reg-kudo-date {
-  display: block;
-  font-size: 12px;
-  color: var(--muted-on-ink);
-  margin-top: 8px;
-}
-
-.reg-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-}
-
-.reg-card {
-  border: 1px solid rgba(242, 238, 227, 0.14);
-  border-radius: 18px;
-  padding: 18px 20px 14px;
-}
-
-.reg-card.is-you {
-  border-color: var(--acc);
-}
-
-.reg-card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-}
-
-.reg-name {
-  font-family: var(--font-bricolage), sans-serif;
-  font-weight: 800;
-  font-size: 17px;
-  letter-spacing: -0.02em;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.reg-tag {
-  font-family: var(--font-instrument), sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border: 1px solid var(--acc);
-  border-radius: 999px;
-  padding: 2px 8px;
-  color: var(--acc);
-}
-
-.reg-tag.is-staff {
-  border-color: rgba(242, 238, 227, 0.3);
-  color: var(--muted-on-ink);
-}
-
-.reg-level {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted-on-ink);
-  white-space: nowrap;
-}
-
-.reg-stats {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  font-size: 13px;
-  color: var(--muted-on-ink);
-  margin-top: 10px;
-}
-
-.reg-stats strong {
-  color: var(--paper);
-}
-
-.reg-clubs {
-  font-size: 12px;
-  color: var(--muted-on-ink);
-  margin: 10px 0 0;
-}
-
-.reg-email {
-  font-size: 12px;
-  color: var(--muted-on-ink);
-  margin: 6px 0 0;
-  word-break: break-all;
-}
-
-.reg-give {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 12px;
-}
-
-.reg-optout {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--muted-on-ink);
-  max-width: 680px;
-  cursor: pointer;
-}
-
-.reg-optout input {
-  margin-top: 4px;
-  width: 18px;
-  height: 18px;
-  accent-color: var(--acc);
-  flex: none;
-}
-
-@media (max-width: 900px) {
-  .quad-cols {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-
-  .quad-room-head {
-    flex-direction: column;
-    gap: 14px;
-  }
-}
-
 /* The Quad, staff side. */
 
 .fac-quad-who {
@@ -9925,116 +9383,6 @@ body:has(.tour) {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-}
-
-/* ---------- Challenges ---------- */
-
-.ch-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-}
-
-.ch-card {
-  border: 1px solid rgba(242, 238, 227, 0.14);
-  border-radius: 18px;
-  padding: 20px 22px 16px;
-}
-
-.ch-card.is-done {
-  border-color: var(--acc);
-}
-
-.ch-card.is-closed {
-  opacity: 0.72;
-}
-
-.ch-card-top {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.ch-name {
-  font-family: var(--font-bricolage), sans-serif;
-  font-weight: 800;
-  font-size: 20px;
-  letter-spacing: -0.02em;
-  margin: 0;
-}
-
-.ch-badge {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border: 1px solid var(--acc);
-  border-radius: 999px;
-  padding: 2px 8px;
-  color: var(--acc);
-  white-space: nowrap;
-}
-
-.ch-blurb {
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--muted-on-ink);
-  margin: 8px 0 0;
-}
-
-.ch-goal {
-  font-size: 13px;
-  color: var(--muted-on-ink);
-  margin: 12px 0 0;
-}
-
-.ch-goal strong {
-  color: var(--paper);
-}
-
-/* The bar only ever fills with work done since the day you joined. */
-.ch-meter {
-  height: 8px;
-  border-radius: 999px;
-  background: rgba(242, 238, 227, 0.12);
-  overflow: hidden;
-  margin: 14px 0 8px;
-}
-
-.ch-meter-fill {
-  display: block;
-  height: 100%;
-  border-radius: 999px;
-  background: var(--acc);
-  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.ch-count {
-  font-size: 13px;
-  font-weight: 600;
-  margin: 0;
-}
-
-.ch-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 14px;
-}
-
-.ch-people {
-  font-size: 12px;
-  color: var(--muted-on-ink);
-}
-
-.ch-finishers {
-  font-size: 12px;
-  color: var(--muted-on-ink);
-  margin: 10px 0 0;
-  padding-top: 10px;
-  border-top: 1px solid rgba(242, 238, 227, 0.1);
 }
 
 /* Challenges, staff side. */
@@ -10364,4 +9712,1251 @@ a.bell-note:hover {
   margin: 34px 0;
   border: none;
   border-top: 1px solid rgba(242, 238, 227, 0.14);
+}
+
+/* ---------- The Quad, the Register, Challenges ---------- */
+/*
+   These three rooms share one kit. The rules that hold it together:
+   surfaces are a tinted wash plus a hairline, never a heavy border with a
+   drop shadow; the tone colour arrives as a dot, a rule or a wash rather
+   than a filled block; and everything you can press moves when you press it.
+*/
+
+/* One-line cousin of .lms-notes, for replies and short notes. */
+.lms-input {
+  width: 100%;
+  background: rgba(242, 238, 227, 0.05);
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-radius: 12px;
+  padding: 11px 16px;
+  font-family: var(--font-instrument), sans-serif;
+  /* 16px floor: smaller makes iOS zoom the page when the field focuses. */
+  font-size: 16px;
+  color: var(--paper);
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.lms-input::placeholder {
+  color: rgba(242, 238, 227, 0.42);
+}
+
+.lms-input:hover {
+  border-color: rgba(242, 238, 227, 0.24);
+}
+
+.lms-input:focus {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+  background: rgba(242, 238, 227, 0.07);
+}
+
+/* ---- shared furniture ---- */
+
+/* Quieter than .lms-section-h: on these pages the page title is the shout,
+   and three levels of uppercase display type just fight each other. */
+.quad-h2,
+.reg-h2 {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-on-ink);
+  margin: 0 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quad-h2--gap {
+  margin-top: 32px;
+}
+
+.quad-h2-count,
+.reg-h2-count {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  background: var(--acc);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.quad-dotsep {
+  margin: 0 6px;
+  opacity: 0.5;
+}
+
+/* The initial disc. A stable colour per name, so the same person always
+   wears the same one. */
+.quad-disc {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  color: currentColor;
+  background: color-mix(in srgb, currentColor 16%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 34%, transparent);
+}
+
+/* Small labels that say what a thing is, in its own colour. */
+.quad-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 3px 9px;
+  margin-right: 10px;
+  color: var(--acc);
+  background: rgba(67, 222, 123, 0.12);
+}
+
+.quad-chip--question { color: var(--vio); background: rgba(91, 124, 250, 0.14); }
+.quad-chip--win,
+.quad-chip--kudos { color: var(--coral); background: rgba(255, 180, 58, 0.14); }
+.quad-chip--final { color: var(--lime); background: rgba(184, 201, 79, 0.14); }
+
+/* ---- the page ---- */
+
+.quad-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.75fr);
+  gap: 56px;
+  align-items: start;
+  margin-top: 44px;
+}
+
+/* ---- the feed ---- */
+
+.quad-feed {
+  min-width: 0;
+}
+
+.quad-event {
+  display: flex;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 14px;
+  padding: 16px 14px;
+  margin: 0 -14px;
+  color: var(--paper);
+  font-family: var(--font-instrument), sans-serif;
+  transition: background 0.18s ease;
+}
+
+.quad-event + .quad-event {
+  border-top: 1px solid rgba(242, 238, 227, 0.09);
+}
+
+.quad-event--post {
+  cursor: pointer;
+}
+
+.quad-event--post:hover {
+  background: rgba(242, 238, 227, 0.04);
+}
+
+.quad-event--post:active {
+  transform: translateY(1px);
+}
+
+.quad-event-body {
+  display: block;
+  min-width: 0;
+  flex: 1;
+}
+
+.quad-event-line {
+  display: block;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--muted-on-ink);
+  margin: 2px 0 0;
+}
+
+.quad-event-line strong {
+  color: var(--paper);
+  font-weight: 700;
+}
+
+/* Long posts get trimmed in the feed; the room has the whole thing. */
+.quad-event-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 16px;
+  line-height: 1.55;
+  margin-top: 6px;
+}
+
+.quad-event-quote {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+  margin: 6px 0 0;
+  padding-left: 12px;
+  border-left: 2px solid rgba(242, 238, 227, 0.18);
+}
+
+.quad-event-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--muted-on-ink);
+  margin: 10px 0 0;
+}
+
+/* ---- the club rail ---- */
+
+.quad-rooms {
+  min-width: 0;
+}
+
+.quad-club {
+  border-radius: 16px;
+  padding: 14px 16px 12px;
+  margin-bottom: 10px;
+  background: rgba(242, 238, 227, 0.03);
+  box-shadow: inset 0 0 0 1px rgba(242, 238, 227, 0.09);
+  transition: background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.quad-club:hover {
+  background: rgba(242, 238, 227, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(242, 238, 227, 0.18);
+}
+
+/* A room you are in wears its own colour: a tinted wash and a lit edge. */
+.quad-club.is-in {
+  background: color-mix(in srgb, currentColor 9%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 30%, transparent);
+}
+
+.quad-club.is-in:hover {
+  background: color-mix(in srgb, currentColor 13%, transparent);
+}
+
+.quad-club-open {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  font-family: var(--font-instrument), sans-serif;
+}
+
+.quad-club-open:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.quad-club-dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin-top: 6px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.quad-club:not(.is-in) .quad-club-dot {
+  background: none;
+  box-shadow: inset 0 0 0 2px currentColor;
+}
+
+.quad-club-text {
+  min-width: 0;
+}
+
+.quad-club-name {
+  display: block;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+}
+
+.quad-club-blurb {
+  display: block;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted-on-ink);
+  margin-top: 4px;
+}
+
+.quad-club-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding-left: 22px;
+}
+
+.quad-club-count {
+  font-size: 11.5px;
+  color: var(--muted-on-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- buttons ---- */
+
+.quad-join {
+  border: 1.5px solid rgba(242, 238, 227, 0.28);
+  border-radius: 999px;
+  background: none;
+  padding: 5px 15px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--paper);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease, transform 0.12s ease;
+}
+
+.quad-join:hover {
+  border-color: var(--paper);
+  background: rgba(242, 238, 227, 0.08);
+}
+
+.quad-join:active {
+  transform: scale(0.97);
+}
+
+.quad-join.is-in {
+  border-color: color-mix(in srgb, var(--acc) 70%, transparent);
+  color: var(--acc);
+}
+
+.quad-send {
+  border: none;
+  border-radius: 999px;
+  background: var(--acc);
+  color: var(--ink);
+  padding: 10px 22px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s ease, transform 0.12s ease, opacity 0.18s ease;
+}
+
+.quad-send:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--acc) 85%, #ffffff);
+}
+
+.quad-send:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* A dimmed green pill reads as broken. A quiet one reads as not yet. */
+.quad-send:disabled {
+  background: rgba(242, 238, 227, 0.09);
+  color: rgba(242, 238, 227, 0.42);
+  cursor: default;
+}
+
+/* ---- one room ---- */
+
+.quad-back {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 22px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted-on-ink);
+  cursor: pointer;
+  transition: color 0.18s ease;
+}
+
+.quad-back:hover {
+  color: var(--paper);
+}
+
+.quad-room-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 24px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.1);
+}
+
+.quad-room-id {
+  display: flex;
+  gap: 14px;
+  min-width: 0;
+}
+
+.quad-room-dot {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin-top: 12px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.quad-room-h {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--paper);
+  margin: 0;
+}
+
+.quad-room-sub {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--muted-on-ink);
+  max-width: 60ch;
+  margin: 10px 0 0;
+}
+
+.quad-room-count {
+  font-size: 12px;
+  color: var(--muted-on-ink);
+  font-variant-numeric: tabular-nums;
+  margin: 8px 0 0;
+}
+
+.quad-composer {
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 34px;
+  background: rgba(242, 238, 227, 0.03);
+  box-shadow: inset 0 0 0 1px rgba(242, 238, 227, 0.1);
+}
+
+.quad-kinds {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.quad-kind {
+  border: 1px solid rgba(242, 238, 227, 0.18);
+  border-radius: 999px;
+  background: none;
+  padding: 5px 14px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted-on-ink);
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+}
+
+.quad-kind:hover {
+  color: var(--paper);
+  border-color: rgba(242, 238, 227, 0.34);
+}
+
+.quad-kind.is-on {
+  border-color: transparent;
+  background: var(--acc);
+  color: var(--ink);
+}
+
+.quad-composer-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.quad-composer-count {
+  font-size: 12px;
+  color: var(--muted-on-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- posts ---- */
+
+.quad-post {
+  display: flex;
+  gap: 14px;
+  padding: 22px 0 18px;
+  border-top: 1px solid rgba(242, 238, 227, 0.1);
+}
+
+.quad-post.is-pinned {
+  padding-left: 16px;
+  margin-left: -16px;
+  border-left: 3px solid var(--acc);
+}
+
+.quad-post-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.quad-post-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.quad-post-name {
+  font-weight: 700;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.quad-post-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid rgba(242, 238, 227, 0.26);
+  border-radius: 999px;
+  padding: 2px 8px;
+  color: var(--muted-on-ink);
+}
+
+.quad-post-badge.is-pin {
+  border-color: color-mix(in srgb, var(--acc) 60%, transparent);
+  color: var(--acc);
+}
+
+.quad-post-meta {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  color: var(--muted-on-ink);
+  white-space: nowrap;
+}
+
+.quad-post-text {
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 10px 0 16px;
+  white-space: pre-wrap;
+  max-width: 70ch;
+}
+
+.quad-reacts {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.quad-react {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(242, 238, 227, 0.16);
+  border-radius: 999px;
+  background: none;
+  padding: 5px 11px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-on-ink);
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease, transform 0.12s ease;
+}
+
+.quad-react:hover:not(:disabled) {
+  border-color: rgba(242, 238, 227, 0.4);
+  color: var(--paper);
+  background: rgba(242, 238, 227, 0.05);
+}
+
+.quad-react:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.quad-react.is-on {
+  border-color: transparent;
+  background: rgba(67, 222, 123, 0.14);
+  color: var(--acc);
+}
+
+.quad-react:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+/* The verbs sit apart from the reactions, so the row reads as two groups. */
+.quad-acts {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 6px;
+  padding-left: 8px;
+  border-left: 1px solid rgba(242, 238, 227, 0.12);
+}
+
+.quad-post-act {
+  background: none;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted-on-ink);
+  cursor: pointer;
+  transition: color 0.18s ease, background 0.18s ease;
+}
+
+.quad-post-act:hover {
+  color: var(--paper);
+  background: rgba(242, 238, 227, 0.06);
+}
+
+.quad-post-act.is-danger:hover {
+  color: var(--coral);
+}
+
+/* ---- comments ---- */
+
+.quad-comments {
+  margin: 18px 0 0;
+  padding-left: 18px;
+  border-left: 1px solid rgba(242, 238, 227, 0.12);
+}
+
+.quad-comment {
+  padding: 10px 0;
+}
+
+.quad-comment-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+}
+
+.quad-comment-name {
+  font-size: 14px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quad-comment-date {
+  font-size: 12px;
+  color: var(--muted-on-ink);
+  white-space: nowrap;
+}
+
+.quad-comment-text {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 4px 0 0;
+  white-space: pre-wrap;
+  max-width: 68ch;
+}
+
+.quad-reply {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.quad-reply .lms-input {
+  flex: 1;
+}
+
+/* ---- empty and loading ---- */
+
+.quad-empty {
+  border-radius: 18px;
+  padding: 30px 28px;
+  background: rgba(242, 238, 227, 0.03);
+  box-shadow: inset 0 0 0 1px rgba(242, 238, 227, 0.09);
+}
+
+.quad-empty-h {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+
+.quad-empty-p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted-on-ink);
+  max-width: 52ch;
+  margin: 0;
+}
+
+.quad-empty-btn {
+  margin-top: 18px;
+  border: none;
+  border-radius: 999px;
+  background: var(--acc);
+  color: var(--ink);
+  padding: 10px 22px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.18s ease;
+}
+
+.quad-empty-btn:hover {
+  background: color-mix(in srgb, var(--acc) 85%, #ffffff);
+}
+
+.quad-empty-btn:active {
+  transform: scale(0.97);
+}
+
+/* Skeletons match the shape of what is coming, not a spinning circle. */
+@keyframes lms-shimmer {
+  0% { opacity: 0.5; }
+  50% { opacity: 0.9; }
+  100% { opacity: 0.5; }
+}
+
+.quad-event--skel,
+.reg-card--skel {
+  pointer-events: none;
+}
+
+.quad-skel-disc {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: rgba(242, 238, 227, 0.08);
+  animation: lms-shimmer 1.6s ease-in-out infinite;
+}
+
+.quad-skel-lines,
+.reg-skel-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  flex: 1;
+  padding-top: 4px;
+}
+
+.quad-skel-lines span,
+.reg-skel-lines span {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(242, 238, 227, 0.08);
+  animation: lms-shimmer 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quad-skel-disc,
+  .quad-skel-lines span,
+  .reg-skel-face,
+  .reg-skel-lines span {
+    animation: none;
+  }
+}
+
+/* ---- Challenges ---- */
+
+.ch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 18px;
+}
+
+.ch-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  padding: 22px 24px 18px;
+  background: rgba(242, 238, 227, 0.03);
+  box-shadow: inset 0 0 0 1px rgba(242, 238, 227, 0.1);
+  transition: background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.ch-card:hover {
+  background: rgba(242, 238, 227, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(242, 238, 227, 0.18);
+}
+
+.ch-card.is-done {
+  background: rgba(67, 222, 123, 0.07);
+  box-shadow: inset 0 0 0 1px rgba(67, 222, 123, 0.35);
+}
+
+.ch-card.is-closed {
+  opacity: 0.66;
+}
+
+.ch-card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ch-name {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.ch-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 3px 9px;
+  background: var(--acc);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.ch-badge.is-quiet {
+  background: none;
+  border: 1px solid rgba(242, 238, 227, 0.24);
+  color: var(--muted-on-ink);
+}
+
+/* The number is the point of a challenge, so it gets the display face. */
+.ch-target {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 16px 0 4px;
+}
+
+.ch-target-num {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ch-target-unit {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--muted-on-ink);
+}
+
+.ch-goal {
+  font-size: 12.5px;
+  color: var(--muted-on-ink);
+  margin: 0;
+}
+
+.ch-blurb {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--muted-on-ink);
+  margin: 14px 0 0;
+}
+
+.ch-progress {
+  margin-top: 18px;
+}
+
+.ch-meter {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(242, 238, 227, 0.12);
+  overflow: hidden;
+}
+
+.ch-meter-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--acc);
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ch-count {
+  font-size: 13px;
+  color: var(--muted-on-ink);
+  font-variant-numeric: tabular-nums;
+  margin: 8px 0 0;
+}
+
+.ch-count strong {
+  color: var(--paper);
+}
+
+.ch-notyet {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+  margin: 18px 0 0;
+}
+
+/* Pinned to the bottom so the actions line up across cards of any height. */
+.ch-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+.ch-people {
+  font-size: 12px;
+  color: var(--muted-on-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.ch-finishers {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(242, 238, 227, 0.1);
+}
+
+.ch-finishers-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin-bottom: 4px;
+}
+
+/* ---- The Register ---- */
+
+.reg-section {
+  margin-top: 46px;
+}
+
+.reg-kudos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.reg-kudo {
+  border-radius: 0 14px 14px 0;
+  padding: 14px 16px;
+  background: rgba(255, 180, 58, 0.07);
+  border-left: 3px solid var(--coral);
+}
+
+.reg-kudo-from {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.reg-kudo-note {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+  margin: 6px 0 0;
+}
+
+.reg-kudo-note::before { content: "\201C"; }
+.reg-kudo-note::after { content: "\201D"; }
+
+.reg-kudo-date {
+  display: block;
+  font-size: 12px;
+  color: var(--muted-on-ink);
+  margin-top: 8px;
+}
+
+.reg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.reg-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  border-radius: 20px;
+  padding: 20px 22px 18px;
+  background: rgba(242, 238, 227, 0.03);
+  box-shadow: inset 0 0 0 1px rgba(242, 238, 227, 0.1);
+  transition: background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.reg-card:hover {
+  background: rgba(242, 238, 227, 0.055);
+  box-shadow: inset 0 0 0 1px rgba(242, 238, 227, 0.2);
+}
+
+.reg-card.is-you {
+  background: rgba(67, 222, 123, 0.07);
+  box-shadow: inset 0 0 0 1px rgba(67, 222, 123, 0.32);
+}
+
+/* The portrait each student actually built, at card size. */
+.reg-face {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(242, 238, 227, 0.06);
+}
+
+.reg-initial {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--muted-on-ink);
+}
+
+.reg-body {
+  min-width: 0;
+}
+
+.reg-name {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.reg-tag {
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 2px 8px;
+  background: var(--acc);
+  color: var(--ink);
+}
+
+.reg-tag.is-staff {
+  background: none;
+  border: 1px solid rgba(242, 238, 227, 0.28);
+  color: var(--muted-on-ink);
+}
+
+.reg-level {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted-on-ink);
+  font-variant-numeric: tabular-nums;
+  margin: 4px 0 0;
+}
+
+.reg-stats {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--muted-on-ink);
+  font-variant-numeric: tabular-nums;
+  margin-top: 10px;
+}
+
+.reg-stats strong {
+  color: var(--paper);
+}
+
+.reg-clubs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+}
+
+.reg-clubs li {
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 3px 9px;
+  background: rgba(242, 238, 227, 0.07);
+  color: var(--muted-on-ink);
+}
+
+.reg-email {
+  font-size: 12px;
+  color: var(--muted-on-ink);
+  margin: 8px 0 0;
+  word-break: break-all;
+}
+
+.reg-give {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.reg-give .lms-input {
+  flex: 1;
+  min-width: 160px;
+}
+
+.reg-kudos-btn {
+  border: 1px solid rgba(242, 238, 227, 0.22);
+  border-radius: 999px;
+  background: none;
+  padding: 6px 15px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--muted-on-ink);
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease, transform 0.12s ease;
+}
+
+.reg-kudos-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  background: rgba(255, 180, 58, 0.08);
+}
+
+.reg-kudos-btn:active {
+  transform: scale(0.97);
+}
+
+.reg-send {
+  border: none;
+  border-radius: 999px;
+  background: var(--coral);
+  color: var(--ink);
+  padding: 8px 18px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+
+.reg-send:active {
+  transform: scale(0.97);
+}
+
+.reg-cancel {
+  background: none;
+  border: none;
+  padding: 6px 8px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted-on-ink);
+  cursor: pointer;
+}
+
+.reg-cancel:hover {
+  color: var(--paper);
+}
+
+.reg-skel-face {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: rgba(242, 238, 227, 0.08);
+  animation: lms-shimmer 1.6s ease-in-out infinite;
+}
+
+.reg-optout {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted-on-ink);
+  max-width: 680px;
+  cursor: pointer;
+}
+
+.reg-optout input {
+  margin-top: 4px;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--acc);
+  flex: none;
+}
+
+@media (max-width: 1100px) {
+  .quad-cols {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .quad-event {
+    padding: 14px 10px;
+    margin: 0 -10px;
+  }
+
+  .quad-room-head {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .quad-acts {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .ch-grid,
+  .reg-grid {
+    grid-template-columns: 1fr;
+  }
 }

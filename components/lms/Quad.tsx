@@ -7,8 +7,8 @@
 // never an empty room on day one.
 //
 // The feed only carries things that can prove when they happened: posts,
-// kudos and passed finals. Unit completions carry no timestamp, so they are
-// not in here and should not be added.
+// kudos, passed finals and finished challenges. Unit completions carry no
+// timestamp, so they are not in here and should not be added.
 
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
@@ -35,7 +35,7 @@ import {
   type PostKind,
 } from "@/lib/quad";
 
-// Line icons, 24px, never emoji.
+// Line icons, 24px grid, never emoji.
 const REACTION_PATH: Record<Reaction, string> = {
   like: "M7 10v10H4V10h3zm3 10h7.5a2 2 0 0 0 1.94-1.5l1.5-6A2 2 0 0 0 19 10h-4.5l.7-3.4A1.6 1.6 0 0 0 13.6 4.6L10 10v10z",
   celebrate:
@@ -45,11 +45,29 @@ const REACTION_PATH: Record<Reaction, string> = {
   support: "M12 20s-7-4.4-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.6-7 9-7 9z",
 };
 
+const TONES = ["acc", "vio", "coral", "lime", "pink"] as const;
+
+// A stable colour per person, so the same name always wears the same disc.
+// Cheap, and it saves reading sixty progress blobs to draw one feed.
+function toneOf(name: string): string {
+  let n = 0;
+  for (let i = 0; i < name.length; i++) n = (n * 31 + name.charCodeAt(i)) % 997;
+  return TONES[n % TONES.length];
+}
+
 function Icon({ d }: { d: string }) {
   return (
     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d={d} />
     </svg>
+  );
+}
+
+function Disc({ name }: { name: string }) {
+  return (
+    <span className={`quad-disc tone-${toneOf(name)}`} aria-hidden="true">
+      {name.slice(0, 1).toUpperCase()}
+    </span>
   );
 }
 
@@ -97,6 +115,7 @@ export default function Quad() {
     setOpenId(id);
     setRoom(null);
     loadRoom(id);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   if (!token) return null;
@@ -107,136 +126,233 @@ export default function Quad() {
     if (openId === id) loadRoom(id);
   };
 
+  const mine = clubs?.filter((c) => c.joined) ?? [];
+  const rest = clubs?.filter((c) => !c.joined) ?? [];
+
   return (
-    <div className="quad">
-      {/* Inside a room the club's own name is the heading; two of them stacked
-          just pushes the conversation down the page. */}
-      {!openId && (
-        <header className="learn-head">
-          <p className="kicker kicker--acc">The Quad</p>
-          <h1 className="learn-h1">The school, out loud.</h1>
-          <p className="learn-sub">
-            Clubs are rooms: join the ones you want, say something, and the rest of the class hears
-            it. Everything here is public to the school and nothing here is private mail.
-          </p>
-        </header>
-      )}
+    <div className="learn quad">
+      <div className="learn-wrap">
+        {/* Inside a room the club's own name is the heading; two of them
+            stacked just pushes the conversation down the page. */}
+        {!openId && (
+          <header className="learn-head">
+            <p className="kicker kicker--acc">The Quad</p>
+            <h1 className="learn-h1">The school, out loud.</h1>
+            <p className="learn-sub">
+              Clubs are rooms: join the ones you want, say something, and the rest of the class
+              hears it. Everything here is public to the school and nothing here is private mail.
+            </p>
+          </header>
+        )}
 
-      {offline && <p className="lms-muted">The Quad needs a connection. It&apos;ll be here when you&apos;re back.</p>}
+        {offline && (
+          <p className="lms-muted">The Quad needs a connection. It&apos;ll be here when you&apos;re back.</p>
+        )}
 
-      {openId && room ? (
-        <Room
-          room={room}
-          faculty={faculty}
-          token={token}
-          onBack={() => openClub("")}
-          onJoin={join}
-          reload={() => {
-            loadRoom(openId);
-            loadHome();
-          }}
-        />
-      ) : (
-        <div className="quad-cols">
-          <section className="quad-feed" aria-label="What is happening">
-            <h2 className="lms-section-h">Lately</h2>
-            {feed && feed.length === 0 && (
-              <p className="lms-muted">
-                Quiet so far. Join a club and the room starts talking. Whatever you post here, the
-                class sees.
-              </p>
-            )}
-            {feed?.map((e, i) => (
-              <FeedRow key={`${e.type}-${e.at}-${i}`} event={e} onOpen={openClub} />
-            ))}
-          </section>
+        {openId && room ? (
+          <Room
+            room={room}
+            faculty={faculty}
+            token={token}
+            onBack={() => {
+              setOpenId("");
+              setRoom(null);
+            }}
+            onJoin={join}
+            reload={() => {
+              loadRoom(openId);
+              loadHome();
+            }}
+          />
+        ) : (
+          <div className="quad-cols">
+            <section className="quad-feed" aria-label="What is happening">
+              <h2 className="quad-h2">Lately</h2>
 
-          <section className="quad-rooms" aria-label="Clubs">
-            <h2 className="lms-section-h">Clubs</h2>
-            {clubs?.map((c) => (
-              <article key={c.id} className={`quad-club tone-${c.tone}${c.joined ? " is-in" : ""}`}>
-                <button className="quad-club-open" onClick={() => c.open && openClub(c.id)} disabled={!c.open}>
-                  <span className="quad-club-name">{c.name}</span>
-                  <span className="quad-club-blurb">{c.blurb}</span>
-                </button>
-                <div className="quad-club-foot">
-                  <span className="quad-club-count">
-                    {c.members} {c.members === 1 ? "member" : "members"} · {c.posts}{" "}
-                    {c.posts === 1 ? "post" : "posts"}
-                  </span>
-                  {c.open ? (
-                    <button
-                      className={`quad-join${c.joined ? " is-in" : ""}`}
-                      aria-pressed={c.joined}
-                      onClick={() => void join(c.id, !c.joined)}
-                    >
-                      {c.joined ? "Joined" : "Join"}
-                    </button>
-                  ) : (
-                    <Link href={`/learn/${c.course}`} className="quad-join">
-                      Enroll First
-                    </Link>
-                  )}
+              {!feed && !offline && <FeedSkeleton />}
+
+              {feed && feed.length === 0 && (
+                <div className="quad-empty">
+                  <p className="quad-empty-h">Nothing has happened yet.</p>
+                  <p className="quad-empty-p">
+                    Join a club and this fills with what the class is doing: questions, wins, kudos,
+                    finals passed. Roll Call is the easy first step.
+                  </p>
+                  <button className="quad-empty-btn" onClick={() => openClub("roll-call")}>
+                    Open Roll Call
+                  </button>
                 </div>
-              </article>
-            ))}
-          </section>
-        </div>
-      )}
+              )}
+
+              {feed?.map((e, i) => (
+                <FeedRow key={`${e.type}-${e.at}-${i}`} event={e} onOpen={openClub} />
+              ))}
+            </section>
+
+            <aside className="quad-rooms" aria-label="Clubs">
+              {mine.length > 0 && (
+                <>
+                  <h2 className="quad-h2">
+                    Your clubs <span className="quad-h2-count">{mine.length}</span>
+                  </h2>
+                  {mine.map((c) => (
+                    <ClubRow key={c.id} c={c} onOpen={openClub} onJoin={join} />
+                  ))}
+                </>
+              )}
+              {rest.length > 0 && (
+                <>
+                  <h2 className="quad-h2 quad-h2--gap">More rooms</h2>
+                  {rest.map((c) => (
+                    <ClubRow key={c.id} c={c} onOpen={openClub} onJoin={join} />
+                  ))}
+                </>
+              )}
+            </aside>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
+function ClubRow({
+  c,
+  onOpen,
+  onJoin,
+}: {
+  c: Club;
+  onOpen: (id: string) => void;
+  onJoin: (id: string, next: boolean) => Promise<void>;
+}) {
+  return (
+    <article className={`quad-club tone-${c.tone}${c.joined ? " is-in" : ""}`}>
+      <button className="quad-club-open" onClick={() => c.open && onOpen(c.id)} disabled={!c.open}>
+        <span className="quad-club-dot" aria-hidden="true" />
+        <span className="quad-club-text">
+          <span className="quad-club-name">{c.name}</span>
+          <span className="quad-club-blurb">{c.blurb}</span>
+        </span>
+      </button>
+      <div className="quad-club-foot">
+        <span className="quad-club-count">
+          {c.members} {c.members === 1 ? "member" : "members"}
+          <span className="quad-dotsep">·</span>
+          {c.posts} {c.posts === 1 ? "post" : "posts"}
+        </span>
+        {c.open ? (
+          <button
+            className={`quad-join${c.joined ? " is-in" : ""}`}
+            aria-pressed={c.joined}
+            onClick={() => void onJoin(c.id, !c.joined)}
+          >
+            {c.joined ? "Joined" : "Join"}
+          </button>
+        ) : (
+          <Link href={`/learn/${c.course}`} className="quad-join">
+            Enroll First
+          </Link>
+        )}
+      </div>
+    </article>
+  );
+}
+
 function FeedRow({ event, onOpen }: { event: FeedEvent; onOpen: (id: string) => void }) {
+  const who = event.yours && event.type !== "post" ? "You" : event.name;
+
   if (event.type === "kudos") {
     return (
       <div className="quad-event">
-        <span className="quad-event-tag">Kudos</span>
-        <p className="quad-event-text">
-          <strong>{event.name}</strong> gave kudos to{" "}
-          <strong>{event.yours ? "you" : event.toName}</strong>
-          {event.text ? <>: “{event.text}”</> : "."}
-        </p>
-        <span className="quad-event-date">{usDate(event.at)}</span>
+        <Disc name={event.name} />
+        <div className="quad-event-body">
+          <p className="quad-event-line">
+            <strong>{event.name}</strong> gave kudos to{" "}
+            <strong>{event.yours ? "you" : event.toName}</strong>
+          </p>
+          {event.text && <p className="quad-event-quote">{event.text}</p>}
+          <p className="quad-event-meta">
+            <span className="quad-chip quad-chip--kudos">Kudos</span>
+            {usDate(event.at)}
+          </p>
+        </div>
       </div>
     );
   }
+
   if (event.type === "challenge") {
     return (
       <div className="quad-event">
-        <span className="quad-event-tag">Challenge</span>
-        <p className="quad-event-text">
-          <strong>{event.yours ? "You" : event.name}</strong> finished{" "}
-          <strong>{event.text}</strong>.
-        </p>
-        <span className="quad-event-date">{usDate(event.at)}</span>
+        <Disc name={event.name} />
+        <div className="quad-event-body">
+          <p className="quad-event-line">
+            <strong>{who}</strong> finished <strong>{event.text}</strong>
+          </p>
+          <p className="quad-event-meta">
+            <span className="quad-chip quad-chip--win">Challenge</span>
+            {usDate(event.at)}
+          </p>
+        </div>
       </div>
     );
   }
+
   if (event.type === "final") {
     return (
       <div className="quad-event">
-        <span className="quad-event-tag">Final</span>
-        <p className="quad-event-text">
-          <strong>{event.yours ? "You" : event.name}</strong> passed the final for{" "}
-          <strong>{event.text}</strong>.
-        </p>
-        <span className="quad-event-date">{usDate(event.at)}</span>
+        <Disc name={event.name} />
+        <div className="quad-event-body">
+          <p className="quad-event-line">
+            <strong>{who}</strong> passed the final for <strong>{event.text}</strong>
+          </p>
+          <p className="quad-event-meta">
+            <span className="quad-chip quad-chip--final">Final</span>
+            {usDate(event.at)}
+          </p>
+        </div>
       </div>
     );
   }
+
   return (
     <button className="quad-event quad-event--post" onClick={() => onOpen(event.club ?? "")}>
-      <span className="quad-event-tag">{POST_KIND_LABEL[event.kind ?? "discussion"]}</span>
-      <p className="quad-event-text">
-        <strong>{event.name}</strong> in {event.clubName}
-      </p>
-      <p className="quad-event-quote">{event.text}</p>
-      <span className="quad-event-date">
-        {usDate(event.at)}
-        {event.comments ? ` · ${event.comments} ${event.comments === 1 ? "reply" : "replies"}` : ""}
+      <Disc name={event.name} />
+      <span className="quad-event-body">
+        <span className="quad-event-line">
+          <strong>{event.name}</strong> in {event.clubName}
+        </span>
+        <span className="quad-event-text">{event.text}</span>
+        <span className="quad-event-meta">
+          <span className={`quad-chip quad-chip--${event.kind ?? "discussion"}`}>
+            {POST_KIND_LABEL[event.kind ?? "discussion"]}
+          </span>
+          {usDate(event.at)}
+          {event.comments ? (
+            <>
+              <span className="quad-dotsep">·</span>
+              {event.comments} {event.comments === 1 ? "reply" : "replies"}
+            </>
+          ) : null}
+        </span>
       </span>
     </button>
+  );
+}
+
+function FeedSkeleton() {
+  return (
+    <div aria-hidden="true">
+      {Array.from({ length: 4 }, (_, i) => (
+        <div key={i} className="quad-event quad-event--skel">
+          <span className="quad-skel-disc" />
+          <span className="quad-skel-lines">
+            <span style={{ width: "42%" }} />
+            <span style={{ width: "88%" }} />
+            <span style={{ width: "30%" }} />
+          </span>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -281,10 +397,21 @@ function Room({
       <button className="quad-back" onClick={onBack}>
         ← All Clubs
       </button>
+
       <div className="quad-room-head">
-        <div>
-          <h2 className="learn-h1 quad-room-h">{club.name}</h2>
-          <p className="learn-sub">{club.blurb}</p>
+        <div className="quad-room-id">
+          {/* The tone lives on the dot alone. On the section it would
+              inherit into every line of text in the room. */}
+          <span className={`quad-room-dot tone-${club.tone}`} aria-hidden="true" />
+          <div>
+            <h2 className="quad-room-h">{club.name}</h2>
+            <p className="quad-room-sub">{club.blurb}</p>
+            <p className="quad-room-count">
+              {club.members} {club.members === 1 ? "member" : "members"}
+              <span className="quad-dotsep">·</span>
+              {club.posts} {club.posts === 1 ? "post" : "posts"}
+            </p>
+          </div>
         </div>
         <button
           className={`quad-join${club.joined ? " is-in" : ""}`}
@@ -318,22 +445,27 @@ function Room({
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
+          <div className="quad-composer-foot">
+            <span className="quad-composer-count">{text.length > 0 ? `${text.length}/1200` : ""}</span>
+            <button className="quad-send" type="submit" disabled={busy || text.trim().length < 3}>
+              {busy ? "Posting…" : "Post to the Club"}
+            </button>
+          </div>
           {error && (
             <p className="lms-login-error" role="alert">
               {error}
             </p>
           )}
-          <button className="btn btn--outline lms-login-btn" type="submit" disabled={busy}>
-            {busy ? "Posting…" : "Post to the Club"}
-          </button>
         </form>
       )}
 
       {posts.length === 0 && (
-        <p className="lms-muted">
-          Nothing in here yet. Somebody has to go first, and it may as well be the person reading
-          this.
-        </p>
+        <div className="quad-empty">
+          <p className="quad-empty-h">Nothing in here yet.</p>
+          <p className="quad-empty-p">
+            Somebody has to go first, and it may as well be the person reading this.
+          </p>
+        </div>
       )}
 
       {posts.map((p) => (
@@ -379,101 +511,112 @@ function Post({
 
   return (
     <article className={`quad-post${post.pinned ? " is-pinned" : ""}`}>
-      <div className="quad-post-head">
-        <span className="quad-post-name">
-          {post.name}
-          {post.staff && <span className="quad-post-badge">Faculty</span>}
-          {post.pinned && <span className="quad-post-badge is-pin">Pinned</span>}
-          {post.locked && <span className="quad-post-badge">Closed</span>}
-        </span>
-        <span className="quad-post-meta">
-          {POST_KIND_LABEL[post.kind]} · {usDate(post.created)}
-        </span>
-      </div>
-      <p className="quad-post-text">{post.text}</p>
-
-      <div className="quad-reacts">
-        {REACTIONS.map((r) => {
-          const on = post.yours.includes(r);
-          return (
-            <button
-              key={r}
-              className={`quad-react${on ? " is-on" : ""}`}
-              aria-pressed={on}
-              aria-label={REACTION_LABEL[r]}
-              disabled={post.mine}
-              onClick={() => void react(r)}
-            >
-              <Icon d={REACTION_PATH[r]} />
-              <span>{post.reactions[r] ?? 0}</span>
-            </button>
-          );
-        })}
-        <button className="quad-post-act" onClick={() => setOpen((v) => !v)}>
-          {post.comments.length === 0
-            ? "Reply"
-            : `${post.comments.length} ${post.comments.length === 1 ? "Reply" : "Replies"}`}
-        </button>
-        {!post.mine && (
-          <button className="quad-post-act" onClick={() => void act("report")}>
-            Report
-          </button>
-        )}
-        {faculty && (
-          <>
-            <button className="quad-post-act" onClick={() => void act(post.pinned ? "unpin" : "pin")}>
-              {post.pinned ? "Unpin" : "Pin"}
-            </button>
-            <button className="quad-post-act" onClick={() => void act(post.locked ? "unlock" : "lock")}>
-              {post.locked ? "Reopen" : "Close"}
-            </button>
-          </>
-        )}
-        {(post.mine || faculty) && (
-          <button className="quad-post-act" onClick={() => void act("delete")}>
-            Take Down
-          </button>
-        )}
-      </div>
-
-      {(open || post.comments.length > 0) && (
-        <div className="quad-comments">
-          {post.comments.map((c) => (
-            <div key={c.id} className="quad-comment">
-              <span className="quad-comment-name">
-                {c.name}
-                {c.staff && <span className="quad-post-badge">Faculty</span>}
-              </span>
-              <p className="quad-comment-text">{c.text}</p>
-              <span className="quad-comment-date">{usDate(c.created)}</span>
-              {(c.mine || faculty) && (
-                <button
-                  className="quad-post-act"
-                  onClick={() => {
-                    void quadDeleteComment(token, post.id, c.id).then(reload);
-                  }}
-                >
-                  Take Down
-                </button>
-              )}
-            </div>
-          ))}
-          {!post.locked && (
-            <form className="quad-reply" onSubmit={sendReply}>
-              <input
-                className="lms-input"
-                maxLength={600}
-                placeholder="Say something useful."
-                value={reply}
-                onChange={(e) => setReply(e.target.value)}
-              />
-              <button className="btn btn--outline" type="submit">
-                Reply
-              </button>
-            </form>
-          )}
+      <Disc name={post.name} />
+      <div className="quad-post-body">
+        <div className="quad-post-head">
+          <span className="quad-post-name">
+            {post.name}
+            {post.staff && <span className="quad-post-badge">Faculty</span>}
+            {post.pinned && <span className="quad-post-badge is-pin">Pinned</span>}
+            {post.locked && <span className="quad-post-badge">Closed</span>}
+          </span>
+          <span className="quad-post-meta">
+            <span className={`quad-chip quad-chip--${post.kind}`}>{POST_KIND_LABEL[post.kind]}</span>
+            {usDate(post.created)}
+          </span>
         </div>
-      )}
+
+        <p className="quad-post-text">{post.text}</p>
+
+        <div className="quad-reacts">
+          {REACTIONS.map((r) => {
+            const on = post.yours.includes(r);
+            return (
+              <button
+                key={r}
+                className={`quad-react${on ? " is-on" : ""}`}
+                aria-pressed={on}
+                aria-label={REACTION_LABEL[r]}
+                title={REACTION_LABEL[r]}
+                disabled={post.mine}
+                onClick={() => void react(r)}
+              >
+                <Icon d={REACTION_PATH[r]} />
+                <span>{post.reactions[r] ?? 0}</span>
+              </button>
+            );
+          })}
+
+          <span className="quad-acts">
+            <button className="quad-post-act" onClick={() => setOpen((v) => !v)}>
+              {post.comments.length === 0
+                ? "Reply"
+                : `${post.comments.length} ${post.comments.length === 1 ? "Reply" : "Replies"}`}
+            </button>
+            {!post.mine && (
+              <button className="quad-post-act" onClick={() => void act("report")}>
+                Report
+              </button>
+            )}
+            {faculty && (
+              <>
+                <button className="quad-post-act" onClick={() => void act(post.pinned ? "unpin" : "pin")}>
+                  {post.pinned ? "Unpin" : "Pin"}
+                </button>
+                <button className="quad-post-act" onClick={() => void act(post.locked ? "unlock" : "lock")}>
+                  {post.locked ? "Reopen" : "Close"}
+                </button>
+              </>
+            )}
+            {(post.mine || faculty) && (
+              <button className="quad-post-act is-danger" onClick={() => void act("delete")}>
+                Take Down
+              </button>
+            )}
+          </span>
+        </div>
+
+        {(open || post.comments.length > 0) && (
+          <div className="quad-comments">
+            {post.comments.map((c) => (
+              <div key={c.id} className="quad-comment">
+                <p className="quad-comment-head">
+                  <span className="quad-comment-name">
+                    {c.name}
+                    {c.staff && <span className="quad-post-badge">Faculty</span>}
+                  </span>
+                  <span className="quad-comment-date">{usDate(c.created)}</span>
+                </p>
+                <p className="quad-comment-text">{c.text}</p>
+                {(c.mine || faculty) && (
+                  <button
+                    className="quad-post-act is-danger"
+                    onClick={() => {
+                      void quadDeleteComment(token, post.id, c.id).then(reload);
+                    }}
+                  >
+                    Take Down
+                  </button>
+                )}
+              </div>
+            ))}
+            {!post.locked && (
+              <form className="quad-reply" onSubmit={sendReply}>
+                <input
+                  className="lms-input"
+                  maxLength={600}
+                  placeholder="Say something useful."
+                  value={reply}
+                  onChange={(e) => setReply(e.target.value)}
+                />
+                <button className="quad-send" type="submit" disabled={reply.trim().length < 3}>
+                  Reply
+                </button>
+              </form>
+            )}
+          </div>
+        )}
+      </div>
     </article>
   );
 }

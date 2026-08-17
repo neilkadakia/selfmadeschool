@@ -235,6 +235,10 @@ function lesson_schema(): array {
         'schema' => $obj([
             'title' => $str,
             'hook' => $str,
+            // The whole block vocabulary, media included. Claude gets the same
+            // range a person writing in the Studio has; clean_lesson() still
+            // checks every source afterwards, because that is safety rather
+            // than a limit on what may be written.
             'blocks' => ['type' => 'array', 'items' => ['anyOf' => [
                 $obj(['kind' => ['const' => 'p'], 'text' => $str], ['kind', 'text']),
                 $obj(['kind' => ['const' => 'h'], 'text' => $str], ['kind', 'text']),
@@ -242,6 +246,13 @@ function lesson_schema(): array {
                 $obj(['kind' => ['const' => 'bigfact'], 'stat' => $str, 'caption' => $str], ['kind', 'stat', 'caption']),
                 $obj(['kind' => ['const' => 'list'], 'title' => $str, 'items' => ['type' => 'array', 'items' => $str]], ['kind', 'items']),
                 $obj(['kind' => ['const' => 'example'], 'title' => $str, 'text' => $str], ['kind', 'title', 'text']),
+                $obj(['kind' => ['const' => 'quote'], 'text' => $str, 'who' => $str], ['kind', 'text']),
+                $obj(['kind' => ['const' => 'divider']], ['kind']),
+                $obj(['kind' => ['const' => 'image'], 'src' => $str, 'alt' => $str, 'caption' => $str], ['kind', 'src', 'alt']),
+                $obj(['kind' => ['const' => 'video'], 'src' => $str, 'poster' => $str, 'caption' => $str], ['kind', 'src']),
+                $obj(['kind' => ['const' => 'embed'], 'src' => $str, 'title' => $str, 'caption' => $str], ['kind', 'src', 'title']),
+                $obj(['kind' => ['const' => 'audio'], 'src' => $str, 'title' => $str, 'caption' => $str], ['kind', 'src', 'title']),
+                $obj(['kind' => ['const' => 'file'], 'href' => $str, 'name' => $str, 'note' => $str], ['kind', 'href', 'name']),
             ]]],
             'quiz' => ['type' => 'array', 'items' => $obj([
                 'q' => $str,
@@ -279,12 +290,31 @@ A unit is one focused idea taught in about ten minutes of reading:
 - blocks: 6-10 content blocks mixing these kinds: p (paragraph), h (section heading),
   callout (a titled rule worth remembering), bigfact (one striking stat + caption),
   list (titled practical steps), example (a named person walked through it with
-  real numbers). Open with a p that grounds the topic in real life; use 2-3 h
-  headings to structure; include at least one callout, one bigfact, one list,
-  and one example; close with a p connecting back to becoming self made.
+  real numbers), quote (a line worth pulling out, with an optional attribution in
+  `who`), divider (a breath between two halves of a unit). Open with a p that
+  grounds the topic in real life; use 2-3 h headings to structure; include at
+  least one callout, one bigfact, one list, and one example; close with a p
+  connecting back to becoming self made.
+- media blocks (image, video, embed, audio, file) are available, but only use one
+  when the notes give you a real URL to point at. Invent a source and the lesson
+  ships broken. With no URL in hand, write the lesson without it and say in a
+  callout what art or footage would belong there. Sources must be https or start
+  with a single slash. An image always needs alt text describing what is in it.
 - quiz: exactly 4 questions testing the idea (never trivia), each with exactly
   4 options, the correct option's zero-based index as answer, and an explain
   line that teaches even when the student got it right.
+  Write the options so the only way through is knowing the answer:
+  * All four options must be about the same length, within a few words of each
+    other. A correct option written longer or more carefully than the others
+    hands the question to anyone who picks the wordy one. This is the single
+    most common way a quiz stops testing anything.
+  * Every wrong option has to be something a reasonable person might actually
+    believe, usually the advice people give that turns out to be wrong. Never
+    write a joke option, an obviously absurd one, or a throwaway.
+  * Move the answer around: across the four questions in a unit, put the
+    correct index at 0, 1, 2 and 3 rather than leaning on one slot.
+  * No "all of the above", no "none of the above", no option that repeats the
+    question's own wording as a giveaway.
 - cards: exactly 6 flashcards. Front is a term or question, back is the version
   that stays with you after the tab closes.
 - action: the unit's Field Work, one specific real-world action a student can

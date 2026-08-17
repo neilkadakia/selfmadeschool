@@ -11,12 +11,14 @@ import { useSearchParams } from "next/navigation";
 import { COURSES, courseUnits, getCourse, FINAL_QUESTIONS, FINAL_PASS, type QuizQuestion } from "@/lib/lms";
 import { questionKey } from "@/lib/mastery";
 import { apiFinalSubmit } from "@/lib/api";
-import { seedFrom, shuffled } from "@/lib/shuffle";
+import { seedFrom, shuffled, shuffledOptions } from "@/lib/shuffle";
 import { useLms, courseProgress } from "@/components/useLms";
 import FeedbackCard from "./FeedbackCard";
 import RewardToast from "./RewardToast";
 
-type ExamQ = QuizQuestion & { source: string; key: string };
+// `order` maps a displayed option back to the authored one, so the sheet
+// handed to the Registrar speaks in the answer key's own indices.
+type ExamQ = QuizQuestion & { source: string; key: string; order: number[] };
 type Pick = { k: string; a: number };
 
 export default function FinalExam() {
@@ -45,12 +47,24 @@ export default function FinalExam() {
       const lesson = course.lessons[unit.slug];
       if (!lesson) continue;
       lesson.quiz.forEach((q, qi) =>
-        all.push({ ...q, source: unit.title, key: questionKey(course.slug, unit.slug, qi) })
+        all.push({
+          ...q,
+          source: unit.title,
+          key: questionKey(course.slug, unit.slug, qi),
+          order: q.options.map((_, oi) => oi),
+        })
       );
     }
     // A new order every attempt: the seed folds in the attempt counter and XP.
     const seed = seedFrom(`${courseSlug}|${attempt}|${state.xp}`);
-    return shuffled(all, seed).slice(0, FINAL_QUESTIONS);
+    // The options move too, and `order` carries the authored index along,
+    // because the Registrar grades against the authored answer key.
+    return shuffled(all, seed)
+      .slice(0, FINAL_QUESTIONS)
+      .map((q) => {
+        const s = shuffledOptions(q.options, q.answer, seedFrom(`${q.key}|${attempt}|${state.xp}`));
+        return { ...q, options: s.options, answer: s.answer, order: s.order };
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [courseSlug, attempt]);
 
@@ -247,7 +261,8 @@ export default function FinalExam() {
                   disabled={picked !== null}
                   onClick={() => {
                     setPicked(oi);
-                    setSheet((prev) => [...prev, { k: q.key, a: oi }]);
+                    // Hand in the authored index, not the one on screen.
+                    setSheet((prev) => [...prev, { k: q.key, a: q.order[oi] }]);
                   }}
                 >
                   <span className="lms-quiz-letter">{String.fromCharCode(65 + oi)}</span>

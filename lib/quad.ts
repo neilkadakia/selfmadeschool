@@ -4,6 +4,7 @@
 // because the server only sends them to faculty.
 
 import { apiCall } from "./api";
+import type { AvatarConfig, Equipped } from "./game";
 
 export const REACTIONS = ["like", "celebrate", "insightful", "support"] as const;
 export type Reaction = (typeof REACTIONS)[number];
@@ -82,6 +83,9 @@ export type FeedEvent = {
 export type Person = {
   name: string;
   role: string;
+  // The portrait they built, when they have built one.
+  avatar: AvatarConfig | null;
+  equipped: Equipped | null;
   xp: number;
   streak: number;
   units: number;
