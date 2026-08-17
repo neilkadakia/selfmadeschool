@@ -495,7 +495,7 @@ export default function Home() {
               Required Reading
             </p>
             <h2 data-reveal className="h2 h2--book">
-              The textbook adulthood never gave you.
+              The textbook school never gave you.
             </h2>
             <p data-reveal className="book-blurb">
               Every unit of The 13th Grade (your mindset, your money, and dealing with life&apos;s big calls) rewritten as a book you can
