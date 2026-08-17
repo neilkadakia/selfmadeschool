@@ -273,6 +273,20 @@ if ($method === 'GET') {
             'yours' => ($k['to'] ?? '') === $me,
         ];
     }
+    // Finishing a challenge is written down with its date when it happens,
+    // so it can carry a place in the timeline honestly.
+    foreach (read_store('challenges') as $c) {
+        foreach ($c['joined'] ?? [] as $email => $j) {
+            if (empty($j['done']) || ($j['doneAt'] ?? '') === '') continue;
+            $events[] = [
+                'type' => 'challenge',
+                'at' => $j['doneAt'],
+                'name' => name_of($users, (string)$email),
+                'text' => $c['name'] ?? '',
+                'yours' => $email === $me,
+            ];
+        }
+    }
     // A passed final is server-graded, so the school knows when it happened.
     $titles = course_titles();
     foreach (read_store('finals') as $email => $courses) {
