@@ -138,7 +138,6 @@ export default function About() {
           <div className="grade-grid">
             {RULES.map((r) => (
               <div key={r.num} data-card className={`card rule-card ${r.card}`}>
-                <span className="rule-num">{r.num}</span>
                 <div>
                   <h3 className="rule-title">{r.title}</h3>
                   <p className="rule-body">{r.body}</p>

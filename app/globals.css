@@ -2681,23 +2681,18 @@ p {
 }
 
 .beliefs-lede {
-  max-width: 680px;
+  max-width: 920px;
   font-size: 17.5px;
   line-height: 1.65;
   color: var(--muted-on-ink);
   margin: -34px 0 52px;
 }
 
+/* No numerals here: the house rules aren't ranked, and the cards read
+   cleaner leading with their titles. */
 .rule-card {
   padding: 38px 32px;
-  min-height: 260px;
-}
-
-.rule-num {
-  font-family: var(--font-bricolage), sans-serif;
-  font-weight: 800;
-  font-size: 56px;
-  line-height: 1;
+  min-height: 0;
 }
 
 .rule-title {
