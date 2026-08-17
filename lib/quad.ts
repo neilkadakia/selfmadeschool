@@ -66,7 +66,7 @@ export type QuadPost = {
 };
 
 export type FeedEvent = {
-  type: "post" | "kudos" | "final";
+  type: "post" | "kudos" | "final" | "challenge";
   at: string;
   name: string;
   text: string;

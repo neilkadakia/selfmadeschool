@@ -201,6 +201,18 @@ function FeedRow({ event, onOpen }: { event: FeedEvent; onOpen: (id: string) => 
       </div>
     );
   }
+  if (event.type === "challenge") {
+    return (
+      <div className="quad-event">
+        <span className="quad-event-tag">Challenge</span>
+        <p className="quad-event-text">
+          <strong>{event.yours ? "You" : event.name}</strong> finished{" "}
+          <strong>{event.text}</strong>.
+        </p>
+        <span className="quad-event-date">{usDate(event.at)}</span>
+      </div>
+    );
+  }
   if (event.type === "final") {
     return (
       <div className="quad-event">

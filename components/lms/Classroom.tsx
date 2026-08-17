@@ -25,6 +25,7 @@ const ROOMS = [
   { href: "/learn/review", label: "Study Hall", exact: false },
   { href: "/learn/arena", label: "The Arena", exact: false },
   { href: "/learn/quad", label: "The Quad", exact: false },
+  { href: "/learn/challenges", label: "Challenges", exact: false },
   { href: "/learn/register", label: "The Register", exact: false },
   { href: "/learn/certificate", label: "Certificates", exact: false },
 ];
@@ -37,6 +38,7 @@ const FACULTY_ROOMS = [
   { href: "/learn/faculty/fieldwork", label: "Field Work", exact: false, min: ROLE_RANK.educator },
   { href: "/learn/faculty/discussion", label: "Study Group", exact: false, min: ROLE_RANK.educator },
   { href: "/learn/faculty/quad", label: "The Quad", exact: false, min: ROLE_RANK.educator },
+  { href: "/learn/faculty/challenges", label: "Challenges", exact: false, min: ROLE_RANK.educator },
   { href: "/learn/faculty/bulletin", label: "The Bulletin", exact: false, min: ROLE_RANK.educator },
   { href: "/learn/faculty/studio", label: "The Studio", exact: false, min: ROLE_RANK.educator },
   { href: "/learn/faculty/records", label: "Records", exact: false, min: ROLE_RANK.educator },
