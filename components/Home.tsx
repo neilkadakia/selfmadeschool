@@ -93,7 +93,7 @@ const STATS = [
   { from: 0, to: 100, suffix: "%", display: "100%", widest: "100%", label: "Real life relevance", tone: "stat--lime", dur: 1.9, ease: "expo.out" },
 ];
 
-const MANTRA_WORDS = ["Build", "Grow", "Break", "Remake", "Refocus", "Restart"];
+const MANTRA_WORDS = ["Build", "Grow", "Break", "Remake", "Restart"];
 
 const MARQUEE =
   "Mindset ★ Money ★ Habits ★ Discipline ★ Big calls ★ Taxes ★ Credit ★ 401(k) ★ Negotiation ★ Relationships ★ Emotional intelligence ★ Purpose ★ First Principles Thinking ★ Boundaries ★ Insurance ★ First apartments ★ Build ★ Break ★ Rebuild ★";

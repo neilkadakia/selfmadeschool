@@ -968,8 +968,7 @@ p {
 
 /* Type, not chips. Solid words alternate with hollow ones so the line reads
    as a chant, cycling the bright half of the palette; cobalt sits this one
-   out, mixed into the ground. Restart comes back around in Build's green,
-   hollowed out and ready to be filled again. */
+   out, mixed into the ground. */
 .mantra-word {
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
@@ -1009,13 +1008,10 @@ p {
   color: var(--lime);
 }
 
+/* Restart closes the line in pink, solid: the fifth word ends the chant
+   at full strength. */
 .mantra-word:nth-child(5) {
   color: var(--pink);
-}
-
-/* Restart lands back on Build's green: the loop closing. */
-.mantra-word:nth-child(6) {
-  color: var(--acc);
 }
 
 .mantra-sub {
