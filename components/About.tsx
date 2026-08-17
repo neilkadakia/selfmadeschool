@@ -99,8 +99,8 @@ export default function About() {
         </h1>
         <p data-hero-sub className="about-sub">
           School taught you trigonometry, then handed you a lease, a W-4, and a 401(k) form and wished you luck. Self
-          Made School is the school for everything after the diploma, built for 18-to-30-year-olds who&apos;d rather
-          learn it now than regret it at 40.
+          Made School is the school for everything after the diploma, built primarily for young adults who&apos;d
+          rather learn it now than regret it at 40.
         </p>
       </header>
 

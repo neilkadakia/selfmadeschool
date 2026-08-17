@@ -18,7 +18,7 @@ export const FAQS = [
   },
   {
     q: "Who is this for?",
-    a: "Anyone 18–30 who got handed adulthood without a manual (students, first-jobbers, new-city movers), and the parents who want to give them a head start.",
+    a: "Young adults who got handed adulthood without a manual (students, first-jobbers, new-city movers), and the parents who want to give them a head start.",
   },
   {
     q: "Is this an actual school?",
