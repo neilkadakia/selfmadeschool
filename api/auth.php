@@ -63,6 +63,11 @@ if ($action === 'set_prefs') {
     if (array_key_exists('nudges', $in)) {
         $users[$auth['email']]['nudgesOff'] = !$in['nudges'];
     }
+    // Being seen by the rest of the school is a choice, not a default of
+    // having signed up. Stored as the opt-out so existing accounts are listed.
+    if (array_key_exists('listed', $in)) {
+        $users[$auth['email']]['unlisted'] = !$in['listed'];
+    }
     write_store('users', $users);
     respond(200, ['ok' => true, 'user' => public_user($auth['email'], $users[$auth['email']])]);
 }
