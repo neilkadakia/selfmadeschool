@@ -161,6 +161,7 @@ if ($action === 'impersonate') {
     if (role_rank($users[$target]['role'] ?? 'student') >= auth_rank($auth)) {
         respond(403, ['error' => 'You can only act as roles below your own.']);
     }
+    audit_log($auth, 'act_as', '', $target);
     respond(200, [
         'ok' => true,
         'token' => issue_token($target, $auth['email'], IMPERSONATE_TTL),

@@ -204,5 +204,243 @@ function public_user(string $email, array $user): array {
         'dob' => $user['dob'] ?? '',
         'role' => $user['role'] ?? 'student',
         'nudges' => empty($user['nudgesOff']),
+        'plan' => $user['plan'] ?? '',
+        'homeroom' => $user['homeroom'] ?? '',
     ];
+}
+
+// A student's display name, falling back to the part of the email before
+// the @ so a half-finished account never shows up as a blank row.
+function name_of(array $users, string $email): string {
+    $n = trim($users[$email]['name'] ?? '');
+    if ($n !== '') return $n;
+    return strtok($email, '@') ?: $email;
+}
+
+// ---------- The catalog ----------
+//
+// api/catalog.json is written at build time from lib/lms.ts (see
+// scripts/export-final-keys.ts). It is the server's only knowledge of what
+// the courses and units are called. Nothing here hard-codes a slug.
+
+function catalog(): array {
+    static $cat = null;
+    if ($cat !== null) return $cat;
+    $raw = @file_get_contents(__DIR__ . '/catalog.json');
+    $data = json_decode($raw ?: '', true);
+    return $cat = is_array($data) && isset($data['courses']) ? $data : ['courses' => []];
+}
+
+function catalog_course(string $slug): ?array {
+    foreach (catalog()['courses'] as $c) {
+        if (($c['slug'] ?? '') === $slug) return $c;
+    }
+    return null;
+}
+
+function catalog_unit(string $courseSlug, string $unitSlug): ?array {
+    $course = catalog_course($courseSlug);
+    foreach ($course['units'] ?? [] as $u) {
+        if (($u['slug'] ?? '') === $unitSlug) return $u;
+    }
+    return null;
+}
+
+// Course slug => title, for emails and tables.
+function course_titles(): array {
+    $map = [];
+    foreach (catalog()['courses'] as $c) $map[$c['slug']] = $c['title'] ?? $c['slug'];
+    return $map;
+}
+
+// Only units that have a written lesson count toward "done": a unit on the
+// syllabus but not yet taught can never be completed, so counting it would
+// make every student look behind.
+function taught_units(string $courseSlug): array {
+    $course = catalog_course($courseSlug);
+    $out = [];
+    foreach ($course['units'] ?? [] as $u) {
+        if (!empty($u['taught'])) $out[] = $u['slug'];
+    }
+    return $out;
+}
+
+// ---------- One student's synced state ----------
+
+function progress_of(string $email): array {
+    return read_store('progress_' . sha1($email));
+}
+
+function state_of(string $email): array {
+    $saved = progress_of($email);
+    $state = $saved['state'] ?? [];
+    return is_array($state) ? $state : [];
+}
+
+// ---------- School settings ----------
+//
+// Everything the school can turn on or off lives here, so the product can
+// run as a free, open, self-paced school today and as a paid, cohorted,
+// deadline-driven one later without a second codebase. Defaults are the
+// school as it is now: open, free, no deadlines.
+
+function default_settings(): array {
+    return [
+        'features' => [
+            // Assignments may carry a due date, and the Gradebook flags
+            // anything past it. Off: assignments are invitations, no clock.
+            'deadlines' => false,
+            // Course access is gated by a plan. Off: everything is open to
+            // every signed-in student, which is how the school opened.
+            'paid' => false,
+            // Homerooms: named groups of students, for targeted bulletins
+            // and roster filtering.
+            'homerooms' => false,
+            // Faculty read and reply to Field Work filings.
+            'fieldwork' => true,
+            // Students see who is on the Honor Roll. Already shipped; the
+            // flag lets a future cohort run quietly.
+            'honorRoll' => true,
+        ],
+        // Plans exist even when 'paid' is off, so turning it on is a switch
+        // and not a migration. The open plan covers everything for free.
+        'plans' => [
+            [
+                'id' => 'open',
+                'name' => 'Open Enrollment',
+                'blurb' => 'Every course, free, while the school is in closed session.',
+                'price' => 0,
+                'cadence' => 'once',
+                'courses' => ['*'],
+                'active' => true,
+            ],
+        ],
+        'defaultPlan' => 'open',
+        'updated' => '',
+        'updatedBy' => '',
+    ];
+}
+
+function read_settings(): array {
+    $saved = read_store('settings');
+    $d = default_settings();
+    $out = $d;
+    if (isset($saved['features']) && is_array($saved['features'])) {
+        $out['features'] = array_merge($d['features'], array_map(
+            fn($v) => (bool)$v,
+            array_intersect_key($saved['features'], $d['features'])
+        ));
+    }
+    if (isset($saved['plans']) && is_array($saved['plans']) && count($saved['plans']) > 0) {
+        $out['plans'] = array_values($saved['plans']);
+    }
+    foreach (['defaultPlan', 'updated', 'updatedBy'] as $k) {
+        if (isset($saved[$k])) $out[$k] = $saved[$k];
+    }
+    return $out;
+}
+
+function write_settings(array $settings, string $by): void {
+    $settings['updated'] = gmdate('c');
+    $settings['updatedBy'] = $by;
+    write_store('settings', $settings);
+}
+
+function feature_on(string $name): bool {
+    $s = read_settings();
+    return !empty($s['features'][$name]);
+}
+
+function plan_by_id(array $settings, string $id): ?array {
+    foreach ($settings['plans'] as $p) {
+        if (($p['id'] ?? '') === $id) return $p;
+    }
+    return null;
+}
+
+function plan_covers(array $plan, string $courseSlug): bool {
+    $courses = $plan['courses'] ?? [];
+    return in_array('*', $courses, true) || in_array($courseSlug, $courses, true);
+}
+
+// ---------- The access gate ----------
+//
+// One function decides whether a person may open a course. Every surface
+// that reveals course content goes through it, so turning payment on can
+// never leave a back door open.
+//
+// Returns ['open' => true] or ['open' => false, 'reason' => ..., 'plan' => ...].
+
+function course_access(string $email, array $user, string $courseSlug): array {
+    $settings = read_settings();
+    if (empty($settings['features']['paid'])) return ['open' => true, 'reason' => 'free'];
+    // Faculty read everything: they have to be able to see what they teach.
+    if (role_rank($user['role'] ?? 'student') >= ROLE_RANK['educator']) {
+        return ['open' => true, 'reason' => 'faculty'];
+    }
+    // A one-off grant from the front office beats any plan.
+    $grants = read_store('grants');
+    $g = $grants[$email][$courseSlug] ?? null;
+    if ($g !== null) {
+        $until = $g['until'] ?? '';
+        if ($until === '' || $until > gmdate('c')) return ['open' => true, 'reason' => 'granted'];
+    }
+    $planId = $user['plan'] ?? ($settings['defaultPlan'] ?? '');
+    $plan = $planId === '' ? null : plan_by_id($settings, $planId);
+    if ($plan !== null && !empty($plan['active']) && plan_covers($plan, $courseSlug)) {
+        return ['open' => true, 'reason' => 'plan', 'plan' => $plan['id']];
+    }
+    // Locked. Name the cheapest active plan that would open it, so the
+    // student is told the way in rather than just the wall.
+    $best = null;
+    foreach ($settings['plans'] as $p) {
+        if (empty($p['active']) || !plan_covers($p, $courseSlug)) continue;
+        if ($best === null || (int)($p['price'] ?? 0) < (int)($best['price'] ?? 0)) $best = $p;
+    }
+    return [
+        'open' => false,
+        'reason' => 'locked',
+        'plan' => $best === null ? null : [
+            'id' => $best['id'],
+            'name' => $best['name'] ?? '',
+            'blurb' => $best['blurb'] ?? '',
+            'price' => (int)($best['price'] ?? 0),
+            'cadence' => $best['cadence'] ?? 'once',
+        ],
+    ];
+}
+
+// Which courses this person may open, as slug => bool.
+function access_map(string $email, array $user): array {
+    $map = [];
+    foreach (catalog()['courses'] as $c) {
+        $map[$c['slug']] = course_access($email, $user, $c['slug'])['open'];
+    }
+    return $map;
+}
+
+// ---------- The audit log ----------
+//
+// Anything a member of staff does that touches somebody else's account
+// lands here: role changes, Act As, account creation, access grants,
+// takedowns. Read-only from the app, newest first, capped so the store
+// stays a file you can open.
+
+const AUDIT_MAX = 2000;
+
+function audit_log(array $auth, string $action, string $detail = '', string $subject = ''): void {
+    $log = read_store('audit');
+    $rows = $log['rows'] ?? [];
+    array_unshift($rows, [
+        'at' => gmdate('c'),
+        'actor' => $auth['actor'] ?? $auth['email'],
+        // When the entry was written during an Act As session, both the
+        // real driver and the account being driven are on the record.
+        'as' => $auth['actor'] !== null ? $auth['email'] : '',
+        'role' => $auth['user']['role'] ?? '',
+        'action' => $action,
+        'subject' => $subject,
+        'detail' => mb_substr($detail, 0, 300),
+    ]);
+    write_store('audit', ['rows' => array_slice($rows, 0, AUDIT_MAX)]);
 }

@@ -189,6 +189,50 @@ if ($key !== '') {
 }
 
 $auth = require_auth();
+
+// A teacher writing to one student by hand. Nothing automatic about it:
+// no priority ladder, no cooldown table, just a person saying a thing to
+// another person, with the school's name on the envelope. Educators and
+// up. The opt-out is still absolute.
+if ($method === 'POST') {
+    $in = body_json();
+    if (($in['action'] ?? '') === 'personal') {
+        require_rank($auth, ROLE_RANK['educator']);
+        $email = strtolower(trim($in['email'] ?? ''));
+        $message = trim((string)($in['message'] ?? ''));
+        $users = read_users();
+        $user = $users[$email] ?? null;
+        if ($user === null) respond(404, ['error' => 'No such account.']);
+        if (mb_strlen($message) < 5 || mb_strlen($message) > 1500) {
+            respond(400, ['error' => 'Keep it between 5 and 1500 characters.']);
+        }
+        if (!empty($user['nudgesOff'])) {
+            respond(409, ['error' => 'They have school email switched off. Their call, and it stands.']);
+        }
+        $first = trim($user['first'] ?? '') ?: strtok($user['name'] ?? 'there', ' ');
+        $teacher = $auth['user']['name'] ?? 'Self Made School';
+        $subject = (string)($in['subject'] ?? '');
+        $subject = trim($subject) === '' ? "A note from $teacher" : mb_substr(trim($subject), 0, 120);
+        $body = "$first,\n\n$message\n\n-- $teacher\nSelf Made School\n\n"
+            . "Reply to this email and it reaches a person, not a robot.\n"
+            . "Turn school email off any time: https://selfmadeschool.org/learn/profile\n";
+        $headers = "From: Self Made School <noreply@selfmadeschool.org>\r\n"
+            . "Content-Type: text/plain; charset=utf-8";
+        @mail($email, $subject, $body, $headers);
+
+        // Recorded against the automatic nudge log too, so the nightly run
+        // knows the school already said something today and stays quiet.
+        $log = read_store('nudges');
+        $today = school_day();
+        $log[$email]['personal'] = $today;
+        $log[$email]['_any'] = $today;
+        write_store('nudges', $log);
+        audit_log($auth, 'nudge.personal', mb_substr($message, 0, 80), $email);
+        respond(200, ['ok' => true]);
+    }
+}
+
+// Everything else here is the nightly machine, and that belongs to one person.
 require_rank($auth, ROLE_RANK['global_admin']);
 
 if ($method === 'GET') {
