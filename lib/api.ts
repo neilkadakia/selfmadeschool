@@ -48,6 +48,16 @@ export function profileComplete(
 
 const BASE = "/api";
 
+// Exported for lib/faculty.ts, which is the same client for the rooms
+// only staff can open. One fetch wrapper, one error shape, one place
+// where a dead server turns into a sentence a human can read.
+export async function apiCall(
+  path: string,
+  opts: { method?: string; token?: string; body?: unknown } = {}
+) {
+  return call(path, opts);
+}
+
 async function call(
   path: string,
   opts: { method?: string; token?: string; body?: unknown } = {}

@@ -55,6 +55,44 @@ function respond(int $code, array $body): void {
     exit;
 }
 
+// Answer first, then do the slow thing.
+//
+// mail() blocks until the mail transport takes the message. That is a few
+// milliseconds on a healthy host and several seconds on a sick one, and
+// either way the person who clicked the button is sitting there watching
+// a spinner for work that has already been saved. This hands the response
+// back and runs $after with the connection already closed.
+//
+// Under PHP-FPM and LiteSpeed that is exact. Anywhere else it degrades to
+// what the code did before: flush, then carry on.
+function respond_then(int $code, array $body, callable $after): void {
+    http_response_code($code);
+    header('Content-Type: application/json; charset=utf-8');
+    $json = json_encode($body, JSON_UNESCAPED_SLASHES);
+    header('Content-Length: ' . strlen($json));
+    header('Connection: close');
+    echo $json;
+
+    if (function_exists('fastcgi_finish_request')) {
+        fastcgi_finish_request();
+    } elseif (function_exists('litespeed_finish_request')) {
+        litespeed_finish_request();
+    } else {
+        while (ob_get_level() > 0) @ob_end_flush();
+        @flush();
+    }
+
+    // Whatever happens out here, the caller already has its answer. A
+    // mail server having a bad day must never look like a failed save.
+    ignore_user_abort(true);
+    try {
+        $after();
+    } catch (Throwable $e) {
+        // Nothing to report to: the response is gone.
+    }
+    exit;
+}
+
 function cors_and_preflight(): void {
     $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
     $allowed = [
@@ -371,9 +409,12 @@ function plan_covers(array $plan, string $courseSlug): bool {
 //
 // Returns ['open' => true] or ['open' => false, 'reason' => ..., 'plan' => ...].
 
-function course_access(string $email, array $user, string $courseSlug): array {
+// $asIfPaid lets the front office see what the school would look like the
+// moment payment is switched on, without switching it on. Nothing but the
+// Enrollment preview passes it.
+function course_access(string $email, array $user, string $courseSlug, bool $asIfPaid = false): array {
     $settings = read_settings();
-    if (empty($settings['features']['paid'])) return ['open' => true, 'reason' => 'free'];
+    if (empty($settings['features']['paid']) && !$asIfPaid) return ['open' => true, 'reason' => 'free'];
     // Faculty read everything: they have to be able to see what they teach.
     if (role_rank($user['role'] ?? 'student') >= ROLE_RANK['educator']) {
         return ['open' => true, 'reason' => 'faculty'];
@@ -411,10 +452,10 @@ function course_access(string $email, array $user, string $courseSlug): array {
 }
 
 // Which courses this person may open, as slug => bool.
-function access_map(string $email, array $user): array {
+function access_map(string $email, array $user, bool $asIfPaid = false): array {
     $map = [];
     foreach (catalog()['courses'] as $c) {
-        $map[$c['slug']] = course_access($email, $user, $c['slug'])['open'];
+        $map[$c['slug']] = course_access($email, $user, $c['slug'], $asIfPaid)['open'];
     }
     return $map;
 }

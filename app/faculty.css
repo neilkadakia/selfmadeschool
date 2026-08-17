@@ -1,0 +1,1118 @@
+/* ==========================================================================
+   The Faculty Lounge.
+
+   Same school, different room. The classroom is a place to read and be
+   encouraged, so it is roomy and loud. This is a place to work, so it is
+   dense, quiet, and built on hairlines: the eye should land on the student
+   who needs something, not on the furniture.
+
+   Color earns its place. Green means done or good. Amber means somebody is
+   waiting on you. Everything else is cream at three weights of opacity.
+   ========================================================================== */
+
+.fac {
+  --line: rgba(242, 238, 227, 0.11);
+  --line-soft: rgba(242, 238, 227, 0.07);
+  --dim: rgba(242, 238, 227, 0.55);
+  --dimmer: rgba(242, 238, 227, 0.38);
+  --raise: rgba(242, 238, 227, 0.035);
+  background: var(--ink);
+  min-height: 100dvh;
+  padding: 34px 34px 120px;
+}
+
+.fac-wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+/* ---------- room header ---------- */
+
+.fac-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 26px;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 30px;
+}
+
+.fac-kicker {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin: 0 0 9px;
+}
+
+.fac-h1 {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.fac-sub {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--dim);
+  max-width: 60ch;
+  margin: 10px 0 0;
+}
+
+.fac-head-actions {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ---------- the pulse strip ---------- */
+
+.fac-pulse {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 34px;
+}
+
+.fac-stat {
+  background: var(--ink);
+  padding: 17px 18px 15px;
+}
+
+.fac-stat-n {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.fac-stat--acc .fac-stat-n {
+  color: var(--acc);
+}
+
+.fac-stat--warn .fac-stat-n {
+  color: var(--coral);
+}
+
+.fac-stat-l {
+  display: block;
+  margin-top: 7px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--dimmer);
+}
+
+.fac-stat-note {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--dim);
+}
+
+/* ---------- panels ---------- */
+
+.fac-panel {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--raise);
+  margin-bottom: 22px;
+  overflow: hidden;
+}
+
+.fac-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.fac-panel-h {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fac-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 21px;
+  height: 21px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: rgba(255, 180, 58, 0.16);
+  color: var(--coral);
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 11.5px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.fac-count--quiet {
+  background: rgba(242, 238, 227, 0.09);
+  color: var(--dim);
+}
+
+.fac-panel-sub {
+  font-size: 13px;
+  color: var(--dim);
+  margin: 0;
+  max-width: 62ch;
+}
+
+.fac-panel-body {
+  padding: 18px 20px;
+}
+
+.fac-panel-body--flush {
+  padding: 0;
+}
+
+/* ---------- the work queue ---------- */
+
+.fac-item {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.fac-item:last-child {
+  border-bottom: 0;
+}
+
+.fac-item-top {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.fac-who {
+  font-weight: 700;
+  font-size: 14.5px;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  border-bottom: 1px solid transparent;
+}
+
+.fac-who:hover {
+  border-bottom-color: var(--acc);
+  color: var(--acc);
+}
+
+.fac-where {
+  font-size: 12.5px;
+  color: var(--dim);
+}
+
+.fac-when {
+  font-size: 12px;
+  color: var(--dimmer);
+  margin-left: auto;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* What the student wrote. Their words get the most contrast on the page
+   after the headline: this is the thing worth reading. */
+.fac-said {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 14px;
+  border-left: 2px solid rgba(67, 222, 123, 0.4);
+}
+
+.fac-asked {
+  font-size: 12.5px;
+  color: var(--dimmer);
+  margin: 0 0 8px;
+  font-style: italic;
+}
+
+.fac-item-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* ---------- a teacher's answer ---------- */
+
+.fac-answer {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(91, 124, 250, 0.08);
+  border-left: 2px solid var(--vio);
+}
+
+.fac-answer-by {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--vio);
+  margin: 0 0 5px;
+}
+
+.fac-answer-text {
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.fac-answer-seen {
+  font-size: 11.5px;
+  color: var(--dimmer);
+  margin: 6px 0 0;
+}
+
+/* ---------- reply composer ---------- */
+
+.fac-compose {
+  margin-top: 12px;
+}
+
+.fac-input,
+.fac-textarea,
+.fac-select {
+  width: 100%;
+  padding: 11px 13px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(14, 14, 18, 0.6);
+  color: var(--paper);
+  font-family: inherit;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.fac-textarea {
+  resize: vertical;
+  min-height: 76px;
+}
+
+.fac-input:focus,
+.fac-textarea:focus,
+.fac-select:focus {
+  outline: none;
+  border-color: rgba(67, 222, 123, 0.55);
+}
+
+.fac-input::placeholder,
+.fac-textarea::placeholder {
+  color: var(--dimmer);
+}
+
+.fac-select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.fac-select option {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.fac-field {
+  display: block;
+  margin-bottom: 13px;
+}
+
+.fac-label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--dimmer);
+  margin-bottom: 6px;
+}
+
+.fac-hint {
+  font-size: 12.5px;
+  color: var(--dim);
+  margin: 6px 0 0;
+}
+
+.fac-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.fac-row > * {
+  flex: 1 1 160px;
+}
+
+/* ---------- buttons ---------- */
+
+.fac-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 15px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.fac-btn:hover {
+  background: rgba(242, 238, 227, 0.07);
+  border-color: rgba(242, 238, 227, 0.28);
+}
+
+.fac-btn--go {
+  background: var(--acc);
+  border-color: var(--acc);
+  color: var(--ink);
+}
+
+.fac-btn--go:hover {
+  background: #5ae98d;
+  border-color: #5ae98d;
+}
+
+.fac-btn--go:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.fac-btn--quiet {
+  color: var(--dim);
+  border-color: transparent;
+  padding: 6px 11px;
+}
+
+.fac-btn--quiet:hover {
+  color: var(--paper);
+}
+
+.fac-btn--danger:hover {
+  color: var(--coral);
+  border-color: rgba(255, 180, 58, 0.4);
+  background: rgba(255, 180, 58, 0.08);
+}
+
+.fac-btn--sm {
+  padding: 5px 11px;
+  font-size: 12px;
+}
+
+/* ---------- tabs ---------- */
+
+.fac-tabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.fac-tab {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: none;
+  color: var(--dim);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.fac-tab:hover {
+  color: var(--paper);
+  background: rgba(242, 238, 227, 0.06);
+}
+
+.fac-tab.is-on {
+  background: rgba(67, 222, 123, 0.13);
+  color: var(--acc);
+}
+
+/* ---------- tables ---------- */
+
+.fac-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.fac-tr {
+  display: grid;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 14px;
+}
+
+.fac-tr:last-child {
+  border-bottom: 0;
+}
+
+.fac-tr--head {
+  padding-top: 11px;
+  padding-bottom: 11px;
+  border-bottom: 1px solid var(--line);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dimmer);
+}
+
+.fac-tr--click {
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.fac-tr--click:hover {
+  background: rgba(242, 238, 227, 0.045);
+}
+
+.fac-num {
+  font-variant-numeric: tabular-nums;
+}
+
+.fac-muted {
+  color: var(--dim);
+}
+
+.fac-dimmer {
+  color: var(--dimmer);
+}
+
+.fac-warn {
+  color: var(--coral);
+}
+
+.fac-good {
+  color: var(--acc);
+}
+
+/* Sortable column headers. */
+.fac-sort {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fac-sort:hover {
+  color: var(--paper);
+}
+
+.fac-sort.is-on {
+  color: var(--acc);
+}
+
+/* ---------- the training matrix ---------- */
+
+.fac-matrix {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.fac-matrix-course {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.fac-matrix-cell {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: rgba(242, 238, 227, 0.13);
+}
+
+/* Not written yet: a hollow square, because nobody could have done it. */
+.fac-matrix-cell.is-untaught {
+  background: none;
+  box-shadow: inset 0 0 0 1px rgba(242, 238, 227, 0.1);
+}
+
+.fac-matrix-cell.is-done {
+  background: var(--acc);
+}
+
+.fac-matrix-cell.is-done.tone-vio {
+  background: var(--vio);
+}
+
+.fac-matrix-cell.is-done.tone-coral {
+  background: var(--coral);
+}
+
+/* ---------- meters ---------- */
+
+.fac-meter {
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(242, 238, 227, 0.11);
+  overflow: hidden;
+}
+
+.fac-meter-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--acc);
+  transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.fac-meter-fill.tone-vio {
+  background: var(--vio);
+}
+
+.fac-meter-fill.tone-coral {
+  background: var(--coral);
+}
+
+/* ---------- charts ---------- */
+
+.fac-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.fac-bars {
+  display: grid;
+  gap: 7px;
+}
+
+.fac-bar-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 46px;
+  gap: 4px 12px;
+  align-items: center;
+  font-size: 13.5px;
+}
+
+.fac-bar-label {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.fac-bar-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fac-bar-track {
+  grid-column: 1 / -1;
+  display: block;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(242, 238, 227, 0.09);
+  overflow: hidden;
+}
+
+/* display: block matters. Both of these are spans, and an inline element
+   ignores width, which draws every bar at zero. */
+.fac-bar-fill {
+  display: block;
+  height: 100%;
+  min-width: 2px;
+  border-radius: 999px;
+  background: var(--acc);
+}
+
+/* ---------- empty and loading ---------- */
+
+.fac-empty {
+  padding: 34px 20px;
+  text-align: center;
+  color: var(--dim);
+  font-size: 14.5px;
+}
+
+.fac-empty strong {
+  display: block;
+  color: var(--paper);
+  font-size: 15.5px;
+  margin-bottom: 5px;
+}
+
+.fac-skel {
+  height: 13px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(242, 238, 227, 0.06),
+    rgba(242, 238, 227, 0.12),
+    rgba(242, 238, 227, 0.06)
+  );
+  background-size: 200% 100%;
+  animation: fac-shimmer 1.4s ease-in-out infinite;
+  margin-bottom: 11px;
+}
+
+@keyframes fac-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fac-skel {
+    animation: none;
+  }
+}
+
+/* ---------- flash ---------- */
+
+.fac-flash {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  z-index: 60;
+  max-width: min(560px, calc(100vw - 40px));
+  padding: 13px 20px;
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+  animation: fac-rise 0.24s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+@keyframes fac-rise {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fac-flash {
+    animation: none;
+  }
+}
+
+/* ---------- the Student File drawer ---------- */
+
+.fac-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: rgba(6, 6, 9, 0.62);
+  backdrop-filter: blur(2px);
+  animation: fac-fade 0.18s ease;
+  border: 0;
+  padding: 0;
+  cursor: default;
+}
+
+@keyframes fac-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.fac-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 71;
+  width: min(720px, 100vw);
+  height: 100dvh;
+  overflow-y: auto;
+  background: #121216;
+  border-left: 1px solid var(--line);
+  box-shadow: -30px 0 70px rgba(0, 0, 0, 0.5);
+  animation: fac-slide 0.26s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+@keyframes fac-slide {
+  from {
+    transform: translateX(28px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fac-scrim,
+  .fac-drawer {
+    animation: none;
+  }
+}
+
+.fac-drawer-head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 22px 26px 16px;
+  background: #121216;
+  border-bottom: 1px solid var(--line);
+}
+
+.fac-drawer-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.fac-drawer-name {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 25px;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.fac-drawer-meta {
+  font-size: 13px;
+  color: var(--dim);
+  margin: 6px 0 0;
+  line-height: 1.55;
+}
+
+.fac-drawer-body {
+  padding: 22px 26px 90px;
+}
+
+.fac-drawer-tabs {
+  display: flex;
+  gap: 3px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.fac-close {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: none;
+  color: var(--dim);
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.fac-close:hover {
+  color: var(--paper);
+  background: rgba(242, 238, 227, 0.07);
+}
+
+/* Course progress inside the drawer. */
+.fac-course {
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.fac-course:last-child {
+  border-bottom: 0;
+}
+
+.fac-course-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 9px;
+  font-size: 14px;
+}
+
+.fac-course-name {
+  font-weight: 700;
+}
+
+/* ---------- toggles ---------- */
+
+.fac-switch {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.fac-switch:last-child {
+  border-bottom: 0;
+}
+
+.fac-switch-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.fac-switch-name {
+  font-size: 14.5px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.fac-switch-blurb {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--dim);
+  margin: 0;
+  max-width: 58ch;
+}
+
+.fac-toggle {
+  flex: none;
+  position: relative;
+  width: 44px;
+  height: 25px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(242, 238, 227, 0.07);
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease;
+  margin-top: 2px;
+}
+
+.fac-toggle::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 17px;
+  height: 17px;
+  border-radius: 999px;
+  background: var(--dim);
+  transition: transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1), background 0.18s ease;
+}
+
+.fac-toggle.is-on {
+  background: rgba(67, 222, 123, 0.22);
+  border-color: rgba(67, 222, 123, 0.5);
+}
+
+.fac-toggle.is-on::after {
+  transform: translateX(19px);
+  background: var(--acc);
+}
+
+.fac-toggle:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fac-toggle,
+  .fac-toggle::after,
+  .fac-meter-fill {
+    transition: none;
+  }
+}
+
+/* ---------- tags ---------- */
+
+.fac-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(242, 238, 227, 0.08);
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+.fac-tag--acc {
+  background: rgba(67, 222, 123, 0.14);
+  color: var(--acc);
+}
+
+.fac-tag--vio {
+  background: rgba(91, 124, 250, 0.16);
+  color: #8ea3ff;
+}
+
+.fac-tag--coral {
+  background: rgba(255, 180, 58, 0.15);
+  color: var(--coral);
+}
+
+.fac-tag--pink {
+  background: rgba(255, 157, 226, 0.15);
+  color: var(--pink);
+}
+
+/* ---------- plans ---------- */
+
+.fac-plan {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.fac-plan:last-child {
+  border-bottom: 0;
+}
+
+.fac-plan-price {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 21px;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 900px) {
+  .fac {
+    padding: 26px 18px 110px;
+  }
+
+  .fac-tr {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .fac-item {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .fac-panel-head,
+  .fac-panel-body {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .fac-drawer-head,
+  .fac-drawer-body {
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+}
+
+/* Tables stop being tables on a phone: each row becomes a stack with the
+   column name printed beside the value. */
+@media (max-width: 720px) {
+  .fac-tr--head {
+    display: none;
+  }
+
+  .fac-tr {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 5px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .fac-tr > [data-k]::before {
+    content: attr(data-k) " ";
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dimmer);
+    margin-right: 7px;
+  }
+
+  .fac-when {
+    margin-left: 0;
+  }
+}
+
+/* ---------- the light classroom ---------- */
+
+html.lms-light .fac {
+  --line: rgba(14, 14, 18, 0.13);
+  --line-soft: rgba(14, 14, 18, 0.08);
+  --dim: rgba(14, 14, 18, 0.62);
+  --dimmer: rgba(14, 14, 18, 0.45);
+  --raise: rgba(14, 14, 18, 0.02);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+html.lms-light .fac-stat,
+html.lms-light .fac-drawer,
+html.lms-light .fac-drawer-head {
+  background: var(--paper);
+}
+
+html.lms-light .fac-input,
+html.lms-light .fac-textarea,
+html.lms-light .fac-select {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--ink);
+}
+
+html.lms-light .fac-select option {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+html.lms-light .fac-flash {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+html.lms-light .fac-matrix-cell {
+  background: rgba(14, 14, 18, 0.14);
+}
+
+html.lms-light .fac-btn--go {
+  color: var(--ink);
+}

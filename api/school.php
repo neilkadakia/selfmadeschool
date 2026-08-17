@@ -60,7 +60,10 @@ if ($method === 'GET') {
                 'name' => name_of($users, $email),
                 'plan' => $u['plan'] ?? '',
                 'grants' => array_keys($grants[$email] ?? []),
-                'access' => access_map($email, $u),
+                // Always answered as though payment were on. While it is
+                // off this is the rehearsal the room promises: exactly who
+                // would be locked out. With it on it is simply the truth.
+                'access' => access_map($email, $u, true),
             ];
         }
         usort($roll, fn($a, $b) => strcmp($a['name'], $b['name']));

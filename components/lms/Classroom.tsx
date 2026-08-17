@@ -5,12 +5,17 @@
 // account row. The unit player keeps its own immersive layout (it has
 // a lesson sidebar of its own), and signed-out visitors just get the
 // gate, full width.
+//
+// Under /learn/faculty the same sidebar swaps its middle section for the
+// faculty rooms. It reads as stepping into a different room of the same
+// building rather than a second application, and there is one exit back
+// to your own classroom at the top of the list.
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { COURSES, levelFor } from "@/lib/lms";
-import { isFaculty } from "@/lib/api";
+import { ROLE_LABEL, ROLE_RANK, isFaculty, rankOf } from "@/lib/api";
 import { useLms, courseProgress } from "@/components/useLms";
 import Portrait from "@/components/lms/Portrait";
 import Wordmark from "@/components/Wordmark";
@@ -22,14 +27,31 @@ const ROOMS = [
   { href: "/learn/certificate", label: "Certificates", exact: false },
 ];
 
+// The lounge, in the order a teacher's day runs. `min` is the rank that
+// sees the entry; the server checks it again on every call.
+const FACULTY_ROOMS = [
+  { href: "/learn/faculty", label: "Front Desk", exact: true, min: ROLE_RANK.educator },
+  { href: "/learn/faculty/gradebook", label: "Gradebook", exact: false, min: ROLE_RANK.educator },
+  { href: "/learn/faculty/fieldwork", label: "Field Work", exact: false, min: ROLE_RANK.educator },
+  { href: "/learn/faculty/discussion", label: "Study Group", exact: false, min: ROLE_RANK.educator },
+  { href: "/learn/faculty/bulletin", label: "The Bulletin", exact: false, min: ROLE_RANK.educator },
+  { href: "/learn/faculty/studio", label: "The Studio", exact: false, min: ROLE_RANK.educator },
+  { href: "/learn/faculty/records", label: "Records", exact: false, min: ROLE_RANK.educator },
+  { href: "/learn/faculty/people", label: "Front Office", exact: false, min: ROLE_RANK.admin },
+  { href: "/learn/faculty/enrollment", label: "Enrollment", exact: false, min: ROLE_RANK.admin },
+  { href: "/learn/faculty/ops", label: "School Ops", exact: false, min: ROLE_RANK.global_admin },
+];
+
 export default function Classroom({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const lms = useLms();
 
-  // /learn/[course]/[unit] is the player: three segments, minus the
-  // named depth-2 rooms which can never collide with a course slug.
+  // /learn/[course]/[unit] is the player, and only that. Testing the
+  // course slug rather than counting segments matters now that the
+  // faculty rooms are three deep too.
   const segs = pathname.split("/").filter(Boolean);
-  const isPlayer = segs.length === 3;
+  const isPlayer = segs.length === 3 && COURSES.some((c) => c.slug === segs[1]);
+  const inLounge = segs[1] === "faculty";
 
   // On phones the sidebar is a horizontal scroll bar. Keep the active
   // room visible. block: "nearest" makes this a no-op vertically. The
@@ -67,6 +89,9 @@ export default function Classroom({ children }: { children: React.ReactNode }) {
   }
 
   const level = levelFor(lms.state.xp);
+  // Captured out here: the early return above proves it is set, but that
+  // does not survive into the callbacks below.
+  const myRank = rankOf(lms.auth.role);
   const isActive = (href: string, exact: boolean) =>
     exact ? pathname === href || pathname === `${href}/` : pathname.startsWith(href);
 
@@ -78,7 +103,25 @@ export default function Classroom({ children }: { children: React.ReactNode }) {
         <Link href="/learn" className="classroom-brand">
           <Wordmark gid="dawn-classroom" />
         </Link>
-        <nav className="classroom-nav" aria-label="Classroom">
+        <nav className="classroom-nav" aria-label={inLounge ? "Faculty Lounge" : "Classroom"}>
+          {inLounge ? (
+            <>
+              <Link href="/learn" className="classroom-link">
+                ← My Learning
+              </Link>
+              <span className="classroom-label">Faculty Lounge</span>
+              {FACULTY_ROOMS.filter((r) => myRank >= r.min).map((r) => (
+                <Link
+                  key={r.href}
+                  href={r.href}
+                  className={`classroom-link${isActive(r.href, r.exact) ? " is-here" : ""}`}
+                >
+                  {r.label}
+                </Link>
+              ))}
+            </>
+          ) : (
+            <>
           <span className="classroom-label">My Learning</span>
           {ROOMS.map((r) => (
             <Link
@@ -127,12 +170,11 @@ export default function Classroom({ children }: { children: React.ReactNode }) {
             Student File
           </Link>
           {isFaculty(lms.auth.role) && (
-            <Link
-              href="/learn/admin"
-              className={`classroom-link${isActive("/learn/admin", false) ? " is-here" : ""}`}
-            >
-              Faculty Lounge
+            <Link href="/learn/faculty" className="classroom-link">
+              Faculty Lounge →
             </Link>
+          )}
+            </>
           )}
         </nav>
         <div className="classroom-user">
@@ -153,7 +195,11 @@ export default function Classroom({ children }: { children: React.ReactNode }) {
                   ? "Saving…"
                   : lms.sync === "error"
                     ? "Offline · saved here"
-                    : level.name}
+                    : // In the lounge you are staff, not a student on the
+                      // level ladder. Show the job instead.
+                      inLounge
+                      ? ROLE_LABEL[lms.auth.role]
+                      : level.name}
               </span>
             </span>
           </Link>

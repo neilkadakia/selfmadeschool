@@ -173,30 +173,7 @@ $replies[$email][$key] = [
 write_store('fieldwork', $replies);
 audit_log($auth, $existing === null ? 'fieldwork.reply' : 'fieldwork.edit', $key, $email);
 
-// Tell them, if they take mail from the school. A reply on the work they
-// did in the real world is worth an interruption; the daily nudge desk is
-// deliberately not in the loop here.
-if (empty($users[$email]['nudgesOff']) && $existing === null) {
-    $unit = catalog_unit($courseSlug, $unitSlug);
-    $titles = course_titles();
-    $first = trim($users[$email]['first'] ?? '') ?: strtok($users[$email]['name'] ?? 'there', ' ');
-    $teacher = $auth['user']['name'] ?? 'The school';
-    $unitTitle = $unit['title'] ?? $unitSlug;
-    $subject = "$teacher read your Field Work";
-    $body = "$first,\n\n"
-        . "You filed a Field Work report on $unitTitle ({$titles[$courseSlug]}). "
-        . "Somebody read it.\n\n"
-        . "$teacher wrote back:\n\n"
-        . "  \"$text\"\n\n"
-        . "It's waiting on the unit page, and on your Student File under Proof.\n\n"
-        . "-- Self Made School\n\n"
-        . "You can switch these emails off in your Student File.";
-    $headers = "From: Self Made School <noreply@selfmadeschool.org>\r\n"
-        . "Content-Type: text/plain; charset=utf-8";
-    @mail($email, $subject, $body, $headers);
-}
-
-respond(200, [
+$payload = [
     'ok' => true,
     'reply' => [
         'text' => $text,
@@ -205,4 +182,35 @@ respond(200, [
         'at' => $replies[$email][$key]['at'],
         'seen' => false,
     ],
-]);
+];
+
+// Tell them, if they take mail from the school. A reply on the work they
+// did in the real world is worth an interruption; the daily nudge desk is
+// deliberately not in the loop here. Only the first answer mails: editing
+// your own wording is not news to the student.
+//
+// The answer is already saved by this point, so the mail goes out after
+// the response does. A teacher never waits on a mail server.
+if (empty($users[$email]['nudgesOff']) && $existing === null) {
+    $unit = catalog_unit($courseSlug, $unitSlug);
+    $titles = course_titles();
+    $first = trim($users[$email]['first'] ?? '') ?: strtok($users[$email]['name'] ?? 'there', ' ');
+    $teacher = $auth['user']['name'] ?? 'The school';
+    $unitTitle = $unit['title'] ?? $unitSlug;
+    respond_then(200, $payload, function () use ($email, $first, $teacher, $unitTitle, $titles, $courseSlug, $text) {
+        $subject = "$teacher read your Field Work";
+        $body = "$first,\n\n"
+            . "You filed a Field Work report on $unitTitle ({$titles[$courseSlug]}). "
+            . "Somebody read it.\n\n"
+            . "$teacher wrote back:\n\n"
+            . "  \"$text\"\n\n"
+            . "It's waiting on the unit page, and on your Student File under Proof.\n\n"
+            . "-- Self Made School\n\n"
+            . "You can switch these emails off in your Student File.";
+        $headers = "From: Self Made School <noreply@selfmadeschool.org>\r\n"
+            . "Content-Type: text/plain; charset=utf-8";
+        @mail($email, $subject, $body, $headers);
+    });
+}
+
+respond(200, $payload);
