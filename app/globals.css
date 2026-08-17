@@ -3174,6 +3174,12 @@ p {
   margin: 0 0 28px;
 }
 
+/* The desk header runs the full width of the page it sits on; the 560px
+   measure is for the narrower screens that share this class. */
+.learn-head .learn-sub {
+  max-width: none;
+}
+
 /* Today's line from lib/encouragement.ts. */
 .lms-pep {
   display: inline-flex;
