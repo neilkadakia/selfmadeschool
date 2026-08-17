@@ -534,7 +534,7 @@ export default function Home() {
                 <p className="book-sub">The missing textbook for your first decade of adulthood.</p>
               </div>
               <div className="book-foot">
-                <span>First Edition · Class of &apos;26</span>
+                <span>Neil R. Kadakia</span>
               </div>
             </div>
             <div data-sticker className="sticker sticker--book">

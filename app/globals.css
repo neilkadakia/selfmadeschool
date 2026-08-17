@@ -2059,11 +2059,11 @@ p {
   max-width: 24ch;
 }
 
-/* Sits down on the sunrise, so it carries ink at full strength. */
+/* The author line, down on the sunrise, so it carries ink at full strength. */
 .book-foot {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink);
 }
