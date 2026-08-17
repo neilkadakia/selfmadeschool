@@ -34,6 +34,66 @@ if ($method !== 'POST') respond(405, ['error' => 'GET or POST only.']);
 
 // ---------- Lesson validation (shared by both engines and manual saves) ----------
 
+// A source we are willing to point a lesson at: a file we ship in public/, or
+// an https address. No javascript:, no data:, and no plain http, which a
+// browser would refuse to load inside the page anyway.
+function clean_src(?string $v): ?string {
+    if (!is_string($v)) return null;
+    $src = trim($v);
+    if ($src === '' || mb_strlen($src) > 500) return null;
+    if (str_starts_with($src, '/') && !str_starts_with($src, '//')) return $src;
+    if (!str_starts_with($src, 'https://')) return null;
+    return filter_var($src, FILTER_VALIDATE_URL) === false ? null : $src;
+}
+
+function clean_media_block(string $kind, array $b): ?array {
+    $s = fn($v, int $max) => is_string($v) && trim($v) !== '' ? mb_substr(trim($v), 0, $max) : null;
+    $caption = $s($b['caption'] ?? null, 300);
+    $with = function (array $row) use ($caption): array {
+        if ($caption !== null) $row['caption'] = $caption;
+        return $row;
+    };
+
+    if ($kind === 'image') {
+        $src = clean_src($b['src'] ?? null);
+        // Alt text is required, not optional: a picture nobody can hear is
+        // not in the lesson for anybody using a screen reader.
+        $alt = $s($b['alt'] ?? null, 200);
+        if ($src === null || $alt === null) return null;
+        return $with(['kind' => 'image', 'src' => $src, 'alt' => $alt]);
+    }
+    if ($kind === 'video') {
+        $src = clean_src($b['src'] ?? null);
+        if ($src === null) return null;
+        $row = ['kind' => 'video', 'src' => $src];
+        $poster = clean_src($b['poster'] ?? null);
+        if ($poster !== null) $row['poster'] = $poster;
+        return $with($row);
+    }
+    if ($kind === 'embed') {
+        $src = clean_src($b['src'] ?? null);
+        $title = $s($b['title'] ?? null, 120);
+        if ($src === null || $title === null) return null;
+        return $with(['kind' => 'embed', 'src' => $src, 'title' => $title]);
+    }
+    if ($kind === 'audio') {
+        $src = clean_src($b['src'] ?? null);
+        $title = $s($b['title'] ?? null, 120);
+        if ($src === null || $title === null) return null;
+        return $with(['kind' => 'audio', 'src' => $src, 'title' => $title]);
+    }
+    if ($kind === 'file') {
+        $href = clean_src($b['href'] ?? null);
+        $name = $s($b['name'] ?? null, 120);
+        if ($href === null || $name === null) return null;
+        $row = ['kind' => 'file', 'href' => $href, 'name' => $name];
+        $note = $s($b['note'] ?? null, 200);
+        if ($note !== null) $row['note'] = $note;
+        return $row;
+    }
+    return null;
+}
+
 function clean_lesson($in): ?array {
     if (!is_array($in)) return null;
     $s = fn($v, int $max = 2000) => is_string($v) && trim($v) !== '' ? mb_substr(trim($v), 0, $max) : null;
@@ -71,6 +131,21 @@ function clean_lesson($in): ?array {
             $row = ['kind' => 'list', 'items' => $items];
             $ti = $s($b['title'] ?? null, 120);
             if ($ti !== null) $row['title'] = $ti;
+            $blocks[] = $row;
+        } elseif ($kind === 'divider') {
+            $blocks[] = ['kind' => 'divider'];
+        } elseif ($kind === 'quote') {
+            $t = $s($b['text'] ?? null, 400);
+            if ($t === null) return null;
+            $row = ['kind' => 'quote', 'text' => $t];
+            $who = $s($b['who'] ?? null, 80);
+            if ($who !== null) $row['who'] = $who;
+            $blocks[] = $row;
+        } elseif ($kind === 'image' || $kind === 'video' || $kind === 'embed' || $kind === 'audio' || $kind === 'file') {
+            // Media blocks are added by hand, never by the Copilot: a model
+            // cannot know a real URL, and one it invents is a broken lesson.
+            $row = clean_media_block($kind, $b);
+            if ($row === null) return null;
             $blocks[] = $row;
         } else {
             return null;
