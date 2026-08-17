@@ -7,13 +7,25 @@ import { LESSONS_13 } from "./lessons13";
 import { COURSE_14 } from "./course14";
 import { COURSE_15 } from "./course15";
 
+// A lesson is a list of blocks. The media kinds carry URLs rather than the
+// bytes: this is a static export, so a file lives in public/ or on a host,
+// and nothing here ever embeds base64 into the bundle.
 export type LessonBlock =
   | { kind: "p"; text: string }
   | { kind: "h"; text: string }
   | { kind: "callout"; title: string; text: string }
   | { kind: "bigfact"; stat: string; caption: string }
   | { kind: "list"; title?: string; items: string[] }
-  | { kind: "example"; title: string; text: string };
+  | { kind: "example"; title: string; text: string }
+  | { kind: "quote"; text: string; who?: string }
+  | { kind: "image"; src: string; alt: string; caption?: string }
+  // A filmed piece we host ourselves. Never call it a module.
+  | { kind: "video"; src: string; poster?: string; caption?: string }
+  // A filmed piece on YouTube or Vimeo, in the same 16:9 frame.
+  | { kind: "embed"; src: string; title: string; caption?: string }
+  | { kind: "audio"; src: string; title: string; caption?: string }
+  | { kind: "file"; href: string; name: string; note?: string }
+  | { kind: "divider" };
 
 export type QuizQuestion = {
   q: string;

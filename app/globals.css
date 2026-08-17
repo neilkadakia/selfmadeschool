@@ -10252,3 +10252,116 @@ a.bell-note:hover {
     margin-left: auto;
   }
 }
+
+/* ---------- Lesson media ---------- */
+
+.lms-quote {
+  margin: 26px 0;
+  padding: 4px 0 4px 22px;
+  border-left: 3px solid var(--acc);
+}
+
+.lms-quote p {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 700;
+  font-size: clamp(19px, 2.4vw, 24px);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.lms-quote cite {
+  display: block;
+  margin-top: 10px;
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted-on-ink);
+}
+
+.lms-figure {
+  margin: 28px 0;
+}
+
+.lms-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+
+.lms-figure figcaption {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+}
+
+/* One 16:9 frame for anything filmed, whether we host it or YouTube does. */
+.lms-watch-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(14, 14, 18, 0.6);
+  border: 1px solid rgba(242, 238, 227, 0.12);
+}
+
+.lms-watch-frame video,
+.lms-watch-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.lms-figure--audio {
+  padding: 18px 20px;
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-radius: 16px;
+}
+
+.lms-audio-title {
+  font-weight: 700;
+  font-size: 15px;
+  margin: 0 0 10px;
+}
+
+.lms-figure--audio audio {
+  width: 100%;
+}
+
+.lms-file {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 22px 0;
+  padding: 16px 20px;
+  border: 1px solid rgba(242, 238, 227, 0.16);
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--paper);
+  transition: border-color 0.2s ease;
+}
+
+.lms-file:hover {
+  border-color: var(--acc);
+}
+
+.lms-file-name {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.lms-file-note {
+  font-size: 13px;
+  color: var(--muted-on-ink);
+}
+
+.lms-divider {
+  margin: 34px 0;
+  border: none;
+  border-top: 1px solid rgba(242, 238, 227, 0.14);
+}

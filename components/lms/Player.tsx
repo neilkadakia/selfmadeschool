@@ -55,6 +55,66 @@ export function Block({ block }: { block: LessonBlock }) {
           <p className="lms-callout-text">{block.text}</p>
         </aside>
       );
+    case "quote":
+      return (
+        <blockquote className="lms-quote">
+          <p>{block.text}</p>
+          {block.who && <cite>{block.who}</cite>}
+        </blockquote>
+      );
+    case "image":
+      return (
+        <figure className="lms-figure">
+          {/* Plain img: the source is a static file or an outside host, and
+              next/image cannot optimize either under output: "export". */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={block.src} alt={block.alt} loading="lazy" />
+          {block.caption && <figcaption>{block.caption}</figcaption>}
+        </figure>
+      );
+    case "video":
+      return (
+        <figure className="lms-figure">
+          <div className="lms-watch-frame">
+            <video controls preload="metadata" poster={block.poster} playsInline>
+              <source src={block.src} />
+            </video>
+          </div>
+          {block.caption && <figcaption>{block.caption}</figcaption>}
+        </figure>
+      );
+    case "embed":
+      return (
+        <figure className="lms-figure">
+          <div className="lms-watch-frame">
+            <iframe
+              src={block.src}
+              title={block.title}
+              loading="lazy"
+              allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture; fullscreen"
+              allowFullScreen
+            />
+          </div>
+          {block.caption && <figcaption>{block.caption}</figcaption>}
+        </figure>
+      );
+    case "audio":
+      return (
+        <figure className="lms-figure lms-figure--audio">
+          <p className="lms-audio-title">{block.title}</p>
+          <audio controls preload="none" src={block.src} />
+          {block.caption && <figcaption>{block.caption}</figcaption>}
+        </figure>
+      );
+    case "file":
+      return (
+        <a className="lms-file" href={block.href} download>
+          <span className="lms-file-name">{block.name}</span>
+          {block.note && <span className="lms-file-note">{block.note}</span>}
+        </a>
+      );
+    case "divider":
+      return <hr className="lms-divider" />;
   }
 }
 
