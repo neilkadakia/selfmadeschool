@@ -10071,3 +10071,184 @@ body:has(.tour) {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- The bell ---------- */
+
+.bell {
+  position: relative;
+  flex: none;
+}
+
+.bell-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(242, 238, 227, 0.18);
+  border-radius: 999px;
+  background: none;
+  color: var(--muted-on-ink);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.bell-btn:hover {
+  border-color: var(--paper);
+  color: var(--paper);
+}
+
+.bell-btn.has-unread {
+  border-color: var(--acc);
+  color: var(--acc);
+}
+
+.bell-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--acc);
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 17px;
+  text-align: center;
+}
+
+/* Opens upward: the bell lives at the bottom of the sidebar. */
+.bell-panel {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 0;
+  width: 300px;
+  max-height: 60vh;
+  overflow-y: auto;
+  z-index: 40;
+  background: #16161c;
+  border: 1px solid rgba(242, 238, 227, 0.16);
+  border-radius: 14px;
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.5);
+}
+
+.bell-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-on-ink);
+  border-bottom: 1px solid rgba(242, 238, 227, 0.1);
+}
+
+.bell-clear {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-on-ink);
+  cursor: pointer;
+}
+
+.bell-clear:hover {
+  color: var(--paper);
+}
+
+.bell-empty {
+  margin: 0;
+  padding: 18px 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+}
+
+.bell-note {
+  display: block;
+  padding: 11px 14px;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.08);
+  color: var(--paper);
+  text-decoration: none;
+}
+
+a.bell-note:hover {
+  background: rgba(242, 238, 227, 0.05);
+}
+
+.bell-note:last-child {
+  border-bottom: none;
+}
+
+.bell-note-text {
+  display: block;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.bell-note-date {
+  display: block;
+  font-size: 11px;
+  color: var(--muted-on-ink);
+  margin-top: 4px;
+}
+
+/* On phones the sidebar is a horizontal bar, so the panel drops instead. */
+@media (max-width: 880px) {
+  .bell-panel {
+    bottom: auto;
+    top: calc(100% + 10px);
+    left: auto;
+    right: 0;
+    width: min(300px, calc(100vw - 32px));
+  }
+}
+
+/* The bell sits in the sidebar header, so it is in the same place whether
+   the sidebar is a column or the phone's horizontal bar. */
+.classroom-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 6px 10px;
+}
+
+.classroom-top .classroom-brand {
+  margin: 0;
+}
+
+/* Fixed, not absolute: .classroom-side scrolls, and an absolute panel gets
+   sliced off at the sidebar's edge. */
+.bell-panel {
+  position: fixed;
+  top: 64px;
+  bottom: auto;
+  left: 14px;
+}
+
+@media (max-width: 880px) {
+  .classroom-top {
+    margin: 0 8px 0 0;
+    flex: none;
+  }
+
+  .bell-panel {
+    top: 54px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: 340px;
+    margin-left: auto;
+  }
+}

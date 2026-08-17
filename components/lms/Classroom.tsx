@@ -18,6 +18,7 @@ import { COURSES, levelFor } from "@/lib/lms";
 import { ROLE_LABEL, ROLE_RANK, isFaculty, rankOf } from "@/lib/api";
 import { useLms, courseProgress } from "@/components/useLms";
 import Portrait from "@/components/lms/Portrait";
+import Bell from "@/components/lms/Bell";
 import Wordmark from "@/components/Wordmark";
 
 const ROOMS = [
@@ -105,9 +106,12 @@ export default function Classroom({ children }: { children: React.ReactNode }) {
       {banner}
       <div className="classroom">
         <aside className="classroom-side">
-        <Link href="/learn" className="classroom-brand">
-          <Wordmark gid="dawn-classroom" />
-        </Link>
+        <div className="classroom-top">
+          <Link href="/learn" className="classroom-brand">
+            <Wordmark gid="dawn-classroom" />
+          </Link>
+          <Bell />
+        </div>
         <nav className="classroom-nav" aria-label={inLounge ? "Faculty Lounge" : "Classroom"}>
           {inLounge ? (
             <>

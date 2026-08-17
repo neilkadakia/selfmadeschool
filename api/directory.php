@@ -142,6 +142,12 @@ if ($action === 'kudos') {
         'at' => gmdate('c'),
     ];
     write_store('kudos', $kudos);
+    notify(
+        $to,
+        'kudos',
+        name_of($users, $me) . ' gave you kudos' . ($note !== '' ? ': "' . $note . '"' : '.'),
+        '/learn/register/'
+    );
     respond(200, ['ok' => true]);
 }
 

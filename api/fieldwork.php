@@ -172,6 +172,16 @@ $replies[$email][$key] = [
 ];
 write_store('fieldwork', $replies);
 audit_log($auth, $existing === null ? 'fieldwork.reply' : 'fieldwork.edit', $key, $email);
+// A teacher writing back about work somebody actually went and did is the
+// best thing in the building; it should not wait to be stumbled upon.
+[$rc, $ru] = array_pad(explode('/', $key, 2), 2, '');
+$runit = catalog_unit($rc, $ru);
+notify(
+    $email,
+    'fieldwork',
+    ($auth['user']['name'] ?? 'Faculty') . ' wrote back about your Field Work on ' . ($runit['title'] ?? $ru) . '.',
+    '/learn/' . $rc . '/' . $ru . '/'
+);
 
 $payload = [
     'ok' => true,

@@ -99,6 +99,13 @@ if ($method === 'GET') {
                 $all[$id]['joined'][$me]['doneAt'] = gmdate('c');
                 $mine['done'] = true;
                 $changed = true;
+                // Nobody watches a progress bar to the end. Tell them.
+                notify(
+                    $me,
+                    'challenge',
+                    'You finished ' . ($c['name'] ?? 'a challenge') . '. That is ' . $target . ' ' . $spec['unit'] . ' since you joined.',
+                    '/learn/challenges/'
+                );
             }
             $you = [
                 'joined' => true,
