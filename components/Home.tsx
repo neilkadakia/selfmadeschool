@@ -392,9 +392,9 @@ export default function Home() {
         </h1>
         <div data-hero-sub className="hero-sub">
           <p className="hero-copy">
-            We&apos;re here to help you with your mindset, your money, and life&apos;s big calls: all the adult stuff you were supposed to just{" "}
-            <em>know</em>. Deliberately non-academic: no grades, no degrees, no lecture halls. Plain English and skills you use the same week. Time to
-            start making yourself.
+            Mindset, money, and the decisions that actually shape a life: the adult stuff nobody sat you down and
+            explained. There&apos;s no syllabus here, no grades, no lecture hall. Just plain English and skills you can
+            use by Friday. Time to start making yourself.
           </p>
           <div className="hero-ctas">
             <Link href="/demo/lesson" className="btn btn--solid">
