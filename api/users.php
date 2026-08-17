@@ -36,8 +36,10 @@ if ($action === 'set_role') {
     if (!in_array($role, ['student', 'educator', 'admin'], true)) {
         respond(400, ['error' => 'Role must be student, educator, or admin.']);
     }
+    $was = $users[$target]['role'] ?? 'student';
     $users[$target]['role'] = $role;
     write_store('users', $users);
+    audit_log($auth, 'role.change', "$was -> $role", $target);
     respond(200, ['ok' => true, 'user' => public_user($target, $users[$target])]);
 }
 
@@ -80,8 +82,14 @@ if ($action === 'create') {
         'role' => $role,
         'hash' => password_hash($password, PASSWORD_DEFAULT),
         'created' => gmdate('c'),
+        // New accounts start on the school's default plan. While the school
+        // is free that plan opens everything, so this is inert until the
+        // day somebody turns payment on.
+        'plan' => read_settings()['defaultPlan'] ?? '',
+        'homeroom' => '',
     ];
     write_store('users', $users);
+    audit_log($auth, 'account.create', $role, $email);
     respond(200, ['ok' => true, 'user' => public_user($email, $users[$email])]);
 }
 

@@ -25,6 +25,60 @@ $isFaculty = auth_rank($auth) >= ROLE_RANK['educator'];
 $method = $_SERVER['REQUEST_METHOD'] ?? '';
 $all = read_store('discuss');
 
+// The faculty feed: every post in the school, one list, newest first, so
+// answering the class doesn't mean walking into thirty separate threads.
+// Filters: waiting (no member of staff has posted in that thread yet),
+// endorsed, or all.
+if ($method === 'GET' && isset($_GET['feed'])) {
+    require_rank($auth, ROLE_RANK['educator']);
+    $users = read_users();
+    $titles = course_titles();
+    $filter = $_GET['filter'] ?? 'waiting';
+
+    $staff = [];
+    foreach ($users as $e => $u) {
+        if (role_rank($u['role'] ?? 'student') >= ROLE_RANK['educator']) $staff[$e] = true;
+    }
+    // Which threads a teacher has already spoken in.
+    $answered = [];
+    foreach ($all as $p) {
+        if (isset($staff[$p['email'] ?? ''])) {
+            $answered[($p['course'] ?? '') . '/' . ($p['unit'] ?? '')] = true;
+        }
+    }
+
+    $rows = [];
+    $counts = ['waiting' => 0, 'endorsed' => 0, 'all' => 0];
+    foreach ($all as $id => $p) {
+        $thread = ($p['course'] ?? '') . '/' . ($p['unit'] ?? '');
+        $fromStaff = isset($staff[$p['email'] ?? '']);
+        $waiting = !$fromStaff && empty($p['endorsed']) && !isset($answered[$thread]);
+        $counts['all']++;
+        if ($waiting) $counts['waiting']++;
+        if (!empty($p['endorsed'])) $counts['endorsed']++;
+        if ($filter === 'waiting' && !$waiting) continue;
+        if ($filter === 'endorsed' && empty($p['endorsed'])) continue;
+        $unit = catalog_unit((string)($p['course'] ?? ''), (string)($p['unit'] ?? ''));
+        $rows[] = [
+            'id' => $id,
+            'email' => $p['email'] ?? '',
+            'name' => $p['name'] ?? 'Student',
+            'text' => $p['text'] ?? '',
+            'created' => $p['created'] ?? '',
+            'ups' => count($p['up'] ?? []),
+            'endorsed' => !empty($p['endorsed']),
+            'fromStaff' => $fromStaff,
+            'answered' => isset($answered[$thread]),
+            'course' => $p['course'] ?? '',
+            'courseTitle' => $titles[$p['course'] ?? ''] ?? '',
+            'unit' => $p['unit'] ?? '',
+            'unitTitle' => $unit['title'] ?? ($p['unit'] ?? ''),
+        ];
+    }
+    usort($rows, fn($a, $b) => strcmp($b['created'], $a['created']));
+    respond(200, ['ok' => true, 'posts' => array_slice($rows, 0, 200), 'counts' => $counts]);
+}
+
 if ($method === 'GET') {
     $course = trim($_GET['course'] ?? '');
     $unit = trim($_GET['unit'] ?? '');
@@ -110,7 +164,12 @@ if ($action === 'endorse' || $action === 'unendorse') {
 }
 
 if ($action === 'delete') {
-    if (($all[$id]['email'] ?? '') !== $auth['email']) require_rank($auth, ROLE_RANK['educator']);
+    $mine = ($all[$id]['email'] ?? '') === $auth['email'];
+    if (!$mine) require_rank($auth, ROLE_RANK['educator']);
+    // Taking down somebody else's words is on the record.
+    if (!$mine) {
+        audit_log($auth, 'discuss.remove', mb_substr((string)($all[$id]['text'] ?? ''), 0, 80), (string)($all[$id]['email'] ?? ''));
+    }
     unset($all[$id]);
     write_store('discuss', $all);
     respond(200, ['ok' => true]);

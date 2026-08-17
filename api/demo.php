@@ -162,7 +162,7 @@ $doc = [
                     'title' => 'Open the real thing',
                     'items' => [
                         ['title' => 'The Classroom', 'body' => "Your dashboard, the day's plan, streak, and everything above. Signed in as you.", 'href' => '/learn/', 'cta' => 'Open Classroom'],
-                        ['title' => 'The Faculty Lounge', 'body' => "Accounts, class progress, Act As, newsletter, backups, and the unit drafting Studio.", 'href' => '/learn/admin/', 'cta' => 'Open Admin'],
+                        ['title' => 'The Faculty Lounge', 'body' => "Ten rooms behind the role ladder: the Front Desk queue, the Gradebook, the Field Work inbox where teachers answer students, Records, the Front Office, and the school's own switches.", 'href' => '/learn/faculty/', 'cta' => 'Open the Lounge'],
                     ],
                 ],
             ],
