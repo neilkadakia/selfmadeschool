@@ -3,14 +3,22 @@
 import Link from "next/link";
 import { getCourse, courseUnits } from "@/lib/lms";
 import { useLms, courseProgress } from "@/components/useLms";
+import { useCourseOpen } from "./useSchool";
 import CommandK from "./CommandK";
+import CourseLock from "./CourseLock";
 import RewardToast from "./RewardToast";
 
 export default function CoursePage({ slug }: { slug: string }) {
   const lms = useLms();
   const { state, loaded } = lms;
+  const gate = useCourseOpen(slug);
   const course = getCourse(slug);
   if (!course) return null;
+
+  // While the school is free this is always open, so nothing is gated by
+  // accident on a slow network: the lock waits until the server has said
+  // that payment is on and this course is not covered.
+  if (gate.known && !gate.open) return <CourseLock slug={slug} needs={gate.needs} />;
 
   const done = state.done[course.slug] ?? [];
   const p = courseProgress(state, course.slug);

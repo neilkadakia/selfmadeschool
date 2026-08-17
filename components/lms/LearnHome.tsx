@@ -10,6 +10,7 @@ import { profileComplete } from "@/lib/api";
 import { useLms, courseProgress } from "@/components/useLms";
 import AvatarStudio from "./AvatarStudio";
 import StudentId from "./StudentId";
+import Assigned from "./Assigned";
 import Bulletin from "./Bulletin";
 import CommandK from "./CommandK";
 import OfficeHours from "./OfficeHours";
@@ -160,6 +161,10 @@ export default function LearnHome() {
             </Link>
 
             <Bulletin />
+
+            {/* Above Office Hours: something addressed to you personally
+                outranks something on offer to everybody. */}
+            <Assigned />
 
             <OfficeHours />
 

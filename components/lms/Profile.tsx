@@ -11,6 +11,7 @@ import { auraFor } from "@/lib/game";
 import { ROLE_LABEL, apiUpdateProfile, apiChangePassword, apiSetPrefs, type AuthUser } from "@/lib/api";
 import { formatPhone, formatPhoneInput, usDate } from "@/lib/format";
 import { useLms, courseProgress } from "@/components/useLms";
+import { useSchool } from "./useSchool";
 import AvatarStudio from "./AvatarStudio";
 import Portrait from "./Portrait";
 import RewardToast from "./RewardToast";
@@ -31,6 +32,7 @@ const ID_BARS = (() => {
 export default function Profile() {
   const lms = useLms();
   const { state, loaded, auth } = lms;
+  const school = useSchool();
   const [first, setFirst] = useState<string | null>(null);
   const [last, setLast] = useState<string | null>(null);
   const [phone, setPhone] = useState<string | null>(null);
@@ -451,6 +453,7 @@ export default function Profile() {
                   .map(([key, r]) => {
                     const [c, u] = key.split("/");
                     const unit = getCourseUnit(c, u);
+                    const reply = school.replies[key];
                     return (
                       <div key={key} className="lms-proof-row">
                         <div className="lms-proof-head">
@@ -458,6 +461,12 @@ export default function Profile() {
                           <span className="lms-proof-date">{usDate(r.date)}</span>
                         </div>
                         {r.note && <p className="lms-proof-note">&quot;{r.note}&quot;</p>}
+                        {reply && (
+                          <div className="lms-proof-reply">
+                            <p className="lms-proof-reply-by">{reply.byName} wrote back</p>
+                            <p className="lms-proof-reply-text">{reply.text}</p>
+                          </div>
+                        )}
                       </div>
                     );
                   })}

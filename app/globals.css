@@ -3935,6 +3935,33 @@ html.lms-light .lms-do .lms-notes::placeholder {
   cursor: pointer;
 }
 
+/* Somebody read it and wrote back. This sits on the green Do panel, so
+   the card goes ink-on-green rather than the usual way round: a teacher's
+   answer should read as the heaviest thing on the unit page, because for
+   the student it is. */
+.lms-fieldwork-reply {
+  margin: 14px 0 4px;
+  padding: 15px 17px;
+  border-radius: 14px;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.lms-fieldwork-reply-by {
+  margin: 0 0 6px;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--acc);
+}
+
+.lms-fieldwork-reply-text {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
 /* The Studio: faculty drafting room. */
 .lms-draft {
   border: 1px solid rgba(242, 238, 227, 0.16);
@@ -4322,6 +4349,133 @@ html.lms-light .lms-sg-badge {
   font-size: 14px;
   font-style: italic;
   color: var(--muted-on-ink);
+}
+
+/* A teacher's answer on a filed report. Green rule down the side: the
+   same mark the Faculty Lounge uses for a student's own words, turned
+   round, because here the student is the one being answered. */
+.lms-proof-reply {
+  margin: 10px 0 0;
+  padding: 2px 0 2px 14px;
+  border-left: 2px solid var(--acc);
+}
+
+.lms-proof-reply-by {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--acc);
+}
+
+.lms-proof-reply-text {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+/* ---------- Assigned: a teacher pointed you at something ---------- */
+
+.lms-assigned {
+  margin-top: 14px;
+  padding: 16px 22px 6px;
+  border-radius: 18px;
+  border: 1px solid rgba(91, 124, 250, 0.5);
+  background: rgba(91, 124, 250, 0.08);
+}
+
+.lms-assigned-kicker {
+  margin: 0 0 4px;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8ea3ff;
+}
+
+.lms-assigned-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.1);
+}
+
+.lms-assigned-row:last-child {
+  border-bottom: 0;
+}
+
+.lms-assigned-main {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+.lms-assigned-title {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: -0.015em;
+}
+
+.lms-assigned-title:hover {
+  color: #8ea3ff;
+}
+
+.lms-assigned-note {
+  margin: 5px 0 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  font-style: italic;
+}
+
+.lms-assigned-by {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  color: var(--muted-on-ink);
+}
+
+.lms-assigned-late {
+  color: #ffb43a;
+  font-weight: 700;
+}
+
+.lms-assigned-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+}
+
+.lms-assigned-go {
+  padding: 9px 18px;
+  font-size: 13.5px;
+}
+
+.lms-assigned-done {
+  background: none;
+  border: none;
+  padding: 8px 2px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted-on-ink);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.lms-assigned-done:hover {
+  color: var(--paper);
+}
+
+html.lms-light .lms-assigned-done {
+  color: var(--muted-on-paper);
+}
+
+html.lms-light .lms-assigned-done:hover {
+  color: var(--ink);
 }
 
 html.lms-light .lms-proof,

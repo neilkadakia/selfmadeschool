@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 import { getCourse, courseUnits, type LessonBlock } from "@/lib/lms";
 import { questionKey } from "@/lib/mastery";
 import { useLms } from "@/components/useLms";
+import { useCourseOpen } from "./useSchool";
 import CommandK from "./CommandK";
+import CourseLock from "./CourseLock";
 import FieldWork from "./FieldWork";
 import RewardToast from "./RewardToast";
 import StudyGroup from "./StudyGroup";
@@ -89,6 +91,7 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
   const router = useRouter();
   const lms = useLms();
   const { state, loaded } = lms;
+  const gate = useCourseOpen(courseSlug);
   const [sideOpen, setSideOpen] = useState(false);
   const [noteSaved, setNoteSaved] = useState(false);
 
@@ -122,6 +125,8 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
   }, [prev, next, courseSlug, router]);
 
   if (!course || !unit) return null;
+  // The same gate the course page uses. Open while the school is free.
+  if (gate.known && !gate.open) return <CourseLock slug={courseSlug} needs={gate.needs} />;
 
   const done = state.done[course.slug] ?? [];
   const isDone = done.includes(unit.slug);

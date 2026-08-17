@@ -337,11 +337,23 @@ export default function Enrollment() {
         )}
       </Panel>
 
-      <p className="fac-hint">
-        There is no payment provider connected. Nothing on this page charges anybody: a plan is a label,
-        and access is something a person hands over. Wiring a checkout in later means filling in one
-        endpoint, because the gate every course already goes through is a single function on the server.
-      </p>
+      <Panel title="Two things to know before you charge anybody">
+        <p className="fac-panel-sub" style={{ marginBottom: 12 }}>
+          <strong>There is no payment provider connected.</strong> Nothing on this page charges anybody:
+          a plan is a label, and access is something a person hands over. Wiring a checkout in later
+          means filling in one endpoint, because the gate every course goes through is a single
+          function on the server.
+        </p>
+        <p className="fac-panel-sub">
+          <strong>The lock is a door, not a vault.</strong> The site is a static build, so the lesson
+          text for every course is inside the JavaScript the browser downloads, whether or not a
+          student has paid for it. The lock is honest for everything the school controls: progress,
+          finals, certificates, the Registrar&apos;s record. It is not proof against somebody who
+          opens the developer tools. Selling a course properly means serving its lessons from the API
+          instead of the bundle, and that is a real piece of work worth doing before real money
+          changes hands.
+        </p>
+      </Panel>
 
       {flashNode}
     </Room>

@@ -3,10 +3,14 @@
 // Field Work: the unit's homework is your actual life. Self-reported,
 // one filing per unit (pays XP + credits once), with an optional line
 // about what happened. Filed reports stack up as Proof on the Student File.
+//
+// And somebody reads them. When a teacher has written back, their answer
+// sits right under what you wrote, and opening the unit marks it read.
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usDate } from "@/lib/format";
 import { useLms } from "@/components/useLms";
+import { useSchool } from "@/components/lms/useSchool";
 
 type Props = {
   course: string;
@@ -16,9 +20,18 @@ type Props = {
 
 export default function FieldWork({ course, unit, action }: Props) {
   const lms = useLms();
-  const record = lms.state.fieldwork[`${course}/${unit}`];
+  const key = `${course}/${unit}`;
+  const record = lms.state.fieldwork[key];
+  const school = useSchool();
+  const reply = school.replies[key];
   const [note, setNote] = useState("");
   const [editing, setEditing] = useState(false);
+
+  // Reading the unit is reading the answer. The teacher's inbox shows
+  // whether it landed, so the mark has to be honest about that.
+  useEffect(() => {
+    if (reply && !reply.seen) school.markSeen(key);
+  }, [reply, key, school]);
 
   return (
     <section className="panel panel--do lms-do">
@@ -29,6 +42,12 @@ export default function FieldWork({ course, unit, action }: Props) {
         <div className="lms-fieldwork-filed">
           <p className="lms-fieldwork-stamp">Filed {usDate(record.date)} ✓</p>
           {record.note && <p className="lms-fieldwork-note">&quot;{record.note}&quot;</p>}
+          {reply && (
+            <div className="lms-fieldwork-reply">
+              <p className="lms-fieldwork-reply-by">{reply.byName} read this</p>
+              <p className="lms-fieldwork-reply-text">{reply.text}</p>
+            </div>
+          )}
           <button
             className="lms-fieldwork-edit"
             onClick={() => {
