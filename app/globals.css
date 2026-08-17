@@ -1727,7 +1727,10 @@ p {
 /* ---------- Receipts ---------- */
 
 .receipts {
-  background: var(--ink);
+  /* A faint lift at the top so the drop from cream doesn't land flat. */
+  background:
+    radial-gradient(110% 70% at 50% 0%, #16161f, transparent 72%),
+    var(--ink);
   padding: 40px 32px 120px;
   border-top: 1px solid rgba(242, 238, 227, 0.1);
 }
@@ -1735,29 +1738,60 @@ p {
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 22px;
+  gap: 18px;
   padding: 60px 0;
 }
 
+/* Same glass as the grade cards, one size down: tone rising from the floor
+   of the tile over a cold cream sheen, with the old colored rule kept as a
+   rail across the top. */
 .stat {
-  border-top: 2px solid var(--paper);
-  padding-top: 22px;
+  --tone: var(--paper);
+  --toneDim: rgba(242, 238, 227, 0.14);
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 26px 26px 24px;
+  border: 1px solid var(--toneDim);
+  background:
+    radial-gradient(130% 95% at 50% 128%, var(--toneDim), transparent 62%),
+    linear-gradient(168deg, rgba(242, 238, 227, 0.07), rgba(242, 238, 227, 0.012));
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+}
+
+.stat::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--tone), transparent 85%);
+}
+
+.stat:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
 }
 
 .stat--acc {
-  border-top-color: var(--acc);
+  --tone: var(--acc);
+  --toneDim: rgba(67, 222, 123, 0.26);
 }
 
 .stat--vio {
-  border-top-color: var(--vio);
+  --tone: var(--vio);
+  --toneDim: rgba(91, 124, 250, 0.3);
 }
 
 .stat--coral {
-  border-top-color: var(--coral);
+  --tone: var(--coral);
+  --toneDim: rgba(255, 180, 58, 0.26);
 }
 
 .stat--lime {
-  border-top-color: var(--lime);
+  --tone: var(--lime);
+  --toneDim: rgba(184, 201, 79, 0.28);
 }
 
 /* The ghost holds the column at its widest value so the live number can count
@@ -1767,7 +1801,8 @@ p {
   display: inline-block;
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
-  font-size: clamp(52px, 8vw, 72px);
+  /* Sized so the $1,000 ghost clears the tile's side padding five-up. */
+  font-size: clamp(46px, 4.6vw, 58px);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -1780,6 +1815,18 @@ p {
   position: absolute;
   left: 0;
   top: 0;
+}
+
+/* The same top-down fade the grade numerals wear. The ghost gets it too so
+   both spans share one box recipe; the trailing padding keeps background-clip
+   from shaving the last glyph. */
+.stat-num-ghost,
+.stat-num-live {
+  padding-right: 0.05em;
+  background: linear-gradient(172deg, currentColor 34%, color-mix(in srgb, currentColor 52%, transparent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .stat--acc .stat-num {
@@ -1799,10 +1846,10 @@ p {
 }
 
 .stat-label {
-  margin: 8px 0 0;
-  font-size: 15px;
-  opacity: 0.7;
-  letter-spacing: 0.06em;
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: rgba(242, 238, 227, 0.68);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 

@@ -18,10 +18,16 @@
   .sticker--free { background: var(--coral); color: var(--ink); transform: rotate(-6deg); }
   .sticker--academic { background: var(--acc); color: var(--ink); transform: rotate(5deg); }
   .row { display: flex; gap: 26px; flex-wrap: wrap; align-items: center; }
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 22px; }
-  .stat { border-top: 2px solid var(--paper); padding-top: 22px; }
-  .stat-num { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 72px; }
-  .stat-label { margin: 8px 0 0; font-size: 15px; opacity: 0.7; letter-spacing: 0.06em; text-transform: uppercase; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px; }
+  .stat { --tone: var(--paper); --toneDim: rgba(242, 238, 227, 0.14); position: relative; overflow: hidden; border-radius: 20px; padding: 26px 26px 24px; border: 1px solid var(--toneDim); background: radial-gradient(130% 95% at 50% 128%, var(--toneDim), transparent 62%), linear-gradient(168deg, rgba(242, 238, 227, 0.07), rgba(242, 238, 227, 0.012)); transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease; }
+  .stat::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--tone), transparent 85%); }
+  .stat:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45); }
+  .stat--acc { --tone: var(--acc); --toneDim: rgba(67, 222, 123, 0.26); }
+  .stat--vio { --tone: var(--vio); --toneDim: rgba(91, 124, 250, 0.3); }
+  .stat--coral { --tone: var(--coral); --toneDim: rgba(255, 180, 58, 0.26); }
+  .stat--lime { --tone: #B8C94F; --toneDim: rgba(184, 201, 79, 0.28); }
+  .stat-num { display: inline-block; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 58px; padding-right: 0.05em; background: linear-gradient(172deg, currentColor 34%, color-mix(in srgb, currentColor 52%, transparent) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .stat-label { margin: 12px 0 0; font-size: 13px; color: rgba(242, 238, 227, 0.68); letter-spacing: 0.08em; text-transform: uppercase; }
   blockquote { margin: 0; max-width: 700px; text-align: center; }
   blockquote p { font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 30px; line-height: 1.25; margin: 0 0 20px; }
   cite { font-style: normal; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--acc); }
@@ -34,13 +40,13 @@
     <span class="sticker sticker--free">actually free</span>
     <span class="sticker sticker--academic">0% academic</span>
   </div>
-  <p class="spec">Stat blocks: 2px colored top border · Bricolage 72px numeral · the row counts as one cascade, 0.16s apart, two of them backwards (tuition from $1,000, parabolas from 100). Each column is pre-sized to the widest value it passes through so a digit change never shifts it.</p>
+  <p class="spec">Stat tiles: same glass as the grade cards one size down · tone rail across the top · numeral wears the top-down fade (Bricolage 58px) · the row counts as one cascade, 0.16s apart, two of them backwards (tuition from $1,000, parabolas from 100). Each column is pre-sized to the widest value it passes through so a digit change never shifts it.</p>
   <div class="stats">
-    <div class="stat" style="border-top-color:var(--acc);"><span class="stat-num" style="color:var(--acc);">24/24</span><p class="stat-label">13th Grade units live</p></div>
-    <div class="stat" style="border-top-color:var(--vio);"><span class="stat-num" style="color:var(--vio);">20 min</span><p class="stat-label">Average unit</p></div>
-    <div class="stat" style="border-top-color:var(--coral);"><span class="stat-num" style="color:var(--coral);">$0</span><p class="stat-label">Tuition, forever</p></div>
-    <div class="stat"><span class="stat-num">0</span><p class="stat-label">Parabolas</p></div>
-    <div class="stat" style="border-top-color:#B8C94F;"><span class="stat-num" style="color:#B8C94F;">100%</span><p class="stat-label">Real life relevance</p></div>
+    <div class="stat stat--acc"><span class="stat-num" style="color:var(--acc);">24/24</span><p class="stat-label">13th Grade units live</p></div>
+    <div class="stat stat--vio"><span class="stat-num" style="color:var(--vio);">20 min</span><p class="stat-label">Average unit</p></div>
+    <div class="stat stat--coral"><span class="stat-num" style="color:var(--coral);">$0</span><p class="stat-label">Tuition, forever</p></div>
+    <div class="stat"><span class="stat-num" style="color:var(--paper);">0</span><p class="stat-label">Parabolas</p></div>
+    <div class="stat stat--lime"><span class="stat-num" style="color:#B8C94F;">100%</span><p class="stat-label">Real life relevance</p></div>
   </div>
   <p class="spec">Blockquote: Bricolage 700 · clamp(26px, 3.6vw, 44px) · green cite</p>
   <blockquote>
