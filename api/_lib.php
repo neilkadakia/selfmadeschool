@@ -461,6 +461,56 @@ function access_map(string $email, array $user, bool $asIfPaid = false): array {
     return $map;
 }
 
+// ---------- Telling somebody something happened ----------
+//
+// The school writes a great deal at students: a reply on their post, kudos,
+// an endorsed answer, a bulletin, a challenge they finished. None of it is
+// worth anything if they never find out. One store, keyed by email, newest
+// first, capped so it stays a file you can open.
+//
+// This is not mail. It is the bell in the classroom, and it never leaves the
+// building, so it costs nothing and can be written on any path.
+
+const NOTIFY_MAX = 60;
+
+function notify(string $email, string $kind, string $text, string $href = ''): void {
+    if ($email === '') return;
+    $all = read_store('notify');
+    $mine = $all[$email] ?? [];
+    array_unshift($mine, [
+        'id' => bin2hex(random_bytes(6)),
+        'kind' => $kind,
+        'text' => mb_substr($text, 0, 240),
+        'href' => $href,
+        'at' => gmdate('c'),
+        'read' => false,
+    ]);
+    $all[$email] = array_slice($mine, 0, NOTIFY_MAX);
+    write_store('notify', $all);
+}
+
+// The same line to a room full of people, written once. Skips the person who
+// caused it: nobody needs telling about their own announcement.
+function notify_all(string $kind, string $text, string $href = '', string $except = ''): void {
+    $users = read_users();
+    $all = read_store('notify');
+    $now = gmdate('c');
+    foreach ($users as $email => $u) {
+        if ($email === $except) continue;
+        $mine = $all[$email] ?? [];
+        array_unshift($mine, [
+            'id' => bin2hex(random_bytes(6)),
+            'kind' => $kind,
+            'text' => mb_substr($text, 0, 240),
+            'href' => $href,
+            'at' => $now,
+            'read' => false,
+        ]);
+        $all[$email] = array_slice($mine, 0, NOTIFY_MAX);
+    }
+    write_store('notify', $all);
+}
+
 // ---------- The audit log ----------
 //
 // Anything a member of staff does that touches somebody else's account

@@ -160,6 +160,17 @@ if ($action === 'endorse' || $action === 'unendorse') {
     require_rank($auth, ROLE_RANK['educator']);
     $all[$id]['endorsed'] = $action === 'endorse';
     write_store('discuss', $all);
+    // Being marked as the answer worth keeping is the best thing that
+    // happens in the Study Group. Say so.
+    if ($action === 'endorse' && ($all[$id]['email'] ?? '') !== $auth['email']) {
+        $unit = catalog_unit((string)($all[$id]['course'] ?? ''), (string)($all[$id]['unit'] ?? ''));
+        notify(
+            (string)($all[$id]['email'] ?? ''),
+            'endorsed',
+            'Faculty marked your answer in ' . ($unit['title'] ?? 'the Study Group') . ' as the one worth keeping.',
+            '/learn/' . ($all[$id]['course'] ?? '') . '/' . ($all[$id]['unit'] ?? '') . '/'
+        );
+    }
     respond(200, ['ok' => true]);
 }
 

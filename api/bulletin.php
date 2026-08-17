@@ -85,6 +85,17 @@ if ($action === 'post') {
         'until' => $until,
     ];
     write_store('bulletin', $all);
+    // A note nobody notices is not an announcement. Homeroom notes ring only
+    // that room's bell; a school-wide note rings everybody's.
+    $line = 'New on the Bulletin: ' . mb_substr($text, 0, 120);
+    if ($homeroom === '') {
+        notify_all('bulletin', $line, '/learn/', $auth['email']);
+    } else {
+        foreach (read_users() as $email => $u) {
+            if ($email === $auth['email']) continue;
+            if (($u['homeroom'] ?? '') === $homeroom) notify($email, 'bulletin', $line, '/learn/');
+        }
+    }
     respond(200, ['ok' => true, 'id' => $id]);
 }
 

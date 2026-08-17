@@ -417,6 +417,15 @@ if ($action === 'comment') {
     ];
     $posts[$id]['comments'] = $comments;
     write_store('quad', $posts);
+    // The author hears about it; a room full of other repliers does not.
+    if (($post['email'] ?? '') !== $me) {
+        notify(
+            (string)$post['email'],
+            'reply',
+            ($auth['user']['name'] ?? 'Somebody') . ' replied to your post in ' . ($clubs[$post['club'] ?? '']['name'] ?? 'the Quad') . '.',
+            '/learn/quad/'
+        );
+    }
     respond(200, ['ok' => true]);
 }
 
@@ -432,6 +441,15 @@ if ($action === 'react') {
     else array_splice($list, $i, 1);
     $posts[$id]['reactions'][$kind] = array_values($list);
     write_store('quad', $posts);
+    // Only on the way on. Toggling off and on again is not an event.
+    if ($i === false) {
+        notify(
+            (string)($post['email'] ?? ''),
+            'reaction',
+            ($auth['user']['name'] ?? 'Somebody') . ' reacted to your post in ' . ($clubs[$post['club'] ?? '']['name'] ?? 'the Quad') . '.',
+            '/learn/quad/'
+        );
+    }
     respond(200, ['ok' => true, 'count' => count($list), 'on' => $i === false]);
 }
 
