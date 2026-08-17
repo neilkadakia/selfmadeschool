@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Wordmark from "./Wordmark";
 import SyllabusExplorer from "./SyllabusExplorer";
 import Newsletter from "./Newsletter";
@@ -39,6 +39,51 @@ const GRADES = [
     link: "Join the Waitlist →",
   },
 ];
+
+/* The jacket copy, as the author wrote it. */
+const BACK_COVER = [
+  "I wrote this for one person: myself, at eighteen.",
+  "Everything before that was aimed at one thing: getting into college. Thirteen years of work for an acceptance letter—and almost nothing for the life waiting on the other side of it.",
+  "No one handed me a manual—how money actually works, how to think when a decision is real and the cost is mine, how to tell the few choices that quietly shape a life from the noise of the ones that don’t. I learned most of it the slow way, and a fair amount of it the expensive way.",
+  "This is everything I wish someone had told me before I walked into my twenties. Not a weekend read—a year you can take on your own. A long, honest letter with a real curriculum to help you through topics like mindset, money, and the big calls, written so you can skip a few of the mistakes I didn’t.",
+  "Some of the people sprinting ahead of you now will be stuck in a decade. Some of the ones who look behind will quietly pull away. This is about how to pull away and set yourself up for success in your twenties.",
+  "This is the manual I needed. Now it’s yours.",
+];
+
+/* Printed furniture, not a scannable code. Bar widths are fixed rather than
+   random so the server and the browser draw the same barcode; the guard bars
+   run long past the digits the way they do on a real EAN-13. */
+const BARCODE = [
+  1, 1, 2, 1, 1, 2, 3, 1, 1, 2, 2, 1, 1, 3, 1, 1, 2, 1, 3, 2, 1, 1, 2, 2, 1, 1, 3, 1, 2, 1, 1, 2, 1, 1, 3, 2, 1, 1, 2, 1,
+  2, 3, 1, 1, 1, 2, 2, 1, 1, 3, 1, 2, 2, 1, 1, 1, 3, 1, 2, 1, 1, 2, 2, 1, 1, 3, 2, 1, 1, 1, 2, 1, 3, 1, 1, 2, 1, 2, 1, 3,
+  1, 1, 2, 2, 1, 1, 1, 3, 1, 2, 1, 1, 2, 1, 1,
+];
+const BARCODE_GUARDS = new Set([0, 2, 46, 48, 92, 94]);
+
+/* Every other run is ink; the ones between are the paper showing through.
+   Resolved once at module load so the draw is a plain map. */
+const BARCODE_INK = (() => {
+  const bars: { x: number; w: number; tall: boolean }[] = [];
+  let x = 0;
+  BARCODE.forEach((w, i) => {
+    if (i % 2 === 0) bars.push({ x, w, tall: BARCODE_GUARDS.has(i) });
+    x += w;
+  });
+  return { bars, width: x };
+})();
+
+function Barcode() {
+  return (
+    <span className="book-barcode" aria-hidden="true">
+      <svg viewBox={`0 0 ${BARCODE_INK.width} 34`} preserveAspectRatio="none" focusable="false">
+        {BARCODE_INK.bars.map((b) => (
+          <rect key={b.x} x={b.x} y={0} width={b.w} height={b.tall ? 34 : 29} />
+        ))}
+      </svg>
+      <span className="book-barcode-digits">9 781234 567890</span>
+    </span>
+  );
+}
 
 const STEPS = [
   {
@@ -105,6 +150,9 @@ export default function Home() {
   const trackRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+  // Hover turns the book on its own; this is the same turn for touch and
+  // keyboard, where there is no hover to lean on.
+  const [backCover, setBackCover] = useState(false);
 
   useGSAP(
     () => {
@@ -115,7 +163,17 @@ export default function Home() {
         gsap.from("[data-hero-kicker]", { y: 20, opacity: 0, duration: 0.7, ease: "power3.out" });
         gsap.from("[data-hline]", { yPercent: 115, duration: 1.05, stagger: 0.1, ease: "power4.out", delay: 0.1 });
         gsap.from("[data-hero-sub] > *", { y: 30, opacity: 0, duration: 0.8, stagger: 0.12, delay: 0.55, ease: "power3.out" });
-        gsap.from("[data-sticker]", { scale: 0, opacity: 0, duration: 0.7, stagger: 0.14, delay: 0.8, ease: "back.out(2.2)" });
+        // clearProps hands the stickers back to CSS, so the book's sticker can
+        // fade out on its own when the cover turns.
+        gsap.from("[data-sticker]", {
+          scale: 0,
+          opacity: 0,
+          duration: 0.7,
+          stagger: 0.14,
+          delay: 0.8,
+          ease: "back.out(2.2)",
+          onComplete: () => gsap.set("[data-sticker]", { clearProps: "transform,opacity" }),
+        });
         gsap.from(".hero-grid", { opacity: 0, duration: 1.6, ease: "power2.out", delay: 0.2 });
 
         // The paper drifts up a little slower than the page, so the hero has
@@ -516,30 +574,71 @@ export default function Home() {
             </div>
           </div>
           <div className="book-stage">
-            {/* The cover carries the school's whole language: graph paper up
-                top, the dawn underline grown into a sunrise across the bottom,
-                a ribbon so it reads as an object. */}
-            <div data-card className="book-cover">
-              <span className="book-rule" aria-hidden="true" />
-              <span className="book-dawn" aria-hidden="true" />
-              <span className="book-ribbon" aria-hidden="true" />
-              <span className="book-brand">
-                <Wordmark gid="dawn-bookcover" />
-              </span>
-              <div className="book-mid">
-                <span className="book-num">
-                  13<span className="dot">.</span>
-                </span>
-                <h3 className="book-title">The 13th Grade</h3>
-                <p className="book-sub">The missing textbook for your first decade of adulthood.</p>
-              </div>
-              <div className="book-foot">
-                <span>Neil R. Kadakia</span>
+            {/* One object with two faces. It turns on the vertical axis like a
+                book you pick up off a table: hover to read the jacket copy, or
+                press the control below on a screen that has no hover. */}
+            <div data-card className={"book-flip" + (backCover ? " is-turned" : "")}>
+              <div className="book-flip-inner">
+                {/* The cover carries the school's whole language: graph paper
+                    up top, the dawn underline grown into a sunrise across the
+                    bottom, a ribbon so it reads as an object. */}
+                <div className="book-cover">
+                  <span className="book-rule" aria-hidden="true" />
+                  <span className="book-dawn" aria-hidden="true" />
+                  <span className="book-ribbon" aria-hidden="true" />
+                  <span className="book-brand">
+                    <Wordmark gid="dawn-bookcover" />
+                  </span>
+                  <div className="book-mid">
+                    <span className="book-num">
+                      13<span className="dot">.</span>
+                    </span>
+                    <h3 className="book-title">The 13th Grade</h3>
+                    <p className="book-sub">The missing textbook for your first decade of adulthood.</p>
+                  </div>
+                  <div className="book-foot">
+                    <span>Neil R. Kadakia</span>
+                  </div>
+                </div>
+                {/* The back: hook line, jacket copy, imprint and barcode down
+                    on the sunrise, with the spine and page edge mirrored so
+                    the turn reads as one physical object. */}
+                <div className="book-back" id="book-back">
+                  <span className="book-rule book-rule--back" aria-hidden="true" />
+                  <span className="book-back-dawn" aria-hidden="true" />
+                  <span className="book-ribbon book-ribbon--back" aria-hidden="true" />
+                  <p className="book-back-hook">
+                    Twelve years got you into college.
+                    <br />
+                    Not one got you ready for life.
+                  </p>
+                  <div className="book-back-copy">
+                    {BACK_COVER.map((para) => (
+                      <p key={para.slice(0, 24)}>{para}</p>
+                    ))}
+                  </div>
+                  <div className="book-back-foot">
+                    <span className="book-back-imprint">
+                      <Wordmark gid="dawn-bookback" />
+                      <span className="book-back-site">selfmadeschool.org</span>
+                    </span>
+                    <Barcode />
+                  </div>
+                </div>
               </div>
             </div>
             <div data-sticker className="sticker sticker--book">
               parent approved ✓
             </div>
+            <button
+              type="button"
+              className="book-turn"
+              aria-pressed={backCover}
+              aria-controls="book-back"
+              onClick={() => setBackCover((v) => !v)}
+            >
+              {backCover ? "See the Cover" : "Read the Back"}
+            </button>
           </div>
         </div>
       </section>

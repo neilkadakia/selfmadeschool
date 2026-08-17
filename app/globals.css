@@ -1955,33 +1955,69 @@ p {
   justify-content: center;
 }
 
+/* The book is one object with two printed faces. The tilt and the lift live
+   out here; the turn itself happens on the inner, so the two animate together
+   without fighting over a single transform. */
+.book-flip {
+  width: min(320px, 70vw);
+  aspect-ratio: 5 / 7;
+  position: relative;
+  perspective: 1700px;
+  transform: rotate(-4deg);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Straighten, lift, and come forward a little: the back cover is set small,
+   the way jacket copy really is, so the turn brings it closer to read. */
+.book-flip:hover,
+.book-flip.is-turned,
+.book-stage:has(.book-turn:hover) .book-flip,
+.book-stage:has(.book-turn:focus-visible) .book-flip {
+  transform: rotate(0deg) translateY(-10px) scale(1.12);
+}
+
+.book-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  /* Slow in, quick through the middle, settle: a page turning, not a spin. */
+  transition: transform 0.85s cubic-bezier(0.62, 0.02, 0.24, 1);
+}
+
+.book-flip:hover .book-flip-inner,
+.book-flip.is-turned .book-flip-inner,
+.book-stage:has(.book-turn:hover) .book-flip-inner,
+.book-stage:has(.book-turn:focus-visible) .book-flip-inner {
+  transform: rotateY(-180deg);
+}
+
 /* Brand rule: green reads as #2BB35C on paper surfaces that carry the mark. */
 .book-cover,
+.book-back,
 .lms-cert {
   --acc: #2bb35c;
 }
 
-.book-cover {
-  width: min(320px, 70vw);
-  aspect-ratio: 5 / 7;
+.book-cover,
+.book-back {
+  position: absolute;
+  inset: 0;
   background: var(--paper);
   color: var(--ink);
-  border-radius: 8px 16px 16px 8px;
-  padding: 34px 30px;
   display: flex;
   flex-direction: column;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 30px 70px rgba(14, 14, 18, 0.35);
+}
+
+.book-cover {
+  border-radius: 8px 16px 16px 8px;
+  padding: 34px 30px;
   /* Title block in the top third, foot pinned to the sunrise. Centering the
      middle let the sub-line sink into the dawn on the shorter mobile cover. */
   justify-content: flex-start;
-  position: relative;
-  transform: rotate(-4deg);
-  box-shadow: 0 30px 70px rgba(14, 14, 18, 0.35);
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
-}
-
-.book-cover:hover {
-  transform: rotate(0deg) translateY(-8px);
-  box-shadow: 0 40px 80px rgba(14, 14, 18, 0.4);
 }
 
 .book-cover::before {
@@ -2141,6 +2177,211 @@ p {
   }
 }
 
+/* ---------- The back of the book ---------- */
+
+.book-back {
+  border-radius: 16px 8px 8px 16px;
+  padding: 26px 24px 20px;
+  transform: rotateY(180deg);
+}
+
+/* Spine on the right now, pages on the left: the same object, turned over. */
+.book-back::before {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(14, 14, 18, 0.15);
+}
+
+.book-back::after {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 10px;
+  bottom: 6px;
+  width: 8px;
+  background: #ffffff;
+  border-radius: 4px 0 0 4px;
+  box-shadow: inset 2px 0 0 rgba(14, 14, 18, 0.15);
+}
+
+/* Ruling only up behind the hook, where there is no small type to fight. */
+.book-rule--back {
+  -webkit-mask-image: linear-gradient(#000 16%, transparent 38%);
+  mask-image: linear-gradient(#000 16%, transparent 38%);
+}
+
+/* The sunrise again, kept low so the jacket copy has room. The centre sits
+   just under the bottom edge, the way it does on the front, so the bands read
+   as an arc instead of a wash. */
+.book-back-dawn {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 21%;
+  border-radius: 0 0 8px 16px;
+  background: radial-gradient(
+    130% 105% at 50% 118%,
+    var(--coral) 0 30%,
+    var(--lime) 30% 47%,
+    #2bb35c 47% 62%,
+    rgba(43, 179, 92, 0.16) 62% 74%,
+    transparent 74%
+  );
+}
+
+/* The bookmark hangs over the top edge, so it shows from this side too, at
+   the mirrored corner: just the stub that clears the board, which also keeps
+   it off the hook line. */
+.book-ribbon--back {
+  right: auto;
+  left: 36px;
+  height: 22px;
+  clip-path: none;
+  border-radius: 0 0 2px 2px;
+}
+
+.book-back-hook,
+.book-back-copy,
+.book-back-foot {
+  position: relative;
+}
+
+.book-back-hook {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1.14;
+  letter-spacing: -0.02em;
+  margin: 0 0 11px;
+  padding-bottom: 11px;
+}
+
+/* The dawn underline at jacket scale, same sweep as the wordmark's. */
+.book-back-hook::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 52px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #f5a83c, #b8c94f 55%, #43de7b);
+}
+
+/* Jacket copy is set small on a real book; this is that size, honestly. */
+.book-back-copy {
+  flex: 1;
+  min-height: 0;
+  font-size: 9px;
+  line-height: 1.5;
+  color: var(--muted-on-paper);
+}
+
+.book-back-copy p {
+  margin: 0 0 6px;
+}
+
+/* The last line is the close, so it carries ink at full strength. */
+.book-back-copy p:last-child {
+  margin: 0;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.book-back-foot {
+  margin-top: 12px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Imprint and barcode both print on their own patch, so they stay legible
+   where the sunrise runs underneath them. */
+.book-back-imprint {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 8px 5px;
+  border-radius: 2px;
+  background: var(--paper);
+  box-shadow: 0 1px 3px rgba(14, 14, 18, 0.14);
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.book-back-site {
+  font-family: var(--font-instrument), sans-serif;
+  font-weight: 600;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-on-paper);
+}
+
+/* The barcode prints on its own white patch, the way it does over cover art. */
+.book-barcode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: none;
+  background: #ffffff;
+  border-radius: 2px;
+  padding: 5px 6px 3px;
+  box-shadow: 0 1px 3px rgba(14, 14, 18, 0.16);
+}
+
+.book-barcode svg {
+  display: block;
+  width: 72px;
+  height: 25px;
+  fill: #14141a;
+}
+
+.book-barcode-digits {
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 6px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #14141a;
+}
+
+/* Hover turns the book on its own; this is the same turn for touch and
+   keyboard. It sits below the object without changing the stage's height,
+   so the sticker keeps its corner. */
+.book-turn {
+  position: absolute;
+  bottom: -58px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 9px 21px;
+  border: 1.5px solid rgba(14, 14, 18, 0.3);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.book-turn:hover {
+  border-color: var(--ink);
+  background: rgba(14, 14, 18, 0.06);
+}
+
 /* Bottom-right corner: the ribbon owns the cover's top edge. */
 .sticker--book {
   bottom: -14px;
@@ -2149,6 +2390,83 @@ p {
   color: #ffffff;
   transform: rotate(-7deg);
   letter-spacing: 0.04em;
+  /* Decoration only, and it sits over the book: never eat the hover. */
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* The sticker is stuck to the cover, so it gets out of the way of the jacket
+   rather than landing on the barcode. */
+.book-flip:hover ~ .sticker--book,
+.book-flip.is-turned ~ .sticker--book,
+.book-stage:has(.book-turn:hover) .sticker--book,
+.book-stage:has(.book-turn:focus-visible) .sticker--book {
+  opacity: 0;
+  transform: rotate(-7deg) scale(0.92);
+}
+
+/* No turn when motion is unwelcome: the back simply takes the front's place. */
+@media (prefers-reduced-motion: reduce) {
+  .book-flip,
+  .book-flip-inner {
+    transition: none;
+  }
+
+  .book-flip:hover,
+  .book-flip.is-turned {
+    transform: rotate(-4deg);
+  }
+
+  .book-flip:hover .book-flip-inner,
+  .book-flip.is-turned .book-flip-inner {
+    transform: none;
+  }
+
+  .book-back {
+    transform: none;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .book-flip:hover .book-back,
+  .book-flip.is-turned .book-back {
+    opacity: 1;
+  }
+}
+
+/* The cover shrinks on phones and the jacket copy shrinks with it; the turn
+   leans in further to make up the difference. */
+@media (max-width: 640px) {
+  .book-flip:hover,
+  .book-flip.is-turned {
+    transform: rotate(0deg) translateY(-6px) scale(1.2);
+  }
+
+  .book-back {
+    padding: 20px 18px 16px;
+  }
+
+  .book-back-hook {
+    font-size: 13px;
+    margin-bottom: 9px;
+    padding-bottom: 9px;
+  }
+
+  .book-back-copy {
+    font-size: 8px;
+    line-height: 1.45;
+  }
+
+  .book-back-copy p {
+    margin-bottom: 5px;
+  }
+
+  .book-barcode svg {
+    width: 60px;
+    height: 21px;
+  }
 }
 
 @media (max-width: 900px) {
