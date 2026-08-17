@@ -30,15 +30,36 @@ flashcards, XP, badges, the Arena, Study Hall, server-graded finals, certificate
 Student progress is one JSON blob per account, owned by the browser and synced to
 `api/progress.php`.
 
+## The Quad and the Register
+`/learn/quad` is the community: clubs are rooms, each with its own members, feed
+and posting rule. House clubs are seeded once into the `clubs` store; a club per
+course is folded in from `api/catalog.json` on every read, so a new course brings
+its room with it and the school never opens as an empty room. Course clubs go
+through `course_access()`, so turning payment on closes the room and the course
+together. Reactions are named (Like, Celebrate, Insightful, Support) and drawn as
+line icons, never emoji. Rooms open as in-page state, not routes, which sidesteps
+dynamic routes under static export.
+
+`/learn/register` is the student directory: names, levels, clubs and kudos. Two
+rules hold it. Emails never reach a student, so kudos are addressed by a derived
+handle rather than an address. And being listed is a choice: `unlisted` on the
+user record takes somebody out of it and nothing else. There is deliberately no
+private mail anywhere in here; everything students say to each other happens in a
+room the whole school can see, which is also what makes moderation tractable.
+
+Kudos are their own currency, counted server-side, and never XP. XP lives in the
+progress blob the browser owns and overwrites wholesale, so a server-side grant
+would not survive the next sync.
+
 ## The Faculty Lounge
 `/learn/faculty` is the staff side, one room per file under `components/faculty/`.
 It shares the classroom shell: `Classroom.tsx` swaps its sidebar nav when the path
 is under `/learn/faculty`. The old `/learn/admin` forwards here.
 
-Rooms by rank: Front Desk, Gradebook, Field Work, Study Group, The Bulletin, The
-Studio and Records (educator); Front Office and Enrollment (administrator); School
-Ops (Global Administrator). The Student File is a drawer, not a route, which keeps
-context and sidesteps dynamic routes under static export.
+Rooms by rank: Front Desk, Gradebook, Field Work, Study Group, The Quad, The
+Bulletin, The Studio and Records (educator); Front Office and Enrollment
+(administrator); School Ops (Global Administrator). The Student File is a drawer,
+not a route, which keeps context and sidesteps dynamic routes under static export.
 
 ### Rules that hold this together
 - **The client owns progress; the server owns everything faculty writes.** Replies,
@@ -56,7 +77,9 @@ context and sidesteps dynamic routes under static export.
   deadlines, homerooms). The school ships free, open and self-paced; School Ops is
   the only place that changes that, and changes land in the audit log.
 - **Records only reports what the data can prove.** Unit completions carry no
-  timestamp, so there is no completions-over-time chart. Do not add one.
+  timestamp, so there is no completions-over-time chart. Do not add one. The same
+  rule shapes the Quad feed: it carries posts, kudos and passed finals, because
+  those know when they happened. Completions are not in it for the same reason.
 - **Slow work happens after the response.** `respond_then()` answers the caller,
   then sends mail. Never make somebody wait on `mail()`.
 

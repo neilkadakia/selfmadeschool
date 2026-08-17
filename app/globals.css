@@ -9346,3 +9346,583 @@ body:has(.tour) {
     padding: 32px 22px;
   }
 }
+
+/* ---------- The Quad and the Register ---------- */
+
+/* One-line cousin of .lms-notes, for replies and short notes. */
+.lms-input {
+  width: 100%;
+  background: rgba(242, 238, 227, 0.04);
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-family: var(--font-instrument), sans-serif;
+  /* 16px floor: smaller makes iOS zoom the page when the field focuses. */
+  font-size: 16px;
+  color: var(--paper);
+}
+
+.lms-input:focus {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+
+.quad-cols {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 44px;
+  align-items: start;
+  margin-top: 40px;
+}
+
+/* ---- the feed ---- */
+
+.quad-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.quad-event {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.12);
+  padding: 16px 0 14px;
+  color: var(--paper);
+  font-family: var(--font-instrument), sans-serif;
+}
+
+.quad-event--post {
+  cursor: pointer;
+}
+
+.quad-event--post:hover {
+  background: rgba(242, 238, 227, 0.03);
+}
+
+.quad-event-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin-bottom: 6px;
+}
+
+.quad-event-text {
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.quad-event-quote {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--muted-on-ink);
+  margin: 6px 0 0;
+}
+
+.quad-event-date {
+  display: block;
+  font-size: 12px;
+  color: var(--muted-on-ink);
+  margin-top: 8px;
+}
+
+/* ---- the club rail ---- */
+
+.quad-rooms {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.quad-club {
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-radius: 18px;
+  padding: 18px 20px 14px;
+  transition: border-color 0.2s ease;
+}
+
+.quad-club:hover {
+  border-color: rgba(242, 238, 227, 0.3);
+}
+
+/* A room you are in wears its own colour on the edge. */
+.quad-club.is-in {
+  border-left: 3px solid currentColor;
+}
+
+.quad-club-open {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  font-family: var(--font-instrument), sans-serif;
+}
+
+.quad-club-open:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.quad-club-name {
+  display: block;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+}
+
+.quad-club-blurb {
+  display: block;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+  margin-top: 6px;
+}
+
+.quad-club-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.quad-club-count {
+  font-size: 12px;
+  color: var(--muted-on-ink);
+}
+
+.quad-join {
+  border: 1.5px solid rgba(242, 238, 227, 0.3);
+  border-radius: 999px;
+  background: none;
+  padding: 6px 16px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--paper);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.quad-join:hover {
+  border-color: var(--paper);
+}
+
+.quad-join.is-in {
+  border-color: var(--acc);
+  color: var(--acc);
+}
+
+/* ---- one room ---- */
+
+.quad-back {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 20px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted-on-ink);
+  cursor: pointer;
+}
+
+.quad-back:hover {
+  color: var(--paper);
+}
+
+.quad-room-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.quad-room-h {
+  font-size: clamp(30px, 4.6vw, 52px);
+}
+
+.quad-composer {
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-radius: 20px;
+  padding: 18px;
+  margin-bottom: 32px;
+}
+
+.quad-kinds {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.quad-kind {
+  border: 1px solid rgba(242, 238, 227, 0.2);
+  border-radius: 999px;
+  background: none;
+  padding: 5px 14px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted-on-ink);
+  cursor: pointer;
+}
+
+.quad-kind.is-on {
+  border-color: var(--acc);
+  color: var(--acc);
+}
+
+/* ---- posts ---- */
+
+.quad-post {
+  border-bottom: 1px solid rgba(242, 238, 227, 0.12);
+  padding: 20px 0 16px;
+}
+
+.quad-post.is-pinned {
+  padding-left: 16px;
+  border-left: 3px solid var(--acc);
+}
+
+.quad-post-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.quad-post-name {
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.quad-post-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid rgba(242, 238, 227, 0.3);
+  border-radius: 999px;
+  padding: 2px 8px;
+  color: var(--muted-on-ink);
+}
+
+.quad-post-badge.is-pin {
+  border-color: var(--acc);
+  color: var(--acc);
+}
+
+.quad-post-meta {
+  font-size: 12px;
+  color: var(--muted-on-ink);
+  white-space: nowrap;
+}
+
+.quad-post-text {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 10px 0 14px;
+  white-space: pre-wrap;
+}
+
+.quad-reacts {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.quad-react {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(242, 238, 227, 0.18);
+  border-radius: 999px;
+  background: none;
+  padding: 5px 12px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted-on-ink);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.quad-react:hover:not(:disabled) {
+  border-color: var(--paper);
+  color: var(--paper);
+}
+
+.quad-react.is-on {
+  border-color: var(--acc);
+  color: var(--acc);
+}
+
+.quad-react:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.quad-post-act {
+  background: none;
+  border: none;
+  padding: 5px 6px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted-on-ink);
+  cursor: pointer;
+}
+
+.quad-post-act:hover {
+  color: var(--paper);
+}
+
+/* ---- comments ---- */
+
+.quad-comments {
+  margin: 16px 0 0 18px;
+  padding-left: 16px;
+  border-left: 1px solid rgba(242, 238, 227, 0.12);
+}
+
+.quad-comment {
+  padding: 10px 0;
+}
+
+.quad-comment-name {
+  font-size: 14px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quad-comment-text {
+  font-size: 15px;
+  line-height: 1.55;
+  margin: 4px 0 0;
+  white-space: pre-wrap;
+}
+
+.quad-comment-date {
+  font-size: 12px;
+  color: var(--muted-on-ink);
+}
+
+.quad-reply {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.quad-reply .lms-input {
+  flex: 1;
+}
+
+/* ---- the Register ---- */
+
+.reg-kudos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.reg-kudo {
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-left: 3px solid var(--acc);
+  border-radius: 0 14px 14px 0;
+  padding: 14px 16px;
+}
+
+.reg-kudo-from {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.reg-kudo-note {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+  margin: 6px 0 0;
+}
+
+.reg-kudo-date {
+  display: block;
+  font-size: 12px;
+  color: var(--muted-on-ink);
+  margin-top: 8px;
+}
+
+.reg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.reg-card {
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-radius: 18px;
+  padding: 18px 20px 14px;
+}
+
+.reg-card.is-you {
+  border-color: var(--acc);
+}
+
+.reg-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.reg-name {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.reg-tag {
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--acc);
+  border-radius: 999px;
+  padding: 2px 8px;
+  color: var(--acc);
+}
+
+.reg-tag.is-staff {
+  border-color: rgba(242, 238, 227, 0.3);
+  color: var(--muted-on-ink);
+}
+
+.reg-level {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-on-ink);
+  white-space: nowrap;
+}
+
+.reg-stats {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--muted-on-ink);
+  margin-top: 10px;
+}
+
+.reg-stats strong {
+  color: var(--paper);
+}
+
+.reg-clubs {
+  font-size: 12px;
+  color: var(--muted-on-ink);
+  margin: 10px 0 0;
+}
+
+.reg-email {
+  font-size: 12px;
+  color: var(--muted-on-ink);
+  margin: 6px 0 0;
+  word-break: break-all;
+}
+
+.reg-give {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.reg-optout {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted-on-ink);
+  max-width: 680px;
+  cursor: pointer;
+}
+
+.reg-optout input {
+  margin-top: 4px;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--acc);
+  flex: none;
+}
+
+@media (max-width: 900px) {
+  .quad-cols {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .quad-room-head {
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+
+/* The Quad, staff side. */
+
+.fac-quad-who {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted-on-ink);
+  margin: 0 0 8px;
+}
+
+.fac-quad-text {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 10px;
+  white-space: pre-wrap;
+}
+
+.fac-quad-count {
+  font-size: 13px;
+  color: var(--coral);
+  margin: 0 0 14px;
+}
+
+.fac-quad-acts {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}

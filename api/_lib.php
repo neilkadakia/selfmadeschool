@@ -242,6 +242,7 @@ function public_user(string $email, array $user): array {
         'dob' => $user['dob'] ?? '',
         'role' => $user['role'] ?? 'student',
         'nudges' => empty($user['nudgesOff']),
+        'listed' => empty($user['unlisted']),
         'plan' => $user['plan'] ?? '',
         'homeroom' => $user['homeroom'] ?? '',
     ];

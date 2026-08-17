@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 dev.log
+
+# Local LMS data store, when the built site is served from out/ for QA.
+/sms-lms-data/
