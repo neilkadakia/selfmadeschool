@@ -159,16 +159,18 @@ export default function About() {
           </h2>
           <div className="founder-copy">
             <p data-reveal>
-              Self Made School began with Neil Kadakia, a father of three young daughters. He did
-              not want them learning the important parts of life the way he did, late and
-              expensively, so he started writing them down.
+              Self Made School began with Neil Kadakia and his wife, Archana, parents of three
+              young daughters, talking about what young adults really need and what school never
+              gets around to teaching. Neither of them wanted their girls learning the important
+              parts of life the way they had, late and expensively.
             </p>
             <p data-reveal>
-              He was never writing alone. His wife, Archana, built much of what these units
-              actually teach: the financial education and the mindset theory at the heart of the
-              school. The way every lesson starts with how you talk to yourself before it touches
-              what you do with your money, that thinking is hers, worked out over years at their
-              own kitchen table.
+              Many conversations, a lot of research, and years of deep thinking later, those talks
+              became a curriculum. Archana built much of what these units actually teach: the
+              financial education and the mindset theory at the heart of the school. The way every
+              lesson starts with how you talk to yourself before it touches what you do with your
+              money, that thinking is hers. Neil began writing it all down as a letter to their
+              daughters.
             </p>
             <p data-reveal>
               What came out was the thing they wished someone had handed them at eighteen. How money
