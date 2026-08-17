@@ -164,12 +164,19 @@ export default function About() {
               expensively, so he started writing them down.
             </p>
             <p data-reveal>
-              What came out was the thing he wished someone had handed him at eighteen. How money
-              actually works. What to say to yourself after you fail. How to make a decision you can
-              live with. Not a lecture. A manual, in plain English, written by someone who loves you.
+              He was never writing alone. His wife, Archana, built much of what these units
+              actually teach: the financial education and the mindset theory at the heart of the
+              school. The way every lesson starts with how you talk to yourself before it touches
+              what you do with your money, that thinking is hers, worked out over years at their
+              own kitchen table.
             </p>
             <p data-reveal>
-              It is not one person&apos;s voice anymore. Teachers, financial educators, and writers
+              What came out was the thing they wished someone had handed them at eighteen. How money
+              actually works. What to say to yourself after you fail. How to make a decision you can
+              live with. Not a lecture. A manual, in plain English, written by people who love you.
+            </p>
+            <p data-reveal>
+              It is not one family&apos;s voice anymore. Teachers, financial educators, and writers
               who have spent their careers explaining hard things to young adults have shaped every
               unit here. They argue about the wording, cut the jargon, and refuse to publish
               anything they would not hand to their own students.
@@ -184,7 +191,7 @@ export default function About() {
               A love letter to three daughters, and to every young mind coming up behind them.
             </p>
             <p data-reveal className="founder-sign">
-              Neil Kadakia · Founder, and the educators who built this with him
+              Neil and Archana Kadakia · Founders, and the educators who built this with them
             </p>
           </div>
         </div>

@@ -960,20 +960,36 @@ p {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
+  align-items: baseline;
+  column-gap: clamp(16px, 2.6vw, 34px);
+  row-gap: 14px;
 }
 
-/* Outlined pills cycling the bright half of the palette. Cobalt sits this one
-   out: it is mixed into the ground. */
+/* Type, not chips. Solid words alternate with hollow ones so the line reads
+   as a chant, cycling the bright half of the palette; cobalt sits this one
+   out, mixed into the ground. Restart comes back around in Build's green,
+   hollowed out and ready to be filled again. */
 .mantra-word {
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
-  font-size: clamp(17px, 2.2vw, 30px);
+  font-size: clamp(28px, 4.5vw, 58px);
   line-height: 1;
   text-transform: uppercase;
-  padding: 13px 22px;
-  border: 2px solid currentColor;
-  border-radius: 999px;
+  letter-spacing: -0.02em;
+}
+
+.mantra-word:nth-child(odd) {
+  display: inline-block;
+  padding-right: 0.04em;
+  background: linear-gradient(172deg, currentColor 30%, color-mix(in srgb, currentColor 55%, transparent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.mantra-word:nth-child(even) {
+  -webkit-text-stroke: 1.5px currentColor;
+  -webkit-text-fill-color: transparent;
 }
 
 .mantra-word:nth-child(1) {
@@ -1024,12 +1040,9 @@ p {
   }
 
   .mantra-words {
-    gap: 10px;
+    column-gap: 14px;
+    row-gap: 10px;
     margin: 0 0 34px;
-  }
-
-  .mantra-word {
-    padding: 11px 16px;
   }
 }
 
@@ -2131,12 +2144,13 @@ p {
   }
 }
 
+/* Bottom-right corner: the ribbon owns the cover's top edge. */
 .sticker--book {
-  top: -14px;
+  bottom: -14px;
   right: 4%;
   background: var(--vio);
   color: #ffffff;
-  transform: rotate(7deg);
+  transform: rotate(-7deg);
   letter-spacing: 0.04em;
 }
 
