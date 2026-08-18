@@ -43,6 +43,18 @@ Session lists in Study Hall are memoized on the size of the history, not on
 `loaded` alone: for a signed-in student `loaded` flips on the local read, before
 the server blob lands, and a list snapshotted then is empty for the whole visit.
 
+## Pace, not drip
+Teachable and Kajabi pace with drip: the creator decides when you may see the
+next part. Wrong tool for a school whose pitch is a year you can take on your
+own, so `lib/pace.ts` lets the **student** set units-per-week and just keeps an
+honest count. Nothing locks.
+
+This needed a new fact: `done` is a bare list, so completions had no dates.
+`LmsState.doneAt` now stamps them **from the day it shipped**, and the card says
+plainly when its count is short because older units predate the log. That also
+means a completions-over-time chart is becoming possible for the first time; it
+is still wrong to draw one over the undated years. `npm run test:pace`.
+
 ## The classroom works offline
 `public/sw.js` is a hand-written service worker; `components/lms/Offline.tsx`
 registers it and shows the offline notice. Three rules in order: **the API is

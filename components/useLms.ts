@@ -55,8 +55,14 @@ export type LmsState = {
   gear: string[]; // owned gear ids
   equipped: Equipped;
   battles: Record<string, { won: boolean; attempts: number; date: string }>; // partKey -> record
-  mastery: MasteryMap; // questionKey -> miss/streak history (the make-up pile)
+  mastery: MasteryMap; // questionKey -> the spacing schedule
   fieldwork: Record<string, { date: string; note: string }>; // "course/unit" -> filed report
+  // "course/unit" -> the day it was finished. Written from the day this
+  // shipped onward: the older completions genuinely have no date, and
+  // inventing one would make every chart built on this a lie.
+  doneAt: Record<string, string>;
+  // Units per week, chosen by the student. 0 means they have not set one.
+  pace: number;
 };
 
 export type Reward = { xp: number; credits: number; badges: Badge[]; levelUp?: string };
@@ -93,6 +99,8 @@ const EMPTY: LmsState = {
   battles: {},
   mastery: {},
   fieldwork: {},
+  doneAt: {},
+  pace: 0,
 };
 
 const SERVER_SNAPSHOT: Snapshot = {
@@ -399,10 +407,14 @@ const actions = {
   toggleDone(course: string, unit: string) {
     apply((s) => {
       const list = s.done[course] ?? [];
+      const key = `${course}/${unit}`;
       if (list.includes(unit)) {
+        const doneAt = { ...s.doneAt };
+        delete doneAt[key];
         return {
           ...s,
           done: { ...s.done, [course]: list.filter((u) => u !== unit) },
+          doneAt,
           xp: Math.max(0, s.xp - XP.unit),
           credits: Math.max(0, s.credits - CREDITS.unit),
         };
@@ -410,11 +422,18 @@ const actions = {
       return touchStreak({
         ...s,
         done: { ...s.done, [course]: [...list, unit] },
+        // Stamped so the school can answer "how many this week" honestly.
+        doneAt: { ...s.doneAt, [key]: localDay() },
         xp: s.xp + XP.unit,
         credits: s.credits + CREDITS.unit,
         lastUnitDay: localDay(),
       });
     });
+  },
+
+  // The student sets their own pace. Nobody else gets to.
+  setPace(perWeek: number) {
+    apply((s) => ({ ...s, pace: Math.max(0, Math.min(21, Math.round(perWeek))) }));
   },
 
   quizResult(course: string, unit: string, correct: number, total: number) {

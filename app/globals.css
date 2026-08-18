@@ -11110,3 +11110,132 @@ a.bell-note:hover {
   color: var(--acc);
   font-weight: 600;
 }
+
+/* ---------- Your pace ---------- */
+/*
+   The student sets the number. Nothing locks, nothing drips: the card just
+   keeps an honest count, and says so when its own count is short.
+*/
+
+.lms-pace {
+  border-radius: 18px;
+  padding: 18px 20px 16px;
+  background: rgba(242, 238, 227, 0.03);
+  box-shadow: inset 0 0 0 1px rgba(242, 238, 227, 0.1);
+}
+
+.lms-pace.is-on {
+  background: rgba(67, 222, 123, 0.07);
+  box-shadow: inset 0 0 0 1px rgba(67, 222, 123, 0.3);
+}
+
+.lms-pace-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-on-ink);
+  margin: 0 0 10px;
+}
+
+.lms-pace-ask {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted-on-ink);
+  margin: 0 0 14px;
+}
+
+.lms-pace-count {
+  font-family: var(--font-bricolage), sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+
+.lms-pace-count strong {
+  font-size: 26px;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.lms-pace-meter {
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(242, 238, 227, 0.12);
+  overflow: hidden;
+}
+
+.lms-pace-meter span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--acc);
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lms-pace-line {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+  margin: 10px 0 0;
+}
+
+.lms-pace-note {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+  opacity: 0.75;
+  margin: 8px 0 0;
+}
+
+.lms-pace-choices {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.lms-pace-choice {
+  border: 1px solid rgba(242, 238, 227, 0.2);
+  border-radius: 999px;
+  background: none;
+  padding: 5px 12px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-on-ink);
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease, transform 0.12s ease;
+}
+
+.lms-pace-choice:hover {
+  color: var(--paper);
+  border-color: rgba(242, 238, 227, 0.36);
+}
+
+.lms-pace-choice:active {
+  transform: scale(0.95);
+}
+
+.lms-pace-choice.is-on {
+  border-color: transparent;
+  background: var(--acc);
+  color: var(--ink);
+}
+
+.lms-pace-off {
+  background: none;
+  border: none;
+  padding: 5px 6px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted-on-ink);
+  cursor: pointer;
+}
+
+.lms-pace-off:hover {
+  color: var(--paper);
+}

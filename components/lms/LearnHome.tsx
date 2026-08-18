@@ -19,6 +19,7 @@ import HonorRoll from "./HonorRoll";
 import RewardToast from "./RewardToast";
 import Ring from "./Ring";
 import TodayPlan from "./TodayPlan";
+import PaceCard from "./PaceCard";
 
 function Flame({ lit }: { lit: boolean }) {
   return (
@@ -307,6 +308,8 @@ export default function LearnHome() {
                 ))}
               </div>
             </div>
+
+            {loaded && totalDone > 0 && <PaceCard />}
 
             {loaded && (
               <TodayPlan
