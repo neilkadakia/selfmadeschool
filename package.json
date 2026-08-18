@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "audit:quiz": "tsx scripts/quiz-audit.ts",
-    "test:review": "tsx scripts/review-test.ts"
+    "test:review": "tsx scripts/review-test.ts",
+    "test:search": "tsx scripts/search-test.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

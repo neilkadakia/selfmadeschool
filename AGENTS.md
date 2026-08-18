@@ -43,6 +43,13 @@ Session lists in Study Hall are memoized on the size of the history, not on
 `loaded` alone: for a signed-in student `loaded` flips on the local read, before
 the server blob lands, and a list snapshotted then is empty for the whole visit.
 
+## Search reads the lessons
+`lib/search.ts` indexes every block, takeaway, flashcard, quiz question and
+Field Work action, lazily on first search, and returns one row per unit with the
+line it matched. Quiz *options* are deliberately excluded: three of four are
+wrong, and surfacing a wrong answer as a search result teaches the wrong thing.
+`npm run test:search`.
+
 ## The Quad and the Register
 `/learn/quad` is the community: clubs are rooms, each with its own members, feed
 and posting rule. House clubs are seeded once into the `clubs` store; a club per
