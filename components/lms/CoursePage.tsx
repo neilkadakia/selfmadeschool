@@ -19,7 +19,7 @@ export default function CoursePage({ slug }: { slug: string }) {
   // While the school is free this is always open, so nothing is gated by
   // accident on a slow network: the lock waits until the server has said
   // that payment is on and this course is not covered.
-  if (gate.known && !gate.open) return <CourseLock slug={slug} needs={gate.needs} />;
+  if (gate.known && !gate.open) return <CourseLock slug={slug} needs={gate.needs} after={gate.after} />;
 
   const done = state.done[course.slug] ?? [];
   const p = courseProgress(state, course.slug);

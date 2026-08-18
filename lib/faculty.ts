@@ -16,6 +16,11 @@ export type Features = {
   homerooms: boolean;
   fieldwork: boolean;
   honorRoll: boolean;
+  prereqs: boolean;
+  forms: boolean;
+  broadcast: boolean;
+  calendarLinks: boolean;
+  certVerify: boolean;
 };
 
 // ---------- the Front Desk ----------

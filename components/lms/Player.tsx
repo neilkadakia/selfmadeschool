@@ -186,7 +186,7 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
 
   if (!course || !unit) return null;
   // The same gate the course page uses. Open while the school is free.
-  if (gate.known && !gate.open) return <CourseLock slug={courseSlug} needs={gate.needs} />;
+  if (gate.known && !gate.open) return <CourseLock slug={courseSlug} needs={gate.needs} after={gate.after} />;
 
   const done = state.done[course.slug] ?? [];
   const isDone = done.includes(unit.slug);

@@ -25,7 +25,18 @@ if ($method === 'GET') {
     // The caller's own server-verified finals, used by the certificate page
     // for the "Verified by the Registrar" mark.
     $all = read_store('finals');
-    respond(200, ['ok' => true, 'finals' => (object)($all[$auth['email']] ?? [])]);
+    $out = ['ok' => true, 'finals' => (object)($all[$auth['email']] ?? [])];
+    // The codes printed on this student's certificates, when the school is
+    // handing out checkable ones. Issued only to the person they belong to.
+    if (feature_on('certVerify')) {
+        $codes = [];
+        foreach (catalog()['courses'] as $c) {
+            $slug = (string)($c['slug'] ?? '');
+            if ($slug !== '') $codes[$slug] = verify_code($auth['email'], $slug);
+        }
+        $out['codes'] = $codes;
+    }
+    respond(200, $out);
 }
 
 if ($method !== 'POST') respond(405, ['error' => 'GET or POST only.']);

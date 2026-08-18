@@ -79,3 +79,39 @@ export function downloadIcs(s: Session) {
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 0);
 }
+
+// Deep links for the two calendars most people actually use. The .ics covers
+// Apple Calendar and Outlook desktop; these two want a URL instead.
+const GAP = "\n\n";
+
+function endOf(s: Session): Date {
+  return new Date(new Date(s.startsAt).getTime() + (s.durationMin || 60) * 60000);
+}
+
+function describe(s: Session): string {
+  return [s.blurb, s.link ? `Join: ${s.link}` : ""].filter(Boolean).join(GAP);
+}
+
+export function googleCalendarUrl(s: Session): string {
+  const q = new URLSearchParams({
+    action: "TEMPLATE",
+    text: s.title,
+    dates: `${stamp(s.startsAt)}/${stamp(endOf(s).toISOString())}`,
+    details: describe(s),
+  });
+  if (s.link) q.set("location", s.link);
+  return `https://calendar.google.com/calendar/render?${q.toString()}`;
+}
+
+export function outlookCalendarUrl(s: Session): string {
+  const q = new URLSearchParams({
+    path: "/calendar/action/compose",
+    rru: "addevent",
+    subject: s.title,
+    startdt: new Date(s.startsAt).toISOString(),
+    enddt: endOf(s).toISOString(),
+    body: describe(s),
+  });
+  if (s.link) q.set("location", s.link);
+  return `https://outlook.live.com/calendar/0/deeplink/compose?${q.toString()}`;
+}

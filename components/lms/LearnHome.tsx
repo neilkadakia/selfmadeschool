@@ -20,6 +20,7 @@ import RewardToast from "./RewardToast";
 import Ring from "./Ring";
 import TodayPlan from "./TodayPlan";
 import PaceCard from "./PaceCard";
+import AskCard from "./AskCard";
 
 function Flame({ lit }: { lit: boolean }) {
   return (
@@ -166,6 +167,8 @@ export default function LearnHome() {
             {/* Above Office Hours: something addressed to you personally
                 outranks something on offer to everybody. */}
             <Assigned />
+
+            <AskCard />
 
             <OfficeHours />
 

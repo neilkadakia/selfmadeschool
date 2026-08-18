@@ -25,12 +25,18 @@ export default function Certificate() {
 
   // The Registrar's copy of the finals record, absent while offline.
   const [verified, setVerified] = useState<Record<string, FinalRecord>>({});
+  // The checkable code for each course, sent only when the school hands out
+  // checkable certificates and only to the student it belongs to.
+  const [codes, setCodes] = useState<Record<string, string>>({});
   useEffect(() => {
     if (!token) return;
     let alive = true;
     void apiFinalStatus(token).then((res) => {
       if (alive && res.ok && res.data.finals && typeof res.data.finals === "object") {
         setVerified(res.data.finals as Record<string, FinalRecord>);
+      }
+      if (alive && res.ok && res.data.codes && typeof res.data.codes === "object") {
+        setCodes(res.data.codes as Record<string, string>);
       }
     });
     return () => {
@@ -155,6 +161,11 @@ export default function Certificate() {
                 completed all {course!.parts.reduce((a, p) => a + p.units.length, 0)} units of
               </p>
               <p className="lms-cert-course">{course!.title}</p>
+              {codes[course!.slug] && (
+                <p className="lms-cert-code">
+                  Check it at selfmadeschool.org/verify · {codes[course!.slug]}
+                </p>
+              )}
               {state.finals[course!.slug]?.passed && (
                 <p className="lms-cert-honors">With Honors</p>
               )}

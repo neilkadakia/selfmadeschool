@@ -41,6 +41,8 @@ const FACULTY_ROOMS = [
   { href: "/learn/faculty/quad", label: "The Quad", exact: false, min: ROLE_RANK.educator },
   { href: "/learn/faculty/challenges", label: "Challenges", exact: false, min: ROLE_RANK.educator },
   { href: "/learn/faculty/bulletin", label: "The Bulletin", exact: false, min: ROLE_RANK.educator },
+  { href: "/learn/faculty/ask", label: "Ask the School", exact: false, min: ROLE_RANK.educator },
+  { href: "/learn/faculty/broadcast", label: "Broadcast", exact: false, min: ROLE_RANK.educator },
   { href: "/learn/faculty/studio", label: "The Studio", exact: false, min: ROLE_RANK.educator },
   { href: "/learn/faculty/records", label: "Records", exact: false, min: ROLE_RANK.educator },
   { href: "/learn/faculty/people", label: "Front Office", exact: false, min: ROLE_RANK.admin },

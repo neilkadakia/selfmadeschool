@@ -19,7 +19,17 @@ type School = {
   replies: Record<string, ReplyToMe>;
   assignments: Assignment[];
   features: Features | null;
-  access: Record<string, { open: boolean; needs: { name: string; price: number; cadence: string } | null }>;
+  access: Record<
+    string,
+    {
+      open: boolean;
+      why?: string;
+      needs: { name: string; price: number; cadence: string } | null;
+      // Set when the door is shut because the course before it is not
+      // finished: the one that has to come first.
+      after?: { slug: string; title: string } | null;
+    }
+  >;
 };
 
 const EMPTY: School = { loaded: false, replies: {}, assignments: [], features: null, access: {} };
@@ -111,10 +121,19 @@ export function useSchool() {
 
 // Whether this account may open a course. Answers true while the school is
 // free, which is the state it ships in, so nothing is gated by accident.
-export function useCourseOpen(slug: string): { known: boolean; open: boolean; needs: School["access"][string]["needs"] } {
+export function useCourseOpen(slug: string): {
+  known: boolean;
+  open: boolean;
+  needs: School["access"][string]["needs"];
+  after: School["access"][string]["after"];
+} {
   const school = useSchool();
-  if (!school.loaded || !school.features) return { known: false, open: true, needs: null };
-  if (!school.features.paid) return { known: true, open: true, needs: null };
+  if (!school.loaded || !school.features) return { known: false, open: true, needs: null, after: null };
+  // Payment is not the only thing that can hold a course shut any more, so
+  // the early return has to consider the order switch too.
+  if (!school.features.paid && !school.features.prereqs) {
+    return { known: true, open: true, needs: null, after: null };
+  }
   const a = school.access[slug];
-  return { known: true, open: a?.open ?? true, needs: a?.needs ?? null };
+  return { known: true, open: a?.open ?? true, needs: a?.needs ?? null, after: a?.after ?? null };
 }

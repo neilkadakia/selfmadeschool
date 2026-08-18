@@ -11239,3 +11239,323 @@ a.bell-note:hover {
 .lms-pace-off:hover {
   color: var(--paper);
 }
+
+/* ---------- Checking a certificate ---------- */
+
+.verify {
+  background: var(--ink);
+  color: var(--paper);
+  min-height: 100dvh;
+  padding: 120px 32px 110px;
+}
+
+.verify-h1 {
+  margin: 0 0 18px;
+}
+
+.verify-lede {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--muted-on-ink);
+  margin: 0 0 32px;
+}
+
+.verify-form {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+/* Codes are read off paper and typed by hand, so the field is generous and
+   the characters are spaced enough to tell 0 from O at a glance. */
+.verify-input {
+  flex: 1;
+  min-width: 260px;
+  background: rgba(242, 238, 227, 0.05);
+  border: 1px solid rgba(242, 238, 227, 0.18);
+  border-radius: 14px;
+  padding: 16px 20px;
+  font-family: var(--font-bricolage), sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+
+.verify-input:focus {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+
+.verify-card {
+  border-radius: 20px;
+  padding: 26px 28px;
+  background: rgba(242, 238, 227, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(242, 238, 227, 0.12);
+}
+
+.verify-card.is-real {
+  background: rgba(67, 222, 123, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(67, 222, 123, 0.4);
+}
+
+.verify-verdict {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(22px, 3vw, 30px);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.verify-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 18px;
+  margin: 22px 0 0;
+}
+
+.verify-facts dt {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-on-ink);
+  margin-bottom: 5px;
+}
+
+.verify-facts dd {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.verify-note {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted-on-ink);
+  margin: 14px 0 0;
+}
+
+.verify-back {
+  margin-top: 36px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.verify-back a {
+  color: var(--muted-on-ink);
+  text-decoration: none;
+}
+
+.verify-back a:hover {
+  color: var(--paper);
+}
+
+/* The code, printed small on the certificate itself. */
+.lms-cert-code {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(14, 14, 18, 0.55);
+  margin: 14px 0 0;
+}
+
+/* Google and Outlook, beside the .ics download. */
+.lms-oh-cals {
+  display: inline-flex;
+  gap: 10px;
+}
+
+.lms-oh-cals a {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted-on-ink);
+  text-decoration: none;
+}
+
+.lms-oh-cals a:hover {
+  color: var(--paper);
+  text-decoration: underline;
+}
+
+/* ---------- Ask the school ---------- */
+
+.lms-ask {
+  border-radius: 18px;
+  padding: 20px 22px 18px;
+  margin-bottom: 18px;
+  background: rgba(91, 124, 250, 0.07);
+  box-shadow: inset 0 0 0 1px rgba(91, 124, 250, 0.32);
+}
+
+.lms-ask-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vio);
+  margin: 0 0 8px;
+}
+
+.lms-ask-title {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.lms-ask-blurb {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted-on-ink);
+  margin: 8px 0 0;
+}
+
+.lms-ask-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* The bar is a background fill behind the label, so the option stays one
+   thing to click rather than a row of parts. */
+.lms-ask-opt {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(242, 238, 227, 0.18);
+  border-radius: 12px;
+  background: none;
+  padding: 11px 14px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 15px;
+  color: var(--paper);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.18s ease, transform 0.12s ease;
+}
+
+.lms-ask-opt:hover:not(:disabled) {
+  border-color: rgba(242, 238, 227, 0.4);
+}
+
+.lms-ask-opt:active:not(:disabled) {
+  transform: scale(0.995);
+}
+
+.lms-ask-opt.is-mine {
+  border-color: var(--vio);
+}
+
+.lms-ask-opt:disabled {
+  cursor: default;
+}
+
+.lms-ask-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: rgba(91, 124, 250, 0.22);
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lms-ask-opt-text,
+.lms-ask-pct {
+  position: relative;
+}
+
+.lms-ask-pct {
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-on-ink);
+}
+
+.lms-ask-note {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+  margin: 4px 0 0;
+}
+
+.lms-ask-open {
+  margin-top: 14px;
+}
+
+.lms-ask-open-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+/* Ask the School, staff side. */
+
+.fac-ask-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fac-ask-results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fac-ask-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) 2fr auto;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.fac-ask-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(242, 238, 227, 0.12);
+  overflow: hidden;
+}
+
+.fac-ask-bar span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--vio);
+}
+
+.fac-ask-n {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-on-ink);
+  white-space: nowrap;
+}
+
+.fac-ask-written {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.fac-ask-answer {
+  padding-left: 14px;
+  border-left: 2px solid rgba(242, 238, 227, 0.14);
+}
+
+@media (max-width: 640px) {
+  .fac-ask-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}

@@ -8,8 +8,9 @@
 import { useEffect, useState } from "react";
 import { apiSessions, apiSessionAct, type Session } from "@/lib/api";
 import { usDate } from "@/lib/format";
-import { downloadIcs } from "@/lib/ics";
+import { downloadIcs, googleCalendarUrl, outlookCalendarUrl } from "@/lib/ics";
 import { useLms } from "@/components/useLms";
+import { useSchool } from "./useSchool";
 
 function when(s: Session): string {
   const d = new Date(s.startsAt);
@@ -19,7 +20,10 @@ function when(s: Session): string {
 
 export default function OfficeHours() {
   const lms = useLms();
+  const school = useSchool();
   const token = lms.auth?.token ?? "";
+  // Off by default: the .ics alone covers Apple Calendar and Outlook desktop.
+  const showLinks = Boolean(school.features?.calendarLinks);
   const [sessions, setSessions] = useState<Session[] | null>(null);
 
   const load = () => {
@@ -68,6 +72,16 @@ export default function OfficeHours() {
                   <button className="lms-oh-cancel" onClick={() => downloadIcs(s)}>
                     Add to Calendar
                   </button>
+                  {showLinks && (
+                    <span className="lms-oh-cals">
+                      <a href={googleCalendarUrl(s)} target="_blank" rel="noreferrer">
+                        Google
+                      </a>
+                      <a href={outlookCalendarUrl(s)} target="_blank" rel="noreferrer">
+                        Outlook
+                      </a>
+                    </span>
+                  )}
                   <button
                     className="lms-oh-cancel"
                     onClick={() => void apiSessionAct(token, "cancel", s.id).then(load)}

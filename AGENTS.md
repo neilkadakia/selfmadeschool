@@ -119,6 +119,17 @@ not a route, which keeps context and sidesteps dynamic routes under static expor
   course, and every content path goes through it. Note its limit: this is a static
   export, so lesson text ships in the JS bundle regardless. Selling a course for
   real means serving lessons from the API first.
+- **Five optional rooms, all off until asked for.** `prereqs` (a course needs
+  the one before it, checked inside `course_access()` so there is still one
+  gate), `forms` (`api/forms.php`, Ask the School: polls are public once you
+  have answered so nobody is anchored by the majority; written answers reach
+  faculty with a name and no other student), `broadcast` (`api/broadcast.php`,
+  one composer with a delivery row per person; the bell always rings, email is
+  a separate tick that respects `nudgesOff`), `calendarLinks` (Google and
+  Outlook beside the .ics), `certVerify` (`api/verify.php`, **the only endpoint
+  that answers without a session** — it returns a name, a course, a date and
+  nothing else, and is 404 unless switched on). `npm`-free suite:
+  `tools/qa/options-test.sh`, 39 assertions, and it leaves every switch off.
 - **Every switch defaults off.** `read_settings()` holds the feature flags (paid,
   deadlines, homerooms). The school ships free, open and self-paced; School Ops is
   the only place that changes that, and changes land in the audit log.

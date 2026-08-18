@@ -1,10 +1,11 @@
 "use client";
 
-// The door, when the school is charging and this course is not yours.
+// The door, when a course is not open to you yet.
 //
-// It names the way in rather than just refusing, and it never pretends the
-// work you already did has gone anywhere. Shown only when payment is on:
-// while the school is free this component is never rendered at all.
+// Two reasons it can be shut: the school is charging and this one is not
+// yours, or the school runs its courses in order and the one before this is
+// unfinished. Either way it names the way in rather than just refusing, and
+// it never pretends the work you already did has gone anywhere.
 
 import Link from "next/link";
 import { getCourse } from "@/lib/lms";
@@ -13,11 +14,38 @@ import { money } from "@/lib/faculty";
 export default function CourseLock({
   slug,
   needs,
+  after,
 }: {
   slug: string;
   needs: { name: string; price: number; cadence: string } | null;
+  after?: { slug: string; title: string } | null;
 }) {
   const course = getCourse(slug);
+
+  // Order comes first: telling somebody the price of a door they cannot
+  // open yet for a different reason is just noise.
+  if (after) {
+    return (
+      <div className="learn">
+        <div className="learn-wrap lms-gate">
+          <Link href="/learn" className="crumb">
+            ← My Learning
+          </Link>
+          <p className={`kicker kicker--${course?.tone ?? "acc"}`}>{course?.kicker ?? "Course"}</p>
+          <h1 className="learn-h1">Finish {after.title} first.</h1>
+          <p className="learn-sub">
+            The school runs these in order, because {course?.title ?? "this course"} is built on
+            what {after.title} teaches. Finish it and this opens on its own. Nothing here expires
+            and nothing you have already done is lost.
+          </p>
+          <Link href={`/learn/${after.slug}`} className="btn btn--solid">
+            Back to {after.title} →
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="learn">
       <div className="learn-wrap lms-gate">

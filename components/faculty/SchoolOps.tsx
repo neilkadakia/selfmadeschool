@@ -50,6 +50,37 @@ const SWITCHES: { id: keyof Features; name: string; blurb: string; warn?: string
     name: "Honor Roll",
     blurb: "Students see the weekly and all-time leaderboards.",
   },
+  {
+    id: "prereqs",
+    name: "Courses run in order",
+    blurb:
+      "The 14th needs the 13th finished, the 15th needs the 14th. Off, the three grades are open in any order, which is how the school opened.",
+    warn: "Students part-way through a later course keep what they have done, but cannot open it again until the one before it is finished.",
+  },
+  {
+    id: "forms",
+    name: "Ask the school",
+    blurb:
+      "Faculty put a question to the school, or to one homeroom, and see the answers. Polls count; open questions collect sentences.",
+  },
+  {
+    id: "broadcast",
+    name: "Broadcast",
+    blurb:
+      "One composer, sent to everybody or to one homeroom or one course, landing on the bell and optionally in the inbox, with a record of who it reached.",
+  },
+  {
+    id: "calendarLinks",
+    name: "Google and Outlook links",
+    blurb:
+      "Office Hours offers both alongside the .ics file. Off, the download is the only way to put a session in a calendar.",
+  },
+  {
+    id: "certVerify",
+    name: "Verifiable certificates",
+    blurb:
+      "Every certificate carries a code, and anyone can check it at /verify without signing in. The check answers with the name, the course and the date, and nothing else.",
+  },
 ];
 
 export default function SchoolOps() {
