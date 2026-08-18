@@ -17,7 +17,7 @@ import {
   type Equipped,
   type GearSlot,
 } from "@/lib/game";
-import { MASTER_STREAK, XP_MASTERED, type MasteryMap } from "@/lib/mastery";
+import { MASTER_STREAK, XP_MASTERED, schedule, type MasteryMap } from "@/lib/mastery";
 import {
   apiGetProgress,
   apiImpersonate,
@@ -542,33 +542,31 @@ const actions = {
     }));
   },
 
-  // Per-question learning history. A miss puts the question in the
-  // make-up pile; MASTER_STREAK consecutive right answers retire it
-  // (with a little XP and, the first time, the Comeback badge).
+  // Per-question learning history, on a spacing schedule.
+  //
+  // Every answer books the next one: right climbs a box and waits longer,
+  // wrong drops to the bottom and comes back tomorrow. Nothing retires, it
+  // just gets quieter, so a unit finished in March is still checked in June.
+  //
+  // The XP and the Comeback badge still land the first time a missed
+  // question is answered right MASTER_STREAK times running, because that is
+  // the moment worth marking. Answering it right again on a later day pays
+  // nothing: the schedule is the reward after that, not the points.
   questionResult(qkey: string, correct: boolean) {
     apply((s) => {
       const prev = s.mastery[qkey];
-      if (correct) {
-        if (!prev || prev.miss === 0 || prev.streak >= MASTER_STREAK) return s;
-        const streak = prev.streak + 1;
-        const mastered = streak >= MASTER_STREAK;
-        let next: LmsState = {
-          ...s,
-          mastery: { ...s.mastery, [qkey]: { ...prev, streak, last: localDay() } },
-          xp: s.xp + (mastered ? XP_MASTERED : 0),
-        };
-        if (mastered && !next.badges.includes("comeback")) {
-          next = { ...next, badges: [...next.badges, "comeback"] };
-        }
-        return next;
-      }
-      return {
+      const entry = schedule(prev, correct);
+      const earned =
+        correct && prev && prev.miss > 0 && prev.streak + 1 === MASTER_STREAK ? XP_MASTERED : 0;
+      let next: LmsState = {
         ...s,
-        mastery: {
-          ...s.mastery,
-          [qkey]: { miss: (prev?.miss ?? 0) + 1, streak: 0, last: localDay() },
-        },
+        mastery: { ...s.mastery, [qkey]: entry },
+        xp: s.xp + earned,
       };
+      if (earned > 0 && !next.badges.includes("comeback")) {
+        next = { ...next, badges: [...next.badges, "comeback"] };
+      }
+      return next;
     });
   },
 

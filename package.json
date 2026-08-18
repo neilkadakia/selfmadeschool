@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "audit:quiz": "tsx scripts/quiz-audit.ts"
+    "audit:quiz": "tsx scripts/quiz-audit.ts",
+    "test:review": "tsx scripts/review-test.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

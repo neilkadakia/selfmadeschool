@@ -30,6 +30,19 @@ flashcards, XP, badges, the Arena, Study Hall, server-graded finals, certificate
 Student progress is one JSON blob per account, owned by the browser and synced to
 `api/progress.php`.
 
+## Study Hall is a schedule, not a pile
+`lib/mastery.ts` runs Leitner boxes: 1, 3, 7, 21, 60 and 180 days. Every answer
+books the next one, right climbs a box, wrong drops to the bottom. Nothing ever
+retires, it only gets quieter, so a unit finished in March is still checked in
+June. Entries written before scheduling existed carry no `box`/`due`, so
+`readEntry()` reads them as what they were; never assume those fields exist.
+Boxes over SM-2 deliberately: a student can be told the whole rule in a sentence.
+`npm run test:review` covers the ladder, the drop, the migration and the queue.
+
+Session lists in Study Hall are memoized on the size of the history, not on
+`loaded` alone: for a signed-in student `loaded` flips on the local read, before
+the server blob lands, and a list snapshotted then is empty for the whole visit.
+
 ## The Quad and the Register
 `/learn/quad` is the community: clubs are rooms, each with its own members, feed
 and posting rule. House clubs are seeded once into the `clubs` store; a club per

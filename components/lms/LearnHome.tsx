@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { PEP_LINES, pepForDay } from "@/lib/encouragement";
 import { BADGES, COURSES, levelFor, courseUnits } from "@/lib/lms";
 import { allBosses } from "@/lib/game";
-import { dueQuestions } from "@/lib/mastery";
+import { dueQuestions, nextDueDay, localDay } from "@/lib/mastery";
 import { profileComplete } from "@/lib/api";
 import { useLms, courseProgress } from "@/components/useLms";
 import AvatarStudio from "./AvatarStudio";
@@ -175,12 +175,15 @@ export default function LearnHome() {
                     <span className="lms-studyhall-title">Study Hall</span>
                     <span className="lms-studyhall-sub">
                       {(() => {
-                        const makeup = dueQuestions(state.mastery).length;
-                        if (makeup > 0)
-                          return `${makeup} make-up question${makeup === 1 ? "" : "s"} in the pile. Clear it, then flashcards`;
+                        const owed = dueQuestions(state.mastery).length;
+                        if (owed > 0)
+                          return `${owed} question${owed === 1 ? "" : "s"} due today, caught just before you would forget ${owed === 1 ? "it" : "them"}`;
+                        const next = nextDueDay(state.mastery);
+                        if (next && next === localDay(1)) return "Nothing due today. The next batch lands tomorrow";
+                        if (next) return "Nothing due today. Flashcards from your finished units are open";
                         return state.reviewLast === days[6].key
-                          ? "Reviewed today ✓ · more never hurts"
-                          : "Weak spots first: flashcards from your completed units";
+                          ? "Reviewed today ✓ · the flashcards are always open"
+                          : "Flashcards from the units you have finished";
                       })()}
                     </span>
                   </span>
