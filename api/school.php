@@ -94,6 +94,10 @@ if ($method === 'GET') {
             // Only ever an object, and only when the door is shut: the plan
             // that would open it. An open course has nothing to sell.
             'needs' => $a['open'] ? null : ($a['plan'] ?? null),
+            // A course held shut because the one before it is unfinished
+            // says so, so the student is told the true reason rather than
+            // being shown a price they do not need to pay.
+            'after' => $a['reason'] === 'prereq' ? ($a['needs'] ?? null) : null,
         ];
     }
     $mine = ($auth['user']['plan'] ?? '') === '' ? null : plan_by_id($settings, $auth['user']['plan']);

@@ -340,6 +340,19 @@ function default_settings(): array {
             // Students see who is on the Honor Roll. Already shipped; the
             // flag lets a future cohort run quietly.
             'honorRoll' => true,
+            // A course can require the one before it. Off: the three grades
+            // are open in any order, which is how the school opened.
+            'prereqs' => false,
+            // Faculty ask the school a question and see the answers.
+            'forms' => false,
+            // One composer, sent to a chosen audience, with a record of who
+            // it reached. Off: the Bulletin and the nudge desk are the only
+            // ways the school speaks to everybody.
+            'broadcast' => false,
+            // Office Hours offers Google and Outlook alongside the .ics.
+            'calendarLinks' => false,
+            // Certificates carry a code anyone can check at /verify.
+            'certVerify' => false,
         ],
         // Plans exist even when 'paid' is off, so turning it on is a switch
         // and not a migration. The open plan covers everything for free.
@@ -413,11 +426,52 @@ function plan_covers(array $plan, string $courseSlug): bool {
 // $asIfPaid lets the front office see what the school would look like the
 // moment payment is switched on, without switching it on. Nothing but the
 // Enrollment preview passes it.
+// The course that has to come first, from catalog order. Nothing here knows
+// a slug: reorder the catalog and the ladder reorders with it.
+function previous_course(string $courseSlug): ?array {
+    $prev = null;
+    foreach (catalog()['courses'] as $c) {
+        if (($c['slug'] ?? '') === $courseSlug) return $prev;
+        $prev = $c;
+    }
+    return null;
+}
+
+// Has this student finished every taught unit of a course? The final is not
+// required: a student who did the work and skipped the exam has still done
+// the course, and holding the next one hostage to an exam would be mean.
+function course_finished(string $email, string $courseSlug): bool {
+    $taught = taught_units($courseSlug);
+    if (count($taught) === 0) return true;
+    $done = state_of($email)['done'][$courseSlug] ?? [];
+    if (!is_array($done)) return false;
+    foreach ($taught as $slug) {
+        if (!in_array($slug, $done, true)) return false;
+    }
+    return true;
+}
+
 function course_access(string $email, array $user, string $courseSlug, bool $asIfPaid = false): array {
     $settings = read_settings();
+    $isFaculty = role_rank($user['role'] ?? 'student') >= ROLE_RANK['educator'];
+
+    // Courses in order, when the school is run that way. Checked before the
+    // plan, because being unable to start yet is a different sentence from
+    // needing to pay, and the student should be told the true one.
+    if (!empty($settings['features']['prereqs']) && !$isFaculty) {
+        $prev = previous_course($courseSlug);
+        if ($prev !== null && !course_finished($email, (string)$prev['slug'])) {
+            return [
+                'open' => false,
+                'reason' => 'prereq',
+                'needs' => ['slug' => $prev['slug'], 'title' => $prev['title'] ?? $prev['slug']],
+            ];
+        }
+    }
+
     if (empty($settings['features']['paid']) && !$asIfPaid) return ['open' => true, 'reason' => 'free'];
     // Faculty read everything: they have to be able to see what they teach.
-    if (role_rank($user['role'] ?? 'student') >= ROLE_RANK['educator']) {
+    if ($isFaculty) {
         return ['open' => true, 'reason' => 'faculty'];
     }
     // A one-off grant from the front office beats any plan.
@@ -459,6 +513,26 @@ function access_map(string $email, array $user, bool $asIfPaid = false): array {
         $map[$c['slug']] = course_access($email, $user, $c['slug'], $asIfPaid)['open'];
     }
     return $map;
+}
+
+// ---------- Certificate codes ----------
+//
+// A one-way derivation from the email and the course, salted per school, so
+// two schools running this code never mint the same code and a code cannot
+// be walked back to an address. Issued only to the student it belongs to
+// (finals.php) and checked without a session (verify.php).
+
+function verify_secret(): string {
+    $ops = read_store('ops');
+    if (empty($ops['verifySecret'])) {
+        $ops['verifySecret'] = bin2hex(random_bytes(16));
+        write_store('ops', $ops);
+    }
+    return $ops['verifySecret'];
+}
+
+function verify_code(string $email, string $course): string {
+    return strtoupper(substr(hash_hmac('sha256', $email . '|' . $course, verify_secret()), 0, 12));
 }
 
 // ---------- Telling somebody something happened ----------
