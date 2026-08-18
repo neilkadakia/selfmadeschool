@@ -43,6 +43,20 @@ Session lists in Study Hall are memoized on the size of the history, not on
 `loaded` alone: for a signed-in student `loaded` flips on the local read, before
 the server blob lands, and a list snapshotted then is empty for the whole visit.
 
+## The classroom works offline
+`public/sw.js` is a hand-written service worker; `components/lms/Offline.tsx`
+registers it and shows the offline notice. Three rules in order: **the API is
+never cached** (a stale answer from the Registrar or the bell is worse than an
+honest failure), hashed `/_next/static` assets are cache-first forever, pages
+are network-first with a cache fallback and `/offline/` last.
+
+"Take This Course Offline" (`SaveOffline.tsx`) posts the unit URLs to the
+worker. Caching a page's HTML is **not enough**: the lesson lives in the route's
+JavaScript, so the worker parses each document for `/_next/` assets and pulls
+those too. Bump `VERSION` in sw.js whenever the worker changes, or browsers
+keep the old one. Verified by `tools/qa/offline-check.js` and
+`save-offline-check.js`, which pull the plug for real.
+
 ## Search reads the lessons
 `lib/search.ts` indexes every block, takeaway, flashcard, quiz question and
 Field Work action, lazily on first search, and returns one row per unit with the

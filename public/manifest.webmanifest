@@ -1,0 +1,21 @@
+{
+  "name": "Self Made School",
+  "short_name": "Self Made",
+  "description": "The school for everything after the diploma: mindset, money, and the decisions that actually shape a life.",
+  "start_url": "/learn/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0E0E12",
+  "theme_color": "#0E0E12",
+  "orientation": "portrait-primary",
+  "categories": ["education"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Study Hall", "url": "/learn/review/", "description": "Whatever is due today" },
+    { "name": "The Quad", "url": "/learn/quad/", "description": "What the class is saying" }
+  ]
+}

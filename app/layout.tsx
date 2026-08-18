@@ -27,6 +27,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title,
   description,
+  // The classroom installs to a home screen and reads with no signal;
+  // public/sw.js does the caching, components/lms/Offline.tsx registers it.
+  manifest: "/manifest.webmanifest",
+  appleWebApp: { capable: true, title: "Self Made", statusBarStyle: "black-translucent" },
   openGraph: {
     title,
     description,

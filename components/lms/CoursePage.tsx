@@ -7,6 +7,7 @@ import { useCourseOpen } from "./useSchool";
 import CommandK from "./CommandK";
 import CourseLock from "./CourseLock";
 import RewardToast from "./RewardToast";
+import SaveOffline from "./SaveOffline";
 
 export default function CoursePage({ slug }: { slug: string }) {
   const lms = useLms();
@@ -77,6 +78,8 @@ export default function CoursePage({ slug }: { slug: string }) {
               </Link>
             )}
           </div>
+
+          <SaveOffline course={course} />
         </header>
 
         {course.parts.map((part, pi) => {
