@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "tsx scripts/quiz-audit.ts --strict && tsx scripts/export-final-keys.ts",
+    "prebuild": "tsx scripts/quiz-audit.ts --strict && tsx scripts/export-final-keys.ts && tsx scripts/export-content.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

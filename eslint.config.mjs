@@ -15,6 +15,8 @@ const eslintConfig = defineConfig([
     // Design handoff prototypes and design-system preview cards, not app code.
     "design/**",
     "design-system/**",
+    // The Expo app is a separate project with its own toolchain and config.
+    "mobile/**",
   ]),
 ]);
 

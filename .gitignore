@@ -43,3 +43,11 @@ dev.log
 
 # Local LMS data store, when the built site is served from out/ for QA.
 /sms-lms-data/
+
+# mobile app (Expo)
+mobile/node_modules
+mobile/.expo
+mobile/dist
+mobile/ios
+mobile/android
+mobile/*.log
