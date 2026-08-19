@@ -184,6 +184,177 @@ if ($action === 'logout') {
     respond(200, ['ok' => true]);
 }
 
+// --- deleting your own account ---
+//
+// The right to leave, and to take everything with you. Apple requires an app
+// that creates accounts to offer this from inside the app; the school's own
+// privacy promise requires it regardless of Apple.
+//
+// Every store that keys anything to an email is listed here on purpose. If a
+// new store starts holding per-student data, it belongs in this function on
+// the same day, or the promise on the privacy page stops being true.
+if ($action === 'delete_account') {
+    $auth = require_auth();
+    $me = $auth['email'];
+    // Act As must never be able to delete somebody else's account.
+    if (!empty($auth['actor'])) respond(403, ['error' => 'Not while acting as somebody else.']);
+    if (($in['confirm'] ?? '') !== 'DELETE') respond(400, ['error' => 'That needs an explicit confirmation.']);
+
+    // The last Global Administrator cannot delete the school out from under
+    // itself: there would be nobody left who could let anybody back in.
+    $users = read_users();
+    if (($users[$me]['role'] ?? '') === 'global_admin') {
+        $others = 0;
+        foreach ($users as $e => $u) {
+            if ($e !== $me && ($u['role'] ?? '') === 'global_admin') $others++;
+        }
+        if ($others === 0) respond(409, ['error' => 'You are the only Global Administrator. Make somebody else one first.']);
+    }
+
+    // The account itself, and its progress blob. The role is read first
+    // because the audit row below is written after the record is gone.
+    $wasRole = $users[$me]['role'] ?? 'student';
+    unset($users[$me]);
+    write_store('users', $users);
+    write_store('progress_' . sha1($me), []);
+
+    // Every session, so nothing of theirs is still signed in anywhere.
+    $tokens = read_store('tokens');
+    foreach ($tokens as $t => $e) {
+        if (($e['email'] ?? '') === $me) unset($tokens[$t]);
+    }
+    write_store('tokens', $tokens);
+
+    // Stores keyed directly by email.
+    foreach (['notify', 'resets', 'newsletter', 'grants', 'homerooms_members', 'assign_done'] as $name) {
+        $st = read_store($name);
+        if (isset($st[$me])) {
+            unset($st[$me]);
+            write_store($name, $st);
+        }
+    }
+
+    // The Quad: their posts, their reactions on other people's posts, and
+    // their comments underneath them.
+    $quad = read_store('quad');
+    $touched = false;
+    foreach ($quad as $id => $post) {
+        if (($post['email'] ?? '') === $me) {
+            unset($quad[$id]);
+            $touched = true;
+            continue;
+        }
+        foreach (($post['reactions'] ?? []) as $kind => $who) {
+            if (in_array($me, $who, true)) {
+                $quad[$id]['reactions'][$kind] = array_values(array_diff($who, [$me]));
+                $touched = true;
+            }
+        }
+        foreach (($post['comments'] ?? []) as $ci => $c) {
+            if (($c['email'] ?? '') === $me) {
+                unset($quad[$id]['comments'][$ci]);
+                $touched = true;
+            }
+        }
+        if ($touched && isset($quad[$id]['comments'])) {
+            $quad[$id]['comments'] = array_values($quad[$id]['comments']);
+        }
+    }
+    if ($touched) write_store('quad', $quad);
+
+    // Kudos in both directions.
+    $kudos = read_store('kudos');
+    $k2 = [];
+    foreach ($kudos as $id => $k) {
+        if (($k['from'] ?? '') === $me || ($k['to'] ?? '') === $me) continue;
+        $k2[$id] = $k;
+    }
+    if (count($k2) !== count($kudos)) write_store('kudos', $k2);
+
+    // Club rolls.
+    $clubs = read_store('clubs');
+    $ct = false;
+    foreach ($clubs as $id => $c) {
+        if (in_array($me, $c['members'] ?? [], true)) {
+            $clubs[$id]['members'] = array_values(array_diff($c['members'], [$me]));
+            $ct = true;
+        }
+    }
+    if ($ct) write_store('clubs', $clubs);
+
+    // Challenges they joined, and answers they gave to the school's questions.
+    foreach ([['challenges', 'joined'], ['forms', 'answers']] as [$name, $field]) {
+        $st = read_store($name);
+        $t2 = false;
+        foreach ($st as $id => $row) {
+            if (isset($row[$field][$me])) {
+                unset($st[$id][$field][$me]);
+                $t2 = true;
+            }
+        }
+        if ($t2) write_store($name, $st);
+    }
+
+    // Seats and waitlist places in Office Hours, and any one-on-one they hold.
+    $sessions = read_store('sessions');
+    $st2 = false;
+    foreach ($sessions as $id => $s) {
+        foreach (['rsvps', 'waitlist'] as $list) {
+            if (in_array($me, $s[$list] ?? [], true)) {
+                $sessions[$id][$list] = array_values(array_diff($s[$list], [$me]));
+                $st2 = true;
+            }
+        }
+    }
+    if ($st2) write_store('sessions', $sessions);
+
+    $booking = read_store('booking');
+    $bt = false;
+    foreach ($booking as $id => $b) {
+        if (($b['takenBy'] ?? '') === $me) {
+            $booking[$id]['takenBy'] = '';
+            $booking[$id]['topic'] = '';
+            $bt = true;
+        }
+        // A teacher leaving takes their unclaimed offers with them.
+        if (($b['educator'] ?? '') === $me) {
+            unset($booking[$id]);
+            $bt = true;
+        }
+    }
+    if ($bt) write_store('booking', $booking);
+
+    // The audit log keeps THAT an account was deleted, because a school has to
+    // be able to answer "where did that student go". It keeps no more than
+    // that. audit_log() would stamp the real address into `actor`, which would
+    // leave the one copy of them the deletion was supposed to remove, so the
+    // row is written by hand with a hash in place of the person.
+    $log = read_store('audit');
+    $rows = $log['rows'] ?? [];
+    // Older rows name this person too: the front office creating the account,
+    // a role change, an Act As session. The events stay, because that is what
+    // an audit log is for, but the address in them becomes the same hash. What
+    // is left says what happened without saying who it was.
+    $tag = 'deleted:' . substr(sha1($me), 0, 12);
+    foreach ($rows as $i => $row) {
+        foreach (['actor', 'as', 'subject'] as $field) {
+            if (($row[$field] ?? '') === $me) $rows[$i][$field] = $tag;
+        }
+    }
+    array_unshift($rows, [
+        'at' => gmdate('c'),
+        'actor' => $tag,
+        'as' => '',
+        'role' => $wasRole,
+        'action' => 'account.deleted',
+        'subject' => '',
+        'detail' => 'self-service, from the app',
+    ]);
+    write_store('audit', ['rows' => array_slice($rows, 0, AUDIT_MAX)]);
+
+    respond(200, ['ok' => true]);
+}
+
 // --- login ---
 $email = strtolower(trim($in['email'] ?? ''));
 $password = (string)($in['password'] ?? '');

@@ -1,40 +1,26 @@
-import { Link, Stack } from 'expo-router';
-import { StyleSheet } from 'react-native';
+// A link to somewhere that is not here.
+//
+// Most likely a deep link to a unit that has since been renamed, so the way
+// out is the desk rather than a back button that may have nothing behind it.
 
-import { Text, View } from '@/components/Themed';
+import { Link, Stack } from "expo-router";
+import { View } from "react-native";
+import { H1, P, Small } from "@/components/ui";
+import { C, S } from "@/lib/theme";
 
-export default function NotFoundScreen() {
+export default function NotFound() {
   return (
     <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
-      <View style={styles.container}>
-        <Text style={styles.title}>This screen doesn't exist.</Text>
-
-        <Link href="/" style={styles.link}>
-          <Text style={styles.linkText}>Go to home screen!</Text>
+      <Stack.Screen options={{ title: "Not found" }} />
+      <View style={{ flex: 1, backgroundColor: C.ink, padding: S.lg, justifyContent: "center", gap: S.md }}>
+        <H1>That page is not here.</H1>
+        <P muted>
+          It may have been renamed, or the link may be older than the classroom it points at.
+        </P>
+        <Link href="/" style={{ marginTop: S.md }}>
+          <Small tone={C.vio}>Back To The Desk</Small>
         </Link>
       </View>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
-  },
-  linkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
-});

@@ -353,6 +353,10 @@ function default_settings(): array {
             'calendarLinks' => false,
             // Certificates carry a code anyone can check at /verify.
             'certVerify' => false,
+            // One-on-one time: an instructor publishes the hours they are
+            // free and a student takes one. Off: Office Hours is the only
+            // live teaching, and it is a room rather than an appointment.
+            'oneOnOne' => false,
         ],
         // Plans exist even when 'paid' is off, so turning it on is a switch
         // and not a migration. The open plan covers everything for free.
