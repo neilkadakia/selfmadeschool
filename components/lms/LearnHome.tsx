@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { PEP_LINES, pepForDay } from "@/lib/encouragement";
+import { usePepLine } from "@/lib/encouragement";
 import { BADGES, COURSES, levelFor, courseUnits } from "@/lib/lms";
 import { allBosses } from "@/lib/game";
 import { dueQuestions, nextDueDay, localDay } from "@/lib/mastery";
@@ -21,6 +20,7 @@ import Ring from "./Ring";
 import TodayPlan from "./TodayPlan";
 import PaceCard from "./PaceCard";
 import AskCard from "./AskCard";
+import GetTheApp from "./GetTheApp";
 
 function Flame({ lit }: { lit: boolean }) {
   return (
@@ -37,9 +37,7 @@ export default function LearnHome() {
   const lms = useLms();
   const { state, loaded } = lms;
   const level = levelFor(state.xp);
-  // Prerendered pages ship line one; the day's line lands after mount.
-  const [pep, setPep] = useState(PEP_LINES[0]);
-  useEffect(() => setPep(pepForDay()), []);
+  const pep = usePepLine();
 
   const totalDone = Object.values(state.done).reduce((a, b) => a + b.length, 0);
 
@@ -348,6 +346,8 @@ export default function LearnHome() {
             })}
           </div>
         </section>
+
+        <GetTheApp />
 
         <p className="lms-hint lms-hint--keys">
           Tip: press <kbd>Ctrl</kbd>+<kbd>K</kbd> to jump to any unit.

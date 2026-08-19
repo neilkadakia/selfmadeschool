@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import { handleAnchorClick } from "@/lib/anchor";
-import { PEP_LINES, pepForDay } from "@/lib/encouragement";
+import { usePepLine } from "@/lib/encouragement";
 import Wordmark from "./Wordmark";
 
 const FOOTER_LINKS = [
@@ -21,9 +20,7 @@ const FOOTER_LINKS = [
 
 export default function Footer() {
   const pathname = usePathname();
-  // Prerendered pages ship line one; the day's line lands after mount.
-  const [pep, setPep] = useState(PEP_LINES[0]);
-  useEffect(() => setPep(pepForDay()), []);
+  const pep = usePepLine();
 
   // The classroom has its own shell. The marketing footer stays out of it.
   if (pathname.startsWith("/learn")) return null;

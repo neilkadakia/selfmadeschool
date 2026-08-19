@@ -11559,3 +11559,330 @@ a.bell-note:hover {
     gap: 4px;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Get the App: the band at the foot of the desk.
+   Midnight ground so it reads as a different surface from the classroom
+   without shouting, a cobalt glow behind it, and a drawn phone rather than a
+   screenshot so it never goes stale as the classroom changes.
+--------------------------------------------------------------------------- */
+
+.app-band {
+  position: relative;
+  margin-top: 76px;
+  padding: 54px 40px 58px;
+  border-radius: 26px;
+  background: linear-gradient(155deg, var(--deep) 0%, #161b3c 58%, #12152e 100%);
+  border: 1px solid rgba(242, 238, 227, 0.09);
+  overflow: hidden;
+}
+
+.app-band-glow {
+  position: absolute;
+  right: -8%;
+  top: -70%;
+  width: min(760px, 92%);
+  aspect-ratio: 1 / 1;
+  background: radial-gradient(circle at 50% 50%, rgba(91, 124, 250, 0.34), rgba(91, 124, 250, 0) 64%);
+  pointer-events: none;
+}
+
+.app-band-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 52px;
+  align-items: center;
+}
+
+.app-band-h {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 44px);
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+  margin: 10px 0 14px;
+  text-wrap: balance;
+}
+
+.app-band-p {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--muted-on-ink);
+  margin: 0 0 26px;
+}
+
+.app-band-note {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: rgba(242, 238, 227, 0.55);
+  margin: 18px 0 0;
+}
+
+/* ---- store buttons ---- */
+
+.app-store-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.app-store {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px 12px 17px;
+  border-radius: 13px;
+  background: rgba(242, 238, 227, 0.055);
+  border: 1px solid rgba(242, 238, 227, 0.16);
+  color: var(--paper);
+  text-decoration: none;
+  transition: background 220ms ease, border-color 220ms ease, transform 220ms ease;
+}
+
+a.app-store:hover {
+  background: rgba(242, 238, 227, 0.1);
+  border-color: rgba(242, 238, 227, 0.3);
+  transform: translateY(-2px);
+}
+
+a.app-store:active {
+  transform: translateY(0);
+}
+
+a.app-store:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 3px;
+}
+
+/* Not a link yet: still looks like the real thing, but plainly inert. */
+.app-store.is-soon {
+  opacity: 0.72;
+  cursor: default;
+}
+
+.app-store-mark {
+  width: 26px;
+  height: 26px;
+  flex: none;
+}
+
+.app-store-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.app-store-sub {
+  font-size: 10.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(242, 238, 227, 0.62);
+}
+
+.app-store-name {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+
+/* ---- the drawn phone ---- */
+
+.app-band-art {
+  display: flex;
+  justify-content: center;
+}
+
+.app-phone {
+  position: relative;
+  width: 218px;
+  height: 438px;
+  border-radius: 34px;
+  padding: 9px;
+  background: linear-gradient(165deg, #2b3160, #0d0f22);
+  border: 1px solid rgba(242, 238, 227, 0.17);
+  box-shadow: 0 30px 60px -22px rgba(9, 11, 26, 0.9), 0 0 0 1px rgba(9, 11, 26, 0.5) inset;
+  transform: rotate(-3deg);
+}
+
+.app-phone-notch {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 62px;
+  height: 5px;
+  border-radius: 99px;
+  background: rgba(242, 238, 227, 0.22);
+  z-index: 2;
+}
+
+.app-phone-screen {
+  height: 100%;
+  border-radius: 26px;
+  background: var(--ink);
+  padding: 30px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app-scr-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.app-scr-hi {
+  font-size: 11px;
+  color: rgba(242, 238, 227, 0.6);
+}
+
+.app-scr-streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--coral);
+}
+
+.app-scr-flame {
+  width: 13px;
+  height: 13px;
+}
+
+.app-scr-ring {
+  position: relative;
+  width: 108px;
+  height: 108px;
+  margin: 4px auto 14px;
+}
+
+.app-scr-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.app-scr-track,
+.app-scr-fill {
+  fill: none;
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+
+.app-scr-track {
+  stroke: rgba(242, 238, 227, 0.1);
+}
+
+.app-scr-fill {
+  stroke: var(--acc);
+  stroke-dasharray: 264;
+  stroke-dashoffset: 84;
+}
+
+.app-scr-ring-n {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 21px;
+  letter-spacing: -0.02em;
+}
+
+.app-scr-label {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(242, 238, 227, 0.72);
+  margin: 0 0 10px;
+}
+
+.app-scr-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  border-radius: 9px;
+  background: rgba(242, 238, 227, 0.045);
+  margin-bottom: 7px;
+}
+
+.app-scr-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background: rgba(242, 238, 227, 0.22);
+  flex: none;
+}
+
+.app-scr-row.is-done .app-scr-dot {
+  background: var(--acc);
+}
+
+.app-scr-row.is-now .app-scr-dot {
+  background: var(--coral);
+}
+
+.app-scr-bar {
+  height: 5px;
+  border-radius: 99px;
+  background: rgba(242, 238, 227, 0.15);
+  flex: 1;
+}
+
+.app-scr-row.is-done .app-scr-bar {
+  background: rgba(67, 222, 123, 0.34);
+}
+
+.app-scr-row.is-now .app-scr-bar {
+  background: rgba(255, 180, 58, 0.38);
+}
+
+.app-scr-tabs {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 11px;
+  border-top: 1px solid rgba(242, 238, 227, 0.08);
+}
+
+.app-scr-tabs span {
+  width: 20px;
+  height: 4px;
+  border-radius: 99px;
+  background: rgba(242, 238, 227, 0.16);
+}
+
+.app-scr-tabs span.is-on {
+  background: var(--acc);
+}
+
+@media (max-width: 860px) {
+  .app-band {
+    padding: 40px 24px 44px;
+  }
+
+  .app-band-inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  /* The phone leads on a phone: the pitch is the thing you are holding. */
+  .app-band-art {
+    order: -1;
+  }
+
+  .app-phone {
+    transform: none;
+  }
+}

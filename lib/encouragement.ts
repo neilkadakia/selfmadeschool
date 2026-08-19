@@ -1,3 +1,5 @@
+import { useSyncExternalStore } from "react";
+
 // One short line of encouragement, rotated by calendar day so the site says
 // something a little different every time you come back. Kept in one place so
 // the classroom and the marketing footer never drift apart.
@@ -26,4 +28,15 @@ export const PEP_LINES = [
 export function pepForDay(now = new Date()) {
   const day = Math.floor(now.getTime() / 86_400_000);
   return PEP_LINES[((day % PEP_LINES.length) + PEP_LINES.length) % PEP_LINES.length];
+}
+
+// The day's line is not the line the HTML was prerendered with, so it has to
+// arrive on the client. useSyncExternalStore is the primitive for exactly that
+// divergence; setting state in a mount effect causes a cascading render.
+// Subscribing is a no-op because the line cannot change while the page is open.
+const NEVER_CHANGES = () => () => {};
+const firstPepLine = () => PEP_LINES[0];
+
+export function usePepLine(): string {
+  return useSyncExternalStore(NEVER_CHANGES, pepForDay, firstPepLine);
 }
