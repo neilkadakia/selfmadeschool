@@ -141,6 +141,48 @@ function clean_lesson($in): ?array {
             $who = $s($b['who'] ?? null, 80);
             if ($who !== null) $row['who'] = $who;
             $blocks[] = $row;
+        } elseif ($kind === 'split') {
+            $ti = $s($b['title'] ?? null, 120);
+            $ll = $s($b['leftLabel'] ?? null, 60);
+            $rl = $s($b['rightLabel'] ?? null, 60);
+            if ($ll === null || $rl === null) return null;
+            $rows = [];
+            foreach (($b['rows'] ?? []) as $r) {
+                if (!is_array($r)) return null;
+                $l = $s($r['left'] ?? null, 300);
+                $rt = $s($r['right'] ?? null, 300);
+                if ($l === null || $rt === null) return null;
+                $rows[] = ['left' => $l, 'right' => $rt];
+            }
+            if (count($rows) < 2) return null;
+            $row = ['kind' => 'split', 'leftLabel' => $ll, 'rightLabel' => $rl, 'rows' => $rows];
+            if ($ti !== null) $row['title'] = $ti;
+            $blocks[] = $row;
+        } elseif ($kind === 'steps') {
+            $ti = $s($b['title'] ?? null, 120);
+            $steps = [];
+            foreach (($b['steps'] ?? []) as $st) {
+                if (!is_array($st)) return null;
+                $lab = $s($st['label'] ?? null, 80);
+                $t = $s($st['text'] ?? null, 400);
+                if ($lab === null || $t === null) return null;
+                $steps[] = ['label' => $lab, 'text' => $t];
+            }
+            if (count($steps) < 2) return null;
+            $row = ['kind' => 'steps', 'steps' => $steps];
+            if ($ti !== null) $row['title'] = $ti;
+            $blocks[] = $row;
+        } elseif ($kind === 'art') {
+            // The website draws these, so only the drawings it actually has
+            // are allowed through. An unknown name would ship a blank frame.
+            $known = ['two-voices', 'critic-cost', 'start-cost', 'shrink-it', 'never-miss-twice', 'the-long-middle'];
+            $name = $s($b['art'] ?? null, 40);
+            $alt = $s($b['alt'] ?? null, 400);
+            if ($name === null || $alt === null || !in_array($name, $known, true)) return null;
+            $row = ['kind' => 'art', 'art' => $name, 'alt' => $alt];
+            $cap = $s($b['caption'] ?? null, 300);
+            if ($cap !== null) $row['caption'] = $cap;
+            $blocks[] = $row;
         } elseif ($kind === 'image' || $kind === 'video' || $kind === 'embed' || $kind === 'audio' || $kind === 'file') {
             // Media blocks are added by hand, never by the Copilot: a model
             // cannot know a real URL, and one it invents is a broken lesson.
@@ -253,6 +295,18 @@ function lesson_schema(): array {
                 $obj(['kind' => ['const' => 'embed'], 'src' => $str, 'title' => $str, 'caption' => $str], ['kind', 'src', 'title']),
                 $obj(['kind' => ['const' => 'audio'], 'src' => $str, 'title' => $str, 'caption' => $str], ['kind', 'src', 'title']),
                 $obj(['kind' => ['const' => 'file'], 'href' => $str, 'name' => $str, 'note' => $str], ['kind', 'href', 'name']),
+                $obj([
+                    'kind' => ['const' => 'split'],
+                    'title' => $str,
+                    'leftLabel' => $str,
+                    'rightLabel' => $str,
+                    'rows' => ['type' => 'array', 'items' => $obj(['left' => $str, 'right' => $str], ['left', 'right'])],
+                ], ['kind', 'leftLabel', 'rightLabel', 'rows']),
+                $obj([
+                    'kind' => ['const' => 'steps'],
+                    'title' => $str,
+                    'steps' => ['type' => 'array', 'items' => $obj(['label' => $str, 'text' => $str], ['label', 'text'])],
+                ], ['kind', 'steps']),
             ]]],
             'quiz' => ['type' => 'array', 'items' => $obj([
                 'q' => $str,
@@ -291,7 +345,9 @@ A unit is one focused idea taught in about ten minutes of reading:
   callout (a titled rule worth remembering), bigfact (one striking stat + caption),
   list (titled practical steps), example (a named person walked through it with
   real numbers), quote (a line worth pulling out, with an optional attribution in
-  `who`), divider (a breath between two halves of a unit). Open with a p that
+  `who`), split (the same moment in two voices or two approaches, side by side,
+  4-6 rows), steps (a numbered flow of 3-5 moves, each with a short label),
+  divider (a breath between two halves of a unit). Open with a p that
   grounds the topic in real life; use 2-3 h headings to structure; include at
   least one callout, one bigfact, one list, and one example; close with a p
   connecting back to becoming self made.
