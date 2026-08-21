@@ -25,6 +25,18 @@ export type LessonBlock =
   | { kind: "embed"; src: string; title: string; caption?: string }
   | { kind: "audio"; src: string; title: string; caption?: string }
   | { kind: "file"; href: string; name: string; note?: string }
+  | {
+      kind: "split";
+      title?: string;
+      leftLabel: string;
+      rightLabel: string;
+      rows: { left: string; right: string }[];
+    }
+  | { kind: "steps"; title?: string; steps: { label: string; text: string }[] }
+  // The web draws these; the app has no SVG, so it shows the written line the
+  // drawing carries. Keep `art` a plain string here: the app must not fail to
+  // parse a lesson because the website learned a new diagram.
+  | { kind: "art"; art: string; alt: string; caption?: string }
   | { kind: "divider" };
 
 export type QuizQuestion = { q: string; options: string[]; answer: number; explain: string };

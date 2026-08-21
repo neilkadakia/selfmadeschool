@@ -227,6 +227,52 @@ function Block({ block: b }: { block: LessonBlock }) {
         </Pressable>
       );
 
+    case "split":
+      return (
+        <View style={{ gap: S.sm }}>
+          {b.title ? <H2>{b.title}</H2> : null}
+          {b.rows.map((row, i) => (
+            <View key={i} style={{ gap: S.sm }}>
+              <View style={[s.splitCell, { borderLeftColor: C.coral }]}>
+                <Kicker tone={C.coral}>{b.leftLabel}</Kicker>
+                <Text style={s.splitText}>{row.left}</Text>
+              </View>
+              <View style={[s.splitCell, { borderLeftColor: C.acc }]}>
+                <Kicker tone={C.acc}>{b.rightLabel}</Kicker>
+                <Text style={s.splitText}>{row.right}</Text>
+              </View>
+            </View>
+          ))}
+        </View>
+      );
+
+    case "steps":
+      return (
+        <View style={{ gap: S.sm }}>
+          {b.title ? <H2>{b.title}</H2> : null}
+          {b.steps.map((step, i) => (
+            <View key={i} style={s.step}>
+              <Text style={s.stepN}>{i + 1}</Text>
+              <View style={{ flex: 1 }}>
+                <Text style={s.stepLabel}>{step.label}</Text>
+                <Small>{step.text}</Small>
+              </View>
+            </View>
+          ))}
+        </View>
+      );
+
+    // No SVG in this app, so a diagram arrives as the sentence it was written
+    // to carry. That line is the same one a screen reader gets on the web.
+    case "art":
+      return (
+        <Card tone={C.acc}>
+          <Kicker tone={C.acc}>Diagram</Kicker>
+          <P>{b.alt}</P>
+          {b.caption ? <Small>{b.caption}</Small> : null}
+        </Card>
+      );
+
     case "divider":
       return <View style={s.rule} />;
 
@@ -259,5 +305,16 @@ const s = StyleSheet.create({
   image: { width: "100%", height: 200, borderRadius: R.md, backgroundColor: C.card },
   linkTitle: { fontFamily: F.bodyBold, fontSize: 16, color: C.paper, marginBottom: 4 },
   rule: { height: 1, backgroundColor: C.line, marginVertical: S.lg },
+  splitCell: { borderLeftWidth: 3, paddingLeft: S.md, gap: 4 },
+  splitText: { fontFamily: F.body, fontSize: 15, lineHeight: 23, color: C.paper },
+  step: { flexDirection: "row", gap: S.md, marginTop: S.sm },
+  stepN: {
+    fontFamily: F.display,
+    fontSize: 18,
+    color: C.acc,
+    width: 22,
+    textAlign: "center",
+  },
+  stepLabel: { fontFamily: F.bodyBold, fontSize: 16, color: C.paper, marginBottom: 2 },
   theLesson: { fontFamily: F.displayMid, fontSize: 19, lineHeight: 27, color: C.paper },
 });

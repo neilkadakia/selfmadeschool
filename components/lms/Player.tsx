@@ -14,6 +14,7 @@ import RewardToast from "./RewardToast";
 import StudyGroup from "./StudyGroup";
 import Quiz from "./Quiz";
 import Deck from "./Deck";
+import LessonArtFigure from "./LessonArt";
 
 // Exported for the public demo lesson, which renders the same blocks
 // outside the auth gate.
@@ -113,6 +114,51 @@ export function Block({ block }: { block: LessonBlock }) {
           {block.note && <span className="lms-file-note">{block.note}</span>}
         </a>
       );
+    case "split":
+      return (
+        <div className="lms-split">
+          {block.title && <p className="lms-split-title">{block.title}</p>}
+          <div className="lms-split-head">
+            <p className="lms-split-label lms-split-label--warn">{block.leftLabel}</p>
+            <p className="lms-split-label lms-split-label--good">{block.rightLabel}</p>
+          </div>
+          <div className="lms-split-rows">
+            {block.rows.map((row, i) => (
+              <div key={i} className="lms-split-row">
+                {/* The label repeats inside every row because on a phone the
+                    two columns stack and the header scrolls away. */}
+                <p className="lms-split-cell lms-split-cell--warn">
+                  <span className="lms-split-mini">{block.leftLabel}</span>
+                  {row.left}
+                </p>
+                <p className="lms-split-cell lms-split-cell--good">
+                  <span className="lms-split-mini">{block.rightLabel}</span>
+                  {row.right}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    case "steps":
+      return (
+        <div className="lms-steps">
+          {block.title && <p className="lms-steps-title">{block.title}</p>}
+          <ol className="lms-steps-list">
+            {block.steps.map((step, i) => (
+              <li key={i} className="lms-step">
+                <span className="lms-step-n">{i + 1}</span>
+                <span className="lms-step-body">
+                  <span className="lms-step-label">{step.label}</span>
+                  <span className="lms-step-text">{step.text}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      );
+    case "art":
+      return <LessonArtFigure art={block.art} alt={block.alt} caption={block.caption} />;
     case "divider":
       return <hr className="lms-divider" />;
   }
@@ -287,7 +333,8 @@ export default function Player({ courseSlug, unitSlug }: { courseSlug: string; u
             <section className="lms-section">
               <h2 className="lms-section-h">Flashcards</h2>
               <p className="lms-section-sub">
-                The unit in six cards: the version that stays with you after the tab closes.
+                The unit in {lesson.cards.length} cards: the version that stays with you after the
+                tab closes.
               </p>
               <Deck
                 cards={lesson.cards}

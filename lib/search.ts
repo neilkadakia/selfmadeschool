@@ -50,6 +50,14 @@ function blockText(b: LessonBlock): string {
       return [b.title, b.caption].filter(Boolean).join(". ");
     case "file":
       return [b.name, b.note].filter(Boolean).join(". ");
+    case "split":
+      return [b.title, ...b.rows.flatMap((r) => [r.left, r.right])].filter(Boolean).join(". ");
+    case "steps":
+      return [b.title, ...b.steps.flatMap((st) => [st.label, st.text])].filter(Boolean).join(". ");
+    // The alt line is the picture written out, so it is the only searchable
+    // thing in a drawing. The chip labels inside it are layout.
+    case "art":
+      return [b.alt, b.caption].filter(Boolean).join(". ");
     default:
       return "";
   }

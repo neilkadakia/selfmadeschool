@@ -25,7 +25,31 @@ export type LessonBlock =
   | { kind: "embed"; src: string; title: string; caption?: string }
   | { kind: "audio"; src: string; title: string; caption?: string }
   | { kind: "file"; href: string; name: string; note?: string }
+  // Three kinds that exist so a lesson is not a wall of text. They carry
+  // structure, never bytes: `art` names a diagram the site draws itself, so a
+  // lesson stays a plain object the API and the phone app can both read.
+  | {
+      kind: "split";
+      title?: string;
+      leftLabel: string;
+      rightLabel: string;
+      rows: { left: string; right: string }[];
+    }
+  | { kind: "steps"; title?: string; steps: { label: string; text: string }[] }
+  | { kind: "art"; art: LessonArt; alt: string; caption?: string }
   | { kind: "divider" };
+
+// The diagrams the site knows how to draw. A lesson picks one by name; the
+// picture lives in components/lms/LessonArt.tsx. Named rather than free-form
+// because a lesson author should not be writing SVG, and because every
+// drawing has to survive the phone and a screen reader.
+export type LessonArt =
+  | "two-voices"
+  | "critic-cost"
+  | "start-cost"
+  | "shrink-it"
+  | "never-miss-twice"
+  | "the-long-middle";
 
 export type QuizQuestion = {
   q: string;

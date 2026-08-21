@@ -6699,6 +6699,50 @@ html.lms-light input[type="date"].lms-cert-name {
   font-size: 19px;
 }
 
+/* What is in the unit, before the unit. Four numbers, so the page reads as
+   something to do rather than something to scroll. */
+.demo-stats {
+  list-style: none;
+  margin: 22px 0 26px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.demo-stats li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(242, 238, 227, 0.05);
+  border: 1px solid rgba(242, 238, 227, 0.12);
+}
+
+.demo-stat-n {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--acc);
+}
+
+.demo-stat-l {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-on-ink);
+}
+
+@media (max-width: 720px) {
+  .demo-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .demo-note {
   margin: 0 0 44px;
   padding: 14px 20px;
@@ -9673,6 +9717,764 @@ a.bell-note:hover {
   margin: 34px 0;
   border: none;
   border-top: 1px solid rgba(242, 238, 227, 0.14);
+}
+
+/* ---------- Lesson structure: split, steps, art ---------- */
+/*
+   Three block kinds that carry shape instead of prose. They share one kit
+   with the rest of the lesson: a tinted wash and a hairline, tone arriving
+   as a rule or a dot rather than a filled slab, and nothing that stops
+   working when the column is 320px wide.
+*/
+
+/* Critic says / Coach says. Two columns on a desktop, two stacked cards on a
+   phone, and the row is the unit either way so a pair never separates. */
+.lms-split {
+  margin: 30px 0;
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-radius: 20px;
+  background: rgba(242, 238, 227, 0.04);
+  padding: 20px;
+}
+
+.lms-split-title {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  margin: 0 0 16px;
+}
+
+.lms-split-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.lms-split-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0;
+  padding-bottom: 8px;
+}
+
+.lms-split-label--warn {
+  color: var(--coral);
+  border-bottom: 2px solid rgba(255, 180, 58, 0.5);
+}
+
+.lms-split-label--good {
+  color: var(--acc);
+  border-bottom: 2px solid rgba(67, 222, 123, 0.5);
+}
+
+.lms-split-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lms-split-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.lms-split-cell {
+  margin: 0;
+  padding: 13px 15px;
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 1.55;
+  border-left: 3px solid transparent;
+}
+
+.lms-split-cell--warn {
+  background: rgba(255, 180, 58, 0.08);
+  border-left-color: rgba(255, 180, 58, 0.55);
+}
+
+.lms-split-cell--good {
+  background: rgba(67, 222, 123, 0.08);
+  border-left-color: rgba(67, 222, 123, 0.55);
+}
+
+/* Only shows once the columns stack, where the header has scrolled away. */
+.lms-split-mini {
+  display: none;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  opacity: 0.75;
+}
+
+@media (max-width: 720px) {
+  .lms-split {
+    padding: 16px;
+  }
+
+  .lms-split-head {
+    display: none;
+  }
+
+  .lms-split-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(242, 238, 227, 0.1);
+  }
+
+  .lms-split-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .lms-split-mini {
+    display: block;
+  }
+
+  .lms-split-cell--warn .lms-split-mini {
+    color: var(--coral);
+  }
+
+  .lms-split-cell--good .lms-split-mini {
+    color: var(--acc);
+  }
+}
+
+/* A numbered flow with a spine down the numbers. */
+.lms-steps {
+  margin: 30px 0;
+}
+
+.lms-steps-title {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  margin: 0 0 14px;
+}
+
+.lms-steps-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lms-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 14px;
+  padding-bottom: 18px;
+}
+
+/* The spine runs from each number down to the next, so the last step ends
+   the line instead of trailing off into nothing. */
+.lms-step::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 34px;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(rgba(67, 222, 123, 0.5), rgba(67, 222, 123, 0.12));
+}
+
+.lms-step:last-child {
+  padding-bottom: 0;
+}
+
+.lms-step:last-child::before {
+  display: none;
+}
+
+.lms-step-n {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(67, 222, 123, 0.55);
+  background: rgba(67, 222, 123, 0.1);
+  color: var(--acc);
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.lms-step-body {
+  display: block;
+  padding-top: 4px;
+}
+
+.lms-step-label {
+  display: block;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 3px;
+}
+
+.lms-step-text {
+  display: block;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted-on-ink);
+}
+
+/* ---------- Drawings ---------- */
+
+.lms-art {
+  margin: 30px 0;
+}
+
+.lms-art-frame {
+  border: 1px solid rgba(242, 238, 227, 0.14);
+  border-radius: 20px;
+  background: rgba(242, 238, 227, 0.04);
+  padding: 22px 20px;
+}
+
+.lms-art figcaption {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+}
+
+/* Shapes stretch to the frame; the words on top are real text. */
+.la-shapes {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.la-tag {
+  position: absolute;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  padding: 5px 9px;
+  border-radius: 8px;
+  background: rgba(14, 14, 18, 0.82);
+  border: 1px solid rgba(242, 238, 227, 0.16);
+  max-width: 46%;
+}
+
+.la-tag--warn {
+  color: var(--coral);
+  border-color: rgba(255, 180, 58, 0.42);
+}
+
+.la-tag--good {
+  color: var(--acc);
+  border-color: rgba(67, 222, 123, 0.42);
+}
+
+.la-tag--plain {
+  color: var(--muted-on-ink);
+}
+
+.la-plot {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 1;
+  min-height: 150px;
+}
+
+.la-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-on-ink);
+}
+
+.la-foot {
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+}
+
+/* two-voices: one situation, two rooms it can go to. */
+.la-seed {
+  margin: 0 auto;
+  width: fit-content;
+  max-width: 100%;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 15px;
+  text-align: center;
+}
+
+.la-fork-neck {
+  height: 34px;
+}
+
+.la-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.la-card {
+  border-radius: 14px;
+  padding: 14px 16px;
+  border: 1px solid rgba(242, 238, 227, 0.12);
+}
+
+.la-card--warn {
+  background: rgba(255, 180, 58, 0.08);
+  border-color: rgba(255, 180, 58, 0.34);
+}
+
+.la-card--good {
+  background: rgba(67, 222, 123, 0.08);
+  border-color: rgba(67, 222, 123, 0.34);
+}
+
+.la-card-label {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.la-card--warn .la-card-label {
+  color: var(--coral);
+}
+
+.la-card--good .la-card-label {
+  color: var(--acc);
+}
+
+.la-card-line {
+  margin: 0 0 10px;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.la-card-out {
+  margin: 0;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(242, 238, 227, 0.16);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted-on-ink);
+}
+
+@media (max-width: 620px) {
+  .la-fork-neck {
+    height: 18px;
+  }
+
+  .la-fork-neck .la-shapes {
+    display: none;
+  }
+
+  .la-pair {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* critic-cost: the loop, laid out as a chain that closes. */
+.la-loop-ring {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.la-loop-node {
+  flex: 1 1 150px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 180, 58, 0.07);
+  border: 1px solid rgba(255, 180, 58, 0.28);
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.la-loop-n {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--coral);
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 12px;
+}
+
+/* The leg that turns the chain back into a loop. Borders, so it spans any
+   width without an arrowhead distorting. */
+.la-loop-return {
+  height: 16px;
+  margin: 0 12px;
+  border: 2px solid rgba(255, 180, 58, 0.5);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  position: relative;
+}
+
+.la-loop-return::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: -3px;
+  border: 5px solid transparent;
+  border-bottom-color: rgba(255, 180, 58, 0.75);
+}
+
+.la-loop-back {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: var(--coral);
+  font-weight: 600;
+}
+
+/* shrink-it: the same habit at three sizes. */
+.la--bars {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.la-bar-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+
+.la-bar {
+  grid-column: 1 / -1;
+  display: block;
+  height: 14px;
+  border-radius: 4px;
+  min-width: 26px;
+}
+
+.la-bar-row--warn .la-bar {
+  background: linear-gradient(90deg, rgba(255, 180, 58, 0.85), rgba(255, 180, 58, 0.35));
+}
+
+.la-bar-row--good .la-bar {
+  background: var(--acc);
+}
+
+.la-bar-label {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.la-bar-note {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: right;
+}
+
+.la-bar-row--warn .la-bar-note {
+  color: var(--coral);
+}
+
+.la-bar-row--good .la-bar-note {
+  color: var(--acc);
+}
+
+/* never-miss-twice: six days, then the fork the whole rule is about. */
+.la-day {
+  display: block;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  flex: none;
+}
+
+.la-day.is-hit {
+  background: var(--acc);
+}
+
+.la-day.is-miss {
+  background: transparent;
+  border: 2px dashed rgba(255, 180, 58, 0.75);
+}
+
+.la-day.is-dead {
+  background: transparent;
+  border: 2px dashed rgba(242, 238, 227, 0.2);
+}
+
+.la-streak-run {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.12);
+}
+
+.la-streak-caption {
+  font-size: 14px;
+  color: var(--muted-on-ink);
+  margin-left: 6px;
+}
+
+.la-branches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.la-branch {
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(242, 238, 227, 0.12);
+}
+
+.la-branch--bad {
+  background: rgba(255, 180, 58, 0.06);
+  border-color: rgba(255, 180, 58, 0.28);
+}
+
+.la-branch--good {
+  background: rgba(67, 222, 123, 0.06);
+  border-color: rgba(67, 222, 123, 0.28);
+}
+
+.la-branch-days {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.la-branch-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 620px) {
+  .la-branches {
+    grid-template-columns: 1fr;
+  }
+
+  .la-day {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+  }
+
+  .la-streak-caption {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+
+  .la-tag {
+    font-size: 11px;
+    max-width: 50%;
+    padding: 4px 7px;
+  }
+
+  /* A 3:1 plot on a phone is 110px tall, which puts every label on top of the
+     line it is pointing at. Give the drawing more height instead. */
+  .la-plot {
+    aspect-ratio: 2 / 1;
+    min-height: 170px;
+  }
+}
+
+
+/* Diagram fills that have to change with the theme, so they live in CSS
+   rather than as attributes on the shapes. */
+.la-band {
+  fill: rgba(255, 180, 58, 0.09);
+}
+
+/* Markers on a stretched plot: HTML, so they stay round at any width. */
+.la-point {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.la-point--warn {
+  background: var(--coral);
+}
+
+.la-point--good {
+  background: var(--acc);
+}
+
+/* Day Class. The drawings inherit currentColor for their strokes, so the
+   curves and the hairlines flip on their own; what needs saying here is
+   every wash, border and accent that was written for a dark ground. */
+html.lms-light .lms-split,
+html.lms-light .lms-art-frame,
+html.lms-light .la-card,
+html.lms-light .la-branch {
+  background: rgba(14, 14, 18, 0.03);
+  border-color: rgba(14, 14, 18, 0.16);
+}
+
+html.lms-light .lms-split-label--warn,
+html.lms-light .la-card--warn .la-card-label,
+html.lms-light .la-bar-row--warn .la-bar-note,
+html.lms-light .la-loop-back,
+html.lms-light .la-tag--warn,
+html.lms-light .lms-split-cell--warn .lms-split-mini {
+  color: #b3700c;
+}
+
+html.lms-light .lms-split-label--good,
+html.lms-light .la-card--good .la-card-label,
+html.lms-light .la-bar-row--good .la-bar-note,
+html.lms-light .lms-step-n,
+html.lms-light .la-tag--good,
+html.lms-light .lms-split-cell--good .lms-split-mini {
+  color: #157a3e;
+}
+
+html.lms-light .lms-split-label--warn {
+  border-bottom-color: rgba(179, 112, 12, 0.45);
+}
+
+html.lms-light .lms-split-label--good {
+  border-bottom-color: rgba(21, 122, 62, 0.45);
+}
+
+html.lms-light .lms-split-cell--warn,
+html.lms-light .la-card--warn,
+html.lms-light .la-branch--bad,
+html.lms-light .la-loop-node {
+  background: rgba(217, 138, 23, 0.1);
+  border-color: rgba(217, 138, 23, 0.32);
+}
+
+html.lms-light .lms-split-cell--warn {
+  border-left-color: rgba(179, 112, 12, 0.55);
+}
+
+html.lms-light .lms-split-cell--good,
+html.lms-light .la-card--good,
+html.lms-light .la-branch--good,
+html.lms-light .lms-step-n {
+  background: rgba(29, 158, 80, 0.1);
+  border-color: rgba(29, 158, 80, 0.32);
+}
+
+html.lms-light .lms-split-cell--good {
+  border-left-color: rgba(21, 122, 62, 0.55);
+}
+
+html.lms-light .lms-step::before {
+  background: linear-gradient(rgba(29, 158, 80, 0.5), rgba(29, 158, 80, 0.12));
+}
+
+html.lms-light .lms-split-row {
+  border-bottom-color: rgba(14, 14, 18, 0.1);
+}
+
+html.lms-light .la-card-out {
+  border-top-color: rgba(14, 14, 18, 0.16);
+}
+
+html.lms-light .la-streak-run {
+  border-bottom-color: rgba(14, 14, 18, 0.12);
+}
+
+/* Paper-on-paper again: the chip that was cream on ink inverts. */
+html.lms-light .la-seed {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+html.lms-light .la-tag {
+  background: rgba(242, 238, 227, 0.9);
+  border-color: rgba(14, 14, 18, 0.18);
+}
+
+html.lms-light .la-loop-n {
+  background: #d98a17;
+  color: var(--paper);
+}
+
+html.lms-light .la-loop-return {
+  border-color: rgba(217, 138, 23, 0.55);
+  border-top: none;
+}
+
+html.lms-light .la-loop-return::before {
+  border-bottom-color: rgba(217, 138, 23, 0.8);
+}
+
+html.lms-light .la-day.is-hit {
+  background: #1d9e50;
+}
+
+html.lms-light .la-day.is-miss {
+  border-color: rgba(217, 138, 23, 0.8);
+}
+
+html.lms-light .la-day.is-dead {
+  border-color: rgba(14, 14, 18, 0.2);
+}
+
+html.lms-light .la-bar-row--good .la-bar {
+  background: #1d9e50;
+}
+
+html.lms-light .la-bar-row--warn .la-bar {
+  background: linear-gradient(90deg, rgba(217, 138, 23, 0.9), rgba(217, 138, 23, 0.35));
+}
+
+html.lms-light .la-band {
+  fill: rgba(217, 138, 23, 0.12);
+}
+
+html.lms-light .la-point--warn {
+  background: #d98a17;
+}
+
+html.lms-light .la-point--good {
+  background: #1d9e50;
+}
+
+html.lms-light .demo-stats li {
+  background: rgba(14, 14, 18, 0.04);
+  border-color: rgba(14, 14, 18, 0.14);
+}
+
+html.lms-light .demo-stat-n {
+  color: #157a3e;
 }
 
 /* ---------- The Quad, the Register, Challenges ---------- */

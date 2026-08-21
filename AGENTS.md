@@ -76,6 +76,29 @@ line it matched. Quiz *options* are deliberately excluded: three of four are
 wrong, and surfacing a wrong answer as a search result teaches the wrong thing.
 `npm run test:search`.
 
+## A lesson is blocks, and three of them are pictures
+Beyond prose, a lesson can carry **`split`** (the same moment in two voices,
+built for Critic says / Coach says), **`steps`** (a numbered flow with a spine)
+and **`art`**, which names a drawing from a fixed list that
+`components/lms/LessonArt.tsx` draws. Named, not free-form: an author should
+never be writing SVG into curriculum data, and every drawing has to survive a
+phone and a screen reader.
+
+Two rules hold the drawings up. **The words in a picture are DOM text, never
+SVG `<text>`**: a 600-unit viewBox on a phone turns 15px type into 8px, so
+shapes are SVG and sentences are HTML stacked on top. And **the figure is one
+image with one sentence**: the frame carries `role="img"` and the `alt` line,
+because a reader walking a scatter of chips learns nothing. That same `alt` is
+what search indexes and what the phone app shows, since Expo has no SVG here.
+
+Because the shape layer is stretched to its frame, anything round or diagonal
+distorts. Circles are HTML markers positioned by percentage, and connectors use
+only vertical and horizontal segments.
+
+Add a drawing in three places: the id in `LessonArt` (`lib/lms.ts`), the case in
+`LessonArt.tsx`, and the name in the allowed list in `api/copilot.php`, which
+refuses an unknown one rather than shipping a blank frame.
+
 ## The Quad and the Register
 `/learn/quad` is the community: clubs are rooms, each with its own members, feed
 and posting rule. House clubs are seeded once into the `clubs` store; a club per
