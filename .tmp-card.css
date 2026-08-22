@@ -1,0 +1,1218 @@
+/* ---------- Lesson graphics ----------
+   The house language, not a generic card kit. The rules, and they are the
+   reason this section was rewritten once already:
+
+   - A block that carries a tone is a SOLID fill with ink text, the way the
+     Read / Watch / Do panels and the syllabus cards are. Never a dark tile
+     with a tinted wash and a coloured band down one edge.
+   - Reference material that wants to be read like a document (a receipt, a
+     table) inverts to cream, the way .lms-bigfact does.
+   - Everything else (steps, timelines, bars, scales) is drawn straight onto
+     the page with a spine, a dot or a bar. No container at all.
+   - Numbers are Bricolage and large. Labels are 12 to 13px uppercase with
+     0.18em tracking, which is the kicker everywhere else on the site.
+*/
+
+.lms-gfx,
+.lms-art,
+.lms-split,
+.lms-steps {
+  margin: 34px 0;
+  min-width: 0;
+}
+
+.lms-gfx-title,
+.lms-split-title,
+.lms-steps-title {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: clamp(19px, 2.4vw, 23px);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0 0 18px;
+}
+
+.lms-gfx figcaption,
+.lms-art figcaption {
+  margin: 16px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ---------- split: the same moment, two ways ---------- */
+
+.lms-split-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.lms-split-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.lms-split-label--warn {
+  color: var(--coral);
+}
+
+.lms-split-label--good {
+  color: var(--acc);
+}
+
+.lms-split-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.lms-split-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.lms-split-cell {
+  margin: 0;
+  border-radius: 18px;
+  padding: 16px 18px;
+  font-size: 15.5px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.lms-split-cell--warn {
+  background: var(--coral);
+  color: var(--ink);
+}
+
+.lms-split-cell--good {
+  background: var(--acc);
+  color: var(--ink);
+}
+
+/* Only shows once the columns stack and the header is gone. */
+.lms-split-mini {
+  display: none;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  opacity: 0.6;
+}
+
+@media (max-width: 720px) {
+  .lms-split-head {
+    display: none;
+  }
+
+  .lms-split-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .lms-split-mini {
+    display: block;
+  }
+}
+
+/* ---------- steps: a numbered flow with a spine ---------- */
+
+.lms-steps-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lms-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 16px;
+  padding-bottom: 22px;
+}
+
+.lms-step::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 40px;
+  bottom: 0;
+  width: 2px;
+  background: rgba(67, 222, 123, 0.35);
+}
+
+.lms-step:last-child {
+  padding-bottom: 0;
+}
+
+.lms-step:last-child::before {
+  display: none;
+}
+
+.lms-step-n {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--acc);
+  color: var(--ink);
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.lms-step-body {
+  display: block;
+  padding-top: 6px;
+}
+
+.lms-step-label {
+  display: block;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  margin-bottom: 5px;
+}
+
+.lms-step-text {
+  display: block;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* ---------- bars ---------- */
+
+.gfx-bars .lms-gfx-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.gfx-bar-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.gfx-bar-label {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.gfx-bar-value {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: clamp(20px, 3vw, 26px);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.gfx-bar-track {
+  display: block;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(242, 238, 227, 0.12);
+  overflow: hidden;
+}
+
+.gfx-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--paper);
+}
+
+.gfx-bar-row.is-good .gfx-bar-fill {
+  background: var(--acc);
+}
+
+.gfx-bar-row.is-good .gfx-bar-value {
+  color: var(--acc);
+}
+
+.gfx-bar-row.is-warn .gfx-bar-fill {
+  background: var(--coral);
+}
+
+.gfx-bar-row.is-warn .gfx-bar-value {
+  color: var(--coral);
+}
+
+.gfx-bar-note {
+  display: block;
+  margin-top: 9px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ---------- flow ---------- */
+
+.gfx-flow-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.gfx-flow-step {
+  flex: 1 1 170px;
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  border-radius: 18px;
+  padding: 15px 17px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.gfx-flow.is-warn .gfx-flow-step {
+  background: var(--coral);
+}
+
+.gfx-flow.is-good .gfx-flow-step {
+  background: var(--acc);
+}
+
+.gfx-flow-n {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.gfx-flow-label {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.gfx-flow-note {
+  display: block;
+  margin-top: 5px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  opacity: 0.72;
+}
+
+/* The leg that closes a cycle. Borders, so it spans any width without an
+   arrowhead distorting inside a stretched viewBox. */
+.gfx-flow-return {
+  height: 18px;
+  margin: 0 14px;
+  border: 2px solid rgba(242, 238, 227, 0.4);
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  position: relative;
+}
+
+.gfx-flow-return::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: -3px;
+  border: 5px solid transparent;
+  border-bottom-color: rgba(242, 238, 227, 0.65);
+}
+
+.gfx-flow.is-warn .gfx-flow-return {
+  border-color: rgba(255, 180, 58, 0.65);
+  border-top: none;
+}
+
+.gfx-flow.is-warn .gfx-flow-return::before {
+  border-bottom-color: var(--coral);
+}
+
+.gfx-flow.is-good .gfx-flow-return {
+  border-color: rgba(67, 222, 123, 0.65);
+  border-top: none;
+}
+
+.gfx-flow.is-good .gfx-flow-return::before {
+  border-bottom-color: var(--acc);
+}
+
+.gfx-flow-back {
+  margin: 12px 0 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.gfx-flow.is-warn .gfx-flow-back {
+  color: var(--coral);
+}
+
+.gfx-flow.is-good .gfx-flow-back {
+  color: var(--acc);
+}
+
+/* ---------- timeline ---------- */
+
+.gfx-tl-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.gfx-tl-point {
+  position: relative;
+  display: grid;
+  grid-template-columns: 92px 26px 1fr;
+  align-items: start;
+  gap: 0 14px;
+  padding-bottom: 24px;
+}
+
+.gfx-tl-point::before {
+  content: "";
+  position: absolute;
+  left: 104px;
+  top: 22px;
+  bottom: 0;
+  width: 2px;
+  background: rgba(242, 238, 227, 0.2);
+}
+
+.gfx-tl-point:last-child {
+  padding-bottom: 0;
+}
+
+.gfx-tl-point:last-child::before {
+  display: none;
+}
+
+.gfx-tl-at {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 3px;
+  text-align: right;
+}
+
+.gfx-tl-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--paper);
+  margin: 4px auto 0;
+}
+
+.gfx-tl-point.is-good .gfx-tl-dot {
+  background: var(--acc);
+}
+
+.gfx-tl-point.is-warn .gfx-tl-dot {
+  background: var(--coral);
+}
+
+.gfx-tl-label {
+  display: block;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.gfx-tl-point.is-good .gfx-tl-label {
+  color: var(--acc);
+}
+
+.gfx-tl-point.is-warn .gfx-tl-label {
+  color: var(--coral);
+}
+
+.gfx-tl-note {
+  display: block;
+  margin-top: 5px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+@media (max-width: 620px) {
+  .gfx-tl-point {
+    grid-template-columns: 26px 1fr;
+    gap: 0 12px;
+  }
+
+  .gfx-tl-point::before {
+    left: 12px;
+  }
+
+  .gfx-tl-at {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: left;
+    padding-top: 0;
+    margin-bottom: 4px;
+  }
+
+  .gfx-tl-dot {
+    grid-column: 1;
+    grid-row: 1;
+    margin-top: 2px;
+  }
+
+  .gfx-tl-body {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
+
+/* ---------- receipt ----------
+   A document, so it inverts to cream and is read as one. */
+
+.gfx-receipt .lms-gfx-body {
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 24px;
+  padding: 26px 28px;
+}
+
+.gfx-rc-list {
+  margin: 0;
+}
+
+.gfx-rc-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(14, 14, 18, 0.14);
+}
+
+.gfx-rc-label {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+.gfx-rc-note {
+  display: block;
+  margin-top: 3px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  font-weight: 400;
+  opacity: 0.62;
+}
+
+.gfx-rc-value {
+  margin: 0;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.gfx-rc-line.is-good .gfx-rc-value {
+  color: #157a3e;
+}
+
+.gfx-rc-line.is-warn .gfx-rc-value {
+  color: #b3700c;
+}
+
+.gfx-rc-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding: 18px 22px;
+  border-radius: 18px;
+  background: var(--acc);
+  color: var(--ink);
+}
+
+.gfx-rc-total-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.gfx-rc-total-value {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 5vw, 40px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.gfx-receipt figcaption {
+  color: var(--muted);
+}
+
+/* ---------- scale ---------- */
+
+.gfx-sc-poles {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.gfx-sc-poles span:last-child {
+  text-align: right;
+}
+
+.gfx-sc-track {
+  position: relative;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--coral), rgba(242, 238, 227, 0.35), var(--acc));
+  margin-bottom: 22px;
+}
+
+.gfx-sc-mark {
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  transform: translate(-50%, -50%);
+}
+
+.gfx-sc-mark.is-good {
+  background: var(--acc);
+}
+
+.gfx-sc-mark.is-warn {
+  background: var(--coral);
+}
+
+.gfx-sc-keys {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gfx-sc-key {
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.gfx-sc-key.is-good {
+  background: var(--acc);
+}
+
+.gfx-sc-key.is-warn {
+  background: var(--coral);
+}
+
+/* ---------- table ---------- */
+
+/* contain: inline-size is load-bearing. Without it the table's min-width
+   propagates as a min-content floor all the way up through .lms-main, which
+   widens the whole lesson column on a phone; body's overflow-x: hidden then
+   swallows the evidence, so the page looks fine and every graphic on it is
+   quietly wider than the screen. */
+.gfx-tb-scroll {
+  overflow-x: auto;
+  contain: inline-size;
+  width: 100%;
+  margin: 0 -4px;
+  padding: 0 4px;
+}
+
+.gfx-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.gfx-table th,
+.gfx-table td {
+  text-align: left;
+  padding: 14px 16px 14px 0;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.14);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.gfx-table thead th {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--acc);
+  border-bottom: 2px solid var(--acc);
+  padding-bottom: 10px;
+  white-space: nowrap;
+}
+
+.gfx-table tbody th {
+  font-weight: 800;
+  padding-right: 22px;
+}
+
+.gfx-table tbody tr:last-child th,
+.gfx-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+@media (max-width: 620px) {
+  .gfx-table table {
+    min-width: 470px;
+  }
+}
+
+/* ---------- The named drawings (components/lms/LessonArt.tsx) ---------- */
+
+.la-shapes {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.la-tag {
+  position: absolute;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  max-width: 46%;
+}
+
+.la-tag--warn {
+  background: var(--coral);
+}
+
+.la-tag--good {
+  background: var(--acc);
+}
+
+.la-tag--plain {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.la-plot {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 1;
+  min-height: 150px;
+}
+
+.la-point {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 3px solid var(--ink);
+}
+
+.la-point--warn {
+  background: var(--coral);
+}
+
+.la-point--good {
+  background: var(--acc);
+}
+
+.la-band {
+  fill: rgba(255, 180, 58, 0.14);
+}
+
+.la-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.la-foot {
+  margin: 14px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* two-voices */
+
+.la-seed {
+  margin: 0 auto;
+  width: fit-content;
+  max-width: 100%;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 16px;
+  text-align: center;
+}
+
+.la-fork-neck {
+  height: 34px;
+}
+
+.la-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.la-card {
+  border-radius: 18px;
+  padding: 18px 20px;
+  color: var(--ink);
+}
+
+.la-card--warn {
+  background: var(--coral);
+}
+
+.la-card--good {
+  background: var(--acc);
+}
+
+.la-card-label {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.la-card-line {
+  margin: 0 0 12px;
+  font-size: 16px;
+  line-height: 1.45;
+  font-weight: 700;
+}
+
+.la-card-out {
+  margin: 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(14, 14, 18, 0.22);
+  font-size: 14.5px;
+  line-height: 1.5;
+  opacity: 0.75;
+}
+
+@media (max-width: 620px) {
+  .la-fork-neck {
+    height: 18px;
+  }
+
+  .la-fork-neck .la-shapes {
+    display: none;
+  }
+
+  .la-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .la-tag {
+    font-size: 11px;
+    max-width: 52%;
+    padding: 5px 10px;
+  }
+
+  .la-plot {
+    aspect-ratio: 2 / 1;
+    min-height: 170px;
+  }
+}
+
+/* critic-cost */
+
+.la-loop-ring {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.la-loop-node {
+  flex: 1 1 165px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 15px 17px;
+  border-radius: 18px;
+  background: var(--coral);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.la-loop-n {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.la-loop-return {
+  height: 18px;
+  margin: 0 14px;
+  border: 2px solid rgba(255, 180, 58, 0.65);
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  position: relative;
+}
+
+.la-loop-return::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: -3px;
+  border: 5px solid transparent;
+  border-bottom-color: var(--coral);
+}
+
+.la-loop-back {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: var(--coral);
+  font-weight: 700;
+}
+
+/* shrink-it */
+
+.la--bars {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.la-bar-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 6px 14px;
+}
+
+.la-bar {
+  grid-column: 1 / -1;
+  display: block;
+  height: 18px;
+  border-radius: 999px;
+  min-width: 30px;
+}
+
+.la-bar-row--warn .la-bar {
+  background: var(--coral);
+}
+
+.la-bar-row--good .la-bar {
+  background: var(--acc);
+}
+
+.la-bar-label {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.la-bar-note {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.la-bar-row--warn .la-bar-note {
+  color: var(--coral);
+}
+
+.la-bar-row--good .la-bar-note {
+  color: var(--acc);
+}
+
+/* never-miss-twice */
+
+.la-day {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  flex: none;
+}
+
+.la-day.is-hit {
+  background: var(--acc);
+}
+
+.la-day.is-miss {
+  background: transparent;
+  border: 2px dashed var(--coral);
+}
+
+.la-day.is-dead {
+  background: transparent;
+  border: 2px dashed rgba(242, 238, 227, 0.28);
+}
+
+.la-streak-run {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.16);
+}
+
+.la-streak-caption {
+  font-size: 15px;
+  color: var(--muted);
+  margin-left: 8px;
+}
+
+.la-branches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.la-branch {
+  padding: 18px 20px;
+  border-radius: 18px;
+  color: var(--ink);
+}
+
+.la-branch--bad {
+  background: var(--coral);
+}
+
+.la-branch--good {
+  background: var(--acc);
+}
+
+.la-branch-days {
+  display: flex;
+  gap: 9px;
+  margin-bottom: 14px;
+}
+
+.la-branch .la-day.is-hit {
+  background: var(--ink);
+}
+
+.la-branch .la-day.is-miss,
+.la-branch .la-day.is-dead {
+  border-color: rgba(14, 14, 18, 0.5);
+}
+
+.la-branch-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+@media (max-width: 620px) {
+  .la-branches {
+    grid-template-columns: 1fr;
+  }
+
+  .la-day {
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+  }
+
+  .la-streak-caption {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+}
+
+/* ---------- Day Class ----------
+   The solid fills are the same in both themes: green stays green and amber
+   stays amber, both with ink text, exactly as the marketing cards do. Only
+   the things drawn in paper-on-ink need turning over. */
+
+html.lms-light .gfx-bar-track {
+  background: rgba(14, 14, 18, 0.12);
+}
+
+html.lms-light .gfx-bar-fill,
+html.lms-light .gfx-tl-dot,
+html.lms-light .gfx-flow-step,
+html.lms-light .gfx-sc-key,
+html.lms-light .la-tag,
+html.lms-light .la-tag--plain,
+html.lms-light .la-seed,
+html.lms-light .gfx-sc-mark {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+html.lms-light .gfx-flow-n,
+html.lms-light .la-loop-n {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+html.lms-light .gfx-sc-mark {
+  border-color: var(--paper);
+}
+
+html.lms-light .gfx-bar-row.is-good .gfx-bar-fill,
+html.lms-light .gfx-tl-point.is-good .gfx-tl-dot,
+html.lms-light .gfx-sc-mark.is-good,
+html.lms-light .gfx-sc-key.is-good,
+html.lms-light .gfx-flow.is-good .gfx-flow-step,
+html.lms-light .la-tag--good {
+  background: var(--acc);
+  color: var(--ink);
+}
+
+html.lms-light .gfx-bar-row.is-warn .gfx-bar-fill,
+html.lms-light .gfx-tl-point.is-warn .gfx-tl-dot,
+html.lms-light .gfx-sc-mark.is-warn,
+html.lms-light .gfx-sc-key.is-warn,
+html.lms-light .gfx-flow.is-warn .gfx-flow-step,
+html.lms-light .la-tag--warn {
+  background: var(--coral);
+  color: var(--ink);
+}
+
+html.lms-light .gfx-bar-row.is-good .gfx-bar-value,
+html.lms-light .gfx-tl-point.is-good .gfx-tl-label,
+html.lms-light .gfx-flow.is-good .gfx-flow-back,
+html.lms-light .lms-split-label--good,
+html.lms-light .la-bar-row--good .la-bar-note,
+html.lms-light .gfx-table thead th {
+  color: #157a3e;
+}
+
+html.lms-light .gfx-bar-row.is-warn .gfx-bar-value,
+html.lms-light .gfx-tl-point.is-warn .gfx-tl-label,
+html.lms-light .gfx-flow.is-warn .gfx-flow-back,
+html.lms-light .lms-split-label--warn,
+html.lms-light .la-bar-row--warn .la-bar-note,
+html.lms-light .la-loop-back {
+  color: #b3700c;
+}
+
+html.lms-light .gfx-table thead th {
+  border-bottom-color: #157a3e;
+}
+
+html.lms-light .gfx-table th,
+html.lms-light .gfx-table td {
+  border-bottom-color: rgba(14, 14, 18, 0.16);
+}
+
+html.lms-light .gfx-tl-point::before {
+  background: rgba(14, 14, 18, 0.2);
+}
+
+html.lms-light .gfx-flow-return {
+  border-color: rgba(14, 14, 18, 0.4);
+  border-top: none;
+}
+
+html.lms-light .gfx-flow-return::before {
+  border-bottom-color: rgba(14, 14, 18, 0.65);
+}
+
+html.lms-light .gfx-sc-track {
+  background: linear-gradient(90deg, var(--coral), rgba(14, 14, 18, 0.25), var(--acc));
+}
+
+/* The receipt is already cream on ink, so in Day Class it turns over to keep
+   standing apart from the page instead of dissolving into it. */
+html.lms-light .gfx-receipt .lms-gfx-body {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+html.lms-light .gfx-rc-line {
+  border-bottom-color: rgba(242, 238, 227, 0.16);
+}
+
+html.lms-light .gfx-rc-line.is-good .gfx-rc-value {
+  color: var(--acc);
+}
+
+html.lms-light .gfx-rc-line.is-warn .gfx-rc-value {
+  color: var(--coral);
+}
+
+html.lms-light .la-day.is-dead {
+  border-color: rgba(14, 14, 18, 0.3);
+}
+
+html.lms-light .la-streak-run {
+  border-bottom-color: rgba(14, 14, 18, 0.16);
+}
+
+html.lms-light .lms-step::before {
+  background: rgba(29, 158, 80, 0.35);
+}
