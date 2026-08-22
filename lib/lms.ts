@@ -25,9 +25,10 @@ export type LessonBlock =
   | { kind: "embed"; src: string; title: string; caption?: string }
   | { kind: "audio"; src: string; title: string; caption?: string }
   | { kind: "file"; href: string; name: string; note?: string }
-  // Three kinds that exist so a lesson is not a wall of text. They carry
-  // structure, never bytes: `art` names a diagram the site draws itself, so a
-  // lesson stays a plain object the API and the phone app can both read.
+  // The graphic kinds. They exist so a lesson is not a wall of text, and they
+  // carry structure, never bytes: a lesson stays a plain object the API and
+  // the phone app can both read. All but `art` are generic, so any unit fills
+  // one with its own numbers rather than asking for a bespoke drawing.
   | {
       kind: "split";
       title?: string;
@@ -36,8 +37,64 @@ export type LessonBlock =
       rows: { left: string; right: string }[];
     }
   | { kind: "steps"; title?: string; steps: { label: string; text: string }[] }
+  // Quantities next to each other. Bars are drawn as a share of the largest
+  // value, so the numbers stay the author's and the scale draws itself.
+  | {
+      kind: "bars";
+      title?: string;
+      items: { label: string; value: number; display?: string; note?: string; tone?: Tone }[];
+      caption?: string;
+    }
+  // A sequence, or a cycle when `loop` is set and it returns to the first box.
+  | {
+      kind: "flow";
+      title?: string;
+      loop?: boolean;
+      tone?: Tone;
+      steps: { label: string; note?: string }[];
+      caption?: string;
+    }
+  // Something changing along time. `at` is the label under the point.
+  | {
+      kind: "timeline";
+      title?: string;
+      points: { at: string; label: string; note?: string; tone?: Tone }[];
+      caption?: string;
+    }
+  // A calculation worked in the open, ending in one number. The money
+  // workhorse: a paycheck, an offer, a month of rent.
+  | {
+      kind: "receipt";
+      title?: string;
+      lines: { label: string; value: string; note?: string; tone?: Tone }[];
+      total?: { label: string; value: string };
+      caption?: string;
+    }
+  // A spectrum with the poles named and marks placed along it. `at` is a
+  // percentage from the left end.
+  | {
+      kind: "scale";
+      title?: string;
+      left: string;
+      right: string;
+      marks: { at: number; label: string; tone?: Tone }[];
+      caption?: string;
+    }
+  // Three or four things compared on the same rows. Two things belong in a
+  // `split`, which pairs them properly on a phone.
+  | {
+      kind: "table";
+      title?: string;
+      head: string[];
+      rows: string[][];
+      caption?: string;
+    }
   | { kind: "art"; art: LessonArt; alt: string; caption?: string }
   | { kind: "divider" };
+
+// Tone on a graphic is meaning, not decoration: good is the move to make,
+// warn is the trap, and plain is neither.
+export type Tone = "good" | "warn" | "plain";
 
 // The diagrams the site knows how to draw. A lesson picks one by name; the
 // picture lives in components/lms/LessonArt.tsx. Named rather than free-form

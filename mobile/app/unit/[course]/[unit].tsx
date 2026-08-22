@@ -273,6 +273,131 @@ function Block({ block: b }: { block: LessonBlock }) {
         </Card>
       );
 
+    // The six generic graphics. No SVG in this app, so each one is rebuilt
+    // out of Views: a bar is a filled row, a scale is its own key list. The
+    // numbers and the words are the whole content anyway.
+    case "bars": {
+      const max = Math.max(...b.items.map((i) => Math.abs(i.value)), 1);
+      return (
+        <View style={{ gap: S.md }}>
+          {b.title ? <H2>{b.title}</H2> : null}
+          {b.items.map((it, i) => (
+            <View key={i} style={{ gap: 6 }}>
+              <View style={s.gfxHead}>
+                <Text style={s.gfxLabel}>{it.label}</Text>
+                <Text style={[s.gfxValue, { color: gfxTone(it.tone) }]}>
+                  {it.display ?? String(it.value)}
+                </Text>
+              </View>
+              <View style={s.barTrack}>
+                <View
+                  style={[
+                    s.barFill,
+                    { width: `${Math.max(2, (Math.abs(it.value) / max) * 100)}%`, backgroundColor: gfxTone(it.tone) },
+                  ]}
+                />
+              </View>
+              {it.note ? <Small>{it.note}</Small> : null}
+            </View>
+          ))}
+          {b.caption ? <Small>{b.caption}</Small> : null}
+        </View>
+      );
+    }
+
+    case "flow":
+      return (
+        <View style={{ gap: S.sm }}>
+          {b.title ? <H2>{b.title}</H2> : null}
+          {b.steps.map((st, i) => (
+            <Card key={i} tone={gfxTone(b.tone)}>
+              <Kicker tone={gfxTone(b.tone)}>{`Step ${i + 1}`}</Kicker>
+              <Text style={s.gfxLabel}>{st.label}</Text>
+              {st.note ? <Small>{st.note}</Small> : null}
+            </Card>
+          ))}
+          {b.loop ? <Small>and round again</Small> : null}
+          {b.caption ? <Small>{b.caption}</Small> : null}
+        </View>
+      );
+
+    case "timeline":
+      return (
+        <View style={{ gap: S.sm }}>
+          {b.title ? <H2>{b.title}</H2> : null}
+          {b.points.map((pt, i) => (
+            <View key={i} style={[s.splitCell, { borderLeftColor: gfxTone(pt.tone) }]}>
+              <Kicker tone={gfxTone(pt.tone)}>{pt.at}</Kicker>
+              <Text style={s.gfxLabel}>{pt.label}</Text>
+              {pt.note ? <Small>{pt.note}</Small> : null}
+            </View>
+          ))}
+          {b.caption ? <Small>{b.caption}</Small> : null}
+        </View>
+      );
+
+    case "receipt":
+      return (
+        <Card>
+          {b.title ? <Kicker tone={C.acc}>{b.title}</Kicker> : null}
+          {b.lines.map((l, i) => (
+            <View key={i} style={s.rcLine}>
+              <View style={{ flex: 1 }}>
+                <Text style={s.gfxLabel}>{l.label}</Text>
+                {l.note ? <Small>{l.note}</Small> : null}
+              </View>
+              <Text style={[s.gfxValue, { color: gfxTone(l.tone) }]}>{l.value}</Text>
+            </View>
+          ))}
+          {b.total ? (
+            <View style={s.rcTotal}>
+              <Text style={s.rcTotalLabel}>{b.total.label}</Text>
+              <Text style={s.stat}>{b.total.value}</Text>
+            </View>
+          ) : null}
+          {b.caption ? <Small>{b.caption}</Small> : null}
+        </Card>
+      );
+
+    case "scale":
+      return (
+        <View style={{ gap: S.sm }}>
+          {b.title ? <H2>{b.title}</H2> : null}
+          <View style={s.gfxHead}>
+            <Small>{b.left}</Small>
+            <Small>{b.right}</Small>
+          </View>
+          {b.marks.map((m, i) => (
+            <View key={i} style={s.scaleKey}>
+              <View style={[s.scaleDot, { backgroundColor: gfxTone(m.tone) }]} />
+              <Text style={s.bulletText}>{m.label}</Text>
+            </View>
+          ))}
+          {b.caption ? <Small>{b.caption}</Small> : null}
+        </View>
+      );
+
+    // A three-column table has nowhere to go on a phone, so each row becomes
+    // its own card with the column names spelled out beside the values.
+    case "table":
+      return (
+        <View style={{ gap: S.sm }}>
+          {b.title ? <H2>{b.title}</H2> : null}
+          {b.rows.map((row, i) => (
+            <Card key={i}>
+              <Kicker tone={C.acc}>{row[0]}</Kicker>
+              {row.slice(1).map((cell, j) => (
+                <View key={j} style={s.rcLine}>
+                  <Text style={[s.bulletText, { flex: 1 }]}>{b.head[j + 1] ?? ""}</Text>
+                  <Text style={[s.bulletText, { flex: 1, textAlign: "right" }]}>{cell}</Text>
+                </View>
+              ))}
+            </Card>
+          ))}
+          {b.caption ? <Small>{b.caption}</Small> : null}
+        </View>
+      );
+
     case "divider":
       return <View style={s.rule} />;
 
@@ -281,6 +406,13 @@ function Block({ block: b }: { block: LessonBlock }) {
       // showing a student an apology in the middle of a lesson.
       return null;
   }
+}
+
+/** Graphic tone to a colour. Plain and missing both mean the paper colour. */
+function gfxTone(tone?: "good" | "warn" | "plain"): string {
+  if (tone === "good") return C.acc;
+  if (tone === "warn") return C.coral;
+  return C.paper;
 }
 
 /** Lesson assets are written as site-root paths; the app needs the whole URL. */
@@ -316,5 +448,23 @@ const s = StyleSheet.create({
     textAlign: "center",
   },
   stepLabel: { fontFamily: F.bodyBold, fontSize: 16, color: C.paper, marginBottom: 2 },
+  gfxHead: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end", gap: S.md },
+  gfxLabel: { fontFamily: F.bodyBold, fontSize: 15, color: C.paper },
+  gfxValue: { fontFamily: F.display, fontSize: 17, color: C.paper },
+  barTrack: { height: 12, borderRadius: 4, backgroundColor: C.card, overflow: "hidden" },
+  barFill: { height: "100%", borderRadius: 4 },
+  rcLine: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    gap: S.md,
+    paddingVertical: S.sm,
+    borderBottomWidth: 1,
+    borderBottomColor: C.line,
+  },
+  rcTotal: { marginTop: S.md, gap: 4 },
+  rcTotalLabel: { fontFamily: F.bodyBold, fontSize: 12, color: C.muted, letterSpacing: 1.6 },
+  scaleKey: { flexDirection: "row", alignItems: "center", gap: S.sm },
+  scaleDot: { width: 12, height: 12, borderRadius: 6 },
   theLesson: { fontFamily: F.displayMid, fontSize: 19, lineHeight: 27, color: C.paper },
 });

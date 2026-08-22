@@ -37,7 +37,45 @@ export type LessonBlock =
   // drawing carries. Keep `art` a plain string here: the app must not fail to
   // parse a lesson because the website learned a new diagram.
   | { kind: "art"; art: string; alt: string; caption?: string }
+  | {
+      kind: "bars";
+      title?: string;
+      items: { label: string; value: number; display?: string; note?: string; tone?: Tone }[];
+      caption?: string;
+    }
+  | {
+      kind: "flow";
+      title?: string;
+      loop?: boolean;
+      tone?: Tone;
+      steps: { label: string; note?: string }[];
+      caption?: string;
+    }
+  | {
+      kind: "timeline";
+      title?: string;
+      points: { at: string; label: string; note?: string; tone?: Tone }[];
+      caption?: string;
+    }
+  | {
+      kind: "receipt";
+      title?: string;
+      lines: { label: string; value: string; note?: string; tone?: Tone }[];
+      total?: { label: string; value: string };
+      caption?: string;
+    }
+  | {
+      kind: "scale";
+      title?: string;
+      left: string;
+      right: string;
+      marks: { at: number; label: string; tone?: Tone }[];
+      caption?: string;
+    }
+  | { kind: "table"; title?: string; head: string[]; rows: string[][]; caption?: string }
   | { kind: "divider" };
+
+export type Tone = "good" | "warn" | "plain";
 
 export type QuizQuestion = { q: string; options: string[]; answer: number; explain: string };
 export type Flashcard = { front: string; back: string };

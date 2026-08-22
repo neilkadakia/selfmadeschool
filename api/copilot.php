@@ -94,6 +94,20 @@ function clean_media_block(string $kind, array $b): ?array {
     return null;
 }
 
+/** Tone on a graphic is one of three words or absent. Anything else is dropped. */
+function clean_tone($v): ?string {
+    return in_array($v, ['good', 'warn', 'plain'], true) ? $v : null;
+}
+
+/** Every graphic may carry a title and a caption. One place, one rule. */
+function with_frame(array $row, array $b, callable $s): array {
+    $title = $s($b['title'] ?? null, 120);
+    if ($title !== null) $row['title'] = $title;
+    $caption = $s($b['caption'] ?? null, 300);
+    if ($caption !== null) $row['caption'] = $caption;
+    return $row;
+}
+
 function clean_lesson($in): ?array {
     if (!is_array($in)) return null;
     $s = fn($v, int $max = 2000) => is_string($v) && trim($v) !== '' ? mb_substr(trim($v), 0, $max) : null;
@@ -172,6 +186,120 @@ function clean_lesson($in): ?array {
             $row = ['kind' => 'steps', 'steps' => $steps];
             if ($ti !== null) $row['title'] = $ti;
             $blocks[] = $row;
+        } elseif ($kind === 'bars') {
+            $items = [];
+            foreach (($b['items'] ?? []) as $it) {
+                if (!is_array($it)) return null;
+                $lab = $s($it['label'] ?? null, 120);
+                if ($lab === null || !isset($it['value']) || !is_numeric($it['value'])) return null;
+                $row = ['kind' => null, 'label' => $lab, 'value' => (float)$it['value']];
+                unset($row['kind']);
+                foreach (['display' => 40, 'note' => 300] as $k => $max) {
+                    $v = $s($it[$k] ?? null, $max);
+                    if ($v !== null) $row[$k] = $v;
+                }
+                $t = clean_tone($it['tone'] ?? null);
+                if ($t !== null) $row['tone'] = $t;
+                $items[] = $row;
+            }
+            if (count($items) < 2) return null;
+            $blocks[] = with_frame(['kind' => 'bars', 'items' => $items], $b, $s);
+        } elseif ($kind === 'flow') {
+            $steps = [];
+            foreach (($b['steps'] ?? []) as $st) {
+                if (!is_array($st)) return null;
+                $lab = $s($st['label'] ?? null, 120);
+                if ($lab === null) return null;
+                $row = ['label' => $lab];
+                $n = $s($st['note'] ?? null, 300);
+                if ($n !== null) $row['note'] = $n;
+                $steps[] = $row;
+            }
+            if (count($steps) < 2) return null;
+            $out = ['kind' => 'flow', 'steps' => $steps];
+            if (!empty($b['loop'])) $out['loop'] = true;
+            $t = clean_tone($b['tone'] ?? null);
+            if ($t !== null) $out['tone'] = $t;
+            $blocks[] = with_frame($out, $b, $s);
+        } elseif ($kind === 'timeline') {
+            $points = [];
+            foreach (($b['points'] ?? []) as $pt) {
+                if (!is_array($pt)) return null;
+                $at = $s($pt['at'] ?? null, 40);
+                $lab = $s($pt['label'] ?? null, 200);
+                if ($at === null || $lab === null) return null;
+                $row = ['at' => $at, 'label' => $lab];
+                $n = $s($pt['note'] ?? null, 300);
+                if ($n !== null) $row['note'] = $n;
+                $t = clean_tone($pt['tone'] ?? null);
+                if ($t !== null) $row['tone'] = $t;
+                $points[] = $row;
+            }
+            if (count($points) < 2) return null;
+            $blocks[] = with_frame(['kind' => 'timeline', 'points' => $points], $b, $s);
+        } elseif ($kind === 'receipt') {
+            $lines = [];
+            foreach (($b['lines'] ?? []) as $l) {
+                if (!is_array($l)) return null;
+                $lab = $s($l['label'] ?? null, 200);
+                $val = $s($l['value'] ?? null, 40);
+                if ($lab === null || $val === null) return null;
+                $row = ['label' => $lab, 'value' => $val];
+                $n = $s($l['note'] ?? null, 300);
+                if ($n !== null) $row['note'] = $n;
+                $t = clean_tone($l['tone'] ?? null);
+                if ($t !== null) $row['tone'] = $t;
+                $lines[] = $row;
+            }
+            if (count($lines) < 2) return null;
+            $out = ['kind' => 'receipt', 'lines' => $lines];
+            if (is_array($b['total'] ?? null)) {
+                $tl = $s($b['total']['label'] ?? null, 120);
+                $tv = $s($b['total']['value'] ?? null, 40);
+                if ($tl === null || $tv === null) return null;
+                $out['total'] = ['label' => $tl, 'value' => $tv];
+            }
+            $blocks[] = with_frame($out, $b, $s);
+        } elseif ($kind === 'scale') {
+            $left = $s($b['left'] ?? null, 80);
+            $right = $s($b['right'] ?? null, 80);
+            if ($left === null || $right === null) return null;
+            $marks = [];
+            foreach (($b['marks'] ?? []) as $m) {
+                if (!is_array($m)) return null;
+                $lab = $s($m['label'] ?? null, 160);
+                if ($lab === null || !isset($m['at']) || !is_numeric($m['at'])) return null;
+                $row = ['at' => max(0, min(100, (float)$m['at'])), 'label' => $lab];
+                $t = clean_tone($m['tone'] ?? null);
+                if ($t !== null) $row['tone'] = $t;
+                $marks[] = $row;
+            }
+            if (!$marks) return null;
+            $blocks[] = with_frame(['kind' => 'scale', 'left' => $left, 'right' => $right, 'marks' => $marks], $b, $s);
+        } elseif ($kind === 'table') {
+            $head = [];
+            foreach (($b['head'] ?? []) as $h) {
+                $t = $s($h, 80);
+                if ($t === null) return null;
+                $head[] = $t;
+            }
+            if (count($head) < 2) return null;
+            $rows = [];
+            foreach (($b['rows'] ?? []) as $r) {
+                if (!is_array($r)) return null;
+                $cells = [];
+                foreach ($r as $c) {
+                    $t = $s($c, 200);
+                    if ($t === null) return null;
+                    $cells[] = $t;
+                }
+                // A ragged row would render as a broken table, so it is a
+                // rejection rather than something to pad out silently.
+                if (count($cells) !== count($head)) return null;
+                $rows[] = $cells;
+            }
+            if (!$rows) return null;
+            $blocks[] = with_frame(['kind' => 'table', 'head' => $head, 'rows' => $rows], $b, $s);
         } elseif ($kind === 'art') {
             // The website draws these, so only the drawings it actually has
             // are allowed through. An unknown name would ship a blank frame.

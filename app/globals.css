@@ -2789,6 +2789,31 @@ p {
   white-space: nowrap;
 }
 
+.footer-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 0;
+  white-space: nowrap;
+  transition: color 0.18s ease;
+}
+
+.footer-social-link svg {
+  width: 19px;
+  height: 19px;
+  flex: none;
+}
+
+.footer-social-link:hover {
+  color: var(--acc);
+}
+
 /* ---------- Small screens ----------
    Lives BELOW every base rule it overrides. Same-specificity rules that
    appear later in the file win the cascade, so this block is dead weight
@@ -5025,9 +5050,21 @@ html.lms-light .lms-proof-row {
   min-width: 130px;
 }
 
+/* Off, not gone. A blanket opacity on an outline button over near-black ink
+   erases the border and the label together, so card one looked like it had
+   no Back control at all. State it explicitly instead. */
 .lms-deck-btn:disabled {
-  opacity: 0.35;
+  opacity: 1;
+  border-color: rgba(242, 238, 227, 0.2);
+  background: rgba(242, 238, 227, 0.04);
+  color: rgba(242, 238, 227, 0.5);
   cursor: default;
+}
+
+html.lms-light .lms-deck-btn:disabled {
+  border-color: rgba(14, 14, 18, 0.2);
+  background: rgba(14, 14, 18, 0.04);
+  color: rgba(14, 14, 18, 0.45);
 }
 
 .lms-deck-finish {
@@ -9719,62 +9756,77 @@ a.bell-note:hover {
   border-top: 1px solid rgba(242, 238, 227, 0.14);
 }
 
-/* ---------- Lesson structure: split, steps, art ---------- */
-/*
-   Three block kinds that carry shape instead of prose. They share one kit
-   with the rest of the lesson: a tinted wash and a hairline, tone arriving
-   as a rule or a dot rather than a filled slab, and nothing that stops
-   working when the column is 320px wide.
+/* ---------- Lesson graphics ----------
+   The house language, not a generic card kit. The rules, and they are the
+   reason this section was rewritten once already:
+
+   - A block that carries a tone is a SOLID fill with ink text, the way the
+     Read / Watch / Do panels and the syllabus cards are. Never a dark tile
+     with a tinted wash and a coloured band down one edge.
+   - Reference material that wants to be read like a document (a receipt, a
+     table) inverts to cream, the way .lms-bigfact does.
+   - Everything else (steps, timelines, bars, scales) is drawn straight onto
+     the page with a spine, a dot or a bar. No container at all.
+   - Numbers are Bricolage and large. Labels are 12 to 13px uppercase with
+     0.18em tracking, which is the kicker everywhere else on the site.
 */
 
-/* Critic says / Coach says. Two columns on a desktop, two stacked cards on a
-   phone, and the row is the unit either way so a pair never separates. */
-.lms-split {
-  margin: 30px 0;
-  border: 1px solid rgba(242, 238, 227, 0.14);
-  border-radius: 20px;
-  background: rgba(242, 238, 227, 0.04);
-  padding: 20px;
+.lms-gfx,
+.lms-art,
+.lms-split,
+.lms-steps {
+  margin: 34px 0;
+  min-width: 0;
 }
 
-.lms-split-title {
+.lms-gfx-title,
+.lms-split-title,
+.lms-steps-title {
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
-  font-size: 17px;
-  letter-spacing: -0.01em;
-  margin: 0 0 16px;
+  font-size: clamp(19px, 2.4vw, 23px);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0 0 18px;
 }
+
+.lms-gfx figcaption,
+.lms-art figcaption {
+  margin: 16px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted-on-ink);
+}
+
+/* ---------- split: the same moment, two ways ---------- */
 
 .lms-split-head {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .lms-split-label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   margin: 0;
-  padding-bottom: 8px;
 }
 
 .lms-split-label--warn {
   color: var(--coral);
-  border-bottom: 2px solid rgba(255, 180, 58, 0.5);
 }
 
 .lms-split-label--good {
   color: var(--acc);
-  border-bottom: 2px solid rgba(67, 222, 123, 0.5);
 }
 
 .lms-split-rows {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 }
 
 .lms-split-row {
@@ -9785,39 +9837,35 @@ a.bell-note:hover {
 
 .lms-split-cell {
   margin: 0;
-  padding: 13px 15px;
-  border-radius: 12px;
-  font-size: 15px;
-  line-height: 1.55;
-  border-left: 3px solid transparent;
+  border-radius: 18px;
+  padding: 16px 18px;
+  font-size: 15.5px;
+  line-height: 1.5;
+  font-weight: 500;
 }
 
 .lms-split-cell--warn {
-  background: rgba(255, 180, 58, 0.08);
-  border-left-color: rgba(255, 180, 58, 0.55);
+  background: var(--coral);
+  color: var(--ink);
 }
 
 .lms-split-cell--good {
-  background: rgba(67, 222, 123, 0.08);
-  border-left-color: rgba(67, 222, 123, 0.55);
+  background: var(--acc);
+  color: var(--ink);
 }
 
-/* Only shows once the columns stack, where the header has scrolled away. */
+/* Only shows once the columns stack and the header is gone. */
 .lms-split-mini {
   display: none;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  margin-bottom: 5px;
-  opacity: 0.75;
+  margin-bottom: 6px;
+  opacity: 0.6;
 }
 
 @media (max-width: 720px) {
-  .lms-split {
-    padding: 16px;
-  }
-
   .lms-split-head {
     display: none;
   }
@@ -9825,40 +9873,14 @@ a.bell-note:hover {
   .lms-split-row {
     grid-template-columns: 1fr;
     gap: 8px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(242, 238, 227, 0.1);
-  }
-
-  .lms-split-row:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
   }
 
   .lms-split-mini {
     display: block;
   }
-
-  .lms-split-cell--warn .lms-split-mini {
-    color: var(--coral);
-  }
-
-  .lms-split-cell--good .lms-split-mini {
-    color: var(--acc);
-  }
 }
 
-/* A numbered flow with a spine down the numbers. */
-.lms-steps {
-  margin: 30px 0;
-}
-
-.lms-steps-title {
-  font-family: var(--font-bricolage), sans-serif;
-  font-weight: 800;
-  font-size: 17px;
-  letter-spacing: -0.01em;
-  margin: 0 0 14px;
-}
+/* ---------- steps: a numbered flow with a spine ---------- */
 
 .lms-steps-list {
   list-style: none;
@@ -9869,21 +9891,19 @@ a.bell-note:hover {
 .lms-step {
   position: relative;
   display: grid;
-  grid-template-columns: 34px 1fr;
-  gap: 14px;
-  padding-bottom: 18px;
+  grid-template-columns: 38px 1fr;
+  gap: 16px;
+  padding-bottom: 22px;
 }
 
-/* The spine runs from each number down to the next, so the last step ends
-   the line instead of trailing off into nothing. */
 .lms-step::before {
   content: "";
   position: absolute;
-  left: 16px;
-  top: 34px;
+  left: 18px;
+  top: 40px;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(rgba(67, 222, 123, 0.5), rgba(67, 222, 123, 0.12));
+  background: rgba(67, 222, 123, 0.35);
 }
 
 .lms-step:last-child {
@@ -9897,58 +9917,556 @@ a.bell-note:hover {
 .lms-step-n {
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  border: 1.5px solid rgba(67, 222, 123, 0.55);
-  background: rgba(67, 222, 123, 0.1);
-  color: var(--acc);
+  background: var(--acc);
+  color: var(--ink);
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1;
 }
 
 .lms-step-body {
   display: block;
-  padding-top: 4px;
+  padding-top: 6px;
 }
 
 .lms-step-label {
   display: block;
-  font-weight: 700;
-  font-size: 16px;
-  margin-bottom: 3px;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  margin-bottom: 5px;
 }
 
 .lms-step-text {
   display: block;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--muted-on-ink);
+}
+
+/* ---------- bars ---------- */
+
+.gfx-bars .lms-gfx-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.gfx-bar-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.gfx-bar-label {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.gfx-bar-value {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(20px, 3vw, 26px);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.gfx-bar-track {
+  display: block;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(242, 238, 227, 0.12);
+  overflow: hidden;
+}
+
+.gfx-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--paper);
+}
+
+.gfx-bar-row.is-good .gfx-bar-fill {
+  background: var(--acc);
+}
+
+.gfx-bar-row.is-good .gfx-bar-value {
+  color: var(--acc);
+}
+
+.gfx-bar-row.is-warn .gfx-bar-fill {
+  background: var(--coral);
+}
+
+.gfx-bar-row.is-warn .gfx-bar-value {
+  color: var(--coral);
+}
+
+.gfx-bar-note {
+  display: block;
+  margin-top: 9px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted-on-ink);
+}
+
+/* ---------- flow ---------- */
+
+.gfx-flow-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.gfx-flow-step {
+  flex: 1 1 170px;
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  border-radius: 18px;
+  padding: 15px 17px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.gfx-flow.is-warn .gfx-flow-step {
+  background: var(--coral);
+}
+
+.gfx-flow.is-good .gfx-flow-step {
+  background: var(--acc);
+}
+
+.gfx-flow-n {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.gfx-flow-label {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.gfx-flow-note {
+  display: block;
+  margin-top: 5px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  opacity: 0.72;
+}
+
+/* The leg that closes a cycle. Borders, so it spans any width without an
+   arrowhead distorting inside a stretched viewBox. */
+.gfx-flow-return {
+  height: 18px;
+  margin: 0 14px;
+  border: 2px solid rgba(242, 238, 227, 0.4);
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  position: relative;
+}
+
+.gfx-flow-return::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: -3px;
+  border: 5px solid transparent;
+  border-bottom-color: rgba(242, 238, 227, 0.65);
+}
+
+.gfx-flow.is-warn .gfx-flow-return {
+  border-color: rgba(255, 180, 58, 0.65);
+  border-top: none;
+}
+
+.gfx-flow.is-warn .gfx-flow-return::before {
+  border-bottom-color: var(--coral);
+}
+
+.gfx-flow.is-good .gfx-flow-return {
+  border-color: rgba(67, 222, 123, 0.65);
+  border-top: none;
+}
+
+.gfx-flow.is-good .gfx-flow-return::before {
+  border-bottom-color: var(--acc);
+}
+
+.gfx-flow-back {
+  margin: 12px 0 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--muted-on-ink);
+}
+
+.gfx-flow.is-warn .gfx-flow-back {
+  color: var(--coral);
+}
+
+.gfx-flow.is-good .gfx-flow-back {
+  color: var(--acc);
+}
+
+/* ---------- timeline ---------- */
+
+.gfx-tl-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.gfx-tl-point {
+  position: relative;
+  display: grid;
+  grid-template-columns: 92px 26px 1fr;
+  align-items: start;
+  gap: 0 14px;
+  padding-bottom: 24px;
+}
+
+.gfx-tl-point::before {
+  content: "";
+  position: absolute;
+  left: 104px;
+  top: 22px;
+  bottom: 0;
+  width: 2px;
+  background: rgba(242, 238, 227, 0.2);
+}
+
+.gfx-tl-point:last-child {
+  padding-bottom: 0;
+}
+
+.gfx-tl-point:last-child::before {
+  display: none;
+}
+
+.gfx-tl-at {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-on-ink);
+  padding-top: 3px;
+  text-align: right;
+}
+
+.gfx-tl-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--paper);
+  margin: 4px auto 0;
+}
+
+.gfx-tl-point.is-good .gfx-tl-dot {
+  background: var(--acc);
+}
+
+.gfx-tl-point.is-warn .gfx-tl-dot {
+  background: var(--coral);
+}
+
+.gfx-tl-label {
+  display: block;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.gfx-tl-point.is-good .gfx-tl-label {
+  color: var(--acc);
+}
+
+.gfx-tl-point.is-warn .gfx-tl-label {
+  color: var(--coral);
+}
+
+.gfx-tl-note {
+  display: block;
+  margin-top: 5px;
   font-size: 15px;
   line-height: 1.6;
   color: var(--muted-on-ink);
 }
 
-/* ---------- Drawings ---------- */
+@media (max-width: 620px) {
+  .gfx-tl-point {
+    grid-template-columns: 26px 1fr;
+    gap: 0 12px;
+  }
 
-.lms-art {
-  margin: 30px 0;
+  .gfx-tl-point::before {
+    left: 12px;
+  }
+
+  .gfx-tl-at {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: left;
+    padding-top: 0;
+    margin-bottom: 4px;
+  }
+
+  .gfx-tl-dot {
+    grid-column: 1;
+    grid-row: 1;
+    margin-top: 2px;
+  }
+
+  .gfx-tl-body {
+    grid-column: 2;
+    grid-row: 2;
+  }
 }
 
-.lms-art-frame {
-  border: 1px solid rgba(242, 238, 227, 0.14);
-  border-radius: 20px;
-  background: rgba(242, 238, 227, 0.04);
-  padding: 22px 20px;
+/* ---------- receipt ----------
+   A document, so it inverts to cream and is read as one. */
+
+.gfx-receipt .lms-gfx-body {
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 24px;
+  padding: 26px 28px;
 }
 
-.lms-art figcaption {
-  margin-top: 10px;
-  font-size: 14px;
-  line-height: 1.5;
+.gfx-rc-list {
+  margin: 0;
+}
+
+.gfx-rc-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(14, 14, 18, 0.14);
+}
+
+.gfx-rc-label {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+.gfx-rc-note {
+  display: block;
+  margin-top: 3px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  font-weight: 400;
+  opacity: 0.62;
+}
+
+.gfx-rc-value {
+  margin: 0;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.gfx-rc-line.is-good .gfx-rc-value {
+  color: #157a3e;
+}
+
+.gfx-rc-line.is-warn .gfx-rc-value {
+  color: #b3700c;
+}
+
+.gfx-rc-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding: 18px 22px;
+  border-radius: 18px;
+  background: var(--acc);
+  color: var(--ink);
+}
+
+.gfx-rc-total-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.gfx-rc-total-value {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 5vw, 40px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.gfx-receipt figcaption {
   color: var(--muted-on-ink);
 }
 
-/* Shapes stretch to the frame; the words on top are real text. */
+/* ---------- scale ---------- */
+
+.gfx-sc-poles {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-on-ink);
+  margin-bottom: 12px;
+}
+
+.gfx-sc-poles span:last-child {
+  text-align: right;
+}
+
+.gfx-sc-track {
+  position: relative;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--coral), rgba(242, 238, 227, 0.35), var(--acc));
+  margin-bottom: 22px;
+}
+
+.gfx-sc-mark {
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  transform: translate(-50%, -50%);
+}
+
+.gfx-sc-mark.is-good {
+  background: var(--acc);
+}
+
+.gfx-sc-mark.is-warn {
+  background: var(--coral);
+}
+
+.gfx-sc-keys {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gfx-sc-key {
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.gfx-sc-key.is-good {
+  background: var(--acc);
+}
+
+.gfx-sc-key.is-warn {
+  background: var(--coral);
+}
+
+/* ---------- table ---------- */
+
+/* contain: inline-size is load-bearing. Without it the table's min-width
+   propagates as a min-content floor all the way up through .lms-main, which
+   widens the whole lesson column on a phone; body's overflow-x: hidden then
+   swallows the evidence, so the page looks fine and every graphic on it is
+   quietly wider than the screen. */
+.gfx-tb-scroll {
+  overflow-x: auto;
+  contain: inline-size;
+  width: 100%;
+  margin: 0 -4px;
+  padding: 0 4px;
+}
+
+.gfx-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.gfx-table th,
+.gfx-table td {
+  text-align: left;
+  padding: 14px 16px 14px 0;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.14);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.gfx-table thead th {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--acc);
+  border-bottom: 2px solid var(--acc);
+  padding-bottom: 10px;
+  white-space: nowrap;
+}
+
+.gfx-table tbody th {
+  font-weight: 800;
+  padding-right: 22px;
+}
+
+.gfx-table tbody tr:last-child th,
+.gfx-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+@media (max-width: 620px) {
+  .gfx-table table {
+    min-width: 470px;
+  }
+}
+
+/* ---------- The named drawings (components/lms/LessonArt.tsx) ---------- */
+
 .la-shapes {
   display: block;
   width: 100%;
@@ -9958,28 +10476,27 @@ a.bell-note:hover {
 .la-tag {
   position: absolute;
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  line-height: 1.3;
-  padding: 5px 9px;
-  border-radius: 8px;
-  background: rgba(14, 14, 18, 0.82);
-  border: 1px solid rgba(242, 238, 227, 0.16);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
   max-width: 46%;
 }
 
 .la-tag--warn {
-  color: var(--coral);
-  border-color: rgba(255, 180, 58, 0.42);
+  background: var(--coral);
 }
 
 .la-tag--good {
-  color: var(--acc);
-  border-color: rgba(67, 222, 123, 0.42);
+  background: var(--acc);
 }
 
 .la-tag--plain {
-  color: var(--muted-on-ink);
+  background: var(--paper);
+  color: var(--ink);
 }
 
 .la-plot {
@@ -9989,35 +10506,57 @@ a.bell-note:hover {
   min-height: 150px;
 }
 
+.la-point {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 3px solid var(--ink);
+}
+
+.la-point--warn {
+  background: var(--coral);
+}
+
+.la-point--good {
+  background: var(--acc);
+}
+
+.la-band {
+  fill: rgba(255, 180, 58, 0.14);
+}
+
 .la-axis {
   display: flex;
   justify-content: space-between;
-  margin-top: 8px;
+  margin-top: 10px;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted-on-ink);
 }
 
 .la-foot {
-  margin: 12px 0 0;
+  margin: 14px 0 0;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--muted-on-ink);
 }
 
-/* two-voices: one situation, two rooms it can go to. */
+/* two-voices */
+
 .la-seed {
   margin: 0 auto;
   width: fit-content;
   max-width: 100%;
-  padding: 10px 16px;
+  padding: 12px 22px;
   border-radius: 999px;
   background: var(--paper);
   color: var(--ink);
-  font-weight: 700;
-  font-size: 15px;
+  font-weight: 800;
+  font-size: 16px;
   text-align: center;
 }
 
@@ -10028,55 +10567,46 @@ a.bell-note:hover {
 .la-pair {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  gap: 16px;
 }
 
 .la-card {
-  border-radius: 14px;
-  padding: 14px 16px;
-  border: 1px solid rgba(242, 238, 227, 0.12);
+  border-radius: 18px;
+  padding: 18px 20px;
+  color: var(--ink);
 }
 
 .la-card--warn {
-  background: rgba(255, 180, 58, 0.08);
-  border-color: rgba(255, 180, 58, 0.34);
+  background: var(--coral);
 }
 
 .la-card--good {
-  background: rgba(67, 222, 123, 0.08);
-  border-color: rgba(67, 222, 123, 0.34);
+  background: var(--acc);
 }
 
 .la-card-label {
-  margin: 0 0 8px;
-  font-size: 11px;
+  margin: 0 0 10px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-}
-
-.la-card--warn .la-card-label {
-  color: var(--coral);
-}
-
-.la-card--good .la-card-label {
-  color: var(--acc);
+  opacity: 0.65;
 }
 
 .la-card-line {
-  margin: 0 0 10px;
-  font-size: 15px;
-  line-height: 1.5;
-  font-weight: 600;
+  margin: 0 0 12px;
+  font-size: 16px;
+  line-height: 1.45;
+  font-weight: 700;
 }
 
 .la-card-out {
   margin: 0;
-  padding-top: 10px;
-  border-top: 1px dashed rgba(242, 238, 227, 0.16);
-  font-size: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(14, 14, 18, 0.22);
+  font-size: 14.5px;
   line-height: 1.5;
-  color: var(--muted-on-ink);
+  opacity: 0.75;
 }
 
 @media (max-width: 620px) {
@@ -10091,53 +10621,64 @@ a.bell-note:hover {
   .la-pair {
     grid-template-columns: 1fr;
   }
+
+  .la-tag {
+    font-size: 11px;
+    max-width: 52%;
+    padding: 5px 10px;
+  }
+
+  .la-plot {
+    aspect-ratio: 2 / 1;
+    min-height: 170px;
+  }
 }
 
-/* critic-cost: the loop, laid out as a chain that closes. */
+/* critic-cost */
+
 .la-loop-ring {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
 }
 
 .la-loop-node {
-  flex: 1 1 150px;
+  flex: 1 1 165px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border-radius: 12px;
-  background: rgba(255, 180, 58, 0.07);
-  border: 1px solid rgba(255, 180, 58, 0.28);
-  font-size: 14px;
-  line-height: 1.4;
-  font-weight: 600;
+  gap: 11px;
+  padding: 15px 17px;
+  border-radius: 18px;
+  background: var(--coral);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 700;
 }
 
 .la-loop-n {
   display: grid;
   place-items: center;
   flex: none;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: var(--coral);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
-  font-size: 12px;
+  font-size: 13px;
 }
 
-/* The leg that turns the chain back into a loop. Borders, so it spans any
-   width without an arrowhead distorting. */
 .la-loop-return {
-  height: 16px;
-  margin: 0 12px;
-  border: 2px solid rgba(255, 180, 58, 0.5);
+  height: 18px;
+  margin: 0 14px;
+  border: 2px solid rgba(255, 180, 58, 0.65);
   border-top: none;
-  border-radius: 0 0 12px 12px;
+  border-radius: 0 0 14px 14px;
   position: relative;
 }
 
@@ -10147,40 +10688,41 @@ a.bell-note:hover {
   left: -6px;
   top: -3px;
   border: 5px solid transparent;
-  border-bottom-color: rgba(255, 180, 58, 0.75);
+  border-bottom-color: var(--coral);
 }
 
 .la-loop-back {
-  margin: 10px 0 0;
+  margin: 12px 0 0;
   font-size: 14px;
   color: var(--coral);
-  font-weight: 600;
+  font-weight: 700;
 }
 
-/* shrink-it: the same habit at three sizes. */
+/* shrink-it */
+
 .la--bars {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
 .la-bar-row {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: baseline;
-  gap: 4px 12px;
+  gap: 6px 14px;
 }
 
 .la-bar {
   grid-column: 1 / -1;
   display: block;
-  height: 14px;
-  border-radius: 4px;
-  min-width: 26px;
+  height: 18px;
+  border-radius: 999px;
+  min-width: 30px;
 }
 
 .la-bar-row--warn .la-bar {
-  background: linear-gradient(90deg, rgba(255, 180, 58, 0.85), rgba(255, 180, 58, 0.35));
+  background: var(--coral);
 }
 
 .la-bar-row--good .la-bar {
@@ -10188,14 +10730,15 @@ a.bell-note:hover {
 }
 
 .la-bar-label {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
 }
 
 .la-bar-note {
   font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   text-align: right;
 }
 
@@ -10207,12 +10750,13 @@ a.bell-note:hover {
   color: var(--acc);
 }
 
-/* never-miss-twice: six days, then the fork the whole rule is about. */
+/* never-miss-twice */
+
 .la-day {
   display: block;
-  width: 26px;
-  height: 26px;
-  border-radius: 7px;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
   flex: none;
 }
 
@@ -10222,28 +10766,28 @@ a.bell-note:hover {
 
 .la-day.is-miss {
   background: transparent;
-  border: 2px dashed rgba(255, 180, 58, 0.75);
+  border: 2px dashed var(--coral);
 }
 
 .la-day.is-dead {
   background: transparent;
-  border: 2px dashed rgba(242, 238, 227, 0.2);
+  border: 2px dashed rgba(242, 238, 227, 0.28);
 }
 
 .la-streak-run {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
-  padding-bottom: 16px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid rgba(242, 238, 227, 0.12);
+  gap: 9px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.16);
 }
 
 .la-streak-caption {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--muted-on-ink);
-  margin-left: 6px;
+  margin-left: 8px;
 }
 
 .la-branches {
@@ -10253,31 +10797,39 @@ a.bell-note:hover {
 }
 
 .la-branch {
-  padding: 14px 16px;
-  border-radius: 14px;
-  border: 1px solid rgba(242, 238, 227, 0.12);
+  padding: 18px 20px;
+  border-radius: 18px;
+  color: var(--ink);
 }
 
 .la-branch--bad {
-  background: rgba(255, 180, 58, 0.06);
-  border-color: rgba(255, 180, 58, 0.28);
+  background: var(--coral);
 }
 
 .la-branch--good {
-  background: rgba(67, 222, 123, 0.06);
-  border-color: rgba(67, 222, 123, 0.28);
+  background: var(--acc);
 }
 
 .la-branch-days {
   display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 9px;
+  margin-bottom: 14px;
+}
+
+.la-branch .la-day.is-hit {
+  background: var(--ink);
+}
+
+.la-branch .la-day.is-miss,
+.la-branch .la-day.is-dead {
+  border-color: rgba(14, 14, 18, 0.5);
 }
 
 .la-branch-text {
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.5;
+  font-weight: 600;
 }
 
 @media (max-width: 620px) {
@@ -10286,196 +10838,143 @@ a.bell-note:hover {
   }
 
   .la-day {
-    width: 22px;
-    height: 22px;
-    border-radius: 6px;
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
   }
 
   .la-streak-caption {
     margin-left: 0;
     flex-basis: 100%;
   }
-
-  .la-tag {
-    font-size: 11px;
-    max-width: 50%;
-    padding: 4px 7px;
-  }
-
-  /* A 3:1 plot on a phone is 110px tall, which puts every label on top of the
-     line it is pointing at. Give the drawing more height instead. */
-  .la-plot {
-    aspect-ratio: 2 / 1;
-    min-height: 170px;
-  }
 }
 
+/* ---------- Day Class ----------
+   The solid fills are the same in both themes: green stays green and amber
+   stays amber, both with ink text, exactly as the marketing cards do. Only
+   the things drawn in paper-on-ink need turning over. */
 
-/* Diagram fills that have to change with the theme, so they live in CSS
-   rather than as attributes on the shapes. */
-.la-band {
-  fill: rgba(255, 180, 58, 0.09);
+html.lms-light .gfx-bar-track {
+  background: rgba(14, 14, 18, 0.12);
 }
 
-/* Markers on a stretched plot: HTML, so they stay round at any width. */
-.la-point {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.la-point--warn {
-  background: var(--coral);
-}
-
-.la-point--good {
-  background: var(--acc);
-}
-
-/* Day Class. The drawings inherit currentColor for their strokes, so the
-   curves and the hairlines flip on their own; what needs saying here is
-   every wash, border and accent that was written for a dark ground. */
-html.lms-light .lms-split,
-html.lms-light .lms-art-frame,
-html.lms-light .la-card,
-html.lms-light .la-branch {
-  background: rgba(14, 14, 18, 0.03);
-  border-color: rgba(14, 14, 18, 0.16);
-}
-
-html.lms-light .lms-split-label--warn,
-html.lms-light .la-card--warn .la-card-label,
-html.lms-light .la-bar-row--warn .la-bar-note,
-html.lms-light .la-loop-back,
-html.lms-light .la-tag--warn,
-html.lms-light .lms-split-cell--warn .lms-split-mini {
-  color: #b3700c;
-}
-
-html.lms-light .lms-split-label--good,
-html.lms-light .la-card--good .la-card-label,
-html.lms-light .la-bar-row--good .la-bar-note,
-html.lms-light .lms-step-n,
-html.lms-light .la-tag--good,
-html.lms-light .lms-split-cell--good .lms-split-mini {
-  color: #157a3e;
-}
-
-html.lms-light .lms-split-label--warn {
-  border-bottom-color: rgba(179, 112, 12, 0.45);
-}
-
-html.lms-light .lms-split-label--good {
-  border-bottom-color: rgba(21, 122, 62, 0.45);
-}
-
-html.lms-light .lms-split-cell--warn,
-html.lms-light .la-card--warn,
-html.lms-light .la-branch--bad,
-html.lms-light .la-loop-node {
-  background: rgba(217, 138, 23, 0.1);
-  border-color: rgba(217, 138, 23, 0.32);
-}
-
-html.lms-light .lms-split-cell--warn {
-  border-left-color: rgba(179, 112, 12, 0.55);
-}
-
-html.lms-light .lms-split-cell--good,
-html.lms-light .la-card--good,
-html.lms-light .la-branch--good,
-html.lms-light .lms-step-n {
-  background: rgba(29, 158, 80, 0.1);
-  border-color: rgba(29, 158, 80, 0.32);
-}
-
-html.lms-light .lms-split-cell--good {
-  border-left-color: rgba(21, 122, 62, 0.55);
-}
-
-html.lms-light .lms-step::before {
-  background: linear-gradient(rgba(29, 158, 80, 0.5), rgba(29, 158, 80, 0.12));
-}
-
-html.lms-light .lms-split-row {
-  border-bottom-color: rgba(14, 14, 18, 0.1);
-}
-
-html.lms-light .la-card-out {
-  border-top-color: rgba(14, 14, 18, 0.16);
-}
-
-html.lms-light .la-streak-run {
-  border-bottom-color: rgba(14, 14, 18, 0.12);
-}
-
-/* Paper-on-paper again: the chip that was cream on ink inverts. */
-html.lms-light .la-seed {
+html.lms-light .gfx-bar-fill,
+html.lms-light .gfx-tl-dot,
+html.lms-light .gfx-flow-step,
+html.lms-light .gfx-sc-key,
+html.lms-light .la-tag,
+html.lms-light .la-tag--plain,
+html.lms-light .la-seed,
+html.lms-light .gfx-sc-mark {
   background: var(--ink);
   color: var(--paper);
 }
 
-html.lms-light .la-tag {
-  background: rgba(242, 238, 227, 0.9);
-  border-color: rgba(14, 14, 18, 0.18);
-}
-
+html.lms-light .gfx-flow-n,
 html.lms-light .la-loop-n {
-  background: #d98a17;
-  color: var(--paper);
+  background: var(--paper);
+  color: var(--ink);
 }
 
-html.lms-light .la-loop-return {
-  border-color: rgba(217, 138, 23, 0.55);
+html.lms-light .gfx-sc-mark {
+  border-color: var(--paper);
+}
+
+html.lms-light .gfx-bar-row.is-good .gfx-bar-fill,
+html.lms-light .gfx-tl-point.is-good .gfx-tl-dot,
+html.lms-light .gfx-sc-mark.is-good,
+html.lms-light .gfx-sc-key.is-good,
+html.lms-light .gfx-flow.is-good .gfx-flow-step,
+html.lms-light .la-tag--good {
+  background: var(--acc);
+  color: var(--ink);
+}
+
+html.lms-light .gfx-bar-row.is-warn .gfx-bar-fill,
+html.lms-light .gfx-tl-point.is-warn .gfx-tl-dot,
+html.lms-light .gfx-sc-mark.is-warn,
+html.lms-light .gfx-sc-key.is-warn,
+html.lms-light .gfx-flow.is-warn .gfx-flow-step,
+html.lms-light .la-tag--warn {
+  background: var(--coral);
+  color: var(--ink);
+}
+
+html.lms-light .gfx-bar-row.is-good .gfx-bar-value,
+html.lms-light .gfx-tl-point.is-good .gfx-tl-label,
+html.lms-light .gfx-flow.is-good .gfx-flow-back,
+html.lms-light .lms-split-label--good,
+html.lms-light .la-bar-row--good .la-bar-note,
+html.lms-light .gfx-table thead th {
+  color: #157a3e;
+}
+
+html.lms-light .gfx-bar-row.is-warn .gfx-bar-value,
+html.lms-light .gfx-tl-point.is-warn .gfx-tl-label,
+html.lms-light .gfx-flow.is-warn .gfx-flow-back,
+html.lms-light .lms-split-label--warn,
+html.lms-light .la-bar-row--warn .la-bar-note,
+html.lms-light .la-loop-back {
+  color: #b3700c;
+}
+
+html.lms-light .gfx-table thead th {
+  border-bottom-color: #157a3e;
+}
+
+html.lms-light .gfx-table th,
+html.lms-light .gfx-table td {
+  border-bottom-color: rgba(14, 14, 18, 0.16);
+}
+
+html.lms-light .gfx-tl-point::before {
+  background: rgba(14, 14, 18, 0.2);
+}
+
+html.lms-light .gfx-flow-return {
+  border-color: rgba(14, 14, 18, 0.4);
   border-top: none;
 }
 
-html.lms-light .la-loop-return::before {
-  border-bottom-color: rgba(217, 138, 23, 0.8);
+html.lms-light .gfx-flow-return::before {
+  border-bottom-color: rgba(14, 14, 18, 0.65);
 }
 
-html.lms-light .la-day.is-hit {
-  background: #1d9e50;
+html.lms-light .gfx-sc-track {
+  background: linear-gradient(90deg, var(--coral), rgba(14, 14, 18, 0.25), var(--acc));
 }
 
-html.lms-light .la-day.is-miss {
-  border-color: rgba(217, 138, 23, 0.8);
+/* The receipt is already cream on ink, so in Day Class it turns over to keep
+   standing apart from the page instead of dissolving into it. */
+html.lms-light .gfx-receipt .lms-gfx-body {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+html.lms-light .gfx-rc-line {
+  border-bottom-color: rgba(242, 238, 227, 0.16);
+}
+
+html.lms-light .gfx-rc-line.is-good .gfx-rc-value {
+  color: var(--acc);
+}
+
+html.lms-light .gfx-rc-line.is-warn .gfx-rc-value {
+  color: var(--coral);
 }
 
 html.lms-light .la-day.is-dead {
-  border-color: rgba(14, 14, 18, 0.2);
+  border-color: rgba(14, 14, 18, 0.3);
 }
 
-html.lms-light .la-bar-row--good .la-bar {
-  background: #1d9e50;
+html.lms-light .la-streak-run {
+  border-bottom-color: rgba(14, 14, 18, 0.16);
 }
 
-html.lms-light .la-bar-row--warn .la-bar {
-  background: linear-gradient(90deg, rgba(217, 138, 23, 0.9), rgba(217, 138, 23, 0.35));
+html.lms-light .lms-step::before {
+  background: rgba(29, 158, 80, 0.35);
 }
 
-html.lms-light .la-band {
-  fill: rgba(217, 138, 23, 0.12);
-}
-
-html.lms-light .la-point--warn {
-  background: #d98a17;
-}
-
-html.lms-light .la-point--good {
-  background: #1d9e50;
-}
-
-html.lms-light .demo-stats li {
-  background: rgba(14, 14, 18, 0.04);
-  border-color: rgba(14, 14, 18, 0.14);
-}
-
-html.lms-light .demo-stat-n {
-  color: #157a3e;
-}
 
 /* ---------- The Quad, the Register, Challenges ---------- */
 /*

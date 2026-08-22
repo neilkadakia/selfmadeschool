@@ -15,6 +15,7 @@ import StudyGroup from "./StudyGroup";
 import Quiz from "./Quiz";
 import Deck from "./Deck";
 import LessonArtFigure from "./LessonArt";
+import LessonGraphic from "./LessonGraphic";
 
 // Exported for the public demo lesson, which renders the same blocks
 // outside the auth gate.
@@ -157,6 +158,13 @@ export function Block({ block }: { block: LessonBlock }) {
           </ol>
         </div>
       );
+    case "bars":
+    case "flow":
+    case "timeline":
+    case "receipt":
+    case "scale":
+    case "table":
+      return <LessonGraphic block={block} />;
     case "art":
       return <LessonArtFigure art={block.art} alt={block.alt} caption={block.caption} />;
     case "divider":

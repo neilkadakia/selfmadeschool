@@ -76,28 +76,59 @@ line it matched. Quiz *options* are deliberately excluded: three of four are
 wrong, and surfacing a wrong answer as a search result teaches the wrong thing.
 `npm run test:search`.
 
-## A lesson is blocks, and three of them are pictures
-Beyond prose, a lesson can carry **`split`** (the same moment in two voices,
-built for Critic says / Coach says), **`steps`** (a numbered flow with a spine)
-and **`art`**, which names a drawing from a fixed list that
-`components/lms/LessonArt.tsx` draws. Named, not free-form: an author should
-never be writing SVG into curriculum data, and every drawing has to survive a
-phone and a screen reader.
+## A lesson is blocks, and nine of them are pictures
+Beyond prose a lesson can carry **`split`** (the same moment two ways),
+**`steps`** (a numbered flow with a spine), **`bars`**, **`flow`** (a sequence,
+or a cycle with `loop`), **`timeline`**, **`receipt`** (a calculation worked in
+the open, the money workhorse), **`scale`**, **`table`**, and **`art`**, which
+names one of six drawings specific to Unit 01. All but `art` are generic: a
+unit fills one with its own numbers rather than asking for a bespoke drawing,
+which is what made illustrating thirty units possible at all.
 
-Two rules hold the drawings up. **The words in a picture are DOM text, never
-SVG `<text>`**: a 600-unit viewBox on a phone turns 15px type into 8px, so
-shapes are SVG and sentences are HTML stacked on top. And **the figure is one
-image with one sentence**: the frame carries `role="img"` and the `alt` line,
-because a reader walking a scatter of chips learns nothing. That same `alt` is
-what search indexes and what the phone app shows, since Expo has no SVG here.
+Renderers: `components/lms/LessonGraphic.tsx` (the eight generic) and
+`LessonArt.tsx` (the six named). Both carry structure, never bytes, so a lesson
+stays a plain object `api/content.php` and the phone app can read.
 
-Because the shape layer is stretched to its frame, anything round or diagonal
-distorts. Circles are HTML markers positioned by percentage, and connectors use
-only vertical and horizontal segments.
+**Design, and this was got wrong once.** A block that carries a tone is a
+**solid fill with ink text**, the way the Read / Watch / Do panels and the
+syllabus cards are. Never a dark tile with a tinted wash and a coloured band
+down one edge: that is the default look every AI reaches for, the user has
+banned it outright, and it belongs to no design this site uses. Reference
+material that reads like a document (a receipt, a table) inverts to cream.
+Steps, timelines, bars and scales are drawn straight onto the page with a
+spine, a dot or a bar and no container. Numbers are Bricolage and large.
 
-Add a drawing in three places: the id in `LessonArt` (`lib/lms.ts`), the case in
-`LessonArt.tsx`, and the name in the allowed list in `api/copilot.php`, which
-refuses an unknown one rather than shipping a blank frame.
+**Words in a picture are DOM text, never SVG `<text>`**: a 600-unit viewBox on
+a phone turns 15px type into 8px, and this is read on phones. A drawing is one
+image with one written sentence: the frame carries `role="img"` and the `alt`
+line, which is also what search indexes and what the phone app shows, since
+Expo has no SVG here. Because the shape layer stretches to its frame, circles
+are HTML markers positioned by percentage and connectors use only vertical and
+horizontal segments.
+
+`.gfx-tb-scroll` carries `contain: inline-size` and it is load-bearing:
+without it a table's `min-width` propagates as a min-content floor up through
+`.lms-main` and widens the entire lesson column on a phone, which `body`'s
+`overflow-x: hidden` then hides, so the page looks fine while every graphic on
+it is quietly off-screen.
+
+Add a drawing in three places: the id in `LessonArt` (`lib/lms.ts`), the case
+in `LessonArt.tsx`, and the name in the allowed list in `api/copilot.php`,
+which refuses an unknown one rather than shipping a blank frame.
+
+## Every unit is a lesson, and the audit says so
+`npm run audit:lessons` (`scripts/lesson-audit.ts`) is the acceptance gate for
+curriculum, next to `audit:quiz` for the knowledge check. It fails on em and en
+dashes, the banned vocabulary, a body under 1,400 words, fewer than two
+graphics, four plain paragraphs in a row, a missing takeaway or Field Work
+line, and any quiz explanation that names an option by position, which is wrong
+the moment it renders because `lib/shuffle.ts` moves the options on every
+attempt. Words that are banned in one sense and ordinary in another (`kids` for
+the reader's own children, `leverage` as the noun for bargaining power) are
+warnings for a person to read, never failures.
+
+Curriculum numbers change, so tests must not pin a sentence. `scripts/search-test.ts`
+pulls its query out of a real paragraph at runtime for exactly that reason.
 
 ## The Quad and the Register
 `/learn/quad` is the community: clubs are rooms, each with its own members, feed

@@ -58,6 +58,20 @@ function blockText(b: LessonBlock): string {
     // thing in a drawing. The chip labels inside it are layout.
     case "art":
       return [b.alt, b.caption].filter(Boolean).join(". ");
+    case "bars":
+      return [b.title, ...b.items.flatMap((i) => [i.label, i.note]), b.caption].filter(Boolean).join(". ");
+    case "flow":
+      return [b.title, ...b.steps.flatMap((st) => [st.label, st.note]), b.caption].filter(Boolean).join(". ");
+    case "timeline":
+      return [b.title, ...b.points.flatMap((pt) => [pt.at, pt.label, pt.note]), b.caption].filter(Boolean).join(". ");
+    case "receipt":
+      return [b.title, ...b.lines.flatMap((l) => [l.label, l.value, l.note]), b.total?.label, b.caption]
+        .filter(Boolean)
+        .join(". ");
+    case "scale":
+      return [b.title, b.left, b.right, ...b.marks.map((m) => m.label), b.caption].filter(Boolean).join(". ");
+    case "table":
+      return [b.title, ...b.head, ...b.rows.flat(), b.caption].filter(Boolean).join(". ");
     default:
       return "";
   }
