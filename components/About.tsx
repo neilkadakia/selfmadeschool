@@ -75,7 +75,7 @@ export default function About() {
 
   return (
     <div ref={rootRef}>
-      <header ref={heroRef} className="hero about-hero">
+      <header ref={heroRef} className="hero about-hero" data-surface="dark">
         {/* The same field as the home hero, quieter: paper, one light, grain. */}
         <div className="hero-grid" aria-hidden="true" />
         <div className="hero-bg" aria-hidden="true">
@@ -104,7 +104,7 @@ export default function About() {
         </p>
       </header>
 
-      <section className="section-paper mission">
+      <section className="section-paper mission" data-surface="light">
         <div className="container">
           <p data-reveal className="kicker kicker--vio">
             Why we exist
@@ -121,7 +121,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="beliefs">
+      <section className="beliefs" data-surface="dark">
         <div className="container">
           <p data-reveal className="kicker kicker--acc">
             What we believe
@@ -148,7 +148,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="section-paper founder">
+      <section className="section-paper founder" data-surface="light">
         <div className="container">
           <p data-reveal className="kicker kicker--vio">
             Who we are
@@ -196,7 +196,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="about-cta">
+      <section className="about-cta" data-surface="green">
         <h2 data-reveal className="h2 h2--about-cta">
           Class starts whenever
           <br />

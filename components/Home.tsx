@@ -337,7 +337,7 @@ export default function Home() {
 
   return (
     <div ref={rootRef}>
-      <header id="top" ref={heroRef} className="hero">
+      <header id="top" ref={heroRef} className="hero" data-surface="dark">
         {/* Graph paper in the dark with dawn coming up behind it. The paper
             stays put so the ruling stays sharp and the cursor light lines up
             with it; the light itself drifts and leans toward the pointer. */}
@@ -407,7 +407,7 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="marquee-band">
+      <div className="marquee-band" data-surface="green">
         {/* Three copies + one-copy shift: track stays covered up to ~2 copy-widths
             of viewport, so the band never shows a gap mid-loop. */}
         <div data-mq className="marquee-track">
@@ -417,7 +417,7 @@ export default function Home() {
         </div>
       </div>
 
-      <section id="the-point" className="mantra-section">
+      <section id="the-point" className="mantra-section" data-surface="dark">
         <div className="mantra-glow" aria-hidden="true" />
         <div className="container mantra-inner">
           <h2 data-reveal className="mantra-h2">
@@ -440,7 +440,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="syllabus" className="section-paper syllabus">
+      <section id="syllabus" className="section-paper syllabus" data-surface="light">
         <div className="container">
           <p data-reveal className="kicker kicker--vio">
             The 13th Grade · Intro Course Syllabus
@@ -454,7 +454,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="grades" className="grades">
+      <section id="grades" className="grades" data-surface="dark">
         <div className="container">
           <p data-reveal className="kicker kicker--coral">
             The Grades
@@ -485,7 +485,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="how" ref={howRef} className="how">
+      <section id="how" ref={howRef} className="how" data-surface="light">
         <div className="how-head">
           <p data-reveal className="kicker kicker--acc">
             How it works
@@ -516,7 +516,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="receipts" className="receipts">
+      <section id="receipts" className="receipts" data-surface="dark">
         <div className="container">
           <div data-stats className="stats-grid">
             {STATS.map((s) => (
@@ -546,7 +546,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="book" className="book-section">
+      <section id="book" className="book-section" data-surface="light">
         <div className="book-grid">
           <div>
             <p data-reveal className="kicker">
@@ -643,7 +643,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="faq" className="faq">
+      <section id="faq" className="faq" data-surface="dark">
         <div className="container">
           <p data-reveal className="kicker kicker--acc">
             Office Hours
@@ -662,7 +662,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="newsletter" className="newsletter">
+      <section id="newsletter" className="newsletter" data-surface="light">
         <div className="container nl-wrap">
           <div data-reveal className="nl-copy">
             <p className="kicker kicker--acc">Extra Credit</p>
@@ -685,7 +685,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="enroll" className="enroll">
+      <section id="enroll" className="enroll" data-surface="green">
         <p data-reveal className="kicker kicker--enroll">
           Pre-launch · doors open soon
         </p>

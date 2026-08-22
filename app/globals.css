@@ -157,23 +157,32 @@ p {
 
 /* ---------- Nav ---------- */
 
-/* Two states, and the whole point is the first one.
-   At the top of the page the bar has no skin: no tint, no blur, no bottom
-   rule. The hero's graph paper and the dome of light above it run all the way
-   to the top edge of the screen, and the wordmark simply stands in that space
-   at the same 32px the headline below it uses. A blurred slab with a hard
-   bottom edge, which is what used to sit here, cut the artwork in half.
-   On scroll the bar earns its skin and becomes a capsule that rides down the
-   page. The header is only ever the inset; .nav-inner is the bar. */
+/* Two states and a palette, and nothing else moves.
+   No height animation, no scaling wordmark, no easing padding: continuous
+   transformation is more conspicuous than any static treatment and it stutters
+   against the pinned How It Works section.
+
+   At rest over the hero the bar has no skin at all. The grid and the dome of
+   light run to the top edge and the wordmark stands in that space on the same
+   32px the headline uses.
+
+   On scroll it takes a skin, and the skin is the section's own paper, handed
+   over by lib/surface.ts as --nav-tint. Over cream it is cream, over the amber
+   book it is amber, over the green enroll it is green. At 0.55 with the blur
+   behind it that is nothing to the eye on flat ground and becomes legibility
+   insurance the instant a 100px headline passes underneath. It runs edge to
+   edge with a single bottom hairline, because a masthead runs to the trim; an
+   inset panel has four visible edges and reads as a widget riding the scroll.
+   There is deliberately no drop shadow: a shadow is what makes a fixed bar
+   feel like an object with mass hovering over the page. */
 .nav {
   position: fixed;
   z-index: 50;
   top: 0;
   left: 0;
   right: 0;
-  padding: 14px 12px;
-  padding-left: max(12px, env(safe-area-inset-left));
-  padding-right: max(12px, env(safe-area-inset-right));
+  --nav-tint: rgba(16, 17, 26, 0.5);
+  --wm-progress: 0.12;
 }
 
 .nav-inner {
@@ -182,43 +191,143 @@ p {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  /* Header inset plus this padding puts the wordmark on 32px, the same left
-     edge as the hero headline. It does not move between the two states. */
-  padding: 10px 20px;
-  /* Square, not a pill. A capsule reads as a widget floating over the page;
-     a crisp rectangle reads as a masthead, which is the register this site
-     is in. The pills inside it stay pills, so the CTA still reads as a
-     button against a straight edge. */
-  border-radius: 2px;
+  /* Puts the wordmark on 32px, the same left edge as the hero headline. It
+     does not move between the two states. */
+  padding: 16px 32px;
+  padding-left: max(32px, env(safe-area-inset-left));
+  padding-right: max(32px, env(safe-area-inset-right));
 }
 
-/* The skin is a pseudo-element so the change is one opacity tween. Animating
-   backdrop-filter directly is jumpy, and a filter that is painted only when
-   it is visible costs nothing while the hero is on screen. */
 .nav-inner::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
-  border-radius: inherit;
-  background: rgba(16, 17, 26, 0.72);
-  border: 1px solid rgba(242, 238, 227, 0.12);
-  backdrop-filter: blur(18px) saturate(150%);
-  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.42);
+  background: var(--nav-tint);
+  border-bottom: 1px solid rgba(242, 238, 227, 0.1);
+  backdrop-filter: blur(18px) saturate(140%);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.22s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .nav--scrolled .nav-inner::before {
   opacity: 1;
 }
 
-/* Explicit, so the skin can never paint over the links. */
 .nav-logo,
 .nav-links {
   position: relative;
   z-index: 1;
+}
+
+/* ---- The palette, crossfaded ----
+   Every state is a colour that can be pointed at in the palette. No blend
+   modes: differencing cream over amber makes sludge that belongs to nothing. */
+
+.nav-logo,
+.nav-link,
+.nav-burger span {
+  transition: color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav--on-light .nav-inner::before,
+.nav--on-green .nav-inner::before {
+  border-bottom-color: rgba(14, 14, 18, 0.1);
+}
+
+.nav--on-light .nav-logo,
+.nav--on-green .nav-logo,
+.nav--on-light .nav-link,
+.nav--on-green .nav-link {
+  color: var(--ink);
+}
+
+/* Green on cream is barely there and green on amber is worse, so on any light
+   ground the mark's accent sets in ink with the rest of it. */
+.nav--on-light .wm-accent,
+.nav--on-green .wm-accent,
+.nav--on-light .wm-dash,
+.nav--on-green .wm-dash {
+  color: var(--ink);
+}
+
+/* The rule keeps its sweep and darkens, rather than flattening to one colour:
+   the amber-to-green run is the mark. */
+.nav--on-light .wm-rule,
+.nav--on-green .wm-rule {
+  filter: saturate(1.45) brightness(0.62);
+}
+
+.nav--on-light .nav-link--login,
+.nav--on-green .nav-link--login {
+  border-left-color: rgba(14, 14, 18, 0.2);
+}
+
+.nav--on-light .nav-burger span,
+.nav--on-green .nav-burger span {
+  background: var(--ink);
+}
+
+/* The pill stays green everywhere, because a call to action that changes
+   colour as you scroll stops reading as the same promise. The one exception is
+   the green section, where green on green would erase it. */
+.nav--on-green .nav-cta {
+  background: var(--ink);
+  color: var(--acc);
+}
+
+.nav--on-green .nav-cta:hover {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* ---- The rule as a scroll indicator ----
+   A teacher underlining as you get through the material. It only moves when
+   the reader moves, so it never performs at you, and somebody who never
+   notices it loses nothing. */
+.wm-rule--progress path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--wm-progress, 0.12));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-inner::before,
+  .nav-logo,
+  .nav-link,
+  .nav-burger span {
+    transition: none;
+  }
+}
+
+/* The logotype. Was inline styles; now classes, so the nav can invert it. */
+.wm {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  letter-spacing: -0.03em;
+  padding: 0 0 6px;
+}
+
+.wm-dash {
+  color: var(--acc);
+  font-size: 0.62em;
+  vertical-align: 0.1em;
+}
+
+.wm-accent {
+  color: var(--acc);
+}
+
+.wm-rule {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  overflow: visible;
 }
 
 .nav-logo {
@@ -2884,16 +2993,12 @@ p {
    anywhere above the bases (that bug shipped once already; see .sticker). */
 
 @media (max-width: 640px) {
-  .nav {
-    padding: 10px 10px;
-    padding-left: max(10px, env(safe-area-inset-left));
-    padding-right: max(10px, env(safe-area-inset-right));
-  }
-
-  /* Same trick as the desktop: inset plus padding lands the wordmark on the
-     hero's own 20px gutter. */
+  /* The bar runs to the trim on every size; only the gutter changes, to the
+     hero's own 20px. */
   .nav-inner {
-    padding: 9px 10px;
+    padding: 12px 20px;
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
     gap: 12px;
   }
 

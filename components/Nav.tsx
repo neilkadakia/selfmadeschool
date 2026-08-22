@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Wordmark from "./Wordmark";
 import { handleAnchorClick } from "@/lib/anchor";
+import { readSurface, scrollProgress, type SurfaceMode } from "@/lib/surface";
 import { useLms } from "./useLms";
 
 const LINKS = [
@@ -20,17 +21,49 @@ export default function Nav() {
   const isAbout = pathname === "/about";
   const inClassroom = pathname.startsWith("/learn");
   const [scrolled, setScrolled] = useState(false);
+  const [surface, setSurface] = useState<SurfaceMode>("dark");
+  const barRef = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
   // Signed-in students get "Classroom"; everyone else gets Log In + Enroll.
   const { auth, loaded } = useLms();
   const student = loaded ? auth : null;
 
+  // One read per frame at most, and all three answers come from it, so the
+  // skin, the ink and the rule can never disagree about where the page is.
+  //
+  // The tint and the progress are written straight to the element as custom
+  // properties. They change on every frame of a scroll, and putting either in
+  // React state would re-render the whole bar sixty times a second to move a
+  // dash offset.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 64);
-    onScroll();
+    let frame = 0;
+    const read = () => {
+      frame = 0;
+      const bar = barRef.current;
+      if (!bar) return;
+      setScrolled(window.scrollY > 64);
+
+      const r = bar.getBoundingClientRect();
+      const s = readSurface(Math.round(r.top + r.height / 2));
+      setSurface(s.mode);
+      bar.style.setProperty("--nav-tint", s.tint);
+
+      // Never fully undrawn: at the top of the page the rule is still a short
+      // amber tick, which reads as the mark rather than as an empty track.
+      bar.style.setProperty("--wm-progress", String(0.12 + scrollProgress() * 0.88));
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(read);
+    };
+    read();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     document.documentElement.style.overflow = open ? "hidden" : "";
@@ -100,7 +133,10 @@ export default function Nav() {
           </>
         )}
       </div>
-      <header className={scrolled ? "nav nav--scrolled" : "nav"}>
+      <header
+        ref={barRef}
+        className={`nav${scrolled ? " nav--scrolled" : ""} nav--on-${surface}`}
+      >
         {/* The bar is this inner element, not the header. At the top of the
             page it has no skin at all, so the hero's graph paper and the dome
             of light above it run to the edge of the screen uninterrupted; on
@@ -108,7 +144,7 @@ export default function Nav() {
             down the page. The header only ever provides the inset. */}
         <div className="nav-inner">
       <Link href="/" className="nav-logo" onClick={close}>
-        <Wordmark gid="dawn-nav" />
+        <Wordmark gid="dawn-nav" progress />
       </Link>
       <nav className="nav-links" aria-label="Main">
         {LINKS.map((link) => (
