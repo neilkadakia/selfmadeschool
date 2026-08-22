@@ -182,7 +182,7 @@ p {
   left: 0;
   right: 0;
   --nav-tint: rgba(16, 17, 26, 0.5);
-  --wm-progress: 0.12;
+  --wm-progress: 1;
 }
 
 .nav-inner {
@@ -292,14 +292,25 @@ p {
    notices it loses nothing. */
 .wm-rule--progress path {
   stroke-dasharray: 1;
-  stroke-dashoffset: calc(1 - var(--wm-progress, 0.12));
+  /* Defaults to the full length, which is what the server renders and what
+     the reader sees on arrival. The nav only starts writing a fraction here
+     once they scroll. */
+  stroke-dashoffset: calc(1 - var(--wm-progress, 1));
+}
+
+/* The one-off handoff from the full mark to the gauge, on the first scroll.
+   Cleared straight afterwards so the tracking that follows is 1:1 with the
+   wheel rather than lagging behind it by the length of a transition. */
+.nav.is-settling .wm-rule--progress path {
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .nav-inner::before,
   .nav-logo,
   .nav-link,
-  .nav-burger span {
+  .nav-burger span,
+  .nav.is-settling .wm-rule--progress path {
     transition: none;
   }
 }
@@ -2894,59 +2905,151 @@ p {
 
 /* ---------- Footer ---------- */
 
+/* Rotates by calendar day (lib/encouragement.ts). Last thing on every page. */
+/* Solid buttons, not glyphs in the link row. The first version of these was
+   19px of thin line art at 55% opacity sitting at the far right of nine text
+   links, which is to say invisible: the owner of the site could not find it.
+   Size and contrast are the whole job here. */
+/* ---------- Footer ----------
+   The page ends on a full green section shouting a call to action, and used to
+   drop straight into a 40px strip of links. That is a whimper. This is the
+   colophon: the school signs its name, says one warm thing, and gets out of
+   the way.
+
+   Three ideas, no more. The hero's graph paper comes back and runs out as the
+   page ends, so the site opens and closes on the same sheet. The day's line of
+   encouragement is the last thing read, in the dawn gradient the wordmark is
+   underlined with. And there is a way back to the top, because the home page
+   is over eight thousand pixels long and there was not one. */
+
 .footer {
+  position: relative;
+  isolation: isolate;
   background: var(--ink);
-  padding: 40px 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
+  padding: 72px 32px 40px;
+  padding-left: max(32px, env(safe-area-inset-left));
+  padding-right: max(32px, env(safe-area-inset-right));
   font-size: 14px;
-  color: rgba(242, 238, 227, 0.55);
+  color: rgba(242, 238, 227, 0.62);
+  overflow: hidden;
 }
 
-/* Rotates by calendar day (lib/encouragement.ts). Last thing on every page. */
+/* The same ruling as the hero, at a fraction of the strength, fading out
+   downward: the paper running off the bottom of the page. */
+.footer-paper {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(242, 238, 227, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 238, 227, 0.1) 1px, transparent 1px),
+    linear-gradient(rgba(242, 238, 227, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 238, 227, 0.04) 1px, transparent 1px);
+  background-size: 304px 304px, 304px 304px, 76px 76px, 76px 76px;
+  -webkit-mask-image: linear-gradient(#000 0%, rgba(0, 0, 0, 0.35) 52%, transparent 88%);
+  mask-image: linear-gradient(#000 0%, rgba(0, 0, 0, 0.35) 52%, transparent 88%);
+}
+
+.footer-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+/* The day's line, in the dawn gradient. The one piece of warmth down here, so
+   it gets the size. */
 .footer-cheer {
-  flex-basis: 100%;
-  margin: 0 0 12px;
-  padding-bottom: 26px;
-  border-bottom: 1px solid rgba(242, 238, 227, 0.12);
+  margin: 0 0 44px;
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
-  font-size: clamp(21px, 2.6vw, 32px);
-  line-height: 1.18;
-  letter-spacing: -0.01em;
+  font-size: clamp(24px, 3.4vw, 42px);
+  line-height: 1.14;
+  letter-spacing: -0.02em;
   background: linear-gradient(90deg, #f5a83c, #b8c94f, #43de7b);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
+.footer-sign {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid rgba(242, 238, 227, 0.14);
+}
+
 .footer-logo {
   font-family: var(--font-bricolage), sans-serif;
   font-weight: 800;
-  font-size: 18px;
+  font-size: 26px;
   color: var(--paper);
+  transition: opacity 0.2s ease;
+}
+
+.footer-logo:hover {
+  opacity: 0.82;
+}
+
+.footer-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(242, 238, 227, 0.28);
+  background: none;
+  color: var(--paper);
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-top svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.footer-top:hover {
+  border-color: var(--acc);
+  color: var(--acc);
+}
+
+.footer-top:hover svg {
+  transform: translateY(-2px);
+}
+
+.footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px 28px;
+  padding: 24px 0 26px;
 }
 
 .footer-links {
   display: flex;
-  /* Must be able to wrap: an unwrappable row here widens the mobile layout
-     viewport for the whole page and pushes the nav burger off-screen. */
   flex-wrap: wrap;
-  gap: 4px 20px;
+  gap: 4px 26px;
 }
 
 .footer-links a {
-  padding: 8px 0;
+  padding: 6px 0;
   white-space: nowrap;
+  transition: color 0.2s ease;
 }
 
-/* Solid buttons, not glyphs in the link row. The first version of these was
-   19px of thin line art at 55% opacity sitting at the far right of nine text
-   links, which is to say invisible: the owner of the site could not find it.
-   Size and contrast are the whole job here. */
+.footer-links a:hover {
+  color: var(--acc);
+}
+
 .footer-social {
   display: flex;
   align-items: center;
@@ -2958,7 +3061,7 @@ p {
   font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(242, 238, 227, 0.55);
+  color: rgba(242, 238, 227, 0.62);
   margin-right: 2px;
 }
 
@@ -2986,6 +3089,44 @@ p {
   transform: translateY(-2px);
 }
 
+.footer-fine {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(242, 238, 227, 0.45);
+}
+
+@media (max-width: 640px) {
+  .footer {
+    padding: 52px 20px 32px;
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
+
+  .footer-cheer {
+    margin-bottom: 32px;
+  }
+
+  /* The wordmark and the way back stack rather than squeezing onto one line. */
+  .footer-sign {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .footer-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-top,
+  .footer-top svg,
+  .footer-social-link {
+    transition: none;
+  }
+}
 
 /* ---------- Small screens ----------
    Lives BELOW every base rule it overrides. Same-specificity rules that

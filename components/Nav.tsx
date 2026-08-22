@@ -23,6 +23,10 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [surface, setSurface] = useState<SurfaceMode>("dark");
   const barRef = useRef<HTMLElement>(null);
+  // The rule shows its full length on arrival and only becomes a gauge once
+  // the reader actually starts moving. Once handed over, it stays a gauge.
+  const ruleLive = useRef(false);
+  const fromFull = useRef(false);
   const [open, setOpen] = useState(false);
   // Signed-in students get "Classroom"; everyone else gets Log In + Enroll.
   const { auth, loaded } = useLms();
@@ -48,8 +52,26 @@ export default function Nav() {
       setSurface(s.mode);
       bar.style.setProperty("--nav-tint", s.tint);
 
-      // Never fully undrawn: at the top of the page the rule is still a short
-      // amber tick, which reads as the mark rather than as an empty track.
+      // The rule is drawn in full when the page is first opened, so the mark
+      // arrives complete rather than as a stub of itself. The moment the
+      // reader scrolls it retracts to the gauge and tracks from then on, even
+      // if they come back to the top.
+      if (!ruleLive.current) {
+        if (window.scrollY <= 0) {
+          fromFull.current = true;
+          bar.style.setProperty("--wm-progress", "1");
+          return;
+        }
+        ruleLive.current = true;
+        // Only worth easing when it is actually leaving the full state; a
+        // reload part-way down the page should just start where it is.
+        if (fromFull.current) {
+          bar.classList.add("is-settling");
+          window.setTimeout(() => bar.classList.remove("is-settling"), 640);
+        }
+      }
+      // Never fully undrawn: at the top the rule is still a short amber tick,
+      // which reads as the mark rather than as an empty track.
       bar.style.setProperty("--wm-progress", String(0.12 + scrollProgress() * 0.88));
     };
     const onScroll = () => {

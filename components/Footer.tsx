@@ -58,41 +58,73 @@ export default function Footer() {
   // The classroom has its own shell. The marketing footer stays out of it.
   if (pathname.startsWith("/learn")) return null;
 
+  const toTop = () => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+  };
+
   return (
     <footer className="footer">
-      {/* One page carries the encouragement line: About, where somebody is
-          already reading about why the school exists. */}
-      {pathname === "/about" && <p className="footer-cheer">{pep}</p>}
-      <span className="footer-logo">
-        <Wordmark gid="dawn-footer" />
-      </span>
-      <div className="footer-links">
-        {FOOTER_LINKS.map((l) => (
-          <Link
-            key={l.href}
-            href={l.href}
-            onClick={(e) => handleAnchorClick(e, l.href, pathname)}
-          >
-            {l.label}
+      {/* The hero opens on graph paper and the page closes on the same sheet,
+          running out as it reaches the bottom. It is a school; the paper is
+          the point. Decorative, so it stays out of the reading order. */}
+      <div className="footer-paper" aria-hidden="true" />
+
+      <div className="footer-inner">
+        {/* The school's own voice, rotated by calendar day. It used to appear
+            on About alone, which wasted the one warm thing at the bottom of
+            every other page: this is the last line a visitor reads, and after
+            a page that has just asked them for something, it should be the
+            school being kind rather than the school selling. */}
+        <p className="footer-cheer">{pep}</p>
+
+        <div className="footer-sign">
+          <Link href="/" className="footer-logo">
+            <Wordmark gid="dawn-footer" />
           </Link>
-        ))}
+          <button type="button" className="footer-top" onClick={toTop}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+              <path d="M12 19V6" strokeLinecap="round" />
+              <path d="M6 11.5 12 5.5l6 6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Back to the Top
+          </button>
+        </div>
+
+        <div className="footer-row">
+          <div className="footer-links">
+            {FOOTER_LINKS.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                onClick={(e) => handleAnchorClick(e, l.href, pathname)}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </div>
+
+          <div className="footer-social">
+            <span className="footer-social-label">Follow</span>
+            {SOCIAL.map((sm) => (
+              <a
+                key={sm.href}
+                href={sm.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social-link"
+                aria-label={`Self Made School on ${sm.label}, ${sm.handle}`}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">{sm.icon}</svg>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <p className="footer-fine">
+          © 2026 Self Made School. Not actual financial advice. Actual life advice.
+        </p>
       </div>
-      <div className="footer-social">
-        <span className="footer-social-label">Follow</span>
-        {SOCIAL.map((sm) => (
-          <a
-            key={sm.href}
-            href={sm.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="footer-social-link"
-            aria-label={`Self Made School on ${sm.label}, ${sm.handle}`}
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">{sm.icon}</svg>
-          </a>
-        ))}
-      </div>
-      <span>© 2026 Self Made School. Not actual financial advice. Actual life advice.</span>
     </footer>
   );
 }
