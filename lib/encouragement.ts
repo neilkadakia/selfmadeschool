@@ -18,7 +18,6 @@ export const PEP_LINES = [
   "You do not have to be good at this yet. You just have to keep showing up.",
   "Progress still counts on the days it is quiet.",
   "Everyone you know who has their money together learned it after school, same as you.",
-  "One unit. That is the whole ask today.",
   "Falling behind is a story. Picking it back up is a decision.",
   "You are building the one thing nobody can repossess.",
   "Small, boring, repeated. That is what winning actually looks like.",
