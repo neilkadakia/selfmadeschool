@@ -8160,6 +8160,81 @@ html.lms-light .lms-gear-buy:disabled {
   animation: arenaPow 0.35s ease;
 }
 
+/* The Slammer: pick-your-weapon row on the intro screen. The chosen
+   weapon is a solid green fill with ink text; the rest read like quiz
+   options. Nothing here is ever dimmed. */
+.lms-weapon-head {
+  margin: 18px 0 10px;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.lms-weapon-pick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.lms-weapon {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  font-family: var(--font-instrument), sans-serif;
+  font-size: 15px;
+  line-height: 1.35;
+  text-align: left;
+  color: var(--paper);
+  background: rgba(242, 238, 227, 0.04);
+  border: 1px solid rgba(242, 238, 227, 0.3);
+  border-radius: 14px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+.lms-weapon:hover {
+  background: rgba(242, 238, 227, 0.09);
+  border-color: rgba(242, 238, 227, 0.5);
+}
+
+.lms-weapon:active {
+  transform: scale(0.98);
+}
+
+.lms-weapon.is-picked {
+  background: var(--acc);
+  border-color: var(--acc);
+  color: var(--ink);
+}
+
+.lms-weapon-name {
+  font-weight: 700;
+}
+
+.lms-weapon-atk {
+  font-size: 13px;
+}
+
+html.lms-light .lms-weapon {
+  color: var(--ink);
+  background: rgba(14, 14, 18, 0.035);
+  border-color: rgba(14, 14, 18, 0.3);
+}
+
+html.lms-light .lms-weapon:hover {
+  background: rgba(14, 14, 18, 0.07);
+  border-color: rgba(14, 14, 18, 0.5);
+}
+
+html.lms-light .lms-weapon.is-picked {
+  background: var(--acc);
+  border-color: var(--acc);
+  color: var(--ink);
+}
+
 .lms-arena-end {
   display: flex;
   flex-direction: column;

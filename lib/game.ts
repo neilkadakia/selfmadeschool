@@ -209,7 +209,13 @@ export type Equipped = Partial<Record<GearSlot, string>>;
 export const ATK_PER_LEVEL = 2;
 
 export function attackFor(equipped: Equipped, xp = 0): number {
-  const weapon = equipped.weapon ? gearById(equipped.weapon) : undefined;
+  return attackWith(equipped.weapon ?? null, xp);
+}
+
+// Same math with the weapon named directly. The Slammer fight lets the
+// player pick a weapon at the door instead of using whatever is equipped.
+export function attackWith(weaponId: string | null, xp = 0): number {
+  const weapon = weaponId ? gearById(weaponId) : undefined;
   return BATTLE.baseAtk + (weapon?.atk ?? 0) + levelFor(xp).index * ATK_PER_LEVEL;
 }
 
@@ -361,4 +367,42 @@ export function allBosses(): BossEntry[] {
       key: partKey(course.slug, partIndex),
     }))
   );
+}
+
+// ---------- The Slammer (the hallway super-boss) ----------
+// Beat all three part bosses of The 13th Grade and the hallway locker
+// itself steps off the wall. The fight is a fixed set of questions pulled
+// from the whole course: a right answer dents the door (and ONLY a right
+// answer), a wrong one gets you slammed with it. Break the locker before
+// the set runs out or your HP does.
+//
+// Tuning: with the starter pencil at Senior level a hit dents for ~29, so
+// the door needs roughly 6 straight or 7 of 10 to give. It slams harder
+// than any part boss, so about four wrong answers is a KO for light armor.
+
+export const SLAMMER = {
+  name: "The Slammer",
+  taunt: "\"You never did get my combination right.\"",
+  weakness: "Right answers. Every single one leaves a dent.",
+  color: "#E2A05C", // dark yellow peach, same as the art
+  hp: 190,
+  atk: 42,
+  rounds: 10,
+} as const;
+
+export function slammerKey(courseSlug: string): string {
+  return `${courseSlug}/slammer`;
+}
+
+// Every question in the course. The boss that guards the whole hallway
+// gets to ask about anything in it.
+export function courseQuestions(course: Course): ArenaQuestion[] {
+  return course.parts.flatMap((p) => partQuestions(course, p));
+}
+
+export function slammerUnlocked(
+  course: Course,
+  battles: Record<string, { won: boolean }>
+): boolean {
+  return course.parts.every((_, i) => battles[partKey(course.slug, i)]?.won);
 }
