@@ -185,7 +185,11 @@ p {
   /* Header inset plus this padding puts the wordmark on 32px, the same left
      edge as the hero headline. It does not move between the two states. */
   padding: 10px 20px;
-  border-radius: 999px;
+  /* Square, not a pill. A capsule reads as a widget floating over the page;
+     a crisp rectangle reads as a masthead, which is the register this site
+     is in. The pills inside it stay pills, so the CTA still reads as a
+     button against a straight edge. */
+  border-radius: 2px;
 }
 
 /* The skin is a pseudo-element so the change is one opacity tween. Animating
