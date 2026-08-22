@@ -26,7 +26,7 @@ export default function Nav() {
   const student = loaded ? auth : null;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 64);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -101,6 +101,12 @@ export default function Nav() {
         )}
       </div>
       <header className={scrolled ? "nav nav--scrolled" : "nav"}>
+        {/* The bar is this inner element, not the header. At the top of the
+            page it has no skin at all, so the hero's graph paper and the dome
+            of light above it run to the edge of the screen uninterrupted; on
+            scroll it takes on a background and becomes a capsule that rides
+            down the page. The header only ever provides the inset. */}
+        <div className="nav-inner">
       <Link href="/" className="nav-logo" onClick={close}>
         <Wordmark gid="dawn-nav" />
       </Link>
@@ -152,6 +158,7 @@ export default function Nav() {
           <span />
         </button>
       </nav>
+        </div>
       </header>
     </>
   );

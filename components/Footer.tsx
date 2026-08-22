@@ -41,12 +41,10 @@ const SOCIAL = [
   },
 ];
 
+// Only what the top nav does not already carry. The nav follows you down the
+// page now, so repeating Syllabus, How It Works, The Book, Demo Lesson and
+// About down here bought nothing except a crowded bottom edge.
 const FOOTER_LINKS = [
-  { href: "/#syllabus", label: "Syllabus" },
-  { href: "/#how", label: "How It Works" },
-  { href: "/#book", label: "The Book" },
-  { href: "/demo/lesson", label: "Demo Lesson" },
-  { href: "/about", label: "About" },
   { href: "/#newsletter", label: "Waitlist" },
   { href: "/learn", label: "Sign In" },
   { href: "/privacy", label: "Privacy" },

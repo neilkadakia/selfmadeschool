@@ -157,21 +157,64 @@ p {
 
 /* ---------- Nav ---------- */
 
+/* Two states, and the whole point is the first one.
+   At the top of the page the bar has no skin: no tint, no blur, no bottom
+   rule. The hero's graph paper and the dome of light above it run all the way
+   to the top edge of the screen, and the wordmark simply stands in that space
+   at the same 32px the headline below it uses. A blurred slab with a hard
+   bottom edge, which is what used to sit here, cut the artwork in half.
+   On scroll the bar earns its skin and becomes a capsule that rides down the
+   page. The header is only ever the inset; .nav-inner is the bar. */
 .nav {
   position: fixed;
   z-index: 50;
   top: 0;
   left: 0;
   right: 0;
+  padding: 14px 12px;
+  padding-left: max(12px, env(safe-area-inset-left));
+  padding-right: max(12px, env(safe-area-inset-right));
+}
+
+.nav-inner {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 32px;
-  padding-left: max(32px, env(safe-area-inset-left));
-  padding-right: max(32px, env(safe-area-inset-right));
-  backdrop-filter: blur(12px);
-  background: rgba(14, 14, 18, 0.55);
-  border-bottom: 1px solid rgba(242, 238, 227, 0.08);
+  gap: 24px;
+  /* Header inset plus this padding puts the wordmark on 32px, the same left
+     edge as the hero headline. It does not move between the two states. */
+  padding: 10px 20px;
+  border-radius: 999px;
+}
+
+/* The skin is a pseudo-element so the change is one opacity tween. Animating
+   backdrop-filter directly is jumpy, and a filter that is painted only when
+   it is visible costs nothing while the hero is on screen. */
+.nav-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: rgba(16, 17, 26, 0.72);
+  border: 1px solid rgba(242, 238, 227, 0.12);
+  backdrop-filter: blur(18px) saturate(150%);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.42);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav--scrolled .nav-inner::before {
+  opacity: 1;
+}
+
+/* Explicit, so the skin can never paint over the links. */
+.nav-logo,
+.nav-links {
+  position: relative;
+  z-index: 1;
 }
 
 .nav-logo {
@@ -247,9 +290,7 @@ p {
   transform: scale(0.97);
 }
 
-.nav--scrolled {
-  background: rgba(14, 14, 18, 0.85);
-}
+
 
 .nav-burger {
   display: none;
@@ -2840,9 +2881,16 @@ p {
 
 @media (max-width: 640px) {
   .nav {
-    padding: 14px 18px;
-    padding-left: max(18px, env(safe-area-inset-left));
-    padding-right: max(18px, env(safe-area-inset-right));
+    padding: 10px 10px;
+    padding-left: max(10px, env(safe-area-inset-left));
+    padding-right: max(10px, env(safe-area-inset-right));
+  }
+
+  /* Same trick as the desktop: inset plus padding lands the wordmark on the
+     hero's own 20px gutter. */
+  .nav-inner {
+    padding: 9px 10px;
+    gap: 12px;
   }
 
   /* The menu carries the CTA on phones. The pill would crowd the wordmark. */
