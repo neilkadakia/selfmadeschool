@@ -2789,30 +2789,49 @@ p {
   white-space: nowrap;
 }
 
+/* Solid buttons, not glyphs in the link row. The first version of these was
+   19px of thin line art at 55% opacity sitting at the far right of nine text
+   links, which is to say invisible: the owner of the site could not find it.
+   Size and contrast are the whole job here. */
 .footer-social {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px 14px;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-social-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(242, 238, 227, 0.55);
+  margin-right: 2px;
 }
 
 .footer-social-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 0;
-  white-space: nowrap;
-  transition: color 0.18s ease;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+  flex: none;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .footer-social-link svg {
-  width: 19px;
-  height: 19px;
-  flex: none;
+  width: 22px;
+  height: 22px;
+  display: block;
 }
 
 .footer-social-link:hover {
-  color: var(--acc);
+  background: var(--acc);
+  color: var(--ink);
+  transform: translateY(-2px);
 }
+
 
 /* ---------- Small screens ----------
    Lives BELOW every base rule it overrides. Same-specificity rules that

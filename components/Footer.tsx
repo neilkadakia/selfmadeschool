@@ -6,31 +6,37 @@ import { handleAnchorClick } from "@/lib/anchor";
 import { usePepLine } from "@/lib/encouragement";
 import Wordmark from "./Wordmark";
 
-// The school's own accounts. Outward links, so they open in a new tab and
-// carry rel="noopener"; the icons are line drawings like everywhere else in
-// this project, never a brand emoji or a bitmap.
+// The school's own accounts. The standard brand marks, because a social icon
+// is one of the few places where inventing your own drawing costs you: people
+// find these by shape, not by reading. Drawn as solid buttons rather than dim
+// glyphs in the link row, where the first version of this was unfindable.
 const SOCIAL = [
   {
     href: "https://www.instagram.com/official.selfmadeschool/",
     label: "Instagram",
     handle: "official.selfmadeschool",
     icon: (
-      <>
-        <rect x="3" y="3" width="18" height="18" rx="5" />
-        <circle cx="12" cy="12" r="4" />
-        <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" />
-      </>
+      <g fill="none" stroke="currentColor" strokeWidth="1.9">
+        <rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4" />
+        <circle cx="12" cy="12" r="4.6" />
+        <circle cx="17.5" cy="6.5" r="1.25" fill="currentColor" stroke="none" />
+      </g>
     ),
   },
   {
     href: "https://www.youtube.com/@official.selfmadeschool.com",
     label: "YouTube",
     handle: "@official.selfmadeschool.com",
+    // One path, even-odd wound, so the play triangle is a hole rather than a
+    // shape painted in the background colour. That keeps it correct on hover,
+    // when the button behind it changes colour.
     icon: (
-      <>
-        <rect x="2.5" y="5" width="19" height="14" rx="4" />
-        <path d="M10.5 9.2v5.6l4.6-2.8z" fill="currentColor" stroke="none" />
-      </>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        fill="currentColor"
+        d="M22.6 7.3a3 3 0 0 0-2.1-2.1C18.6 4.6 12 4.6 12 4.6s-6.6 0-8.5.6A3 3 0 0 0 1.4 7.3 31 31 0 0 0 .8 12a31 31 0 0 0 .6 4.7 3 3 0 0 0 2.1 2.1c1.9.6 8.5.6 8.5.6s6.6 0 8.5-.6a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .6-4.7 31 31 0 0 0-.6-4.7ZM9.9 15.4V8.6l5.9 3.4-5.9 3.4Z"
+      />
     ),
   },
 ];
@@ -74,6 +80,7 @@ export default function Footer() {
         ))}
       </div>
       <div className="footer-social">
+        <span className="footer-social-label">Follow</span>
         {SOCIAL.map((sm) => (
           <a
             key={sm.href}
@@ -83,10 +90,7 @@ export default function Footer() {
             className="footer-social-link"
             aria-label={`Self Made School on ${sm.label}, ${sm.handle}`}
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-              {sm.icon}
-            </svg>
-            <span>{sm.label}</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">{sm.icon}</svg>
           </a>
         ))}
       </div>
