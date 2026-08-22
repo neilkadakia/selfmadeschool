@@ -1,0 +1,306 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
+<title>Lesson Blocks</title>
+<style>
+  :root { --ink: #0E0E12; --paper: #F2EEE3; --acc: #43DE7B; --vio: #5B7CFA; --coral: #FFB43A; --muted: rgba(242,238,227,0.75); }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 40px 32px 64px; font-family: "Instrument Sans", sans-serif; background: var(--ink); color: var(--paper); }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  .kicker { font-size: 13px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--acc); margin: 0 0 12px; }
+  h1 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 44px; line-height: 1; letter-spacing: -0.03em; text-transform: uppercase; margin: 0 0 14px; }
+  .lede { font-size: 17px; line-height: 1.7; color: var(--muted); margin: 0 0 48px; }
+  .label { font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--acc); margin: 56px 0 6px; }
+  .note { font-size: 14px; line-height: 1.6; color: var(--muted); margin: 0 0 18px; }
+
+  /* ---------- split: the same moment in two voices ---------- */
+  .lms-split { margin: 30px 0; border: 1px solid rgba(242,238,227,0.14); border-radius: 20px; background: rgba(242,238,227,0.04); padding: 20px; }
+  .lms-split-title { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; margin: 0 0 16px; }
+  .lms-split-head { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 10px; }
+  .lms-split-label { font-size: 11px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; margin: 0; padding-bottom: 8px; }
+  .lms-split-label--warn { color: var(--coral); border-bottom: 2px solid rgba(255,180,58,0.5); }
+  .lms-split-label--good { color: var(--acc); border-bottom: 2px solid rgba(67,222,123,0.5); }
+  .lms-split-rows { display: flex; flex-direction: column; gap: 10px; }
+  .lms-split-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .lms-split-cell { margin: 0; padding: 13px 15px; border-radius: 12px; font-size: 15px; line-height: 1.55; border-left: 3px solid transparent; }
+  .lms-split-cell--warn { background: rgba(255,180,58,0.08); border-left-color: rgba(255,180,58,0.55); }
+  .lms-split-cell--good { background: rgba(67,222,123,0.08); border-left-color: rgba(67,222,123,0.55); }
+  .lms-split-mini { display: none; font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 5px; opacity: 0.75; }
+  @media (max-width: 720px) {
+    .lms-split { padding: 16px; }
+    .lms-split-head { display: none; }
+    .lms-split-row { grid-template-columns: 1fr; gap: 8px; padding-bottom: 10px; border-bottom: 1px solid rgba(242,238,227,0.1); }
+    .lms-split-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .lms-split-mini { display: block; }
+    .lms-split-cell--warn .lms-split-mini { color: var(--coral); }
+    .lms-split-cell--good .lms-split-mini { color: var(--acc); }
+  }
+
+  /* ---------- steps: a numbered flow with a spine ---------- */
+  .lms-steps { margin: 30px 0; }
+  .lms-steps-title { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; margin: 0 0 14px; }
+  .lms-steps-list { list-style: none; margin: 0; padding: 0; }
+  .lms-step { position: relative; display: grid; grid-template-columns: 34px 1fr; gap: 14px; padding-bottom: 18px; }
+  .lms-step::before { content: ""; position: absolute; left: 16px; top: 34px; bottom: 0; width: 2px; background: linear-gradient(rgba(67,222,123,0.5), rgba(67,222,123,0.12)); }
+  .lms-step:last-child { padding-bottom: 0; }
+  .lms-step:last-child::before { display: none; }
+  .lms-step-n { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid rgba(67,222,123,0.55); background: rgba(67,222,123,0.1); color: var(--acc); font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 15px; line-height: 1; }
+  .lms-step-body { display: block; padding-top: 4px; }
+  .lms-step-label { display: block; font-weight: 700; font-size: 16px; margin-bottom: 3px; }
+  .lms-step-text { display: block; font-size: 15px; line-height: 1.6; color: var(--muted); }
+
+  /* ---------- art: six named drawings ---------- */
+  .lms-art { margin: 30px 0; }
+  .lms-art-frame { border: 1px solid rgba(242,238,227,0.14); border-radius: 20px; background: rgba(242,238,227,0.04); padding: 22px 20px; }
+  .lms-art figcaption { margin-top: 10px; font-size: 14px; line-height: 1.5; color: var(--muted); }
+  .la-shapes { display: block; width: 100%; height: 100%; }
+  .la-tag { position: absolute; font-size: 12px; font-weight: 700; line-height: 1.3; padding: 5px 9px; border-radius: 8px; background: rgba(14,14,18,0.82); border: 1px solid rgba(242,238,227,0.16); max-width: 46%; }
+  .la-tag--warn { color: var(--coral); border-color: rgba(255,180,58,0.42); }
+  .la-tag--good { color: var(--acc); border-color: rgba(67,222,123,0.42); }
+  .la-tag--plain { color: var(--muted); }
+  .la-plot { position: relative; width: 100%; aspect-ratio: 3 / 1; min-height: 150px; }
+  .la-point { position: absolute; width: 12px; height: 12px; border-radius: 50%; transform: translate(-50%, -50%); }
+  .la-point--warn { background: var(--coral); }
+  .la-point--good { background: var(--acc); }
+  .la-band { fill: rgba(255,180,58,0.09); }
+  .la-axis { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .la-seed { margin: 0 auto; width: fit-content; max-width: 100%; padding: 10px 16px; border-radius: 999px; background: var(--paper); color: var(--ink); font-weight: 700; font-size: 15px; text-align: center; }
+  .la-fork-neck { height: 34px; }
+  .la-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .la-card { border-radius: 14px; padding: 14px 16px; border: 1px solid rgba(242,238,227,0.12); }
+  .la-card--warn { background: rgba(255,180,58,0.08); border-color: rgba(255,180,58,0.34); }
+  .la-card--good { background: rgba(67,222,123,0.08); border-color: rgba(67,222,123,0.34); }
+  .la-card-label { margin: 0 0 8px; font-size: 11px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; }
+  .la-card--warn .la-card-label { color: var(--coral); }
+  .la-card--good .la-card-label { color: var(--acc); }
+  .la-card-line { margin: 0 0 10px; font-size: 15px; line-height: 1.5; font-weight: 600; }
+  .la-card-out { margin: 0; padding-top: 10px; border-top: 1px dashed rgba(242,238,227,0.16); font-size: 14px; line-height: 1.5; color: var(--muted); }
+  .la-loop-ring { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  .la-loop-node { flex: 1 1 150px; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; background: rgba(255,180,58,0.07); border: 1px solid rgba(255,180,58,0.28); font-size: 14px; line-height: 1.4; font-weight: 600; }
+  .la-loop-n { display: grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--coral); color: var(--ink); font-weight: 800; font-size: 12px; }
+  .la-loop-return { height: 16px; margin: 0 12px; border: 2px solid rgba(255,180,58,0.5); border-top: none; border-radius: 0 0 12px 12px; position: relative; }
+  .la-loop-return::before { content: ""; position: absolute; left: -6px; top: -3px; border: 5px solid transparent; border-bottom-color: rgba(255,180,58,0.75); }
+  .la-loop-back { margin: 10px 0 0; font-size: 14px; color: var(--coral); font-weight: 600; }
+  .la--bars { display: flex; flex-direction: column; gap: 16px; }
+  .la-bar-row { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 4px 12px; }
+  .la-bar { grid-column: 1 / -1; display: block; height: 14px; border-radius: 4px; min-width: 26px; }
+  .la-bar-row--warn .la-bar { background: linear-gradient(90deg, rgba(255,180,58,0.85), rgba(255,180,58,0.35)); }
+  .la-bar-row--good .la-bar { background: var(--acc); }
+  .la-bar-label { font-size: 15px; font-weight: 700; }
+  .la-bar-note { font-size: 13px; font-weight: 700; text-align: right; }
+  .la-bar-row--warn .la-bar-note { color: var(--coral); }
+  .la-bar-row--good .la-bar-note { color: var(--acc); }
+  .la-day { display: block; width: 26px; height: 26px; border-radius: 7px; flex: none; }
+  .la-day.is-hit { background: var(--acc); }
+  .la-day.is-miss { background: transparent; border: 2px dashed rgba(255,180,58,0.75); }
+  .la-day.is-dead { background: transparent; border: 2px dashed rgba(242,238,227,0.2); }
+  .la-streak-run { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid rgba(242,238,227,0.12); }
+  .la-streak-caption { font-size: 14px; color: var(--muted); margin-left: 6px; }
+  .la-branches { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .la-branch { padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(242,238,227,0.12); }
+  .la-branch--bad { background: rgba(255,180,58,0.06); border-color: rgba(255,180,58,0.28); }
+  .la-branch--good { background: rgba(67,222,123,0.06); border-color: rgba(67,222,123,0.28); }
+  .la-branch-days { display: flex; gap: 8px; margin-bottom: 12px; }
+  .la-branch-text { margin: 0; font-size: 14px; line-height: 1.5; }
+  @media (max-width: 620px) {
+    .la-fork-neck { height: 18px; }
+    .la-fork-neck .la-shapes { display: none; }
+    .la-pair, .la-branches { grid-template-columns: 1fr; }
+    .la-day { width: 22px; height: 22px; border-radius: 6px; }
+    .la-streak-caption { margin-left: 0; flex-basis: 100%; }
+    .la-tag { font-size: 11px; max-width: 50%; padding: 4px 7px; }
+    .la-plot { aspect-ratio: 2 / 1; min-height: 170px; }
+  }
+
+  /* ---------- demo stat strip ---------- */
+  .demo-stats { list-style: none; margin: 22px 0 26px; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .demo-stats li { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border-radius: 14px; background: rgba(242,238,227,0.05); border: 1px solid rgba(242,238,227,0.12); }
+  .demo-stat-n { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 26px; line-height: 1; letter-spacing: -0.02em; color: var(--acc); }
+  .demo-stat-l { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  @media (max-width: 720px) { .demo-stats { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">Lesson Blocks</p>
+  <h1>Split, Steps, Drawings</h1>
+  <p class="lede">
+    The three block kinds that keep a written unit from being a wall of prose. They carry structure, never
+    bytes: a drawing is picked by name from a fixed set the site knows how to make, so a lesson stays a plain
+    object the API and the phone app can both read. Words inside a picture are always real text, because a
+    600-unit viewBox squeezed onto a phone turns 15px type into 8px.
+  </p>
+
+  <p class="label">split</p>
+  <p class="note">The same moment in two voices, line by line. Two columns on a desktop; on a phone the header drops away, each row stacks, and every cell grows its own tiny label so a pair can never come apart.</p>
+  <div class="lms-split">
+    <p class="lms-split-title">Same Tuesday, two voices</p>
+    <div class="lms-split-head">
+      <p class="lms-split-label lms-split-label--warn">The critic says</p>
+      <p class="lms-split-label lms-split-label--good">The coach says</p>
+    </div>
+    <div class="lms-split-rows">
+      <div class="lms-split-row">
+        <p class="lms-split-cell lms-split-cell--warn"><span class="lms-split-mini">The critic says</span>"You failed the quiz because you're stupid."</p>
+        <p class="lms-split-cell lms-split-cell--good"><span class="lms-split-mini">The coach says</span>"You failed the quiz because you skipped the practice problems."</p>
+      </div>
+      <div class="lms-split-row">
+        <p class="lms-split-cell lms-split-cell--warn"><span class="lms-split-mini">The critic says</span>"Don't bother applying. They'll laugh."</p>
+        <p class="lms-split-cell lms-split-cell--good"><span class="lms-split-mini">The coach says</span>"Apply. Let them say no. Don't say it for them."</p>
+      </div>
+      <div class="lms-split-row">
+        <p class="lms-split-cell lms-split-cell--warn"><span class="lms-split-mini">The critic says</span>"You always quit."</p>
+        <p class="lms-split-cell lms-split-cell--good"><span class="lms-split-mini">The coach says</span>"You've quit at week three, twice. Let's plan for week three."</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="label">steps</p>
+  <p class="note">A numbered flow. The spine is drawn from each number down to the next, so the last step ends the line rather than trailing off.</p>
+  <div class="lms-steps">
+    <p class="lms-steps-title">The three-line answer</p>
+    <ol class="lms-steps-list">
+      <li class="lms-step"><span class="lms-step-n">1</span><span class="lms-step-body"><span class="lms-step-label">Catch it</span><span class="lms-step-text">Notice the verdict as a verdict. "There's the critic." Naming it breaks the trance.</span></span></li>
+      <li class="lms-step"><span class="lms-step-n">2</span><span class="lms-step-body"><span class="lms-step-label">Get specific</span><span class="lms-step-text">Replace the verdict with what actually happened, in one sentence, with no adjectives.</span></span></li>
+      <li class="lms-step"><span class="lms-step-n">3</span><span class="lms-step-body"><span class="lms-step-label">Call the next play</span><span class="lms-step-text">Say the next physical action, small enough to do today. The critic cannot argue with a scheduled action.</span></span></li>
+    </ol>
+  </div>
+
+  <p class="label">art: two-voices</p>
+  <figure class="lms-art">
+    <div class="lms-art-frame">
+      <div class="la la--fork">
+        <p class="la-seed">You bomb the presentation.</p>
+        <div class="la-fork-neck">
+          <svg class="la-shapes" viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M100 0 V14 M14 14 H186 M14 14 V40 M186 14 V40" fill="none" stroke="currentColor" stroke-opacity="0.32" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="la-pair">
+          <div class="la-card la-card--warn">
+            <p class="la-card-label">The Critic</p>
+            <p class="la-card-line">&ldquo;You always do this. Presenting is not your thing.&rdquo;</p>
+            <p class="la-card-out">You find a reason to skip the next one.</p>
+          </div>
+          <div class="la-card la-card--good">
+            <p class="la-card-label">The Coach</p>
+            <p class="la-card-line">&ldquo;The opening was rushed. Fix that one thing.&rdquo;</p>
+            <p class="la-card-out">You book the next one.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <figcaption>Same mistake. The voice decides what happens next.</figcaption>
+  </figure>
+
+  <p class="label">art: critic-cost</p>
+  <p class="note">The return leg is borders, not a path: an arrow drawn inside a stretched viewBox arrives squashed, and this has to span any width.</p>
+  <figure class="lms-art">
+    <div class="lms-art-frame">
+      <div class="la la--loop">
+        <ol class="la-loop-ring">
+          <li class="la-loop-node"><span class="la-loop-n">1</span><span>You make a mistake</span></li>
+          <li class="la-loop-node"><span class="la-loop-n">2</span><span>&ldquo;I&rsquo;m bad at this&rdquo;</span></li>
+          <li class="la-loop-node"><span class="la-loop-n">3</span><span>You avoid it</span></li>
+          <li class="la-loop-node"><span class="la-loop-n">4</span><span>You get worse at it</span></li>
+        </ol>
+        <div class="la-loop-return" aria-hidden="true"></div>
+        <p class="la-loop-back">and back to the top, forever, with nothing fixed</p>
+      </div>
+    </div>
+    <figcaption>The critic causes the exact evidence it quotes.</figcaption>
+  </figure>
+
+  <p class="label">art: start-cost</p>
+  <figure class="lms-art">
+    <div class="lms-art-frame">
+      <div class="la la--plot">
+        <div class="la-plot">
+          <svg class="la-shapes" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M20 172 L74 172 C92 172 96 26 118 26 C140 26 146 140 172 146 L580 154 L580 176 L20 176 Z" fill="currentColor" fill-opacity="0.06"/>
+            <path d="M20 172 L74 172 C92 172 96 26 118 26 C140 26 146 140 172 146 L580 154" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M20 176 L580 176" stroke="currentColor" stroke-opacity="0.2" stroke-width="1.5"/>
+          </svg>
+          <span class="la-tag la-tag--warn" style="left:24%;top:6%">Starting</span>
+          <span class="la-tag la-tag--good" style="left:50%;top:52%">Keeping going</span>
+        </div>
+      </div>
+    </div>
+    <figcaption>The price is at the front. Pay less of it.</figcaption>
+  </figure>
+
+  <p class="label">art: shrink-it</p>
+  <figure class="lms-art">
+    <div class="lms-art-frame">
+      <div class="la la--bars">
+        <div class="la-bar-row la-bar-row--warn"><span class="la-bar" style="width:100%"></span><span class="la-bar-label">Study for two hours</span><span class="la-bar-note">Dead by Thursday</span></div>
+        <div class="la-bar-row la-bar-row--warn"><span class="la-bar" style="width:46%"></span><span class="la-bar-label">Study for twenty minutes</span><span class="la-bar-note">Dead by the bad week</span></div>
+        <div class="la-bar-row la-bar-row--good"><span class="la-bar" style="width:14%"></span><span class="la-bar-label">Open the notebook</span><span class="la-bar-note">Still alive in March</span></div>
+      </div>
+    </div>
+    <figcaption>The smallest version is not the warm-up. It is the habit.</figcaption>
+  </figure>
+
+  <p class="label">art: the-long-middle</p>
+  <p class="note">The shape layer stretches to its frame, so the two markers are HTML sitting at the coordinates the viewBox uses. An SVG circle here would arrive as an oval.</p>
+  <figure class="lms-art">
+    <div class="lms-art-frame">
+      <div class="la la--plot">
+        <div class="la-plot">
+          <svg class="la-shapes" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="150" y="0" width="290" height="176" class="la-band"/>
+            <path d="M20 176 L580 176" stroke="currentColor" stroke-opacity="0.2" stroke-width="1.5"/>
+            <path d="M30 26 C70 76 96 108 148 118 L432 128 C494 133 540 152 572 160" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <span class="la-point la-point--warn" style="left:48.3%;top:63%"></span>
+          <span class="la-point la-point--good" style="left:95.3%;top:80.5%"></span>
+          <span class="la-tag la-tag--plain" style="left:3%;top:2%">How hard it feels</span>
+          <span class="la-tag la-tag--warn" style="left:32%;top:34%">Most people quit in here</span>
+          <span class="la-tag la-tag--good" style="right:2%;top:50%">Automatic</span>
+        </div>
+        <div class="la-axis"><span>Day 1</span><span>Day 66</span></div>
+      </div>
+    </div>
+    <figcaption>Nobody quits on day two. They quit in the flat part, where nothing seems to be happening.</figcaption>
+  </figure>
+
+  <p class="label">art: never-miss-twice</p>
+  <figure class="lms-art">
+    <div class="lms-art-frame">
+      <div class="la la--streak">
+        <div class="la-streak-run">
+          <span class="la-day is-hit"></span><span class="la-day is-hit"></span><span class="la-day is-hit"></span><span class="la-day is-hit"></span><span class="la-day is-hit"></span><span class="la-day is-miss"></span>
+          <span class="la-streak-caption">One day missed. Nothing has happened yet.</span>
+        </div>
+        <div class="la-branches">
+          <div class="la-branch la-branch--bad">
+            <div class="la-branch-days"><span class="la-day is-miss"></span><span class="la-day is-miss"></span><span class="la-day is-dead"></span></div>
+            <p class="la-branch-text">Miss the next one and you are not recovering, you are quitting slowly.</p>
+          </div>
+          <div class="la-branch la-branch--good">
+            <div class="la-branch-days"><span class="la-day is-hit"></span><span class="la-day is-hit"></span><span class="la-day is-hit"></span></div>
+            <p class="la-branch-text">Land the next one and the miss stays a bad day instead of the end.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <figcaption>The miss that ends a habit is never the first one.</figcaption>
+  </figure>
+
+  <p class="label">demo stat strip</p>
+  <p class="note">Four numbers above the open-house lesson, so the page reads as something to do rather than something to scroll. The minute count is measured off the lesson at render, never typed into the copy.</p>
+  <ul class="demo-stats">
+    <li><span class="demo-stat-n">11</span><span class="demo-stat-l">Minute Read</span></li>
+    <li><span class="demo-stat-n">6</span><span class="demo-stat-l">Questions</span></li>
+    <li><span class="demo-stat-n">9</span><span class="demo-stat-l">Flashcards</span></li>
+    <li><span class="demo-stat-n">1</span><span class="demo-stat-l">Thing To Do Tonight</span></li>
+  </ul>
+</div>
+</body>
+</html>

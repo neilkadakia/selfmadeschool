@@ -12,14 +12,14 @@
   * { box-sizing: border-box; }
   body { margin: 0; padding: 40px 32px 56px; font-family: "Instrument Sans", sans-serif; background: var(--ink); color: var(--paper); }
   /* Matches .lms-main: the lesson column runs to 1080 so the video, quiz and
-     deck use a wide screen. Body copy keeps its own 65ch measure. */
+     deck use a wide screen. Copy inside it is never capped again. */
   .wrap { max-width: 1080px; margin: 0 auto; }
   .kicker { font-size: 13px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--acc); margin: 0 0 14px; }
   .h1 { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(36px, 5vw, 60px); line-height: 0.95; letter-spacing: -0.03em; text-transform: uppercase; margin: 0 0 12px; }
-  .hook { font-size: 17px; line-height: 1.6; color: var(--muted); margin: 0 0 36px; max-width: 560px; }
+  .hook { font-size: 17px; line-height: 1.6; color: var(--muted); margin: 0 0 36px; }
 
   /* Lesson blocks */
-  .p { font-size: 17px; line-height: 1.7; margin: 0 0 22px; max-width: 65ch; }
+  .p { font-size: 17px; line-height: 1.7; margin: 0 0 22px; }
   .callout { border-left: 4px solid var(--acc); background: rgba(67,222,123,0.07); border-radius: 0 16px 16px 0; padding: 18px 22px; margin: 0 0 22px; }
   .example { border-left: 4px solid var(--vio); background: rgba(91,124,250,0.09); border-radius: 0 16px 16px 0; padding: 18px 22px; margin: 0 0 22px; }
   .c-title { font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin: 0 0 6px; opacity: 0.8; }
